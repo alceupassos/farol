@@ -67,7 +67,7 @@ const Dashboard = () => {
                    userRole === 'medico' ? 'Gestão de pacientes e consultas' :
                    'Aqui está um resumo dos seus dados de saúde'}
                   <span className="text-xs text-muted-foreground italic ml-1">
-                    * Sistema MedWallet com dados de demonstração
+                    * Sistema de Saúde Pública com dados de demonstração
                   </span>
                 </p>
               </div>

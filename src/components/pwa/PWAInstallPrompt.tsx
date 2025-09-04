@@ -94,7 +94,7 @@ export const PWAInstallPrompt = () => {
       </CardHeader>
       <CardContent className="pt-0">
         <CardDescription className="text-blue-100 mb-4">
-          Instale o MedChain Wallet para acesso rápido e funcionalidades offline
+          Instale o Sistema de Saúde Pública para acesso rápido e funcionalidades offline
         </CardDescription>
         <div className="flex gap-2">
           <Button

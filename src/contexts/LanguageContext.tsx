@@ -11,7 +11,7 @@ type LanguageContextType = {
 const translations = {
   pt: {
     // Onboarding
-    'welcome.title': 'Bem-vindo ao MedChain',
+    'welcome.title': 'Bem-vindo ao Sistema de Saúde Pública',
     'welcome.subtitle': 'Suas informações médicas seguras em blockchain',
     'auth.login': 'Entrar',
     'auth.register': 'Cadastrar',
@@ -50,7 +50,7 @@ const translations = {
   },
   en: {
     // Onboarding
-    'welcome.title': 'Welcome to MedChain',
+    'welcome.title': 'Welcome to Public Health System',
     'welcome.subtitle': 'Your medical information secure on blockchain',
     'auth.login': 'Login',
     'auth.register': 'Register',
@@ -89,7 +89,7 @@ const translations = {
   },
   fr: {
     // Onboarding
-    'welcome.title': 'Bienvenue à MedChain',
+    'welcome.title': 'Bienvenue au Système de Santé Publique',
     'welcome.subtitle': 'Vos informations médicales sécurisées sur blockchain',
     'auth.login': 'Connexion',
     'auth.register': 'S\'inscrire',
@@ -128,7 +128,7 @@ const translations = {
   },
   es: {
     // Onboarding
-    'welcome.title': 'Bienvenido a MedChain',
+    'welcome.title': 'Bienvenido al Sistema de Salud Pública',
     'welcome.subtitle': 'Su información médica segura en blockchain',
     'auth.login': 'Iniciar sesión',
     'auth.register': 'Registrarse',

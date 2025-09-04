@@ -13,7 +13,7 @@ const OnboardingSlides = ({ onComplete }: OnboardingProps) => {
   
   const slides = [
     {
-      title: "Bem-vindo ao MedChain",
+      title: "Bem-vindo ao Sistema de Saúde Pública",
       description: "Sua carteira médica digital segura, alimentada por tecnologia blockchain. Gerencie e controle todos os seus registros médicos em um só lugar.",
       icon: <Shield size={48} className="text-medical" />,
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"

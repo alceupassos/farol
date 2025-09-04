@@ -71,7 +71,7 @@ const MunicipalityContactForm = () => {
           Solicite uma Demonstração para Sua Cidade
         </h3>
         <p className="text-xl text-muted-foreground">
-          Veja como o MedWallet pode transformar a gestão de saúde do seu município
+          Veja como o Sistema de Saúde Pública pode transformar a gestão de saúde do seu município
         </p>
       </div>
 

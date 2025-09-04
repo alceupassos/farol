@@ -82,7 +82,7 @@ const HowItWorksSection = () => {
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient-medical">
-            Como o MedWallet Transforma a Gestão Municipal de Saúde
+            Como o Sistema de Saúde Pública Transforma a Gestão Municipal de Saúde
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Uma solução completa em 4 etapas simples que revoluciona a saúde pública do seu município

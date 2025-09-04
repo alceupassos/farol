@@ -1,4 +1,4 @@
-const CACHE_NAME = 'medchain-wallet-v1';
+const CACHE_NAME = 'sistema-saude-publica-v1';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -87,7 +87,7 @@ self.addEventListener('sync', (event) => {
 // Push notifications
 self.addEventListener('push', (event) => {
   const options = {
-    body: event.data ? event.data.text() : 'Nova notificação do MedChain Wallet',
+    body: event.data ? event.data.text() : 'Nova notificação do Sistema de Saúde Pública',
     icon: '/favicon.ico',
     badge: '/favicon.ico',
     vibrate: [100, 50, 100],
@@ -110,7 +110,7 @@ self.addEventListener('push', (event) => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('MedChain Wallet', options)
+    self.registration.showNotification('Sistema de Saúde Pública', options)
   );
 });
 

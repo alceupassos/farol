@@ -244,7 +244,7 @@ const AuthPage = () => {
                 Acesso Demonstração
               </CardTitle>
               <CardDescription>
-                Entre como {userTypes.find(type => type.id === selectedRole)?.title.toLowerCase()} para explorar o sistema MedWallet
+                Entre como {userTypes.find(type => type.id === selectedRole)?.title.toLowerCase()} para explorar o Sistema de Saúde Pública
               </CardDescription>
             </CardHeader>
             

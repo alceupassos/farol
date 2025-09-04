@@ -55,7 +55,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ compact = false 
       {
         id: '1',
         name: 'Hospital das Clínicas Notifications',
-        url: 'https://api.hc.fm.usp.br/webhooks/medchain',
+        url: 'https://api.hc.fm.usp.br/webhooks/saudepublica',
         events: ['patient.created', 'patient.updated', 'lab.result.ready'],
         status: 'active',
         lastTriggered: new Date(Date.now() - 15 * 60 * 1000),
@@ -68,7 +68,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ compact = false 
       {
         id: '2',
         name: 'Laboratório Fleury Integration',
-        url: 'https://webhook.fleury.com.br/medchain/results',
+        url: 'https://webhook.fleury.com.br/saudepublica/results',
         events: ['lab.result.ready', 'lab.result.updated'],
         status: 'active',
         lastTriggered: new Date(Date.now() - 5 * 60 * 1000),
@@ -94,7 +94,7 @@ export const WebhookManager: React.FC<WebhookManagerProps> = ({ compact = false 
       {
         id: '4',
         name: 'DATASUS Reporting',
-        url: 'https://reporting.datasus.gov.br/medchain',
+        url: 'https://reporting.datasus.gov.br/saudepublica',
         events: ['epidemiological.alert', 'mortality.data'],
         status: 'inactive',
         lastTriggered: new Date(Date.now() - 24 * 60 * 60 * 1000),

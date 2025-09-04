@@ -85,7 +85,7 @@ const DocumentationPage = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Primeiros Passos</CardTitle>
-                  <CardDescription>Como começar a usar o MedWallet</CardDescription>
+                  <CardDescription>Como começar a usar o Sistema de Saúde Pública</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ol className="list-decimal list-inside space-y-3 text-sm">
@@ -105,7 +105,7 @@ const DocumentationPage = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Arquitetura do Sistema</CardTitle>
-                  <CardDescription>Entenda como o MedWallet funciona</CardDescription>
+                  <CardDescription>Entenda como o Sistema de Saúde Pública funciona</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">

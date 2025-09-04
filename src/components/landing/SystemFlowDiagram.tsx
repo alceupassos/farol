@@ -5,7 +5,7 @@ const SystemFlowDiagram = () => {
   return (
     <div className="max-w-6xl mx-auto">
       <h3 className="text-2xl font-bold text-center mb-8 text-gradient-medical">
-        Fluxo do Sistema MedWallet Municipal
+        Fluxo do Sistema de Saúde Pública Municipal
       </h3>
       
       <Card className="glass-card">

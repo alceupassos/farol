@@ -20,7 +20,7 @@ const HelpPage = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Central de Ajuda</h1>
-          <p className="text-muted-foreground">Encontre respostas e aprenda a usar o MedWallet</p>
+          <p className="text-muted-foreground">Encontre respostas e aprenda a usar o Sistema de Saúde Pública</p>
         </div>
 
         {/* Quick Actions */}

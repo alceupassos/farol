@@ -49,7 +49,7 @@ const ROISection = () => {
           Resultados Comprovados
         </h3>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Municípios que implementaram o MedWallet obtiveram resultados significativos
+          Municípios que implementaram o Sistema de Saúde Pública obtiveram resultados significativos
         </p>
       </div>
 
@@ -86,7 +86,7 @@ const ROISection = () => {
             Impacto Transformador na Gestão Municipal
           </h4>
           <p className="text-lg text-muted-foreground mb-6 max-w-3xl mx-auto">
-            O MedWallet não apenas moderniza a gestão de saúde, mas cria um ecossistema inteligente 
+            O Sistema de Saúde Pública não apenas moderniza a gestão de saúde, mas cria um ecossistema inteligente 
             que conecta cidadãos, agentes de saúde e gestores públicos em uma rede de cuidado contínuo.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

@@ -36,7 +36,7 @@ const SettingsPage = () => {
     {
       id: "preferences",
       title: "Preferências da Conta",
-      description: "Defina suas preferências gerais para o MedWallet.",
+      description: "Defina suas preferências gerais para o Sistema de Saúde Pública.",
       icon: <ListChecks className="h-6 w-6 text-primary" />,
       options: ["Unidades de medida (métrico/imperial)", "Formatos de data", "Configurações de exportação de dados"]
     }

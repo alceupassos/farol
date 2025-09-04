@@ -64,7 +64,7 @@ const LandingPage = () => {
             <div className="flex items-center space-x-3">
               <img 
                 src="/lovable-uploads/f328f86f-9e20-428c-b571-91f861610d33.png" 
-                alt="MedWallet Logo" 
+                alt="Saúde Pública Logo"
                 className="h-10 w-auto"
               />
               <span className="text-2xl font-bold text-white">Saúde Pública</span>
@@ -208,7 +208,7 @@ const LandingPage = () => {
               >
                 <img 
                   src={heroShield} 
-                  alt="MedWallet Security Shield" 
+                  alt="Saúde Pública Security Shield" 
                   className="w-full max-w-lg mx-auto"
                   style={{
                     animation: 'float 3s ease-in-out infinite'
@@ -411,11 +411,11 @@ const LandingPage = () => {
                   ))}
                 </div>
                 <p className="text-lg italic text-white">
-                  "O MedWallet transformou como eu gerencio a saúde da minha família. 
+                  "O Sistema de Saúde Pública transformou como eu gerencio a saúde da minha família. 
                   Ter todos os dados médicos seguros e acessíveis em um só lugar é indispensável."
                 </p>
                 <footer className="text-gray-300">
-                  — Sarah K., Usuária MedWallet
+                  — Sarah K., Cidadã
                 </footer>
               </blockquote>
             </Card>
@@ -462,7 +462,7 @@ const LandingPage = () => {
                 Pronto para revolucionar sua saúde?
               </h2>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                Junte-se a milhares de usuários que já confiam no MedWallet para cuidar da sua saúde
+                Junte-se aos municipios que já confiam no Sistema de Saúde Pública para cuidar da população
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -499,10 +499,10 @@ const LandingPage = () => {
               <div className="flex items-center space-x-3">
                 <img 
                   src="/lovable-uploads/f328f86f-9e20-428c-b571-91f861610d33.png" 
-                  alt="MedWallet Logo" 
+                  alt="Saúde Pública Logo"
                   className="h-8 w-auto"
                 />
-                <span className="text-xl font-bold text-white">MedWallet</span>
+                <span className="text-xl font-bold text-white">Saúde Pública</span>
               </div>
               <p className="text-gray-300">
                 Sua saúde, unificada. Sua carteira, inteligente.
@@ -538,7 +538,7 @@ const LandingPage = () => {
           </div>
 
           <div className="border-t border-orange-500/20 mt-8 pt-8 text-center text-gray-300">
-            <p>&copy; 2024 MedWallet. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Saúde Pública. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

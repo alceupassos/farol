@@ -30,7 +30,7 @@ const EmergencyQR = () => {
             <div className="flex flex-col items-center space-y-3">
               <div className="w-48 h-48 bg-white flex items-center justify-center p-2">
                 <QRCodeSVG
-                  value={`https://medchain.app/emergency-access/${accessCode}`}
+                  value={`https://saudepublica.gov.br/emergency-access/${accessCode}`}
                   size={180}
                   level="H"
                   includeMargin={true}
