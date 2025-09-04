@@ -38,10 +38,10 @@ import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
 import AuthPage from "./pages/AuthPage";
-
-// Create placeholder components for routes that don't have dedicated pages yet
-const HelpPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Central de Ajuda</h1><p>Conteúdo da central de ajuda estará disponível em breve.</p></div>;
-const SupportPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Suporte</h1><p>Conteúdo da página de suporte estará disponível em breve.</p></div>;
+import DemoPage from "./pages/DemoPage";
+import HelpPage from "./pages/HelpPage";
+import SupportPage from "./pages/SupportPage";
+import DocumentationPage from "./pages/DocumentationPage";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +73,8 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/demo" element={<DemoPage />} />
+                <Route path="/documentation" element={<DocumentationPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>

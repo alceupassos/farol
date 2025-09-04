@@ -13,23 +13,23 @@
     --popover: 210 15% 12%;
     --popover-foreground: 0 0% 98%;
     
-    /* Enhanced orange primary with glow variants */
-    --primary: 18 100% 50%;
+    /* Verde principal com tonalidades */
+    --primary: 142 76% 36%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 18 100% 70%;
-    --primary-light: 20 100% 60%;
-    --primary-dark: 30 100% 20%;
+    --primary-glow: 142 76% 45%;
+    --primary-light: 142 60% 50%;
+    --primary-dark: 142 80% 25%;
     
-    /* Enhanced secondary with medical teal */
-    --secondary: 180 100% 50%;
+    /* Laranja secundário */
+    --secondary: 25 95% 53%;
     --secondary-foreground: 0 0% 98%;
-    --secondary-glow: 180 100% 70%;
+    --secondary-glow: 25 95% 65%;
     
     --muted: 210 10% 25%;
     --muted-foreground: 210 5% 65%;
-    --accent: 142 69% 58%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 98%;
-    --accent-glow: 142 100% 80%;
+    --accent-glow: 217 100% 75%;
     
     /* Enhanced state colors */
     --destructive: 0 75% 55%;
@@ -72,10 +72,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 20% 8%;
     
-    --primary: 18 100% 50%;
+    --primary: 142 76% 36%;
     --primary-foreground: 0 0% 98%;
-    --primary-light: 20 100% 60%;
-    --primary-dark: 30 100% 20%;
+    --primary-light: 142 60% 50%;
+    --primary-dark: 142 80% 25%;
     
     --secondary: 210 20% 95%;
     --secondary-foreground: 210 20% 10%;

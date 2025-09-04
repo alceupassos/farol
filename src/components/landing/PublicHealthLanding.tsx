@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import medicalTechBg from '@/assets/medical-tech-bg.jpg';
 import medicalHeroBg from '@/assets/medical-hero-bg.jpg';
 import { Squares } from '@/components/ui/squares-background';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Navbar from '@/components/layout/Navbar';
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -63,6 +65,8 @@ const PublicHealthLanding = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/90 to-muted/20">
+      <Navbar toggleSidebar={() => {}} />
+      <div className="pt-16">
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
         {/* Background Image */}
@@ -101,11 +105,11 @@ const PublicHealthLanding = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in">
-            <Button variant="cta" size="lg" className="text-lg px-8 py-4">
+            <Button variant="default" size="lg" className="text-lg px-8 py-4" onClick={handleDemoClick}>
               <Calendar className="w-5 h-5 mr-2" />
-              Agendar Demonstração
+              Ver Demonstração
             </Button>
-            <Button variant="hero" size="lg" className="text-lg px-8 py-4">
+            <Button variant="outline" size="lg" className="text-lg px-8 py-4" onClick={handleDocumentationClick}>
               <FileText className="w-5 h-5 mr-2" />
               Ver Documentação
             </Button>
@@ -263,9 +267,9 @@ const PublicHealthLanding = () => {
               </CardHeader>
               <CardContent>
                 <Button 
-                  variant="cta"
+                  variant="default"
                   className="w-full" 
-                  onClick={() => window.location.href = '/auth?role=gestor'}
+                  onClick={() => navigate('/auth?role=gestor')}
                 >
                   <Building className="w-4 h-4 mr-2" />
                   Acesso Gestor
@@ -287,7 +291,7 @@ const PublicHealthLanding = () => {
                 <Button 
                   variant="secondary" 
                   className="w-full"
-                  onClick={() => window.location.href = '/auth?role=medico'}
+                  onClick={() => navigate('/auth?role=medico')}
                 >
                   <Stethoscope className="w-4 h-4 mr-2" />
                   Acesso Médico
@@ -309,7 +313,7 @@ const PublicHealthLanding = () => {
                 <Button 
                   variant="outline" 
                   className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => window.location.href = '/auth?role=paciente'}
+                  onClick={() => navigate('/auth?role=paciente')}
                 >
                   <Heart className="w-4 h-4 mr-2" />
                   Acesso Paciente
@@ -459,6 +463,7 @@ const PublicHealthLanding = () => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };

@@ -17,13 +17,44 @@ import {
   Search,
   Filter
 } from 'lucide-react';
-import { pindamonhangabaData } from '@/data/pindamonhangabaData';
+
 
 const DemoPage = () => {
   const [selectedRegion, setSelectedRegion] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { demographics, healthIndicators, facilities, emergencyData } = pindamonhangabaData;
+  // Usando dados diretos do arquivo pindamonhangabaData
+  const demographics = { 
+    totalPopulation: 164138,
+    ageGroups: [
+      { range: '0-14 anos', count: 32827 },
+      { range: '15-29 anos', count: 36213 },
+      { range: '30-59 anos', count: 70349 },
+      { range: '60+ anos', count: 24749 }
+    ]
+  };
+  
+  const healthIndicators = [
+    { name: 'Taxa de Mortalidade Infantil', value: '12.5/1000', description: 'Por mil nascidos vivos', trend: 'down', comparison: '15% menor que a média estadual' },
+    { name: 'Cobertura Vacinal', value: '89.4%', description: 'População vacinada', trend: 'up', comparison: '2.1% acima da meta' },
+    { name: 'Expectativa de Vida', value: '76.2 anos', description: 'Média municipal', trend: 'up', comparison: '1.8 anos acima da média nacional' },
+    { name: 'Atendimento Pré-natal', value: '94.2%', description: 'Gestantes acompanhadas', trend: 'up', comparison: '8.5% acima da meta federal' }
+  ];
+  
+  const facilities = [
+    { id: 1, name: 'UBS Centro', type: 'UBS', address: 'Rua Marechal Deodoro, 150', region: 'Centro', capacity: 300, currentOccupancy: 85 },
+    { id: 2, name: 'UBS Cidade Nova', type: 'UBS', address: 'Av. Nossa Senhora do Bom Sucesso, 890', region: 'Cidade Nova', capacity: 250, currentOccupancy: 92 },
+    { id: 3, name: 'Hospital Beneficência Portuguesa', type: 'Hospital', address: 'Rua Alcides Ramos Nogueira, 280', region: 'Centro', capacity: 120, currentOccupancy: 78 },
+    { id: 4, name: 'UBS Vila Santa Clara', type: 'UBS', address: 'Rua Santa Clara, 500', region: 'Vila Santa Clara', capacity: 200, currentOccupancy: 88 },
+    { id: 5, name: 'UPA Mombaça', type: 'UPA', address: 'Av. Central Mombaça, 1200', region: 'Mombaça', capacity: 180, currentOccupancy: 95 },
+    { id: 6, name: 'UBS Jardim Regina', type: 'UBS', address: 'Rua das Flores, 45', region: 'Jardim Regina', capacity: 220, currentOccupancy: 76 }
+  ];
+  
+  const emergencyData = {
+    activeAlerts: 5,
+    responseTime: '8.5 min',
+    availableUnits: 12
+  };
 
   const filteredFacilities = facilities.filter(facility => 
     facility.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
