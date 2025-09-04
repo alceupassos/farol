@@ -7,12 +7,16 @@ import {
   Search,
   Settings,
   Sun,
+  LogOut,
+  User
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import AccessDropdown from './AccessDropdown';
 import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -20,6 +24,7 @@ interface NavbarProps {
 
 const Navbar = ({ toggleSidebar }: NavbarProps) => {
   const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
+  const { user, userRole, signOut } = useAuth();
   
   const toggleTheme = () => {
     const newIsDark = !isDark;
@@ -35,6 +40,19 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
+
+  const getRoleDisplayName = (role: string | null) => {
+    const roleMap = {
+      'gestor': 'Gestor Municipal',
+      'medico': 'Profissional de Saúde',
+      'paciente': 'Paciente'
+    };
+    return role ? roleMap[role as keyof typeof roleMap] || role : 'Visitante';
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <header className="fixed w-full h-16 z-50 bg-gray-900 border-b border-gray-800 px-4">
@@ -72,7 +90,26 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
         <div className="flex items-center space-x-2">
           <LanguageSwitcher />
           
-          <AccessDropdown />
+          {/* Mostrar info do usuário logado ou AccessDropdown */}
+          {user ? (
+            <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 px-3 py-2 bg-gray-800 rounded-lg">
+                <User size={16} className="text-gray-400" />
+                <span className="text-sm text-gray-300">{getRoleDisplayName(userRole)}</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="text-gray-400 hover:text-white hover:bg-gray-800"
+              >
+                <LogOut size={16} />
+                <span className="sr-only">Sair</span>
+              </Button>
+            </div>
+          ) : (
+            <AccessDropdown />
+          )}
           
           <UserSpecificAlerts />
           

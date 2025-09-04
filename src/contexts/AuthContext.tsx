@@ -11,6 +11,7 @@ interface AuthContextType {
   signInAsGuest: (role: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, role: string, additionalData?: any) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  switchGuestRole: (newRole: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -275,6 +276,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await supabase.auth.signOut();
   };
 
+  const switchGuestRole = (newRole: string) => {
+    if (user?.email === 'guest@saudepublica.ai') {
+      setUserRole(newRole);
+      localStorage.setItem('guestRole', newRole);
+    }
+  };
+
   const value = {
     user,
     session,
@@ -284,6 +292,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInAsGuest,
     signUp,
     signOut,
+    switchGuestRole,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

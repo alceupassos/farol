@@ -220,6 +220,20 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           </Link>
         </div>
 
+        {/* Indicador de role atual */}
+        {userRole && (
+          <div className="px-6 py-3 border-b border-sidebar-border bg-sidebar-accent/10">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <span className="text-sm font-medium text-sidebar-accent-foreground">
+                {userRole === 'gestor' && 'Gestor Municipal'}
+                {userRole === 'medico' && 'Profissional de Saúde'}  
+                {userRole === 'paciente' && 'Paciente'}
+              </span>
+            </div>
+          </div>
+        )}
+
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
           {menuSections.map((section, index) => (
             <div key={section.title}>

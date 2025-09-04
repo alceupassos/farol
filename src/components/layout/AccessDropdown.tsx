@@ -8,9 +8,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const AccessDropdown = () => {
   const navigate = useNavigate();
+  const { signOut } = useAuth();
 
   const accessOptions = [
     {
@@ -36,7 +38,9 @@ const AccessDropdown = () => {
     }
   ];
 
-  const handleAccessSelect = (role: string) => {
+  const handleAccessSelect = async (role: string) => {
+    // Fazer logout antes de redirecionar para nova autenticação
+    await signOut();
     navigate(`/auth?role=${role}`);
   };
 
