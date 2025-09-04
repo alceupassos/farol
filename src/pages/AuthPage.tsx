@@ -36,7 +36,7 @@ const AuthPage = () => {
     specialty: ''
   });
   
-  const { signIn, signUp } = useAuth();
+  const { signIn, signInAsGuest, signUp } = useAuth();
   const navigate = useNavigate();
 
   const userTypes = [
@@ -67,52 +67,21 @@ const AuthPage = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleGuestLogin = async () => {
     if (!selectedRole) {
       toast.error('Selecione o tipo de usuário');
-      return;
-    }
-
-    if (!isLogin && formData.password !== formData.confirmPassword) {
-      toast.error('As senhas não coincidem');
       return;
     }
 
     setLoading(true);
 
     try {
-      if (isLogin) {
-        const { error } = await signIn(formData.email, formData.password);
-        if (error) {
-          if (error.message.includes('Invalid login credentials')) {
-            toast.error('Email ou senha incorretos');
-          } else {
-            toast.error('Erro no login: ' + error.message);
-          }
-        } else {
-          toast.success('Login realizado com sucesso!');
-          navigate('/dashboard');
-        }
+      const { error } = await signInAsGuest(selectedRole);
+      if (error) {
+        toast.error('Erro no login: ' + error.message);
       } else {
-        const additionalData = {
-          full_name: formData.fullName,
-          municipality: selectedRole === 'gestor' ? formData.municipality : '',
-          crm: selectedRole === 'medico' ? formData.crm : '',
-          specialty: selectedRole === 'medico' ? formData.specialty : ''
-        };
-
-        const { error } = await signUp(formData.email, formData.password, selectedRole, additionalData);
-        if (error) {
-          if (error.message.includes('already registered')) {
-            toast.error('Este email já está cadastrado');
-          } else {
-            toast.error('Erro no cadastro: ' + error.message);
-          }
-        } else {
-          toast.success('Cadastro realizado com sucesso! Verifique seu email.');
-          setIsLogin(true);
-        }
+        toast.success('Acesso como demonstração realizado com sucesso!');
+        navigate('/dashboard');
       }
     } catch (error) {
       toast.error('Erro inesperado. Tente novamente.');
@@ -239,84 +208,42 @@ const AuthPage = () => {
           </div>
         </div>
 
-        {/* Login/Signup Form */}
+        {/* Access Button */}
         {selectedRole && (
           <Card className="max-w-md mx-auto">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                {isLogin ? <LogIn className="w-5 h-5" /> : <UserPlus className="w-5 h-5" />}
-                {isLogin ? 'Entrar' : 'Cadastrar'}
+                <LogIn className="w-5 h-5" />
+                Acesso Demonstração
               </CardTitle>
               <CardDescription>
-                {isLogin ? 'Faça login em sua conta' : 'Crie sua conta no sistema'}
+                Entre como {userTypes.find(type => type.id === selectedRole)?.title.toLowerCase()} para explorar o sistema MedWallet
               </CardDescription>
             </CardHeader>
             
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="password">Senha *</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Sua senha"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    required
-                  />
-                </div>
-
-                {!isLogin && (
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">Confirmar Senha *</Label>
-                    <Input
-                      id="confirmPassword"
-                      type="password"
-                      placeholder="Confirme sua senha"
-                      value={formData.confirmPassword}
-                      onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                      required
-                    />
-                  </div>
-                )}
-
-                {renderAdditionalFields()}
-
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Processando...' : (isLogin ? 'Entrar' : 'Cadastrar')}
-                </Button>
-
-                <div className="text-center">
-                  <Button
-                    type="button"
-                    variant="link"
-                    onClick={() => setIsLogin(!isLogin)}
-                  >
-                    {isLogin ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
-                  </Button>
-                </div>
-              </form>
-
-              {!isLogin && (
-                <Alert className="mt-4">
+              <div className="space-y-4">
+                <Alert>
                   <AlertCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Para testes, você pode desabilitar a confirmação de email nas configurações do Supabase.
+                    <strong>Credenciais de Demonstração:</strong><br/>
+                    Email: guest@saudepublica.ai<br/>
+                    Senha: 1234
                   </AlertDescription>
                 </Alert>
-              )}
+
+                <Button 
+                  onClick={handleGuestLogin} 
+                  className="w-full" 
+                  disabled={loading}
+                >
+                  {loading ? 'Entrando...' : 'Entrar como Demonstração'}
+                </Button>
+                
+                <div className="text-center text-sm text-muted-foreground">
+                  Explore todas as funcionalidades do sistema com dados de exemplo
+                </div>
+              </div>
             </CardContent>
           </Card>
         )}

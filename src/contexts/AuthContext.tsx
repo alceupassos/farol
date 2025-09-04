@@ -8,6 +8,7 @@ interface AuthContextType {
   userRole: string | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signInAsGuest: (role: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, role: string, additionalData?: any) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
@@ -95,6 +96,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error };
   };
 
+  const signInAsGuest = async (role: string) => {
+    // Always use guest credentials
+    const { error } = await supabase.auth.signInWithPassword({
+      email: 'guest@saudepublica.ai',
+      password: '1234',
+    });
+    
+    if (!error) {
+      // Set the role immediately for the guest user
+      setUserRole(role);
+    }
+    
+    return { error };
+  };
+
   const signUp = async (email: string, password: string, role: string, additionalData?: any) => {
     const redirectUrl = `${window.location.origin}/`;
     
@@ -156,6 +172,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     userRole,
     loading,
     signIn,
+    signInAsGuest,
     signUp,
     signOut,
   };

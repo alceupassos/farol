@@ -1,7 +1,35 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, User, FileText, Pill, Calendar, BarChart2, Microscope, Smile, Dna, KeyRound, ShieldAlert, Settings, Info, QrCode, Video } from 'lucide-react'; // Adicionado Video
+import { 
+  LayoutDashboard, 
+  User, 
+  FileText, 
+  Pill, 
+  Calendar, 
+  BarChart2, 
+  Microscope, 
+  Smile, 
+  Dna, 
+  KeyRound, 
+  ShieldAlert, 
+  Settings, 
+  Info, 
+  QrCode, 
+  Video,
+  Users,
+  Building,
+  Stethoscope,
+  TrendingUp,
+  Zap,
+  MapPin,
+  TestTube,
+  ClipboardList,
+  Brain,
+  Shield,
+  Database
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface SidebarItemProps {
   to: string;
@@ -56,30 +84,97 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { userRole } = useAuth();
 
-  const mainMenuItems = [
-    { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Painel de Controle" },
-    { to: "/profile", icon: <User className="h-5 w-5 mr-3" />, label: "Perfil do Paciente" },
-    { to: "/records", icon: <FileText className="h-5 w-5 mr-3" />, label: "Registros Médicos" },
-    { to: "/medications", icon: <Pill className="h-5 w-5 mr-3" />, label: "Medicamentos" },
-    { to: "/appointments", icon: <Calendar className="h-5 w-5 mr-3" />, label: "Consultas" },
-    { to: "/metrics", icon: <BarChart2 className="h-5 w-5 mr-3" />, label: "Métricas de Saúde" },
-    { to: "/labexams", icon: <Microscope className="h-5 w-5 mr-3" />, label: "Exames Laboratoriais" },
-    { to: "/quality-of-life", icon: <Smile className="h-5 w-5 mr-3" />, label: "Qualidade de Vida" },
-    { to: "/genetic-data", icon: <Dna className="h-5 w-5 mr-3" />, label: "Dados Genéticos" },
-    { to: "https://www.angrasaude.com.br", icon: <Video className="h-5 w-5 mr-3" />, label: "Telemedicina" }, // Novo item
-  ];
+  const getMenuItemsByRole = () => {
+    const menuSections = [];
 
-  const accessAndSecurityItems = [
-    { to: "/manage-access", icon: <KeyRound className="h-5 w-5 mr-3" />, label: "Gerenciar Acesso" },
-    { to: "/emergency", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Acesso de Emergência" },
-  ];
-  
-  const otherItems = [
-    { to: "/settings", icon: <Settings className="h-5 w-5 mr-3" />, label: "Configurações" },
-    { to: "/technical-details", icon: <Info className="h-5 w-5 mr-3" />, label: "Detalhes Técnicos" },
-    { to: "/qr-ana-ativo", icon: <QrCode className="h-5 w-5 mr-3" />, label: "QR CODE de ANA+ATIVO" },
-  ];
+    // Dashboard comum para todos
+    menuSections.push({
+      title: "Dashboard",
+      items: [
+        { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral" }
+      ]
+    });
+
+    if (userRole === 'gestor') {
+      menuSections.push({
+        title: "Gestão Pública",
+        items: [
+          { to: "/executive-dashboard", icon: <TrendingUp className="h-5 w-5 mr-3" />, label: "Dashboard Executivo" },
+          { to: "/operational-dashboard", icon: <Zap className="h-5 w-5 mr-3" />, label: "Dashboard Operacional" },
+          { to: "/population", icon: <Users className="h-5 w-5 mr-3" />, label: "Análise Populacional" },
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" },
+          { to: "/resources", icon: <ClipboardList className="h-5 w-5 mr-3" />, label: "Gestão de Recursos" }
+        ]
+      });
+      menuSections.push({
+        title: "Analytics",
+        items: [
+          { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" },
+          { to: "/security-dashboard", icon: <Shield className="h-5 w-5 mr-3" />, label: "Segurança" },
+          { to: "/integrations-dashboard", icon: <Database className="h-5 w-5 mr-3" />, label: "Integrações" }
+        ]
+      });
+    }
+
+    if (userRole === 'medico') {
+      menuSections.push({
+        title: "Assistência Médica",
+        items: [
+          { to: "/patients", icon: <Users className="h-5 w-5 mr-3" />, label: "Meus Pacientes" },
+          { to: "/appointments", icon: <Calendar className="h-5 w-5 mr-3" />, label: "Agenda Médica" },
+          { to: "/lab-exams", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Exames e Resultados" },
+          { to: "/protocols", icon: <FileText className="h-5 w-5 mr-3" />, label: "Protocolos Médicos" },
+          { to: "https://www.angrasaude.com.br", icon: <Video className="h-5 w-5 mr-3" />, label: "Telemedicina" }
+        ]
+      });
+      menuSections.push({
+        title: "Analytics",
+        items: [
+          { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" },
+          { to: "/security-dashboard", icon: <Shield className="h-5 w-5 mr-3" />, label: "Segurança" }
+        ]
+      });
+    }
+
+    if (userRole === 'paciente') {
+      menuSections.push({
+        title: "Minha Saúde",
+        items: [
+          { to: "/profile", icon: <User className="h-5 w-5 mr-3" />, label: "Meu Perfil" },
+          { to: "/records", icon: <FileText className="h-5 w-5 mr-3" />, label: "Registros Médicos" },
+          { to: "/medications", icon: <Pill className="h-5 w-5 mr-3" />, label: "Medicamentos" },
+          { to: "/appointments", icon: <Calendar className="h-5 w-5 mr-3" />, label: "Minhas Consultas" },
+          { to: "/metrics", icon: <BarChart2 className="h-5 w-5 mr-3" />, label: "Métricas de Saúde" },
+          { to: "/labexams", icon: <Microscope className="h-5 w-5 mr-3" />, label: "Meus Exames" },
+          { to: "/quality-of-life", icon: <Smile className="h-5 w-5 mr-3" />, label: "Qualidade de Vida" },
+          { to: "/genetic-data", icon: <Dna className="h-5 w-5 mr-3" />, label: "Dados Genéticos" }
+        ]
+      });
+      menuSections.push({
+        title: "Emergência e Acesso",
+        items: [
+          { to: "/emergency", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "QR Emergência" },
+          { to: "/manage-access", icon: <KeyRound className="h-5 w-5 mr-3" />, label: "Gerenciar Acesso" },
+          { to: "/qr-ana-ativo", icon: <QrCode className="h-5 w-5 mr-3" />, label: "QR ANA+ATIVO" }
+        ]
+      });
+    }
+
+    // Sistema para todos
+    menuSections.push({
+      title: "Sistema",
+      items: [
+        { to: "/settings", icon: <Settings className="h-5 w-5 mr-3" />, label: "Configurações" },
+        { to: "/technical-details", icon: <Info className="h-5 w-5 mr-3" />, label: "Detalhes Técnicos" }
+      ]
+    });
+
+    return menuSections;
+  };
+
+  const menuSections = getMenuItemsByRole();
 
   return (
     <>
@@ -105,19 +200,20 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
-          <h3 className="px-3 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-2">Principal</h3>
-          {mainMenuItems.map(item => (
-            <SidebarItem key={item.label} {...item} currentPath={currentPath} onClick={isOpen && !item.to.startsWith('http') ? toggleSidebar : (item.to.startsWith('http') && isOpen ? toggleSidebar : undefined)} />
-          ))}
-
-          <h3 className="px-3 pt-4 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-2">Acesso e Segurança</h3>
-          {accessAndSecurityItems.map(item => (
-            <SidebarItem key={item.to} {...item} currentPath={currentPath} onClick={isOpen ? toggleSidebar : undefined} />
-          ))}
-          
-          <h3 className="px-3 pt-4 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-2">Outros</h3>
-          {otherItems.map(item => (
-            <SidebarItem key={item.to} {...item} currentPath={currentPath} onClick={isOpen ? toggleSidebar : undefined} />
+          {menuSections.map((section, index) => (
+            <div key={section.title}>
+              <h3 className={`px-3 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-2 ${index > 0 ? 'pt-4' : ''}`}>
+                {section.title}
+              </h3>
+              {section.items.map(item => (
+                <SidebarItem 
+                  key={item.label} 
+                  {...item} 
+                  currentPath={currentPath} 
+                  onClick={isOpen && !item.to.startsWith('http') ? toggleSidebar : (item.to.startsWith('http') && isOpen ? toggleSidebar : undefined)} 
+                />
+              ))}
+            </div>
           ))}
         </nav>
 
