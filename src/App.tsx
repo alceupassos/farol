@@ -73,7 +73,6 @@ const App = () => (
               <Sonner />
               <PWAInstallPrompt />
               <ServiceWorkerManager />
-              <HealthCheckDashboard />
               <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
