@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DocumentUpload } from '@/components/intelligent-reading/DocumentUpload';
+import { EnhancedDocumentUpload } from '@/components/intelligent-reading/EnhancedDocumentUpload';
 import { DocumentProcessor } from '@/components/intelligent-reading/DocumentProcessor';
 import { ResidentialDashboard } from '@/components/intelligent-reading/ResidentialDashboard';
 import { HealthAgentInterface } from '@/components/intelligent-reading/HealthAgentInterface';
@@ -24,10 +25,14 @@ const IntelligentReading = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
             <TabsTrigger value="upload" className="flex items-center gap-2">
               <ScanLine className="h-4 w-4" />
               Upload & OCR
+            </TabsTrigger>
+            <TabsTrigger value="enhanced-upload" className="flex items-center gap-2">
+              <Brain className="h-4 w-4" />
+              Upload IA Avançado
             </TabsTrigger>
             <TabsTrigger value="processing" className="flex items-center gap-2">
               <Brain className="h-4 w-4" />
@@ -48,14 +53,31 @@ const IntelligentReading = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ScanLine className="h-5 w-5 text-primary" />
-                  Upload e Processamento OCR
+                  Upload e Processamento OCR Básico
                 </CardTitle>
                 <CardDescription>
-                  Faça upload ou capture documentos médicos para processamento inteligente
+                  Faça upload ou capture documentos médicos para processamento básico
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <DocumentUpload />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="enhanced-upload" className="animate-fade-in">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Brain className="h-5 w-5 text-primary" />
+                  Upload com IA Avançada
+                </CardTitle>
+                <CardDescription>
+                  Análise médica inteligente com GPT-5 e processamento contextual
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <EnhancedDocumentUpload />
               </CardContent>
             </Card>
           </TabsContent>

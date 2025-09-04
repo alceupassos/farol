@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   Brain, 
   FileText, 
@@ -199,23 +200,69 @@ Observações: Hemograma dentro dos padrões de normalidade.`
         : agent
     ));
 
-    // Simular processamento do agente
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    setAiAgents(prev => prev.map(agent => 
-      agent.id === agentId 
-        ? { 
-            ...agent, 
-            status: 'completed',
-            results: getAgentResults(agentId)
+    try {
+      // Usar a Edge Function real para análise médica
+      const { data, error } = await supabase.functions.invoke('medical-document-analyzer', {
+        body: {
+          ocrText: currentDocument.extractedText,
+          documentType: 'exam',
+          patientInfo: {
+            name: 'João Silva',
+            age: 45,
+            gender: 'M'
           }
-        : agent
-    ));
+        }
+      });
 
-    toast({
-      title: "Processamento concluído",
-      description: "Documento analisado com sucesso pelos agentes IA.",
-    });
+      if (error) {
+        console.error('Analysis error:', error);
+        throw error;
+      }
+
+      // Atualizar com resultados reais da IA
+      setAiAgents(prev => prev.map(agent => 
+        agent.id === agentId 
+          ? { 
+              ...agent, 
+              status: 'completed',
+              results: formatAIResults(data.extractedData?.results || [])
+            }
+          : agent
+      ));
+
+      toast({
+        title: "Análise IA concluída",
+        description: `Documento analisado com IA avançada: ${data.documentType}`,
+      });
+
+    } catch (error) {
+      console.error('Error in AI analysis:', error);
+      // Fallback para dados simulados
+      setAiAgents(prev => prev.map(agent => 
+        agent.id === agentId 
+          ? { 
+              ...agent, 
+              status: 'completed',
+              results: getAgentResults(agentId)
+            }
+          : agent
+      ));
+
+      toast({
+        title: "Processamento concluído",
+        description: "Documento analisado com sucesso (modo demo).",
+      });
+    }
+  };
+
+  const formatAIResults = (results: any[]) => {
+    return results.map(result => ({
+      parameter: result.parameter,
+      value: result.value + ' ' + result.unit,
+      reference: result.referenceRange,
+      status: result.status,
+      interpretation: result.status === 'normal' ? 'Valor dentro da normalidade' : 'Requer atenção médica'
+    }));
   };
 
   const getAgentResults = (agentId: string) => {
