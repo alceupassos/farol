@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
+import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -27,6 +29,7 @@ import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
 import IntegrationsDashboard from "./pages/IntegrationsDashboard";
+import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
 
 // Create placeholder components for routes that don't have dedicated pages yet
 const HelpPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Central de Ajuda</h1><p>Conteúdo da central de ajuda estará disponível em breve.</p></div>;
@@ -41,6 +44,8 @@ const App = () => (
         <div className="dark">
           <Toaster />
           <Sonner />
+          <PWAInstallPrompt />
+          <ServiceWorkerManager />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -65,6 +70,7 @@ const App = () => (
               <Route path="/executive-dashboard" element={<ExecutiveDashboard />} />
               <Route path="/operational-dashboard" element={<OperationalDashboard />} />
               <Route path="/integrations-dashboard" element={<IntegrationsDashboard />} />
+              <Route path="/ai-analytics" element={<AIAnalyticsDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
