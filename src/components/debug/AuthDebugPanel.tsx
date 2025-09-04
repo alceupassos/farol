@@ -32,7 +32,7 @@ const AuthDebugPanel = () => {
       try {
         const { error: guestCheckError } = await supabase.auth.signInWithPassword({
           email: 'guest@saudepublica.ai',
-          password: '1234'
+          password: '123456'
         });
         
         if (!guestCheckError) {

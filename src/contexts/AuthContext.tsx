@@ -114,7 +114,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Try to sign in first (user might already exist)
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: 'guest@saudepublica.ai',
-        password: '1234',
+        password: '123456',
       });
 
       if (!signInError) {
@@ -129,7 +129,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: 'guest@saudepublica.ai',
-        password: '1234',
+        password: '123456',
         options: {
           emailRedirectTo: `${window.location.origin}/`,
           data: {
@@ -145,7 +145,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (signUpError.message?.includes('already registered')) {
           const { error: retrySignInError } = await supabase.auth.signInWithPassword({
             email: 'guest@saudepublica.ai',
-            password: '1234',
+            password: '123456',
           });
           
           if (!retrySignInError) {
@@ -163,7 +163,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('User created but not confirmed, trying to sign in...');
         const { error: finalSignInError } = await supabase.auth.signInWithPassword({
           email: 'guest@saudepublica.ai',
-          password: '1234',
+          password: '123456',
         });
         
         if (!finalSignInError) {

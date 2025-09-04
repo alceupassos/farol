@@ -14,7 +14,7 @@ async function createGuestUser() {
     
     const { data, error } = await supabase.auth.signUp({
       email: 'guest@saudepublica.ai',
-      password: '1234',
+      password: '123456',
       options: {
         data: {
           role: 'paciente',

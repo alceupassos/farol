@@ -29,6 +29,10 @@ O usuário de demonstração `guest@saudepublica.ai` não existe no banco de dad
 
 Se o problema persistir, execute o script `scripts/create-guest-user.js`:
 
+**Credenciais de Demonstração Atualizadas:**
+- **Email**: guest@saudepublica.ai  
+- **Senha**: 123456
+
 ```bash
 node scripts/create-guest-user.js
 ```

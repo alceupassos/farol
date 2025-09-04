@@ -255,7 +255,7 @@ const AuthPage = () => {
                   <AlertDescription>
                     <strong>Credenciais de Demonstração:</strong><br/>
                     Email: guest@saudepublica.ai<br/>
-                    Senha: 1234<br/>
+                    Senha: 123456<br/>
                     <em className="text-xs text-muted-foreground mt-1 block">
                       Se o login falhar, o sistema tentará criar o usuário automaticamente
                     </em>
