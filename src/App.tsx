@@ -10,6 +10,7 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
 import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
 import ErrorBoundary from "./components/ErrorBoundary";
+import HealthCheckDashboard from "./components/debug/HealthCheckDashboard";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -72,6 +73,7 @@ const App = () => (
               <Sonner />
               <PWAInstallPrompt />
               <ServiceWorkerManager />
+              <HealthCheckDashboard />
               <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />

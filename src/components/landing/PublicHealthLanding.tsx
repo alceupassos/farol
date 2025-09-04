@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-// Temporary placeholders - using web images until local assets are created
-const medicalTechBg = 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1920&h=1080&fit=crop&auto=format';
-const medicalHeroBg = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1920&h=1080&fit=crop&auto=format';
+import medicalTechBg from '@/assets/medical-tech-bg.jpg';
+import medicalHeroBg from '@/assets/medical-hero-bg.jpg';
 import { Squares } from '@/components/ui/squares-background';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from '@/components/layout/Navbar';
