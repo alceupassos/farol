@@ -22,6 +22,7 @@ import SettingsPage from "./pages/SettingsPage";
 import ManageAccessPage from "./pages/ManageAccessPage";
 import QualityOfLifePage from "./pages/QualityOfLifePage";
 import QrAnaAtivoPage from "./pages/QrAnaAtivoPage"; // Importa a nova página
+import IntelligentReading from "./pages/IntelligentReading";
 
 // Create placeholder components for routes that don't have dedicated pages yet
 const HelpPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Central de Ajuda</h1><p>Conteúdo da central de ajuda estará disponível em breve.</p></div>;
@@ -56,6 +57,7 @@ const App = () => (
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/technical-details" element={<TechnicalDetailsPage />} />
               <Route path="/qr-ana-ativo" element={<QrAnaAtivoPage />} /> {/* Adiciona a rota para a página QR ANA ATIVO */}
+              <Route path="/intelligent-reading" element={<IntelligentReading />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
