@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
+import AccessDropdown from './AccessDropdown';
+import medwalletLogo from '@/assets/medwallet-logo.png';
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -46,9 +48,9 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
             <span className="sr-only">Abrir menu</span>
           </button>
           
-          <Link to="/dashboard" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/f328f86f-9e20-428c-b571-91f861610d33.png" 
+              src={medwalletLogo} 
               alt="MedWallet Logo" 
               className="h-10 w-auto"
             />
@@ -72,14 +74,7 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
         <div className="flex items-center space-x-2">
           <LanguageSwitcher />
           
-          <button
-            type="button"
-            className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 relative"
-          >
-            <Bell size={20} />
-            <span className="sr-only">Notificações</span>
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
+          <AccessDropdown />
           
           <button
             type="button"
@@ -88,21 +83,6 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
             <span className="sr-only">Alternar tema</span>
-          </button>
-          
-          <Link
-            to="/settings"
-            className="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            <Settings size={20} />
-            <span className="sr-only">Configurações</span>
-          </Link>
-          
-          <button
-            type="button"
-            className="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-          >
-            JS 
           </button>
         </div>
       </div>
