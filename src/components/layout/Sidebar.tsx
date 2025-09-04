@@ -111,7 +111,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       menuSections.push({
         title: "Mapas e Localização",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" },
+          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas Epidemiológicos" }
         ]
       });
       menuSections.push({
@@ -138,7 +139,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       menuSections.push({
         title: "Mapas e Localização",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" },
+          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas Epidemiológicos" }
         ]
       });
       menuSections.push({
@@ -167,7 +169,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       menuSections.push({
         title: "Mapas e Localização",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Consultar Mapas" }
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Consultar Mapas" },
+          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas de Saúde" }
         ]
       });
       menuSections.push({

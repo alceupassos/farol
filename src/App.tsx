@@ -44,6 +44,7 @@ import DemoPage from "./pages/DemoPage";
 import HelpPage from "./pages/HelpPage";
 import SupportPage from "./pages/SupportPage";
 import DocumentationPage from "./pages/DocumentationPage";
+import EpidemicAlerts from "./pages/EpidemicAlerts";
 
 const queryClient = new QueryClient();
 
@@ -223,6 +224,11 @@ const App = () => (
                 <Route path="/lab-exams" element={
                   <ProtectedRoute>
                     <LabExams />
+                  </ProtectedRoute>
+                } />
+                <Route path="/epidemic-alerts" element={
+                  <ProtectedRoute>
+                    <EpidemicAlerts />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
