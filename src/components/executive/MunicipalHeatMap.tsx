@@ -29,7 +29,10 @@ export const MunicipalHeatMap = () => {
 
   const fetchMapboxToken = async () => {
     try {
+      console.log('Iniciando busca do token Mapbox...');
       const { data, error } = await supabase.functions.invoke('mapbox-token');
+      
+      console.log('Resposta da edge function:', { data, error });
       
       if (error) {
         console.error('Erro ao buscar token do Mapbox:', error);
@@ -37,7 +40,10 @@ export const MunicipalHeatMap = () => {
       }
 
       if (data?.token) {
+        console.log('Token recebido com sucesso');
         setMapboxToken(data.token);
+      } else {
+        console.error('Token não encontrado na resposta:', data);
       }
     } catch (error) {
       console.error('Erro ao conectar com o serviço de mapas:', error);
