@@ -114,13 +114,13 @@ const PublicHealthLanding = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in">
-            <Button variant="default" size="lg" className="text-lg px-8 py-4" onClick={handleDemoClick}>
-              <Calendar className="w-5 h-5 mr-2" />
-              Ver Demonstração
+            <Button variant="default" size="lg" className="text-lg px-8 py-4" onClick={() => navigate('/auth')}>
+              <LogIn className="w-5 h-5 mr-2" />
+              Entrar no Sistema
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4" onClick={handleDocumentationClick}>
-              <FileText className="w-5 h-5 mr-2" />
-              Ver Documentação
+            <Button variant="outline" size="lg" className="text-lg px-8 py-4" onClick={() => navigate('/dashboard')}>
+              <BarChart3 className="w-5 h-5 mr-2" />
+              Ver Dashboard
             </Button>
           </div>
         </div>
