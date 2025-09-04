@@ -4,6 +4,7 @@ import dashboardBg from '@/assets/dashboard-bg.jpg';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import DashboardAlertWidget from '@/components/epidemic/DashboardAlertWidget';
 import { 
   Users, 
   Calendar, 
@@ -29,6 +30,9 @@ const RoleDashboard = () => {
 
   const renderGestorDashboard = () => (
     <div className="space-y-6">
+      {/* Alert Widget */}
+      <DashboardAlertWidget className="mb-6" />
+      
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="glass-morphism border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -127,6 +131,9 @@ const RoleDashboard = () => {
 
   const renderMedicoDashboard = () => (
     <div className="space-y-6">
+      {/* Alert Widget */}
+      <DashboardAlertWidget className="mb-6" />
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -209,6 +216,9 @@ const RoleDashboard = () => {
 
   const renderPacienteDashboard = () => (
     <div className="space-y-6">
+      {/* Alert Widget */}
+      <DashboardAlertWidget className="mb-6" />
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

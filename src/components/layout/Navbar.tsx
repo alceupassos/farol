@@ -11,6 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import AccessDropdown from './AccessDropdown';
+import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
 
 interface NavbarProps {
@@ -72,6 +73,8 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           <LanguageSwitcher />
           
           <AccessDropdown />
+          
+          <UserSpecificAlerts />
           
           <button
             type="button"
