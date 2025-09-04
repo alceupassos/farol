@@ -30,6 +30,7 @@ import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
 import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
+import SecurityDashboard from "./pages/SecurityDashboard";
 
 // Create placeholder components for routes that don't have dedicated pages yet
 const HelpPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Central de Ajuda</h1><p>Conteúdo da central de ajuda estará disponível em breve.</p></div>;
@@ -71,6 +72,7 @@ const App = () => (
               <Route path="/operational-dashboard" element={<OperationalDashboard />} />
               <Route path="/integrations-dashboard" element={<IntegrationsDashboard />} />
               <Route path="/ai-analytics" element={<AIAnalyticsDashboard />} />
+              <Route path="/security" element={<SecurityDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
