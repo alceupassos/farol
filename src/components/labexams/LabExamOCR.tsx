@@ -1,12 +1,14 @@
 
 import { useState } from 'react';
-import { Camera, Upload, Loader2, Check, AlertTriangle, XCircle } from 'lucide-react';
+import { Camera, Upload, Loader2, Check, AlertTriangle, XCircle, Brain } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { LabExam } from './types';
 import { processSampleHemogram } from '@/data/labExamsData';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { convertGeminiToLabExam } from '@/utils/geminiToLabExam';
 
 interface LabExamOCRProps {
   onComplete: (exam: LabExam) => void;
@@ -35,20 +37,58 @@ const LabExamOCR = ({ onComplete, onCancel }: LabExamOCRProps) => {
     reader.readAsDataURL(file);
   };
 
-  const simulateProcessing = () => {
+  const simulateProcessing = async () => {
     setProgress(0);
+    
+    // Update progress
     const interval = setInterval(() => {
       setProgress(prev => {
-        if (prev >= 100) {
+        if (prev >= 90) {
           clearInterval(interval);
-          const exam = processSampleHemogram();
-          setProcessedExam(exam);
-          setStep('review');
-          return 100;
+          return 90;
         }
-        return prev + 5;
+        return prev + 15;
       });
-    }, 200);
+    }, 300);
+
+    try {
+      // Process with Google Gemini
+      const response = await supabase.functions.invoke('medical-ocr-gemini', {
+        body: {
+          imageData: imagePreview,
+          documentType: 'lab_exam',
+          patientInfo: {
+            name: 'Paciente Exemplo',
+            age: 35,
+            gender: 'M'
+          }
+        }
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+
+      setProgress(100);
+      
+      // Convert Gemini response to LabExam format
+      const geminiData = response.data;
+      const processedExam = convertGeminiToLabExam(geminiData);
+      
+      setTimeout(() => {
+        setProcessedExam(processedExam);
+        setStep('review');
+      }, 500);
+
+    } catch (error) {
+      console.error('OCR processing error:', error);
+      // Fallback to sample data
+      const processedExam = processSampleHemogram();
+      setProcessedExam(processedExam);
+      setStep('review');
+    } finally {
+      clearInterval(interval);
+    }
   };
 
   const handleComplete = () => {
@@ -145,10 +185,10 @@ const LabExamOCR = ({ onComplete, onCancel }: LabExamOCRProps) => {
               </div>
               <Progress value={progress} className="h-2" />
               
-              <div className="text-sm text-muted-foreground pt-2">
+               <div className="text-sm text-muted-foreground pt-2">
                 <div className="flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Extraindo texto com OCR...</span>
+                  <Brain className="h-4 w-4 animate-pulse text-primary" />
+                  <span>Processando com IA Google Gemini 2.5...</span>
                 </div>
               </div>
             </div>

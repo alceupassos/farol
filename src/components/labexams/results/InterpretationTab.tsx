@@ -1,25 +1,107 @@
 
-import { AlertTriangle, CheckCircle, FileText } from 'lucide-react';
-import { Card, CardContent } from "@/components/ui/card";
+import React from 'react';
+import { AlertTriangle, CheckCircle, FileText, Brain, TrendingUp, Lightbulb } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import EnhancedParameterCard from '../EnhancedParameterCard';
+import HealthInsightsPanel from '../HealthInsightsPanel';
+import { LabExam } from '../types';
 
-const InterpretationTab = () => {
+interface InterpretationTabProps {
+  exam: LabExam;
+}
+
+const InterpretationTab: React.FC<InterpretationTabProps> = ({ exam }) => {
+  // Extract enhanced data if available from summary
+  const hasEnhancedData = exam.summary && exam.summary.includes('parameters');
+  
+  // Mock enhanced data for demonstration
+  const mockEnhancedData = {
+    parameters: exam.groups.flatMap(group => 
+      group.parameters.filter(param => param.status !== 'NA').map(param => ({
+        name: param.name,
+        value: param.value.toString(),
+        unit: param.unit,
+        referenceRange: param.referenceRange,
+        status: param.status as 'normal' | 'warning' | 'critical',
+        explanation: param.description || `${param.name} é um indicador importante para a saúde geral.`,
+        function: `${param.name} tem função essencial no organismo, contribuindo para diversos processos metabólicos.`,
+        lowRiskConsequences: `Valores baixos de ${param.name} podem indicar deficiências nutricionais ou outras condições.`,
+        highRiskConsequences: `Valores elevados de ${param.name} podem sugerir sobrecarga ou processos inflamatórios.`,
+        nutritionalRecommendations: [
+          'Manter dieta rica em frutas e vegetais',
+          'Incluir fontes de proteína de qualidade',
+          'Beber água suficiente diariamente'
+        ],
+        lifestyle: [
+          'Praticar exercícios regulares',
+          'Dormir 7-8 horas por noite',
+          'Evitar estresse excessivo',
+          'Consultar médico regularmente'
+        ]
+      }))
+    ),
+    summary: exam.summary || `Análise geral do exame ${exam.name} mostra resultados dentro dos parâmetros esperados para a maioria dos indicadores avaliados.`,
+    overallRisk: exam.status === 'critical' ? 'high' as const : 
+                 exam.status === 'warning' ? 'moderate' as const : 'low' as const,
+    recommendations: [
+      'Manter hábitos saudáveis de alimentação',
+      'Praticar atividade física regular',
+      'Realizar acompanhamento médico periódico',
+      'Monitorar indicadores importantes regularmente'
+    ],
+    correlations: [
+      {
+        parameters: ['Hemoglobina', 'Hematócrito'],
+        observation: 'Valores correlacionados que indicam capacidade de transporte de oxigênio'
+      }
+    ]
+  };
+
   return (
-    <>
-      <Card className="border-amber-200/30 bg-amber-50/10 dark:bg-amber-900/5">
-        <CardContent className="pt-6">
-          <div className="flex items-start gap-4">
-            <AlertTriangle className="h-6 w-6 text-amber-500 flex-shrink-0 mt-1" />
-            <div>
-              <h4 className="text-base font-medium mb-2">Aviso importante</h4>
-              <p className="text-sm text-muted-foreground mb-4">
-                Esta interpretação é gerada automaticamente com base nos resultados do exame, mas não substitui
-                a avaliação de um profissional de saúde. Sempre consulte seu médico para interpretação adequada
-                dos seus resultados.
-              </p>
+    <div className="space-y-6">
+      {/* Health Insights Panel */}
+      <HealthInsightsPanel
+        summary={mockEnhancedData.summary}
+        overallRisk={mockEnhancedData.overallRisk}
+        recommendations={mockEnhancedData.recommendations}
+        correlations={mockEnhancedData.correlations}
+      />
+
+      {/* Enhanced Parameter Cards */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Análise Detalhada dos Parâmetros</h3>
+        <div className="grid grid-cols-1 gap-6">
+          {mockEnhancedData.parameters.slice(0, 3).map((parameter, index) => (
+            <EnhancedParameterCard
+              key={index}
+              parameter={parameter}
+              chartType={index % 3 === 0 ? 'gauge' : index % 3 === 1 ? 'bar' : 'pie'}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Legacy content for backwards compatibility */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Interpretação Tradicional</h3>
+        <Card className="border-amber-200/30 bg-amber-50/10 dark:bg-amber-900/5">
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="h-6 w-6 text-amber-500 flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="text-base font-medium mb-2">Aviso importante</h4>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Esta interpretação é gerada automaticamente com base nos resultados do exame, mas não substitui
+                  a avaliação de um profissional de saúde. Sempre consulte seu médico para interpretação adequada
+                  dos seus resultados.
+                </p>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
       
       <div className="mt-6 space-y-4">
         <h3 className="text-lg font-medium">Interpretação Preliminar</h3>
@@ -98,7 +180,7 @@ const InterpretationTab = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -65,7 +65,7 @@ const ExamResults = ({ exam, onBack }: ExamResultsProps) => {
             </TabsContent>
             
             <TabsContent value="interpretacao">
-              <InterpretationTab />
+              <InterpretationTab exam={exam} />
             </TabsContent>
           </Tabs>
         </CardContent>
