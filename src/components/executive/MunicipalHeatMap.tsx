@@ -242,13 +242,13 @@ export const MunicipalHeatMap = () => {
     heatMapData.forEach(point => {
       // Create popup
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-        <div class="p-3">
-          <h3 class="font-bold text-lg mb-2">${point.neighborhood}</h3>
+        <div class="p-3 bg-white text-gray-900">
+          <h3 class="font-bold text-lg mb-2 text-gray-900">${point.neighborhood}</h3>
           <div class="space-y-1 text-sm">
-            <div>Score de Saúde: <span class="font-semibold">${point.healthScore}/100</span></div>
-            <div>Residências: <span class="font-semibold">${point.totalResidences}</span></div>
-            <div>Alertas: <span class="font-semibold ${point.alertCount > 10 ? 'text-red-500' : 'text-green-500'}">${point.alertCount}</span></div>
-            <div>Nível de Risco: <span class="font-semibold capitalize ${point.riskLevel === 'high' ? 'text-red-500' : point.riskLevel === 'medium' ? 'text-yellow-500' : 'text-green-500'}">${point.riskLevel}</span></div>
+            <div class="text-gray-700">Score de Saúde: <span class="font-semibold text-gray-900">${point.healthScore}/100</span></div>
+            <div class="text-gray-700">Residências: <span class="font-semibold text-gray-900">${point.totalResidences}</span></div>
+            <div class="text-gray-700">Alertas: <span class="font-semibold ${point.alertCount > 10 ? 'text-red-600' : 'text-green-600'}">${point.alertCount}</span></div>
+            <div class="text-gray-700">Nível de Risco: <span class="font-semibold capitalize ${point.riskLevel === 'high' ? 'text-red-600' : point.riskLevel === 'medium' ? 'text-yellow-600' : 'text-green-600'}">${point.riskLevel}</span></div>
           </div>
         </div>
       `);

@@ -166,13 +166,13 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
         })
           .setLngLat([unit.address.longitude, unit.address.latitude])
           .setPopup(new mapboxgl.Popup().setHTML(`
-            <div class="p-2">
-              <h3 class="font-bold">${unit.name}</h3>
+            <div class="p-2 bg-white text-gray-900">
+              <h3 class="font-bold text-gray-900">${unit.name}</h3>
               <p class="text-sm text-gray-600">${unit.type}</p>
-              <p class="text-sm">${unit.address.street}, ${unit.address.number}</p>
-              <p class="text-sm">${unit.address.neighborhood}</p>
-              <p class="text-sm font-medium">Médicos: ${unit.doctors}</p>
-              <p class="text-sm font-medium">Capacidade: ${unit.capacity} pacientes</p>
+              <p class="text-sm text-gray-700">${unit.address.street}, ${unit.address.number}</p>
+              <p class="text-sm text-gray-700">${unit.address.neighborhood}</p>
+              <p class="text-sm font-medium text-gray-700">Médicos: ${unit.doctors}</p>
+              <p class="text-sm font-medium text-gray-700">Capacidade: ${unit.capacity} pacientes</p>
             </div>
           `))
           .addTo(map.current!);
@@ -191,17 +191,17 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
       })
         .setLngLat([neighborhood.lng, neighborhood.lat])
         .setPopup(new mapboxgl.Popup().setHTML(`
-          <div class="p-3">
-            <h3 class="font-bold text-lg">${neighborhood.name}</h3>
-            <p class="text-sm">População: ${neighborhood.population.toLocaleString()}</p>
-            <p class="text-sm">Total de casos: ${totalCases}</p>
+          <div class="p-3 bg-white text-gray-900">
+            <h3 class="font-bold text-lg text-gray-900">${neighborhood.name}</h3>
+            <p class="text-sm text-gray-700">População: ${neighborhood.population.toLocaleString()}</p>
+            <p class="text-sm text-gray-700">Total de casos: ${totalCases}</p>
             <div class="mt-2">
               <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRiskBadgeClass(riskLevel)}">
                 ${getRiskLabel(riskLevel)}
               </span>
             </div>
             ${epidData ? `
-              <div class="mt-2 text-xs">
+              <div class="mt-2 text-xs text-gray-600">
                 <p>Dengue: ${epidData.cases.dengue}</p>
                 <p>COVID-19: ${epidData.cases.covid}</p>
                 <p>Influenza: ${epidData.cases.influenza}</p>
