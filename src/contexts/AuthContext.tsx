@@ -108,7 +108,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInAsGuest = async (role: string) => {
-    // Always use guest credentials
+    // First, try to create the guest user if it doesn't exist
+    const { error: signUpError } = await supabase.auth.signUp({
+      email: 'guest@saudepublica.ai',
+      password: '1234',
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+        data: {
+          role: 'paciente',
+          full_name: 'Usuário Demonstração'
+        }
+      }
+    });
+
+    // If user already exists, signUpError will indicate that
+    // Now try to sign in
     const { error } = await supabase.auth.signInWithPassword({
       email: 'guest@saudepublica.ai',
       password: '1234',
