@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 
 const PublicHealthLanding = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     municipality: '',
     contact: '',
@@ -61,6 +62,14 @@ const PublicHealthLanding = () => {
     e.preventDefault();
     console.log('Municipal contact form submitted:', formData);
     // Here would integrate with your backend
+  };
+
+  const handleDemoClick = () => {
+    navigate('/demo');
+  };
+
+  const handleDocumentationClick = () => {
+    navigate('/documentation');
   };
 
   return (
