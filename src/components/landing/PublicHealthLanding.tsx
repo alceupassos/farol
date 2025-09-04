@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import medicalTechBg from '@/assets/medical-tech-bg.jpg';
+import medicalHeroBg from '@/assets/medical-hero-bg.jpg';
+import { Squares } from '@/components/ui/squares-background';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -62,13 +64,27 @@ const PublicHealthLanding = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/90 to-muted/20">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
+      <section className="relative py-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
+        {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-          style={{ backgroundImage: `url(${medicalTechBg})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{ backgroundImage: `url(${medicalHeroBg})` }}
         />
+        
+        {/* Squares Background Animation */}
+        <div className="absolute inset-0 opacity-30">
+          <Squares 
+            direction="diagonal"
+            speed={0.3}
+            squareSize={60}
+            borderColor="hsl(var(--primary) / 0.1)"
+            hoverFillColor="hsl(var(--primary) / 0.05)"
+          />
+        </div>
+        
+        {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
         <div className="relative max-w-7xl mx-auto text-center z-10">
           <Badge className="mb-6 px-4 py-2 text-sm">
             <Shield className="w-4 h-4 mr-2" />
