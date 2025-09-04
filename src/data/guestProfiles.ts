@@ -2,7 +2,7 @@ export const guestProfiles = {
   gestor: {
     name: "Dr. Carlos Mendes",
     role: "Secretário de Saúde",
-    municipality: "São Paulo - SP",
+    municipality: "Pindamonhangaba - SP",
     email: "guest@saudepublica.ai",
     avatar: "👨‍💼",
     description: "Gestor público com 15 anos de experiência em administração de saúde municipal"
@@ -76,11 +76,11 @@ export const samplePatients = [
 ];
 
 export const municipalityData = {
-  name: "São Paulo",
-  population: 12325000,
-  healthBudget: "R$ 8.2 bilhões",
-  healthUnits: 468,
-  doctors: 3245,
+  name: "Pindamonhangaba",
+  population: 164138,
+  healthBudget: "R$ 45 milhões",
+  healthUnits: 23,
+  doctors: 342,
   nurses: 8921,
   beds: 15678,
   vaccinationRate: 87.5,

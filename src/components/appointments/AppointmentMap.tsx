@@ -124,11 +124,11 @@ const LocationCard = ({ location, appointments }: { location: string, appointmen
       <div className="space-y-2 mb-3 text-sm">
         <div className="flex items-start">
           <MapPin size={16} className="mr-2 mt-0.5 text-gray-500 dark:text-gray-400" />
-          <span className="text-gray-500 dark:text-gray-400">Rua Principal, 123, São Paulo</span>
+          <span className="text-gray-500 dark:text-gray-400">Rua Principal, 123, Pindamonhangaba</span>
         </div>
         <div className="flex items-start">
           <Phone size={16} className="mr-2 mt-0.5 text-gray-500 dark:text-gray-400" />
-          <span className="text-gray-500 dark:text-gray-400">(11) 3456-7890</span>
+          <span className="text-gray-500 dark:text-gray-400">(12) 3456-7890</span>
         </div>
         <div className="flex items-start">
           <Building size={16} className="mr-2 mt-0.5 text-gray-500 dark:text-gray-400" />

@@ -96,7 +96,7 @@ const MunicipalityContactForm = () => {
                   id="cityName"
                   value={formData.cityName}
                   onChange={(e) => handleChange('cityName', e.target.value)}
-                  placeholder="Ex: São Paulo"
+                  placeholder="Ex: Pindamonhangaba"
                   required
                   className="bg-background/50"
                 />

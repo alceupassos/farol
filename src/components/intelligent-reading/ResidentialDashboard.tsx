@@ -49,7 +49,7 @@ export const ResidentialDashboard = () => {
     {
       id: '1',
       address: 'Rua das Flores, 123 - Centro',
-      coordinates: [-23.5505, -46.6333],
+      coordinates: [-45.4612, -22.9242],
       responsibleAgent: 'Ana Silva',
       lastVisit: '2024-01-15',
       healthAlerts: 1,
@@ -89,8 +89,8 @@ export const ResidentialDashboard = () => {
     },
     {
       id: '2',
-      address: 'Av. Principal, 456 - Jardim Norte',
-      coordinates: [-23.5515, -46.6343],
+      address: 'Av. Nossa Senhora do Bom Sucesso, 456 - Cidade Nova',
+      coordinates: [-45.4580, -22.9180],
       responsibleAgent: 'Carlos Santos',
       lastVisit: '2024-01-12',
       healthAlerts: 0,

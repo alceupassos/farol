@@ -22,7 +22,7 @@ const HistoryTab = () => {
           />
           
           <AccessHistoryItem 
-            institution="Clínica São Paulo"
+            institution="Clínica Pindamonhangaba"
             accessedBy="Dra. Ana Ferreira"
             verified={true}
             date="28/05/2023"

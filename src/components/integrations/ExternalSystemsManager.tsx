@@ -231,7 +231,7 @@ export const ExternalSystemsManager = () => {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="name">Nome do Sistema</Label>
-                <Input id="name" placeholder="Ex: Hospital São Paulo" />
+                <Input id="name" placeholder="Ex: Hospital Beneficência Portuguesa" />
               </div>
               <div>
                 <Label htmlFor="type">Tipo</Label>

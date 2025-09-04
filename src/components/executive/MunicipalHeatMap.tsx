@@ -52,47 +52,55 @@ export const MunicipalHeatMap = () => {
     }
   };
 
-  // Mock data for demonstration
+  // Dados de Pindamonhangaba com coordenadas corretas
   const mockHeatMapData: HeatMapData[] = [
     {
       neighborhood: "Centro",
-      coordinates: [-46.6361, -23.5505],
+      coordinates: [-45.4612, -22.9242],
       healthScore: 85,
       totalResidences: 1250,
       riskLevel: 'low',
       alertCount: 2
     },
     {
-      neighborhood: "Jardim América",
-      coordinates: [-46.6600, -23.5650],
+      neighborhood: "Cidade Nova",
+      coordinates: [-45.4580, -22.9180],
       healthScore: 72,
       totalResidences: 890,
       riskLevel: 'medium',
       alertCount: 8
     },
     {
-      neighborhood: "Vila Madalena",
-      coordinates: [-46.6900, -23.5450],
+      neighborhood: "Vila Santa Clara",
+      coordinates: [-45.4700, -22.9300],
       healthScore: 68,
-      totalResidences: 2100,
+      totalResidences: 980,
       riskLevel: 'high',
       alertCount: 15
     },
     {
-      neighborhood: "Mooca",
-      coordinates: [-46.5950, -23.5400],
+      neighborhood: "Jardim Regina",
+      coordinates: [-45.4550, -22.9400],
       healthScore: 79,
-      totalResidences: 1680,
+      totalResidences: 720,
       riskLevel: 'low',
       alertCount: 4
     },
     {
-      neighborhood: "Itaim Bibi",
-      coordinates: [-46.6750, -23.5900],
+      neighborhood: "Mombaça",
+      coordinates: [-45.4400, -22.9500],
       healthScore: 91,
-      totalResidences: 950,
+      totalResidences: 1500,
       riskLevel: 'low',
       alertCount: 1
+    },
+    {
+      neighborhood: "Vila Operária",
+      coordinates: [-45.4650, -22.9150],
+      healthScore: 74,
+      totalResidences: 680,
+      riskLevel: 'medium',
+      alertCount: 6
     }
   ];
 
@@ -115,7 +123,7 @@ export const MunicipalHeatMap = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/dark-v11',
-      center: [-46.6361, -23.5505], // São Paulo coordinates
+      center: [-45.4612, -22.9242], // Pindamonhangaba coordinates
       zoom: 11,
       pitch: 45,
       bearing: 0

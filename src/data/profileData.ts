@@ -17,9 +17,9 @@ export const profileSections = [
     title: 'Informações de Contato',
     fields: [
       { id: 'email', label: 'E-mail', value: 'joao.silva@exemplo.com' },
-      { id: 'phone', label: 'Telefone', value: '+55 (11) 98765-4321' },
-      { id: 'address', label: 'Endereço', value: 'Rua Principal, 123, São Paulo, SP' },
-      { id: 'emergency', label: 'Contato de Emergência', value: 'Maria Silva (Esposa) - +55 (11) 91234-5678' }
+      { id: 'phone', label: 'Telefone', value: '+55 (12) 98765-4321' },
+      { id: 'address', label: 'Endereço', value: 'Rua XV de Novembro, 123, Pindamonhangaba, SP' },
+      { id: 'emergency', label: 'Contato de Emergência', value: 'Maria Silva (Esposa) - +55 (12) 91234-5678' }
     ]
   },
   {

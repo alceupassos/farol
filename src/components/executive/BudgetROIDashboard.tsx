@@ -26,33 +26,33 @@ export const BudgetROIDashboard: React.FC<BudgetROIDashboardProps> = ({ compact 
   const [budgetData, setBudgetData] = useState<BudgetData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Mock data for demonstration
+  // Dados de orçamento de Pindamonhangaba (164.138 habitantes)
   const mockData: BudgetData = {
-    totalBudget: 2500000,
-    spent: 1875000,
-    saved: 625000,
+    totalBudget: 45000000,
+    spent: 32000000,
+    saved: 13000000,
     roi: 3.2,
-    costPerResident: 51.6,
+    costPerResident: 274.30,
     monthlyExpenses: [
-      { month: 'Jan', planned: 200000, actual: 185000, savings: 15000 },
-      { month: 'Fev', planned: 220000, actual: 205000, savings: 15000 },
-      { month: 'Mar', planned: 250000, actual: 225000, savings: 25000 },
-      { month: 'Abr', planned: 240000, actual: 235000, savings: 5000 },
-      { month: 'Mai', planned: 280000, actual: 250000, savings: 30000 },
-      { month: 'Jun', planned: 300000, actual: 270000, savings: 30000 }
+      { month: 'Jan', planned: 3800000, actual: 3400000, savings: 400000 },
+      { month: 'Fev', planned: 3800000, actual: 3700000, savings: 100000 },
+      { month: 'Mar', planned: 4200000, actual: 4000000, savings: 200000 },
+      { month: 'Abr', planned: 4000000, actual: 3600000, savings: 400000 },
+      { month: 'Mai', planned: 4400000, actual: 4300000, savings: 100000 },
+      { month: 'Jun', planned: 4600000, actual: 4200000, savings: 400000 }
     ],
     categoryBreakdown: [
-      { category: 'Tecnologia', amount: 750000, percentage: 40 },
-      { category: 'Pessoal', amount: 562500, percentage: 30 },
-      { category: 'Infraestrutura', amount: 281250, percentage: 15 },
-      { category: 'Treinamento', amount: 187500, percentage: 10 },
-      { category: 'Outros', amount: 93750, percentage: 5 }
+      { category: 'Tecnologia', amount: 12800000, percentage: 40 },
+      { category: 'Pessoal', amount: 9600000, percentage: 30 },
+      { category: 'Infraestrutura', amount: 4800000, percentage: 15 },
+      { category: 'Treinamento', amount: 3200000, percentage: 10 },
+      { category: 'Outros', amount: 1600000, percentage: 5 }
     ],
     roiMetrics: [
-      { metric: 'Redução de Custos Operacionais', value: 850000, change: 15.2 },
-      { metric: 'Economia em Papel/Arquivo', value: 120000, change: 22.5 },
-      { metric: 'Eficiência de Processos', value: 340000, change: 18.7 },
-      { metric: 'Prevenção de Doenças', value: 680000, change: 12.3 }
+      { metric: 'Redução de Custos Operacionais', value: 8500000, change: 15.2 },
+      { metric: 'Economia em Papel/Arquivo', value: 1200000, change: 22.5 },
+      { metric: 'Eficiência de Processos', value: 3400000, change: 18.7 },
+      { metric: 'Prevenção de Doenças', value: 6800000, change: 12.3 }
     ]
   };
 
