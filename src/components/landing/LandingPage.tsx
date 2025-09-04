@@ -7,6 +7,7 @@ import { Shield, Calendar, CreditCard, Users, Star, ArrowRight, CheckCircle, Act
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import { useLanguage } from '@/contexts/LanguageContext';
 import heroShield from '@/assets/hero-shield.png';
+import HowItWorksSection from './HowItWorksSection';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -185,6 +186,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      {/* How It Works Section */}
+      <HowItWorksSection />
 
       {/* Benefits Section */}
       <section id="benefits" className="py-20">
