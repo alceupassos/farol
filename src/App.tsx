@@ -30,7 +30,7 @@ import QualityOfLifePage from "./pages/QualityOfLifePage";
 import PatientsPage from "./pages/PatientsPage";
 import ProtocolsPage from "./pages/ProtocolsPage";
 import PopulationPage from "./pages/PopulationPage";
-import MapPage from "./pages/MapPage";
+import EpidemiologyPage from "./pages/EpidemiologyPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import QrAnaAtivoPage from "./pages/QrAnaAtivoPage"; // Importa a nova página
 import IntelligentReading from "./pages/IntelligentReading";
@@ -210,9 +210,9 @@ const App = () => (
                     <PopulationPage />
                   </ProtectedRoute>
                 } />
-                <Route path="/map" element={
+                <Route path="/epidemiology" element={
                   <ProtectedRoute>
-                    <MapPage />
+                    <EpidemiologyPage />
                   </ProtectedRoute>
                 } />
                 <Route path="/resources" element={

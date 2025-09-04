@@ -29,9 +29,6 @@ verify_jwt = false
 [functions.mapbox-token]
 verify_jwt = false
 
-[functions.google-maps-api]
-verify_jwt = false
-
 [db]
 port = 54322
 

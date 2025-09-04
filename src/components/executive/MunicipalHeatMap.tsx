@@ -97,15 +97,12 @@ export const MunicipalHeatMap = () => {
   ];
 
   useEffect(() => {
-    console.log('useEffect executado, iniciando fetch do token...');
     setHeatMapData(mockHeatMapData);
     fetchMapboxToken();
   }, []);
 
   useEffect(() => {
-    console.log('Token mapbox mudou:', mapboxToken);
     if (mapboxToken) {
-      console.log('Inicializando mapa com token:', mapboxToken.substring(0, 20) + '...');
       initializeMap();
     }
   }, [mapboxToken]);
@@ -379,16 +376,6 @@ export const MunicipalHeatMap = () => {
             <Button variant="outline" className="w-full justify-start">
               <Download className="w-4 h-4 mr-2" />
               Exportar Dados
-            </Button>
-            <Button 
-              variant="outline" 
-              className="w-full justify-start"
-              onClick={() => {
-                console.log('Testando edge function...');
-                fetchMapboxToken();
-              }}
-            >
-              Testar Token Mapbox
             </Button>
             <Separator />
             <div className="text-xs text-muted-foreground">
