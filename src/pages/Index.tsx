@@ -1,8 +1,8 @@
 
-import PublicHealthLanding from '@/components/landing/PublicHealthLanding';
+import LandingPage from '@/components/landing/LandingPage';
 
 const Index = () => {
-  return <PublicHealthLanding />;
+  return <LandingPage />;
 };
 
 export default Index;

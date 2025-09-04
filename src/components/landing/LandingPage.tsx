@@ -96,7 +96,12 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-background" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{ backgroundImage: `url('/lovable-uploads/f4731860-a224-4e16-b81d-315aed901499.png')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -119,13 +124,18 @@ const LandingPage = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={handleGetStarted} 
+                  variant="cta"
                   size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                  className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-xl hover:shadow-primary/40 animate-button-pulse"
                 >
                   Começar Gratuitamente
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="lg">
+                <Button 
+                  variant="hero" 
+                  size="lg"
+                  className="border-primary/30 hover:border-primary/50 backdrop-blur-sm"
+                >
                   Ver Demonstração
                 </Button>
               </div>
@@ -143,22 +153,29 @@ const LandingPage = () => {
             </div>
 
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 blur-3xl rounded-full" />
-              <img 
-                src={heroShield} 
-                alt="MedWallet Security Shield" 
-                className="relative z-10 w-full max-w-lg mx-auto animate-pulse-gentle"
-              />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 blur-3xl rounded-full animate-pulse-gentle" />
+              <div className="relative z-10 p-8 glass-morphism rounded-2xl">
+                <img 
+                  src={heroShield} 
+                  alt="MedWallet Security Shield" 
+                  className="w-full max-w-lg mx-auto animate-float"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold">Recursos Principais</h2>
+      <section id="features" className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
+          style={{ backgroundImage: `url('/lovable-uploads/bfbb24a3-44a4-473b-a5f0-5ad421382991.png')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-muted/30 via-primary/5 to-secondary/10" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center space-y-4 mb-16 animate-fade-in">
+            <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Recursos Principais</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Tudo que você precisa para gerenciar sua saúde de forma moderna e segura
             </p>
@@ -166,18 +183,18 @@ const LandingPage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="relative group hover:shadow-lg transition-all duration-300 border-border/50">
+              <Card key={index} className="relative group hover:shadow-2xl transition-all duration-500 border-0 glass-morphism hover:scale-105 animate-slide-up">
                 <CardHeader className="text-center pb-4">
-                  <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <div className="mx-auto w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:animate-float">
                     <feature.icon className="h-8 w-8 text-primary" />
                   </div>
-                  <Badge variant="secondary" className="w-fit mx-auto mb-2">
+                  <Badge variant="secondary" className="w-fit mx-auto mb-2 bg-gradient-to-r from-primary/20 to-secondary/20">
                     {feature.highlight}
                   </Badge>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl group-hover:text-primary transition-colors">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-center text-muted-foreground">
+                  <CardDescription className="text-center text-muted-foreground group-hover:text-foreground transition-colors">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
@@ -213,28 +230,33 @@ const LandingPage = () => {
                 ))}
               </div>
 
-              <Button size="lg" onClick={handleGetStarted}>
+              <Button 
+                variant="premium" 
+                size="lg" 
+                onClick={handleGetStarted}
+                className="shadow-xl hover:shadow-2xl"
+              >
                 Experimente Agora
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <Card className="p-6 text-center border-border/50">
-                <div className="text-3xl font-bold text-primary mb-2">10k+</div>
-                <div className="text-muted-foreground">Usuários ativos</div>
+              <Card className="p-6 text-center border-0 glass-morphism hover:scale-105 transition-all duration-300 group">
+                <div className="text-3xl font-bold text-primary mb-2 group-hover:animate-pulse">10k+</div>
+                <div className="text-muted-foreground group-hover:text-foreground transition-colors">Usuários ativos</div>
               </Card>
-              <Card className="p-6 text-center border-border/50">
-                <div className="text-3xl font-bold text-primary mb-2">99.9%</div>
-                <div className="text-muted-foreground">Uptime</div>
+              <Card className="p-6 text-center border-0 glass-morphism hover:scale-105 transition-all duration-300 group">
+                <div className="text-3xl font-bold text-primary mb-2 group-hover:animate-pulse">99.9%</div>
+                <div className="text-muted-foreground group-hover:text-foreground transition-colors">Uptime</div>
               </Card>
-              <Card className="p-6 text-center border-border/50">
-                <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                <div className="text-muted-foreground">Hospitais parceiros</div>
+              <Card className="p-6 text-center border-0 glass-morphism hover:scale-105 transition-all duration-300 group">
+                <div className="text-3xl font-bold text-primary mb-2 group-hover:animate-pulse">500+</div>
+                <div className="text-muted-foreground group-hover:text-foreground transition-colors">Hospitais parceiros</div>
               </Card>
-              <Card className="p-6 text-center border-border/50">
-                <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-                <div className="text-muted-foreground">Suporte</div>
+              <Card className="p-6 text-center border-0 glass-morphism hover:scale-105 transition-all duration-300 group">
+                <div className="text-3xl font-bold text-primary mb-2 group-hover:animate-pulse">24/7</div>
+                <div className="text-muted-foreground group-hover:text-foreground transition-colors">Suporte</div>
               </Card>
             </div>
           </div>
@@ -242,24 +264,29 @@ const LandingPage = () => {
       </section>
 
       {/* Trust Section */}
-      <section id="trust" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold">Confiança e Segurança</h2>
+      <section id="trust" className="py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
+          style={{ backgroundImage: `url('/lovable-uploads/50067579-7380-49c5-9134-15db818306f6.png')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-muted/20 via-primary/5 to-secondary/10" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center space-y-4 mb-16 animate-fade-in">
+            <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Confiança e Segurança</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Seus dados médicos protegidos com a mais alta tecnologia de segurança
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <Card className="p-8 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+            <Card className="p-8 glass-morphism border-0 shadow-2xl hover:shadow-primary/20 transition-all duration-500 hover:scale-105">
               <blockquote className="space-y-6">
                 <div className="flex space-x-1 mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                    <Star key={i} className="h-5 w-5 fill-primary text-primary animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
                   ))}
                 </div>
-                <p className="text-lg italic">
+                <p className="text-lg italic text-foreground">
                   "O MedWallet transformou como eu gerencio a saúde da minha família. 
                   Ter todos os dados médicos seguros e acessíveis em um só lugar é indispensável."
                 </p>
@@ -316,11 +343,20 @@ const LandingPage = () => {
                 Junte-se a milhares de usuários que já confiam no MedWallet para cuidar da sua saúde
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" onClick={handleGetStarted}>
+                <Button 
+                  variant="cta" 
+                  size="lg" 
+                  onClick={handleGetStarted}
+                  className="shadow-xl hover:shadow-primary/40"
+                >
                   Começar Agora
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="lg">
+                <Button 
+                  variant="hero" 
+                  size="lg"
+                  className="border-primary/30 hover:border-primary/50"
+                >
                   Falar com Especialista
                 </Button>
               </div>
