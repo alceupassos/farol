@@ -109,6 +109,12 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         ]
       });
       menuSections.push({
+        title: "Mapas e Localização",
+        items: [
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
+        ]
+      });
+      menuSections.push({
         title: "Analytics",
         items: [
           { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" },
@@ -127,6 +133,12 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           { to: "/lab-exams", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Exames e Resultados" },
           { to: "/protocols", icon: <FileText className="h-5 w-5 mr-3" />, label: "Protocolos Médicos" },
           { to: "https://www.angrasaude.com.br", icon: <Video className="h-5 w-5 mr-3" />, label: "Telemedicina" }
+        ]
+      });
+      menuSections.push({
+        title: "Mapas e Localização",
+        items: [
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
         ]
       });
       menuSections.push({
@@ -150,6 +162,12 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           { to: "/labexams", icon: <Microscope className="h-5 w-5 mr-3" />, label: "Meus Exames" },
           { to: "/quality-of-life", icon: <Smile className="h-5 w-5 mr-3" />, label: "Qualidade de Vida" },
           { to: "/genetic-data", icon: <Dna className="h-5 w-5 mr-3" />, label: "Dados Genéticos" }
+        ]
+      });
+      menuSections.push({
+        title: "Mapas e Localização",
+        items: [
+          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Consultar Mapas" }
         ]
       });
       menuSections.push({
@@ -188,21 +206,21 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-64 transform flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 transition-transform duration-300 ease-in-out md:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-64 transform flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-transform duration-300 ease-in-out md:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-6 dark:border-gray-800">
+        <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-6">
           <Link to="/dashboard" className="flex items-center gap-2">
             <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
-            <span className="text-lg font-semibold">Vida Segura</span>
+            <span className="text-lg font-semibold text-sidebar-foreground">Vida Segura</span>
           </Link>
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
           {menuSections.map((section, index) => (
             <div key={section.title}>
-              <h3 className={`px-3 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-2 ${index > 0 ? 'pt-4' : ''}`}>
+              <h3 className={`px-3 text-xs font-semibold uppercase text-sidebar-accent-foreground tracking-wider mb-2 ${index > 0 ? 'pt-4' : ''}`}>
                 {section.title}
               </h3>
               {section.items.map(item => (
@@ -217,8 +235,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           ))}
         </nav>
 
-        <div className="mt-auto border-t border-gray-200 p-4 dark:border-gray-800">
-          <p className="text-center text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-auto border-t border-sidebar-border p-4">
+          <p className="text-center text-xs text-sidebar-accent-foreground">
             © {new Date().getFullYear()} Vida Segura.
             <br />
             Todos os direitos reservados.

@@ -62,6 +62,16 @@
     --button-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --button-hover-scale: 1.05;
     --button-active-scale: 0.98;
+    
+    /* Sidebar colors for dark theme */
+    --sidebar-background: 210 15% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 210 10% 25%;
+    --sidebar-accent-foreground: 210 5% 65%;
+    --sidebar-border: 210 15% 20%;
+    --sidebar-ring: 18 100% 50%;
   }
  
   .light {
@@ -93,6 +103,16 @@
     --border: 210 20% 90%;
     --input: 210 20% 90%;
     --ring: 18 100% 50%;
+    
+    /* Sidebar colors for light theme */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 210 20% 8%;
+    --sidebar-primary: 142 76% 36%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 210 20% 95%;
+    --sidebar-accent-foreground: 210 10% 45%;
+    --sidebar-border: 210 20% 90%;
+    --sidebar-ring: 18 100% 50%;
   }
 }
 
