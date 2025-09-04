@@ -28,7 +28,11 @@ import {
   Clock,
   FileText,
   Phone,
-  Mail
+  Mail,
+  LogIn,
+  UserPlus,
+  Stethoscope,
+  Heart
 } from 'lucide-react';
 
 const PublicHealthLanding = () => {
@@ -215,84 +219,108 @@ const PublicHealthLanding = () => {
         </div>
       </section>
 
-      {/* ROI Calculator Section */}
+      {/* Login CTA Section */}
       <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <Card className="border-0 shadow-2xl bg-gradient-to-br from-card to-muted/20">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl">Calcule o ROI para seu Município</CardTitle>
-              <CardDescription className="text-lg">
-                Veja o potencial de economia e melhoria dos indicadores
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <Label htmlFor="population">População Atendida</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o porte" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="small">Até 50.000 hab</SelectItem>
-                      <SelectItem value="medium">50.000 - 200.000 hab</SelectItem>
-                      <SelectItem value="large">Acima de 200.000 hab</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-4">Acesse o Sistema</h2>
+          <p className="text-xl text-muted-foreground mb-12">
+            Escolha o tipo de acesso adequado ao seu perfil
+          </p>
 
-                <div>
-                  <Label htmlFor="budget">Orçamento Anual Saúde</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Faixa orçamentária" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Até R$ 10M</SelectItem>
-                      <SelectItem value="medium">R$ 10M - R$ 50M</SelectItem>
-                      <SelectItem value="high">Acima de R$ 50M</SelectItem>
-                    </SelectContent>
-                  </Select>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-primary/5">
+              <CardHeader className="pb-4">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                  <Building className="w-8 h-8 text-primary" />
                 </div>
+                <CardTitle className="text-xl">Gestor/Prefeitura</CardTitle>
+                <CardDescription className="text-base">
+                  Secretários de saúde, prefeitos e gestores municipais
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2 mb-6">
+                  <li>• Dashboards executivos</li>
+                  <li>• Análise epidemiológica</li>
+                  <li>• Gestão de recursos</li>
+                  <li>• Relatórios de transparência</li>
+                </ul>
+                <Button 
+                  className="w-full" 
+                  onClick={() => window.location.href = '/auth'}
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Entrar como Gestor
+                </Button>
+              </CardContent>
+            </Card>
 
-                <div>
-                  <Label htmlFor="staff">Profissionais de Saúde</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Tamanho da equipe" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="small">Até 100</SelectItem>
-                      <SelectItem value="medium">100 - 500</SelectItem>
-                      <SelectItem value="large">Acima de 500</SelectItem>
-                    </SelectContent>
-                  </Select>
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-secondary/5">
+              <CardHeader className="pb-4">
+                <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-colors">
+                  <Stethoscope className="w-8 h-8 text-secondary" />
                 </div>
-              </div>
+                <CardTitle className="text-xl">Médico/Profissional</CardTitle>
+                <CardDescription className="text-base">
+                  Médicos, enfermeiros e profissionais de saúde
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2 mb-6">
+                  <li>• Prontuários eletrônicos</li>
+                  <li>• Análise de exames com IA</li>
+                  <li>• Prescrições digitais</li>
+                  <li>• Telemedicina</li>
+                </ul>
+                <Button 
+                  variant="secondary" 
+                  className="w-full"
+                  onClick={() => window.location.href = '/auth'}
+                >
+                  <Stethoscope className="w-4 h-4 mr-2" />
+                  Entrar como Médico
+                </Button>
+              </CardContent>
+            </Card>
 
-              <div className="bg-gradient-to-r from-primary/5 to-secondary/5 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold mb-4">Projeção de Benefícios Anuais:</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex justify-between">
-                    <span>Economia Operacional:</span>
-                    <span className="font-bold text-chart-2">R$ 2.5M - R$ 8.5M</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Melhoria Indicadores SUS:</span>
-                    <span className="font-bold text-chart-3">+35% - +60%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Redução Desperdício:</span>
-                    <span className="font-bold text-chart-1">R$ 800K - R$ 3.2M</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>ROI Estimado:</span>
-                    <span className="font-bold text-primary">280% - 450%</span>
-                  </div>
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-accent/5">
+              <CardHeader className="pb-4">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
+                  <Heart className="w-8 h-8 text-accent" />
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                <CardTitle className="text-xl">Paciente</CardTitle>
+                <CardDescription className="text-base">
+                  Cidadãos e usuários do sistema de saúde
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2 mb-6">
+                  <li>• Histórico médico completo</li>
+                  <li>• Agendamento online</li>
+                  <li>• Resultados de exames</li>
+                  <li>• Cartão digital de saúde</li>
+                </ul>
+                <Button 
+                  variant="outline" 
+                  className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => window.location.href = '/auth'}
+                >
+                  <Heart className="w-4 h-4 mr-2" />
+                  Entrar como Paciente
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground mb-4">
+              Novo no sistema? Crie sua conta em segundos
+            </p>
+            <Button size="lg" variant="outline">
+              <UserPlus className="w-5 h-5 mr-2" />
+              Criar Conta Gratuita
+            </Button>
+          </div>
         </div>
       </section>
 

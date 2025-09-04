@@ -4,8 +4,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
 import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
 import Index from "./pages/Index";
@@ -31,6 +32,7 @@ import OperationalDashboard from "./pages/OperationalDashboard";
 import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
+import AuthPage from "./pages/AuthPage";
 
 // Create placeholder components for routes that don't have dedicated pages yet
 const HelpPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Central de Ajuda</h1><p>Conteúdo da central de ajuda estará disponível em breve.</p></div>;
@@ -38,48 +40,157 @@ const SupportPage = () => <div className="p-4"><h1 className="text-2xl font-bold
 
 const queryClient = new QueryClient();
 
+// Protected Route component
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
+  }
+  
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+  
+  return <>{children}</>;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <div className="dark">
-          <Toaster />
-          <Sonner />
-          <PWAInstallPrompt />
-          <ServiceWorkerManager />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/records" element={<Records />} />
-              <Route path="/medications" element={<Medications />} />
-              <Route path="/appointments" element={<Appointments />} />
-              <Route path="/metrics" element={<Metrics />} />
-              <Route path="/access" element={<Access />} />
-              <Route path="/emergency" element={<Emergency />} />
-              <Route path="/labexams" element={<LabExams />} />
-              <Route path="/genetic-data" element={<GeneticDataPage />} />
-              <Route path="/quality-of-life" element={<QualityOfLifePage />} />
-              <Route path="/help" element={<HelpPage />} />
-              <Route path="/support" element={<SupportPage />} />
-              <Route path="/manage-access" element={<ManageAccessPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/technical-details" element={<TechnicalDetailsPage />} />
-              <Route path="/qr-ana-ativo" element={<QrAnaAtivoPage />} /> {/* Adiciona a rota para a página QR ANA ATIVO */}
-              <Route path="/intelligent-reading" element={<IntelligentReading />} />
-              <Route path="/executive-dashboard" element={<ExecutiveDashboard />} />
-              <Route path="/operational-dashboard" element={<OperationalDashboard />} />
-              <Route path="/integrations-dashboard" element={<IntegrationsDashboard />} />
-              <Route path="/ai-analytics" element={<AIAnalyticsDashboard />} />
-              <Route path="/security" element={<SecurityDashboard />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </div>
-      </TooltipProvider>
-    </LanguageProvider>
+    <AuthProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <div className="dark">
+            <Toaster />
+            <Sonner />
+            <PWAInstallPrompt />
+            <ServiceWorkerManager />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/dashboard" element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/profile" element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                } />
+                <Route path="/records" element={
+                  <ProtectedRoute>
+                    <Records />
+                  </ProtectedRoute>
+                } />
+                <Route path="/medications" element={
+                  <ProtectedRoute>
+                    <Medications />
+                  </ProtectedRoute>
+                } />
+                <Route path="/appointments" element={
+                  <ProtectedRoute>
+                    <Appointments />
+                  </ProtectedRoute>
+                } />
+                <Route path="/metrics" element={
+                  <ProtectedRoute>
+                    <Metrics />
+                  </ProtectedRoute>
+                } />
+                <Route path="/access" element={
+                  <ProtectedRoute>
+                    <Access />
+                  </ProtectedRoute>
+                } />
+                <Route path="/emergency" element={
+                  <ProtectedRoute>
+                    <Emergency />
+                  </ProtectedRoute>
+                } />
+                <Route path="/labexams" element={
+                  <ProtectedRoute>
+                    <LabExams />
+                  </ProtectedRoute>
+                } />
+                <Route path="/genetic-data" element={
+                  <ProtectedRoute>
+                    <GeneticDataPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/quality-of-life" element={
+                  <ProtectedRoute>
+                    <QualityOfLifePage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/help" element={
+                  <ProtectedRoute>
+                    <HelpPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/support" element={
+                  <ProtectedRoute>
+                    <SupportPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/manage-access" element={
+                  <ProtectedRoute>
+                    <ManageAccessPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings" element={
+                  <ProtectedRoute>
+                    <SettingsPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/technical-details" element={
+                  <ProtectedRoute>
+                    <TechnicalDetailsPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/qr-ana-ativo" element={
+                  <ProtectedRoute>
+                    <QrAnaAtivoPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/intelligent-reading" element={
+                  <ProtectedRoute>
+                    <IntelligentReading />
+                  </ProtectedRoute>
+                } />
+                <Route path="/executive-dashboard" element={
+                  <ProtectedRoute>
+                    <ExecutiveDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/operational-dashboard" element={
+                  <ProtectedRoute>
+                    <OperationalDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/integrations-dashboard" element={
+                  <ProtectedRoute>
+                    <IntegrationsDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/ai-analytics" element={
+                  <ProtectedRoute>
+                    <AIAnalyticsDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/security" element={
+                  <ProtectedRoute>
+                    <SecurityDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </TooltipProvider>
+      </LanguageProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
