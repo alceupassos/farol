@@ -1,7 +1,7 @@
 {
-  "name": "MedChain Wallet",
-  "short_name": "MedWallet",
-  "description": "Carteira digital de saúde com blockchain e IA",
+  "name": "Saúde Pública",
+  "short_name": "SaúdePub",
+  "description": "Sistema de saúde pública inteligente",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

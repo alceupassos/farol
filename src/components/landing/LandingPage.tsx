@@ -67,7 +67,7 @@ const LandingPage = () => {
                 alt="MedWallet Logo" 
                 className="h-10 w-auto"
               />
-              <span className="text-2xl font-bold text-white">MedWallet</span>
+              <span className="text-2xl font-bold text-white">Saúde Pública</span>
             </div>
             
             <nav className="hidden md:flex items-center space-x-8">
@@ -152,7 +152,7 @@ const LandingPage = () => {
                   </span>
                 </h1>
                 <p className="text-xl text-gray-300 max-w-lg">
-                  Gerencie consultas, prescrições e pagamentos de forma integrada e segura com a tecnologia blockchain do MedWallet
+                  Gerencie consultas, prescrições e dados de saúde de forma integrada e segura com o Sistema de Saúde Pública
                 </p>
               </div>
               
@@ -300,7 +300,7 @@ const LandingPage = () => {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-white">
-                  Por que escolher o MedWallet?
+                  Por que escolher o Sistema de Saúde Pública?
                 </h2>
                 <p className="text-xl text-gray-300">
                   Uma plataforma completa que revoluciona a forma como você cuida da sua saúde

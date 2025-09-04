@@ -11,7 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import AccessDropdown from './AccessDropdown';
-import medwalletLogo from '@/assets/medwallet-logo.png';
+import saudePublicaLogo from '@/assets/saude-publica-logo.png';
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -50,12 +50,12 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src={medwalletLogo} 
-              alt="MedWallet Logo" 
+              src={saudePublicaLogo} 
+              alt="Saúde Pública Logo" 
               className="h-10 w-auto"
             />
             <span className="hidden md:inline-block text-xl font-bold text-primary">
-              MedWallet
+              Saúde Pública
             </span>
           </Link>
         </div>
