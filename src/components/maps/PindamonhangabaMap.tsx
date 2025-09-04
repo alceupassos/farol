@@ -24,6 +24,7 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const markers = useRef<mapboxgl.Marker[]>([]);
   const [mapboxToken, setMapboxToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -155,8 +156,29 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
     }
   };
 
+  const clearMapData = () => {
+    if (!map.current) return;
+    
+    // Remove todos os marcadores
+    markers.current.forEach(marker => marker.remove());
+    markers.current = [];
+    
+    // Remove camadas se existirem
+    if (map.current.getLayer('epidemiological-circles')) {
+      map.current.removeLayer('epidemiological-circles');
+    }
+    
+    // Remove fontes de dados se existirem
+    if (map.current.getSource('epidemiological-data')) {
+      map.current.removeSource('epidemiological-data');
+    }
+  };
+
   const addMarkers = () => {
     if (!map.current) return;
+
+    // Limpar marcadores existentes antes de adicionar novos
+    clearMapData();
 
     // Unidades de saúde
     if (showHealthUnits) {
@@ -176,6 +198,8 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
             </div>
           `))
           .addTo(map.current!);
+          
+        markers.current.push(marker);
       });
     }
 
@@ -210,6 +234,8 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
           </div>
         `))
         .addTo(map.current!);
+        
+      markers.current.push(marker);
     });
   };
 
@@ -287,10 +313,23 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => window.location.reload()}
+              onClick={async () => {
+                setIsLoading(true);
+                clearMapData();
+                await fetchMapboxToken();
+                if (map.current) {
+                  addDataLayers();
+                  addMarkers();
+                }
+                setIsLoading(false);
+                toast({
+                  title: "Mapa atualizado",
+                  description: "Os dados do mapa foram recarregados com sucesso."
+                });
+              }}
               disabled={isLoading}
             >
-              <RefreshCw className="w-4 h-4 mr-2" />
+              <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
               Atualizar
             </Button>
           </CardTitle>

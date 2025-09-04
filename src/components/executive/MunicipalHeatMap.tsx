@@ -22,6 +22,7 @@ interface HeatMapData {
 export const MunicipalHeatMap = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const markers = useRef<mapboxgl.Marker[]>([]);
   const [mapboxToken, setMapboxToken] = useState('');
   const [heatMapData, setHeatMapData] = useState<HeatMapData[]>([]);
   const [selectedLayer, setSelectedLayer] = useState('health-score');
@@ -236,6 +237,27 @@ export const MunicipalHeatMap = () => {
     });
   };
 
+  const clearMapData = () => {
+    if (!map.current) return;
+    
+    // Remove todos os marcadores
+    markers.current.forEach(marker => marker.remove());
+    markers.current = [];
+    
+    // Remove camadas se existirem
+    if (map.current.getLayer('heat-map-layer')) {
+      map.current.removeLayer('heat-map-layer');
+    }
+    if (map.current.getLayer('municipal-points')) {
+      map.current.removeLayer('municipal-points');
+    }
+    
+    // Remove fonte de dados se existir
+    if (map.current.getSource('municipal-data')) {
+      map.current.removeSource('municipal-data');
+    }
+  };
+
   const addMarkers = () => {
     if (!map.current) return;
 
@@ -260,12 +282,17 @@ export const MunicipalHeatMap = () => {
         .setLngLat(point.coordinates)
         .setPopup(popup)
         .addTo(map.current!);
+        
+      markers.current.push(marker);
     });
   };
 
   const refreshData = async () => {
     setLoading(true);
     try {
+      // Limpar dados existentes do mapa
+      clearMapData();
+      
       const { data, error } = await supabase.functions.invoke('municipal-analytics', {
         body: { 
           type: 'heat-map-data',
@@ -276,9 +303,33 @@ export const MunicipalHeatMap = () => {
 
       if (!error && data) {
         setHeatMapData(data.heatMapData);
+        // Reagendar atualização do mapa para depois que os dados forem definidos
+        setTimeout(() => {
+          if (map.current) {
+            addHeatMapLayers();
+            addMarkers();
+          }
+        }, 100);
+      } else {
+        // Se falhar a API, usar dados mockados e atualizar o mapa
+        setHeatMapData(mockHeatMapData);
+        setTimeout(() => {
+          if (map.current) {
+            addHeatMapLayers();
+            addMarkers();
+          }
+        }, 100);
       }
     } catch (error) {
       console.error('Error refreshing heat map data:', error);
+      // Em caso de erro, usar dados mockados
+      setHeatMapData(mockHeatMapData);
+      setTimeout(() => {
+        if (map.current) {
+          addHeatMapLayers();
+          addMarkers();
+        }
+      }, 100);
     } finally {
       setLoading(false);
     }
