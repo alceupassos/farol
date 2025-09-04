@@ -36,6 +36,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (guestRole) {
         return guestRole;
       }
+      // If no stored role for guest, return default
+      return 'paciente';
     }
     
     try {
@@ -43,9 +45,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('user_roles')
         .select('role')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle(); // Use maybeSingle instead of single to avoid error when no rows
       
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error('Error fetching user role:', error);
         return null;
       }
