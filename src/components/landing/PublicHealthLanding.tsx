@@ -126,6 +126,87 @@ const PublicHealthLanding = () => {
         </div>
       </section>
 
+      {/* Quick Access Section - Moved up for better visibility */}
+      <section className="py-20 px-4 bg-gradient-to-br from-muted/10 to-background relative">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-4 text-foreground">Acesso Rápido ao Sistema</h2>
+          <p className="text-xl text-muted-foreground mb-12">
+            Entre diretamente como demonstração para seu perfil
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <Card className="group hover:shadow-2xl transition-all duration-500 border-2 border-primary/20 hover:border-primary/40 hover:scale-105 animate-scale-in bg-card/90 backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/50 group-hover:to-primary/30 transition-all duration-300 group-hover:animate-pulse shadow-lg">
+                  <Building className="w-8 h-8 text-primary" />
+                </div>
+                <CardTitle className="text-xl group-hover:text-primary transition-colors">Gestor/Prefeitura</CardTitle>
+                <CardDescription className="text-base">
+                  Dashboards executivos e análise epidemiológica
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button 
+                  variant="default"
+                  size="lg"
+                  className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300" 
+                  onClick={() => navigate('/auth?role=gestor')}
+                >
+                  <Building className="w-5 h-5 mr-2" />
+                  Acesso Gestor
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-secondary/20 hover:border-secondary/40 bg-card/90 backdrop-blur-sm hover:scale-105">
+              <CardHeader className="pb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-secondary/30 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/40 transition-colors shadow-lg">
+                  <Stethoscope className="w-8 h-8 text-secondary" />
+                </div>
+                <CardTitle className="text-xl group-hover:text-secondary transition-colors">Médico/Profissional</CardTitle>
+                <CardDescription className="text-base">
+                  Prontuários e análise de exames com IA
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button 
+                  variant="secondary" 
+                  size="lg"
+                  className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
+                  onClick={() => navigate('/auth?role=medico')}
+                >
+                  <Stethoscope className="w-5 h-5 mr-2" />
+                  Acesso Médico
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-accent/20 hover:border-accent/40 bg-card/90 backdrop-blur-sm hover:scale-105">
+              <CardHeader className="pb-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-accent/30 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/40 transition-colors shadow-lg">
+                  <Heart className="w-8 h-8 text-accent" />
+                </div>
+                <CardTitle className="text-xl group-hover:text-accent transition-colors">Paciente</CardTitle>
+                <CardDescription className="text-base">
+                  Histórico médico e cartão digital de saúde
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="w-full text-lg py-3 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+                  onClick={() => navigate('/auth?role=paciente')}
+                >
+                  <Heart className="w-5 h-5 mr-2" />
+                  Acesso Paciente
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Key Features Grid */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -255,83 +336,6 @@ const PublicHealthLanding = () => {
         </div>
       </section>
 
-      {/* Quick Access Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Acesso Rápido ao Sistema</h2>
-          <p className="text-xl text-muted-foreground mb-12">
-            Entre diretamente como demonstração para seu perfil
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 glass-morphism hover:scale-105 animate-scale-in">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:animate-float">
-                  <Building className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">Gestor/Prefeitura</CardTitle>
-                <CardDescription className="text-base">
-                  Dashboards executivos e análise epidemiológica
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  variant="default"
-                  className="w-full" 
-                  onClick={() => navigate('/auth?role=gestor')}
-                >
-                  <Building className="w-4 h-4 mr-2" />
-                  Acesso Gestor
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-secondary/5">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-colors">
-                  <Stethoscope className="w-8 h-8 text-secondary" />
-                </div>
-                <CardTitle className="text-xl">Médico/Profissional</CardTitle>
-                <CardDescription className="text-base">
-                  Prontuários e análise de exames com IA
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  variant="secondary" 
-                  className="w-full"
-                  onClick={() => navigate('/auth?role=medico')}
-                >
-                  <Stethoscope className="w-4 h-4 mr-2" />
-                  Acesso Médico
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-accent/5">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
-                  <Heart className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl">Paciente</CardTitle>
-                <CardDescription className="text-base">
-                  Histórico médico e cartão digital de saúde
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  variant="outline" 
-                  className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => navigate('/auth?role=paciente')}
-                >
-                  <Heart className="w-4 h-4 mr-2" />
-                  Acesso Paciente
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
 
       {/* Municipal Contact Form */}
       <section className="py-20 px-4 bg-gradient-to-br from-muted/20 to-background">
