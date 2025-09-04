@@ -111,7 +111,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       menuSections.push({
         title: "Mapas e Localização",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
+          { to: "/map", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
         ]
       });
       menuSections.push({
@@ -138,7 +138,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       menuSections.push({
         title: "Mapas e Localização",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
+          { to: "/map", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" }
         ]
       });
       menuSections.push({
@@ -167,7 +167,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       menuSections.push({
         title: "Mapas e Localização",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Consultar Mapas" }
+          { to: "/map", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Consultar Mapas" }
         ]
       });
       menuSections.push({

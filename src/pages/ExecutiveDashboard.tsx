@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import { ExecutiveKPIs } from "@/components/executive/ExecutiveKPIs";
-import { MunicipalHeatMap } from "@/components/executive/MunicipalHeatMap";
+import { GoogleMapsHeatMap } from "@/components/executive/GoogleMapsHeatMap";
 import { PopulationAnalytics } from "@/components/executive/PopulationAnalytics";
 import { BudgetROIDashboard } from "@/components/executive/BudgetROIDashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -70,7 +70,7 @@ const ExecutiveDashboard = () => {
               <MapPin className="w-5 h-5 text-primary" />
               Mapa de Calor Municipal
             </h3>
-            <MunicipalHeatMap />
+            <GoogleMapsHeatMap />
           </TabsContent>
 
           <TabsContent value="population" className="space-y-4">
