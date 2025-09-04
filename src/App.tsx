@@ -26,6 +26,7 @@ import QrAnaAtivoPage from "./pages/QrAnaAtivoPage"; // Importa a nova página
 import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
+import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 
 // Create placeholder components for routes that don't have dedicated pages yet
 const HelpPage = () => <div className="p-4"><h1 className="text-2xl font-bold">Central de Ajuda</h1><p>Conteúdo da central de ajuda estará disponível em breve.</p></div>;
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="/intelligent-reading" element={<IntelligentReading />} />
               <Route path="/executive-dashboard" element={<ExecutiveDashboard />} />
               <Route path="/operational-dashboard" element={<OperationalDashboard />} />
+              <Route path="/integrations-dashboard" element={<IntegrationsDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
