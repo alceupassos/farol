@@ -219,15 +219,15 @@ const PublicHealthLanding = () => {
         </div>
       </section>
 
-      {/* Login CTA Section */}
+      {/* Quick Access Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Acesse o Sistema</h2>
+          <h2 className="text-4xl font-bold mb-4">Acesso Rápido ao Sistema</h2>
           <p className="text-xl text-muted-foreground mb-12">
-            Escolha o tipo de acesso adequado ao seu perfil
+            Entre diretamente como demonstração para seu perfil
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-primary/5">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
@@ -235,22 +235,16 @@ const PublicHealthLanding = () => {
                 </div>
                 <CardTitle className="text-xl">Gestor/Prefeitura</CardTitle>
                 <CardDescription className="text-base">
-                  Secretários de saúde, prefeitos e gestores municipais
+                  Dashboards executivos e análise epidemiológica
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="text-sm text-muted-foreground space-y-2 mb-6">
-                  <li>• Dashboards executivos</li>
-                  <li>• Análise epidemiológica</li>
-                  <li>• Gestão de recursos</li>
-                  <li>• Relatórios de transparência</li>
-                </ul>
                 <Button 
                   className="w-full" 
-                  onClick={() => window.location.href = '/auth'}
+                  onClick={() => window.location.href = '/auth?role=gestor'}
                 >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Entrar como Gestor
+                  <Building className="w-4 h-4 mr-2" />
+                  Acesso Gestor
                 </Button>
               </CardContent>
             </Card>
@@ -262,23 +256,17 @@ const PublicHealthLanding = () => {
                 </div>
                 <CardTitle className="text-xl">Médico/Profissional</CardTitle>
                 <CardDescription className="text-base">
-                  Médicos, enfermeiros e profissionais de saúde
+                  Prontuários e análise de exames com IA
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="text-sm text-muted-foreground space-y-2 mb-6">
-                  <li>• Prontuários eletrônicos</li>
-                  <li>• Análise de exames com IA</li>
-                  <li>• Prescrições digitais</li>
-                  <li>• Telemedicina</li>
-                </ul>
                 <Button 
                   variant="secondary" 
                   className="w-full"
-                  onClick={() => window.location.href = '/auth'}
+                  onClick={() => window.location.href = '/auth?role=medico'}
                 >
                   <Stethoscope className="w-4 h-4 mr-2" />
-                  Entrar como Médico
+                  Acesso Médico
                 </Button>
               </CardContent>
             </Card>
@@ -290,35 +278,26 @@ const PublicHealthLanding = () => {
                 </div>
                 <CardTitle className="text-xl">Paciente</CardTitle>
                 <CardDescription className="text-base">
-                  Cidadãos e usuários do sistema de saúde
+                  Histórico médico e cartão digital de saúde
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="text-sm text-muted-foreground space-y-2 mb-6">
-                  <li>• Histórico médico completo</li>
-                  <li>• Agendamento online</li>
-                  <li>• Resultados de exames</li>
-                  <li>• Cartão digital de saúde</li>
-                </ul>
                 <Button 
                   variant="outline" 
                   className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => window.location.href = '/auth'}
+                  onClick={() => window.location.href = '/auth?role=paciente'}
                 >
                   <Heart className="w-4 h-4 mr-2" />
-                  Entrar como Paciente
+                  Acesso Paciente
                 </Button>
               </CardContent>
             </Card>
           </div>
 
-          <div className="mt-12 text-center">
-            <p className="text-muted-foreground mb-4">
-              Novo no sistema? Crie sua conta em segundos
-            </p>
-            <Button size="lg" variant="outline">
-              <UserPlus className="w-5 h-5 mr-2" />
-              Criar Conta Gratuita
+          <div className="text-center">
+            <Button size="lg" onClick={() => window.location.href = '/auth'}>
+              <LogIn className="w-5 h-5 mr-2" />
+              Acessar Sistema
             </Button>
           </div>
         </div>

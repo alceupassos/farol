@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const AuthPage = () => {
@@ -38,6 +38,15 @@ const AuthPage = () => {
   
   const { signIn, signInAsGuest, signUp } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Auto-select role from URL parameter
+  useEffect(() => {
+    const roleParam = searchParams.get('role');
+    if (roleParam && ['gestor', 'medico', 'paciente'].includes(roleParam)) {
+      setSelectedRole(roleParam);
+    }
+  }, [searchParams]);
 
   const userTypes = [
     {
