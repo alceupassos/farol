@@ -65,7 +65,7 @@ const App = () => (
     <AuthProvider>
       <LanguageProvider>
         <TooltipProvider>
-          <div className="dark">
+          <div>
             <Toaster />
             <Sonner />
             <PWAInstallPrompt />
