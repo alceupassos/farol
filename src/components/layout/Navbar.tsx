@@ -11,7 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import AccessDropdown from './AccessDropdown';
-import saudePublicaLogo from '@/assets/saude-publica-logo.png';
+import saudePublicaLogo from '@/assets/medwallet-logo.png';
 
 interface NavbarProps {
   toggleSidebar: () => void;
