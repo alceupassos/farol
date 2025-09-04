@@ -121,6 +121,39 @@ export default {
         'blur-in': {
           from: { filter: 'blur(4px)', opacity: '0' },
           to: { filter: 'blur(0)', opacity: '1' }
+        },
+        // Advanced Button Animations
+        'buttonPulse': {
+          '0%, 100%': { 
+            transform: 'scale(1)',
+            boxShadow: '0 0 0 0 hsl(var(--primary) / 0.7)'
+          },
+          '50%': { 
+            transform: 'scale(1.02)',
+            boxShadow: '0 0 0 8px hsl(var(--primary) / 0)'
+          }
+        },
+        'glowPulse': {
+          '0%': { boxShadow: '0 0 20px hsl(var(--primary) / 0.3)' },
+          '100%': { boxShadow: '0 0 40px hsl(var(--primary) / 0.6)' }
+        },
+        'buttonBounce': {
+          '0%, 20%, 53%, 80%, 100%': { transform: 'translate3d(0,0,0)' },
+          '40%, 43%': { transform: 'translate3d(0,-8px,0)' },
+          '70%': { transform: 'translate3d(0,-4px,0)' },
+          '90%': { transform: 'translate3d(0,-2px,0)' }
+        },
+        'shimmer': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' }
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' }
+        },
+        'breathe': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' }
         }
       },
       animation: {
@@ -132,7 +165,14 @@ export default {
         'slide-down': 'slide-down 0.5s ease-out',
         'pulse-gentle': 'pulse-gentle 2s ease-in-out infinite',
         'scale-in': 'scale-in 0.3s ease-out',
-        'blur-in': 'blur-in 0.5s ease-out'
+        'blur-in': 'blur-in 0.5s ease-out',
+        // Enhanced Button Animations
+        'button-pulse': 'buttonPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite alternate',
+        'button-bounce': 'buttonBounce 0.6s ease',
+        'shimmer': 'shimmer 2s infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'breathe': 'breathe 2s ease-in-out infinite'
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

@@ -5,7 +5,7 @@
  
 @layer base {
   :root {
-    /* Nova identidade MedWallet - cores de fundo escuras */
+    /* Enhanced dark theme with dramatic gradients */
     --background: 210 20% 8%;
     --foreground: 0 0% 98%;
     --card: 210 15% 12%;
@@ -13,31 +13,55 @@
     --popover: 210 15% 12%;
     --popover-foreground: 0 0% 98%;
     
-    /* Tons de laranja como destaque */
-    --primary: 18 100% 50%;  /* #ff6600 */
+    /* Enhanced orange primary with glow variants */
+    --primary: 18 100% 50%;
     --primary-foreground: 0 0% 98%;
-    --primary-light: 20 100% 60%;  /* #ff8533 */
-    --primary-dark: 30 100% 20%;   /* #6c5200 */
+    --primary-glow: 18 100% 70%;
+    --primary-light: 20 100% 60%;
+    --primary-dark: 30 100% 20%;
     
-    --secondary: 210 15% 20%;
+    /* Enhanced secondary with medical teal */
+    --secondary: 180 100% 50%;
     --secondary-foreground: 0 0% 98%;
+    --secondary-glow: 180 100% 70%;
+    
     --muted: 210 10% 25%;
     --muted-foreground: 210 5% 65%;
-    --accent: 20 100% 60%;  /* #ff8533 */
+    --accent: 142 69% 58%;
     --accent-foreground: 0 0% 98%;
+    --accent-glow: 142 100% 80%;
     
-    /* Cores de estado para feedback */
-    --destructive: 0 75% 55%;     /* #ff4336 */
+    /* Enhanced state colors */
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 98%;
-    --success: 142 76% 36%;       /* #4caf50 */
-    --warning: 45 100% 51%;       /* #ff9800 */
-    --error: 4 90% 58%;           /* #f44336 */
+    --success: 142 76% 36%;
+    --warning: 45 100% 51%;
+    --error: 4 90% 58%;
     
     --border: 210 15% 20%;
     --input: 210 15% 15%;
     --ring: 18 100% 50%;
     --radius: 0.5rem;
     --medical: 18 100% 50%;
+    
+    /* Advanced Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
+    --gradient-medical: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, hsl(var(--accent)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--primary) / 0.1) 50%, hsl(var(--secondary) / 0.1) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.5) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(var(--background) / 0.8) 0%, hsl(var(--card) / 0.6) 100%);
+    
+    /* Animated Shadows */
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+    --shadow-secondary-glow: 0 0 30px hsl(var(--secondary) / 0.3);
+    --shadow-accent-glow: 0 0 30px hsl(var(--accent) / 0.3);
+    --shadow-elegant: 0 10px 40px -10px hsl(var(--primary) / 0.4);
+    
+    /* Button Animation Variables */
+    --button-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --button-hover-scale: 1.05;
+    --button-active-scale: 0.98;
   }
  
   .light {
@@ -84,15 +108,30 @@
 
 @layer components {
   .glass-card {
-    @apply bg-gray-900 border border-gray-800 bg-opacity-80 backdrop-blur-sm;
+    @apply backdrop-blur-md;
+    background: var(--gradient-glass);
+    border: 1px solid hsl(var(--border) / 0.3);
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .glass-morphism {
+    @apply backdrop-blur-xl;
+    background: linear-gradient(135deg, hsl(var(--background) / 0.8), hsl(var(--card) / 0.4));
+    border: 1px solid hsl(var(--border) / 0.2);
+    box-shadow: 0 8px 32px hsl(var(--primary) / 0.1);
   }
   
   .medical-gradient {
-    @apply bg-gradient-to-br from-orange-600 to-orange-500;
+    background: var(--gradient-medical);
+  }
+  
+  .hero-gradient {
+    background: var(--gradient-hero);
   }
   
   .text-gradient-medical {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+    background: var(--gradient-medical);
+    @apply bg-clip-text text-transparent;
   }
   
   .animate-fade-in {
@@ -105,6 +144,55 @@
   
   .animate-scale-in {
     @apply animate-in zoom-in-95 fade-in duration-500;
+  }
+  
+  /* Button Animation Classes */
+  .btn-animated {
+    transition: var(--button-transition);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-animated:hover {
+    transform: translateY(-2px) scale(var(--button-hover-scale));
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .btn-animated:active {
+    transform: scale(var(--button-active-scale));
+  }
+  
+  .btn-pulse {
+    animation: buttonPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .btn-glow {
+    box-shadow: var(--shadow-glow);
+    animation: glowPulse 2s ease-in-out infinite alternate;
+  }
+  
+  .btn-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary-foreground) / 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-shimmer:hover::before {
+    left: 100%;
+  }
+  
+  .btn-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-bounce:hover {
+    animation: buttonBounce 0.6s ease;
   }
 }
 

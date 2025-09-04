@@ -4,13 +4,14 @@ import { cn } from '@/lib/utils';
 
 interface AppButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'premium' | 'cta' | 'hero';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
   isLoading?: boolean;
   loadingText?: string;
   fullWidth?: boolean;
+  animation?: 'none' | 'pulse' | 'glow' | 'bounce' | 'float' | 'breathe';
 }
 
 const AppButton = ({
@@ -23,22 +24,36 @@ const AppButton = ({
   isLoading = false,
   loadingText,
   fullWidth = false,
+  animation = 'none',
   ...props
 }: AppButtonProps) => {
-  const baseStyles = "inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyles = "btn-animated inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 relative overflow-hidden shadow-lg";
   
   const variantStyles = {
-    primary: "bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary/50",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 focus:ring-secondary/40",
-    outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground focus:ring-primary/40",
-    ghost: "hover:bg-accent hover:text-accent-foreground focus:ring-primary/40",
-    link: "underline-offset-4 hover:underline text-primary hover:text-primary/90 focus:ring-transparent p-0"
+    primary: "bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary/50 btn-shimmer hover:shadow-primary/25",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 focus:ring-secondary/40 hover:shadow-secondary/25",
+    outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground focus:ring-primary/40 hover:border-primary/50",
+    ghost: "hover:bg-accent hover:text-accent-foreground focus:ring-primary/40 hover:shadow-md",
+    link: "underline-offset-4 hover:underline text-primary hover:text-primary/90 focus:ring-transparent p-0 shadow-none",
+    premium: "bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-xl hover:shadow-2xl btn-glow",
+    cta: "bg-primary text-primary-foreground btn-pulse shadow-xl hover:shadow-primary/40 font-semibold",
+    hero: "bg-gradient-to-r from-primary/90 to-secondary/90 text-white border border-white/20 hover:bg-gradient-to-r hover:from-primary hover:to-secondary shadow-xl hover:shadow-primary/30 backdrop-blur-sm"
   };
   
   const sizeStyles = {
-    sm: "text-xs px-3 py-1.5",
-    md: "text-sm px-4 py-2",
-    lg: "text-base px-6 py-3"
+    sm: "text-xs px-3 py-1.5 h-8",
+    md: "text-sm px-4 py-2 h-10",
+    lg: "text-base px-6 py-3 h-12",
+    xl: "text-lg px-8 py-4 h-14"
+  };
+  
+  const animationStyles = {
+    none: "",
+    pulse: "btn-pulse",
+    glow: "btn-glow",
+    bounce: "hover:animate-button-bounce",
+    float: "animate-float",
+    breathe: "animate-breathe"
   };
   
   const widthStyles = fullWidth ? "w-full" : "";
@@ -55,7 +70,8 @@ const AppButton = ({
         variantStyles[variant],
         finalSizeStyles,
         widthStyles,
-        "disabled:opacity-50 disabled:pointer-events-none",
+        animationStyles[animation],
+        "disabled:opacity-50 disabled:pointer-events-none disabled:transform-none",
         className
       )}
       disabled={isLoading || props.disabled}

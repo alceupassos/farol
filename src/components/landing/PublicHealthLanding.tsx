@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import medicalTechBg from '@/assets/medical-tech-bg.jpg';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -59,31 +60,36 @@ const PublicHealthLanding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/90 to-muted/20">
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5" />
-        <div className="relative max-w-7xl mx-auto text-center">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{ backgroundImage: `url(${medicalTechBg})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+        <div className="relative max-w-7xl mx-auto text-center z-10">
           <Badge className="mb-6 px-4 py-2 text-sm">
             <Shield className="w-4 h-4 mr-2" />
             Saúde Pública Inteligente
           </Badge>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-fade-in">
             Transforme a Saúde Pública do seu Município
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed animate-slide-up">
             Plataforma completa de gestão inteligente para secretarias de saúde. 
             Dashboards executivos, análise epidemiológica com IA e otimização de recursos.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8 py-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in">
+            <Button variant="cta" size="lg" className="text-lg px-8 py-4">
               <Calendar className="w-5 h-5 mr-2" />
               Agendar Demonstração
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4">
+            <Button variant="hero" size="lg" className="text-lg px-8 py-4">
               <FileText className="w-5 h-5 mr-2" />
               Ver Documentação
             </Button>
@@ -100,12 +106,12 @@ const PublicHealthLanding = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
+            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 glass-morphism hover:scale-105 animate-fade-in">
               <CardHeader>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:animate-float">
                   <BarChart3 className="w-6 h-6 text-primary" />
                 </div>
-                <CardTitle>Dashboards Executivos</CardTitle>
+                <CardTitle className="group-hover:text-primary transition-colors">Dashboards Executivos</CardTitle>
                 <CardDescription>
                   Visualizações em tempo real para prefeitos e secretários tomarem decisões baseadas em dados
                 </CardDescription>
@@ -176,20 +182,21 @@ const PublicHealthLanding = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-muted/30 to-secondary/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Benefícios para seu Município</h2>
+      <section className="py-20 px-4 bg-gradient-to-r from-muted/20 via-primary/5 to-secondary/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-background/50 to-transparent" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">Benefícios para seu Município</h2>
             <p className="text-xl text-muted-foreground">Resultados comprovados em gestão pública de saúde</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="text-center space-y-4 group animate-slide-up">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:scale-110">
                 <TrendingUp className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold">+35%</h3>
-              <p className="text-muted-foreground">Melhoria na eficiência operacional</p>
+              <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">+35%</h3>
+              <p className="text-muted-foreground group-hover:text-foreground transition-colors">Melhoria na eficiência operacional</p>
             </div>
 
             <div className="text-center space-y-4">
@@ -228,18 +235,19 @@ const PublicHealthLanding = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <Card className="group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-primary/5">
+            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 glass-morphism hover:scale-105 animate-scale-in">
               <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:animate-float">
                   <Building className="w-8 h-8 text-primary" />
                 </div>
-                <CardTitle className="text-xl">Gestor/Prefeitura</CardTitle>
+                <CardTitle className="text-xl group-hover:text-primary transition-colors">Gestor/Prefeitura</CardTitle>
                 <CardDescription className="text-base">
                   Dashboards executivos e análise epidemiológica
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Button 
+                  variant="cta"
                   className="w-full" 
                   onClick={() => window.location.href = '/auth?role=gestor'}
                 >
