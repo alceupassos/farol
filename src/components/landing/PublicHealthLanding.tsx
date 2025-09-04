@@ -293,13 +293,6 @@ const PublicHealthLanding = () => {
               </CardContent>
             </Card>
           </div>
-
-          <div className="text-center">
-            <Button size="lg" onClick={() => window.location.href = '/auth'}>
-              <LogIn className="w-5 h-5 mr-2" />
-              Acessar Sistema
-            </Button>
-          </div>
         </div>
       </section>
 
