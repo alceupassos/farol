@@ -29,7 +29,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [userRole, setUserRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchUserRole = async (userId: string) => {
+  const fetchUserRole = async (userId: string, userEmail?: string) => {
+    // Check if this is a guest user and has a stored role
+    if (userEmail === 'guest@saudepublica.ai') {
+      const guestRole = localStorage.getItem('guestRole');
+      if (guestRole) {
+        return guestRole;
+      }
+    }
+    
     try {
       const { data, error } = await supabase
         .from('user_roles')
@@ -59,11 +67,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (session?.user) {
           // Fetch user role after authentication
           setTimeout(async () => {
-            const role = await fetchUserRole(session.user.id);
+            const role = await fetchUserRole(session.user.id, session.user.email);
             setUserRole(role);
           }, 0);
         } else {
           setUserRole(null);
+          localStorage.removeItem('guestRole'); // Clear guest role on logout
         }
         
         setLoading(false);
@@ -77,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (session?.user) {
         setTimeout(async () => {
-          const role = await fetchUserRole(session.user.id);
+          const role = await fetchUserRole(session.user.id, session.user.email);
           setUserRole(role);
         }, 0);
       }
@@ -104,8 +113,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     
     if (!error) {
-      // Set the role immediately for the guest user
+      // Set the role immediately for the guest user - override database role
       setUserRole(role);
+      // Store guest role in localStorage to persist across refreshes
+      localStorage.setItem('guestRole', role);
     }
     
     return { error };

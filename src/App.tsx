@@ -25,6 +25,11 @@ import GeneticDataPage from "./pages/GeneticData";
 import SettingsPage from "./pages/SettingsPage";
 import ManageAccessPage from "./pages/ManageAccessPage";
 import QualityOfLifePage from "./pages/QualityOfLifePage";
+import PatientsPage from "./pages/PatientsPage";
+import ProtocolsPage from "./pages/ProtocolsPage";
+import PopulationPage from "./pages/PopulationPage";
+import EpidemiologyPage from "./pages/EpidemiologyPage";
+import ResourcesPage from "./pages/ResourcesPage";
 import QrAnaAtivoPage from "./pages/QrAnaAtivoPage"; // Importa a nova página
 import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
@@ -179,9 +184,40 @@ const App = () => (
                     <AIAnalyticsDashboard />
                   </ProtectedRoute>
                 } />
-                <Route path="/security" element={
+                <Route path="/security-dashboard" element={
                   <ProtectedRoute>
                     <SecurityDashboard />
+                  </ProtectedRoute>
+                } />
+                {/* New pages for different user types */}
+                <Route path="/patients" element={
+                  <ProtectedRoute>
+                    <PatientsPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/protocols" element={
+                  <ProtectedRoute>
+                    <ProtocolsPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/population" element={
+                  <ProtectedRoute>
+                    <PopulationPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/epidemiology" element={
+                  <ProtectedRoute>
+                    <EpidemiologyPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/resources" element={
+                  <ProtectedRoute>
+                    <ResourcesPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/lab-exams" element={
+                  <ProtectedRoute>
+                    <LabExams />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
