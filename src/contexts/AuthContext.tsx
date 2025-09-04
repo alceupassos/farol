@@ -71,10 +71,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setTimeout(async () => {
             const role = await fetchUserRole(session.user.id, session.user.email);
             setUserRole(role);
+            console.log('User authenticated with role:', role);
           }, 0);
         } else {
           setUserRole(null);
           localStorage.removeItem('guestRole'); // Clear guest role on logout
+          console.log('User logged out');
         }
         
         setLoading(false);
@@ -108,34 +110,114 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signInAsGuest = async (role: string) => {
-    // First, try to create the guest user if it doesn't exist
-    const { error: signUpError } = await supabase.auth.signUp({
-      email: 'guest@saudepublica.ai',
-      password: '1234',
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-        data: {
-          role: 'paciente',
-          full_name: 'Usuário Demonstração'
-        }
-      }
-    });
+    try {
+      // Try to sign in first (user might already exist)
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: 'guest@saudepublica.ai',
+        password: '1234',
+      });
 
-    // If user already exists, signUpError will indicate that
-    // Now try to sign in
-    const { error } = await supabase.auth.signInWithPassword({
-      email: 'guest@saudepublica.ai',
-      password: '1234',
-    });
-    
-    if (!error) {
-      // Set the role immediately for the guest user - override database role
-      setUserRole(role);
-      // Store guest role in localStorage to persist across refreshes
-      localStorage.setItem('guestRole', role);
+      if (!signInError) {
+        // Login successful
+        setUserRole(role);
+        localStorage.setItem('guestRole', role);
+        return { error: null };
+      }
+
+      // If sign in failed, try to create the user
+      console.log('Guest user does not exist, creating...', signInError);
+      
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email: 'guest@saudepublica.ai',
+        password: '1234',
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            role: 'paciente',
+            full_name: 'Usuário Demonstração'
+          }
+        }
+      });
+
+      if (signUpError) {
+        console.error('Error creating guest user:', signUpError);
+        // If signup failed due to existing user, try login again
+        if (signUpError.message?.includes('already registered')) {
+          const { error: retrySignInError } = await supabase.auth.signInWithPassword({
+            email: 'guest@saudepublica.ai',
+            password: '1234',
+          });
+          
+          if (!retrySignInError) {
+            setUserRole(role);
+            localStorage.setItem('guestRole', role);
+            return { error: null };
+          }
+          return { error: retrySignInError };
+        }
+        return { error: signUpError };
+      }
+
+      // If user was created but needs confirmation, try to sign in anyway
+      if (signUpData.user && !signUpData.session) {
+        console.log('User created but not confirmed, trying to sign in...');
+        const { error: finalSignInError } = await supabase.auth.signInWithPassword({
+          email: 'guest@saudepublica.ai',
+          password: '1234',
+        });
+        
+        if (!finalSignInError) {
+          setUserRole(role);
+          localStorage.setItem('guestRole', role);
+          return { error: null };
+        }
+        return { error: finalSignInError };
+      }
+
+      // User was created and session exists
+      if (signUpData.session) {
+        setUserRole(role);
+        localStorage.setItem('guestRole', role);
+        
+        // Create profile and role entries
+        try {
+          // Insert into profiles table if not exists
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .upsert({
+              user_id: signUpData.user!.id,
+              full_name: 'Usuário Demonstração',
+              municipality: 'Demonstração'
+            });
+
+          if (profileError) {
+            console.error('Error creating profile:', profileError);
+          }
+
+          // Insert into user_roles table if not exists
+          const { error: roleError } = await supabase
+            .from('user_roles')
+            .upsert({
+              user_id: signUpData.user!.id,
+              role: 'paciente' as any
+            });
+
+          if (roleError) {
+            console.error('Error creating user role:', roleError);
+          }
+        } catch (dbError) {
+          console.error('Error setting up guest user data:', dbError);
+        }
+        
+        return { error: null };
+      }
+
+      return { error: new Error('Falha na criação do usuário de demonstração') };
+      
+    } catch (error) {
+      console.error('Unexpected error in signInAsGuest:', error);
+      return { error: error as any };
     }
-    
-    return { error };
   };
 
   const signUp = async (email: string, password: string, role: string, additionalData?: any) => {

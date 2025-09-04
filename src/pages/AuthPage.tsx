@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 import { toast } from 'sonner';
 
 const AuthPage = () => {
@@ -39,6 +40,9 @@ const AuthPage = () => {
   const { signIn, signInAsGuest, signUp } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  
+  // Auto-redirect if user is already authenticated
+  useAuthRedirect();
 
   // Auto-select role from URL parameter
   useEffect(() => {
@@ -87,13 +91,26 @@ const AuthPage = () => {
     try {
       const { error } = await signInAsGuest(selectedRole);
       if (error) {
-        toast.error('Erro no login: ' + error.message);
+        console.error('Guest login error:', error);
+        
+        // Mostrar mensagem de erro mais específica
+        let errorMessage = 'Erro no acesso de demonstração.';
+        if (error.message?.includes('Invalid login credentials')) {
+          errorMessage = 'Usuário de demonstração não encontrado. Criando automaticamente...';
+        } else if (error.message?.includes('email')) {
+          errorMessage = 'Erro na configuração do email de demonstração.';
+        } else if (error.message) {
+          errorMessage = `Erro: ${error.message}`;
+        }
+        
+        toast.error(errorMessage);
       } else {
-        toast.success('Acesso como demonstração realizado com sucesso!');
+        toast.success(`Acesso como ${selectedRole} realizado com sucesso!`);
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error('Erro inesperado. Tente novamente.');
+      console.error('Unexpected error:', error);
+      toast.error('Erro inesperado. Verifique o console para mais detalhes.');
     } finally {
       setLoading(false);
     }
