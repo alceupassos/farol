@@ -25,7 +25,26 @@ export const MunicipalHeatMap = () => {
   const [mapboxToken, setMapboxToken] = useState('');
   const [heatMapData, setHeatMapData] = useState<HeatMapData[]>([]);
   const [selectedLayer, setSelectedLayer] = useState('health-score');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const fetchMapboxToken = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('mapbox-token');
+      
+      if (error) {
+        console.error('Erro ao buscar token do Mapbox:', error);
+        return;
+      }
+
+      if (data?.token) {
+        setMapboxToken(data.token);
+      }
+    } catch (error) {
+      console.error('Erro ao conectar com o serviço de mapas:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Mock data for demonstration
   const mockHeatMapData: HeatMapData[] = [
@@ -73,7 +92,14 @@ export const MunicipalHeatMap = () => {
 
   useEffect(() => {
     setHeatMapData(mockHeatMapData);
+    fetchMapboxToken();
   }, []);
+
+  useEffect(() => {
+    if (mapboxToken) {
+      initializeMap();
+    }
+  }, [mapboxToken]);
 
   const initializeMap = () => {
     if (!mapContainer.current || !mapboxToken) return;
@@ -286,26 +312,15 @@ export const MunicipalHeatMap = () => {
             </div>
           </CardHeader>
           <CardContent className="h-[500px] p-0">
-            {!mapboxToken ? (
+            {loading ? (
               <div className="h-full flex items-center justify-center bg-muted rounded-lg mx-6 mb-6">
                 <div className="text-center space-y-4">
-                  <MapPin className="w-12 h-12 text-muted-foreground mx-auto" />
+                  <RefreshCw className="w-12 h-12 text-muted-foreground mx-auto animate-spin" />
                   <div className="space-y-2">
-                    <h3 className="font-semibold">Configure Mapbox Token</h3>
-                    <p className="text-sm text-muted-foreground max-w-md">
-                      Para visualizar o mapa, insira seu token público do Mapbox
+                    <h3 className="font-semibold">Carregando mapa...</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Configurando visualização do mapa
                     </p>
-                    <div className="space-y-2">
-                      <Input
-                        placeholder="pk.eyJ1IjoiZXhhbXBsZS..."
-                        value={mapboxToken}
-                        onChange={(e) => setMapboxToken(e.target.value)}
-                        className="max-w-sm mx-auto"
-                      />
-                      <Button onClick={initializeMap} disabled={!mapboxToken}>
-                        Inicializar Mapa
-                      </Button>
-                    </div>
                   </div>
                 </div>
               </div>

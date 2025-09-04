@@ -26,6 +26,9 @@ verify_jwt = false
 [functions.epidemiological-analyzer]
 verify_jwt = false
 
+[functions.mapbox-token]
+verify_jwt = false
+
 [db]
 port = 54322
 

@@ -3,11 +3,11 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { RefreshCw, MapPin, AlertTriangle } from 'lucide-react';
 import { neighborhoods, epidemiologicalData, healthUnits, PINDAMONHANGABA_CENTER } from '@/data/pindamonhangabaData';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface PindamonhangabaMapProps {
   showEpidemiological?: boolean;
@@ -25,8 +25,37 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapboxToken, setMapboxToken] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
+
+  const fetchMapboxToken = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('mapbox-token');
+      
+      if (error) {
+        console.error('Erro ao buscar token do Mapbox:', error);
+        toast({
+          title: "Erro de configuração",
+          description: "Não foi possível carregar a configuração do mapa.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (data?.token) {
+        setMapboxToken(data.token);
+      }
+    } catch (error) {
+      console.error('Erro ao conectar com o serviço de mapas:', error);
+      toast({
+        title: "Erro de conexão",
+        description: "Não foi possível conectar com o serviço de mapas.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const initializeMap = async () => {
     if (!mapContainer.current || !mapboxToken) return;
@@ -52,7 +81,7 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
       console.error('Erro ao inicializar mapa:', error);
       toast({
         title: "Erro no mapa",
-        description: "Não foi possível carregar o mapa. Verifique o token do Mapbox.",
+        description: "Não foi possível carregar o mapa.",
         variant: "destructive"
       });
     }
@@ -206,18 +235,22 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
   };
 
   useEffect(() => {
-    if (mapboxToken) {
-      initializeMap();
-    }
+    fetchMapboxToken();
 
     return () => {
       if (map.current) {
         map.current.remove();
       }
     };
+  }, []);
+
+  useEffect(() => {
+    if (mapboxToken) {
+      initializeMap();
+    }
   }, [mapboxToken]);
 
-  if (!mapboxToken) {
+  if (isLoading) {
     return (
       <Card>
         <CardHeader>
@@ -226,27 +259,11 @@ const PindamonhangabaMap: React.FC<PindamonhangabaMapProps> = ({
             Mapa de Pindamonhangaba
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Para visualizar o mapa, configure o token do Mapbox:
-          </p>
-          <div className="flex gap-2">
-            <Input
-              placeholder="Token público do Mapbox"
-              value={mapboxToken}
-              onChange={(e) => setMapboxToken(e.target.value)}
-              type="password"
-            />
-            <Button onClick={initializeMap} disabled={!mapboxToken}>
-              Carregar Mapa
-            </Button>
+        <CardContent className="flex items-center justify-center h-64">
+          <div className="flex items-center gap-2">
+            <RefreshCw className="w-5 h-5 animate-spin" />
+            <span>Carregando mapa...</span>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Obtenha seu token em{' '}
-            <a href="https://account.mapbox.com/" target="_blank" rel="noopener noreferrer" className="underline">
-              mapbox.com
-            </a>
-          </p>
         </CardContent>
       </Card>
     );
