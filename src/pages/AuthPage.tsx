@@ -22,6 +22,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 import { toast } from 'sonner';
+import AuthDebugPanel from '@/components/debug/AuthDebugPanel';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -254,7 +255,10 @@ const AuthPage = () => {
                   <AlertDescription>
                     <strong>Credenciais de Demonstração:</strong><br/>
                     Email: guest@saudepublica.ai<br/>
-                    Senha: 1234
+                    Senha: 1234<br/>
+                    <em className="text-xs text-muted-foreground mt-1 block">
+                      Se o login falhar, o sistema tentará criar o usuário automaticamente
+                    </em>
                   </AlertDescription>
                 </Alert>
 
@@ -274,6 +278,9 @@ const AuthPage = () => {
           </Card>
         )}
       </div>
+      
+      {/* Debug Panel - só aparece em desenvolvimento */}
+      {process.env.NODE_ENV === 'development' && <AuthDebugPanel />}
     </div>
   );
 };
