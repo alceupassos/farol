@@ -9,6 +9,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
 import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -61,16 +62,17 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <LanguageProvider>
-        <TooltipProvider>
-          <div>
-            <Toaster />
-            <Sonner />
-            <PWAInstallPrompt />
-            <ServiceWorkerManager />
-            <BrowserRouter>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <div>
+              <Toaster />
+              <Sonner />
+              <PWAInstallPrompt />
+              <ServiceWorkerManager />
+              <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/demo" element={<DemoPage />} />
@@ -230,6 +232,7 @@ const App = () => (
       </LanguageProvider>
     </AuthProvider>
   </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

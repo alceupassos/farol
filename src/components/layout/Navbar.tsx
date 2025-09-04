@@ -11,7 +11,8 @@ import {
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import AccessDropdown from './AccessDropdown';
-import medwalletLogo from '@/assets/medwallet-logo.png';
+// Temporary placeholder - using web image until local asset is created
+const medwalletLogo = 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=200&h=60&fit=crop&auto=format';
 
 interface NavbarProps {
   toggleSidebar: () => void;
