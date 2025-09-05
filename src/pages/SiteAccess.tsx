@@ -45,8 +45,8 @@ const SiteAccess = () => {
       }
 
       setQrCodeData({ qrUri, secret });
-      setStep('verify');
-      setIsFirstAccess(false);
+      setStep('setup');
+      setIsFirstAccess(true);
     } catch (error) {
       console.error('Error generating access code:', error);
       setError('Erro ao gerar código de acesso');
@@ -149,7 +149,7 @@ const SiteAccess = () => {
     );
   }
 
-  if (step === 'setup' && isFirstAccess) {
+  if (step === 'setup') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
         <div className="w-full max-w-lg">
@@ -183,27 +183,34 @@ const SiteAccess = () => {
                     <QrCode className="w-4 h-4" />
                     Passo 2: Configure o acesso
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Clique no botão abaixo para gerar seu QR Code de configuração
-                  </p>
-                  
-                  <Button
-                    onClick={handleSetupAuthenticator}
-                    className="w-full"
-                    disabled={isCreatingCode}
-                  >
-                    {isCreatingCode ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Gerando código...
+                  {qrCodeData ? (
+                    <div className="space-y-4">
+                      <div className="bg-white p-6 rounded-lg mx-auto flex justify-center">
+                        <QRCodeSVG value={qrCodeData.qrUri} size={180} />
                       </div>
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <Shield className="w-4 h-4" />
-                        Gerar QR Code de Acesso
+                      
+                      <div className="p-3 bg-muted/50 rounded-lg">
+                        <p className="text-xs font-medium mb-1">Código manual:</p>
+                        <p className="text-xs font-mono bg-background p-2 rounded border break-all">
+                          {qrCodeData.secret}
+                        </p>
                       </div>
-                    )}
-                  </Button>
+
+                      <Button
+                        onClick={() => setStep('verify')}
+                        className="w-full"
+                      >
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4" />
+                          Já configurei, continuar
+                        </div>
+                      </Button>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      QR Code será gerado automaticamente...
+                    </p>
+                  )}
                 </div>
 
                 {error && (
