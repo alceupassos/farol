@@ -88,155 +88,155 @@ const App = () => (
                 <Route path="/auth-2fa" element={<Auth2FA />} />
                 <Route path="/setup-2fa" element={<Setup2FA />} />
                 <Route path="/dashboard" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Dashboard />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/profile" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Profile />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/records" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Records />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/medications" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Medications />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/appointments" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Appointments />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/metrics" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Metrics />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/access" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Access />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/emergency" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <Emergency />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/labexams" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <LabExams />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/genetic-data" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <GeneticDataPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/quality-of-life" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <QualityOfLifePage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/help" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <HelpPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/support" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <SupportPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/manage-access" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <ManageAccessPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/settings" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <SettingsPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/technical-details" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <TechnicalDetailsPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/qr-ana-ativo" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <QrAnaAtivoPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/intelligent-reading" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <IntelligentReading />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/executive-dashboard" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <ExecutiveDashboard />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/operational-dashboard" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <OperationalDashboard />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/integrations-dashboard" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <IntegrationsDashboard />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/ai-analytics" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <AIAnalyticsDashboard />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/security-dashboard" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <SecurityDashboard />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 {/* New pages for different user types */}
                 <Route path="/patients" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <PatientsPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/protocols" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <ProtocolsPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/population" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <PopulationPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/epidemiology" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <EpidemiologyPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/resources" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <ResourcesPage />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/lab-exams" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <LabExams />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="/epidemic-alerts" element={
-                  <ProtectedRoute>
+                  <TwoFAProtectedRoute>
                     <EpidemicAlerts />
-                  </ProtectedRoute>
+                  </TwoFAProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
               </Routes>

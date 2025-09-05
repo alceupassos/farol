@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, Calendar, FileText, Clock, Zap, Heart, Activity, Pill } from 'lucide-react';
+import { Stethoscope, Calendar, FileText, Clock, Zap, Heart, Activity, Pill, Shield } from 'lucide-react';
 import AppButton from '@/components/ui/AppButton';
 import SummaryCard from '@/components/dashboard/SummaryCard';
 import RecentActivity from '@/components/dashboard/RecentActivity';
@@ -9,9 +9,11 @@ import HealthMetric from '@/components/ui/HealthMetric';
 import MainLayout from '@/components/layout/MainLayout';
 import RoleDashboard from '@/components/dashboard/RoleDashboard';
 import { useAuth } from '@/contexts/AuthContext';
+import { use2FA } from '@/hooks/use2FA';
 
 const Dashboard = () => {
   const { userRole } = useAuth();
+  const { has2FA } = use2FA();
   const [recentActivities] = useState([
     {
       id: '1',
@@ -97,6 +99,37 @@ const Dashboard = () => {
           {/* Legacy Patient Dashboard - shown only for patients */}
           {userRole === 'paciente' && (
             <>
+              {/* 2FA Setup Card - Show if not configured */}
+              {!has2FA && (
+                <div className="mb-6 animate-fade-in">
+                  <div className="glass-card rounded-xl p-6 border-l-4 border-l-yellow-500">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0">
+                        <Shield className="h-8 w-8 text-yellow-500" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-yellow-500 mb-2">
+                          Configure Autenticação em Duas Etapas
+                        </h3>
+                        <p className="text-gray-300 mb-4">
+                          Proteja sua conta com 2FA para maior segurança dos seus dados de saúde.
+                        </p>
+                        <Link to="/setup-2fa">
+                          <AppButton 
+                            variant="outline" 
+                            className="border-yellow-500 text-yellow-500 hover:bg-yellow-500/10"
+                            icon={<Shield size={16} />}
+                            iconPosition="left"
+                          >
+                            Configurar 2FA
+                          </AppButton>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 mt-8">
                 <SummaryCard
