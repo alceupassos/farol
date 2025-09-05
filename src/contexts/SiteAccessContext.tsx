@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { verifySiteAccessCode, generateSiteSessionToken } from '@/utils/siteCrypto';
 
 interface SiteAccessContextType {
   siteAccessGranted: boolean;
@@ -54,53 +53,31 @@ export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
     try {
       setLoading(true);
       
-      // Get all active site access codes
-      const { data: accessCodes, error } = await supabase
-        .from('site_access_codes')
-        .select('*')
-        .eq('is_active', true);
+      // Use the site-auth edge function
+      const { data, error } = await supabase.functions.invoke('site-auth', {
+        body: { 
+          code,
+          ip_address: '', // Will be populated by the edge function
+          user_agent: navigator.userAgent
+        }
+      });
 
       if (error) {
-        console.error('Error fetching site access codes:', error);
+        console.error('Error calling site-auth function:', error);
         return false;
       }
 
-      // Try to verify against any active code
-      for (const accessCode of accessCodes || []) {
-        const isValid = verifySiteAccessCode(code, accessCode.encrypted_secret, accessCode.salt);
+      if (data?.valid) {
+        // Store session token
+        const sessionToken = data.session_token;
+        const accessTime = Date.now().toString();
         
-        if (isValid) {
-          // Generate session token
-          const sessionToken = generateSiteSessionToken();
-          const accessTime = Date.now().toString();
-          
-          // Store in session storage
-          sessionStorage.setItem('site_access_token', sessionToken);
-          sessionStorage.setItem('site_access_time', accessTime);
-          
-          // Log the access
-          await supabase.from('site_access_logs').insert({
-            code_used: accessCode.id,
-            success: true,
-            attempted_at: new Date().toISOString()
-          });
-
-          // Update last used time
-          await supabase
-            .from('site_access_codes')
-            .update({ last_used_at: new Date().toISOString() })
-            .eq('id', accessCode.id);
-
-          setSiteAccessGranted(true);
-          return true;
-        }
+        sessionStorage.setItem('site_access_token', sessionToken);
+        sessionStorage.setItem('site_access_time', accessTime);
+        
+        setSiteAccessGranted(true);
+        return true;
       }
-
-      // Log failed attempt
-      await supabase.from('site_access_logs').insert({
-        success: false,
-        attempted_at: new Date().toISOString()
-      });
 
       return false;
     } catch (error) {

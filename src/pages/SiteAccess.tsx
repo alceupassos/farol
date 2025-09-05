@@ -21,45 +21,8 @@ const SiteAccess = () => {
   const [step, setStep] = useState<'loading' | 'setup' | 'verify'>('loading');
   const [isCreatingCode, setIsCreatingCode] = useState(false);
 
-  // Check if this is first access (no active codes)
-  useEffect(() => {
-    const checkFirstAccess = async () => {
-      try {
-        const { data: accessCodes, error } = await supabase
-          .from('site_access_codes')
-          .select('*')
-          .eq('is_active', true);
-
-        if (error) {
-          console.error('Error checking access codes:', error);
-          setStep('verify');
-          return;
-        }
-
-        if (!accessCodes || accessCodes.length === 0) {
-          setIsFirstAccess(true);
-          setStep('setup');
-        } else {
-          setIsFirstAccess(false);
-          setStep('verify');
-        }
-      } catch (error) {
-        console.error('Error in checkFirstAccess:', error);
-        setStep('verify');
-      }
-    };
-
-    if (!siteAccessGranted && !loading) {
-      checkFirstAccess();
-    }
-  }, [siteAccessGranted, loading]);
-
-  // Redirect if already has access
-  if (siteAccessGranted) {
-    return <Navigate to="/" replace />;
-  }
-
-  const handleSetupAuthenticator = async () => {
+  // Auto-generate QR Code function
+  const autoGenerateQR = async () => {
     setIsCreatingCode(true);
     try {
       const { secret, salt, encryptedSecret, qrUri } = generateSiteAccessCode('Sistema Principal');
@@ -77,6 +40,7 @@ const SiteAccess = () => {
       if (error) {
         console.error('Error saving access code:', error);
         setError('Erro ao configurar o código de acesso');
+        setStep('verify');
         return;
       }
 
@@ -86,10 +50,60 @@ const SiteAccess = () => {
     } catch (error) {
       console.error('Error generating access code:', error);
       setError('Erro ao gerar código de acesso');
+      setStep('verify');
     } finally {
       setIsCreatingCode(false);
     }
   };
+
+  // Check if this is first access and auto-generate QR
+  useEffect(() => {
+    const checkFirstAccessAndSetup = async () => {
+      try {
+        const { data: accessCodes, error } = await supabase
+          .from('site_access_codes')
+          .select('*')
+          .eq('is_active', true);
+
+        if (error) {
+          console.error('Error checking access codes:', error);
+          setStep('verify');
+          return;
+        }
+
+        // Check if codes exist and are valid (not temporary)
+        const validCodes = accessCodes?.filter(code => 
+          code.encrypted_secret !== 'temp_encrypted_secret' && 
+          code.salt !== 'temp_salt' &&
+          code.encrypted_secret && 
+          code.salt
+        ) || [];
+
+        if (validCodes.length === 0) {
+          setIsFirstAccess(true);
+          // Auto-generate QR on first access
+          await autoGenerateQR();
+        } else {
+          setIsFirstAccess(false);
+          setStep('verify');
+        }
+      } catch (error) {
+        console.error('Error in checkFirstAccess:', error);
+        setStep('verify');
+      }
+    };
+
+    if (!siteAccessGranted && !loading) {
+      checkFirstAccessAndSetup();
+    }
+  }, [siteAccessGranted, loading]);
+
+  // Redirect if already has access
+  if (siteAccessGranted) {
+    return <Navigate to="/" replace />;
+  }
+
+  const handleSetupAuthenticator = autoGenerateQR;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
