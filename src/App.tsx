@@ -75,188 +75,188 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <SiteAccessProvider>
-        <PreLoginGuard>
-          <AuthProvider>
-            <ProfileAccessProvider>
-              <LanguageProvider>
-                <TooltipProvider>
+        <AuthProvider>
+          <ProfileAccessProvider>
+            <LanguageProvider>
+              <TooltipProvider>
                 <div>
                   <Toaster />
                   <Sonner />
                   <PWAInstallPrompt />
                   <ServiceWorkerManager />
                   <BrowserRouter>
-                  <Routes>
-                    <Route path="/site-access" element={<SiteAccess />} />
-                    <Route path="/admin" element={<AdminPanel />} />
-                <Route path="/" element={<Index />} />
-                <Route path="/demo" element={<DemoPage />} />
-                <Route path="/documentation" element={<DocumentationPage />} />
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/auth-2fa" element={<Auth2FA />} />
-                <Route path="/setup-2fa" element={<Setup2FA />} />
-                <Route path="/dashboard" element={
-                  <TwoFAProtectedRoute>
-                    <Dashboard />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/profile" element={
-                  <TwoFAProtectedRoute>
-                    <Profile />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/records" element={
-                  <TwoFAProtectedRoute>
-                    <Records />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/medications" element={
-                  <TwoFAProtectedRoute>
-                    <Medications />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/appointments" element={
-                  <TwoFAProtectedRoute>
-                    <Appointments />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/metrics" element={
-                  <TwoFAProtectedRoute>
-                    <Metrics />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/access" element={
-                  <TwoFAProtectedRoute>
-                    <Access />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/emergency" element={
-                  <TwoFAProtectedRoute>
-                    <Emergency />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/labexams" element={
-                  <TwoFAProtectedRoute>
-                    <LabExams />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/genetic-data" element={
-                  <TwoFAProtectedRoute>
-                    <GeneticDataPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/quality-of-life" element={
-                  <TwoFAProtectedRoute>
-                    <QualityOfLifePage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/help" element={
-                  <TwoFAProtectedRoute>
-                    <HelpPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/support" element={
-                  <TwoFAProtectedRoute>
-                    <SupportPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/manage-access" element={
-                  <TwoFAProtectedRoute>
-                    <ManageAccessPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/settings" element={
-                  <TwoFAProtectedRoute>
-                    <SettingsPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/technical-details" element={
-                  <TwoFAProtectedRoute>
-                    <TechnicalDetailsPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/qr-ana-ativo" element={
-                  <TwoFAProtectedRoute>
-                    <QrAnaAtivoPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/intelligent-reading" element={
-                  <TwoFAProtectedRoute>
-                    <IntelligentReading />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/executive-dashboard" element={
-                  <TwoFAProtectedRoute>
-                    <ExecutiveDashboard />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/operational-dashboard" element={
-                  <TwoFAProtectedRoute>
-                    <OperationalDashboard />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/integrations-dashboard" element={
-                  <TwoFAProtectedRoute>
-                    <IntegrationsDashboard />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/ai-analytics" element={
-                  <TwoFAProtectedRoute>
-                    <AIAnalyticsDashboard />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/security-dashboard" element={
-                  <TwoFAProtectedRoute>
-                    <SecurityDashboard />
-                  </TwoFAProtectedRoute>
-                } />
-                {/* New pages for different user types */}
-                <Route path="/patients" element={
-                  <TwoFAProtectedRoute>
-                    <PatientsPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/protocols" element={
-                  <TwoFAProtectedRoute>
-                    <ProtocolsPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/population" element={
-                  <TwoFAProtectedRoute>
-                    <PopulationPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/epidemiology" element={
-                  <TwoFAProtectedRoute>
-                    <EpidemiologyPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/resources" element={
-                  <TwoFAProtectedRoute>
-                    <ResourcesPage />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/lab-exams" element={
-                  <TwoFAProtectedRoute>
-                    <LabExams />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="/epidemic-alerts" element={
-                  <TwoFAProtectedRoute>
-                    <EpidemicAlerts />
-                  </TwoFAProtectedRoute>
-                } />
-                <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </BrowserRouter>
-              </div>
-            </TooltipProvider>
-          </LanguageProvider>
-        </ProfileAccessProvider>
+                    <PreLoginGuard>
+                      <Routes>
+                        <Route path="/site-access" element={<SiteAccess />} />
+                        <Route path="/admin" element={<AdminPanel />} />
+                        <Route path="/" element={<Index />} />
+                        <Route path="/demo" element={<DemoPage />} />
+                        <Route path="/documentation" element={<DocumentationPage />} />
+                        <Route path="/auth" element={<AuthPage />} />
+                        <Route path="/auth-2fa" element={<Auth2FA />} />
+                        <Route path="/setup-2fa" element={<Setup2FA />} />
+                        <Route path="/dashboard" element={
+                          <TwoFAProtectedRoute>
+                            <Dashboard />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/profile" element={
+                          <TwoFAProtectedRoute>
+                            <Profile />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/records" element={
+                          <TwoFAProtectedRoute>
+                            <Records />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/medications" element={
+                          <TwoFAProtectedRoute>
+                            <Medications />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/appointments" element={
+                          <TwoFAProtectedRoute>
+                            <Appointments />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/metrics" element={
+                          <TwoFAProtectedRoute>
+                            <Metrics />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/access" element={
+                          <TwoFAProtectedRoute>
+                            <Access />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/emergency" element={
+                          <TwoFAProtectedRoute>
+                            <Emergency />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/labexams" element={
+                          <TwoFAProtectedRoute>
+                            <LabExams />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/genetic-data" element={
+                          <TwoFAProtectedRoute>
+                            <GeneticDataPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/quality-of-life" element={
+                          <TwoFAProtectedRoute>
+                            <QualityOfLifePage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/help" element={
+                          <TwoFAProtectedRoute>
+                            <HelpPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/support" element={
+                          <TwoFAProtectedRoute>
+                            <SupportPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/manage-access" element={
+                          <TwoFAProtectedRoute>
+                            <ManageAccessPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/settings" element={
+                          <TwoFAProtectedRoute>
+                            <SettingsPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/technical-details" element={
+                          <TwoFAProtectedRoute>
+                            <TechnicalDetailsPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/qr-ana-ativo" element={
+                          <TwoFAProtectedRoute>
+                            <QrAnaAtivoPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/intelligent-reading" element={
+                          <TwoFAProtectedRoute>
+                            <IntelligentReading />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/executive-dashboard" element={
+                          <TwoFAProtectedRoute>
+                            <ExecutiveDashboard />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/operational-dashboard" element={
+                          <TwoFAProtectedRoute>
+                            <OperationalDashboard />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/integrations-dashboard" element={
+                          <TwoFAProtectedRoute>
+                            <IntegrationsDashboard />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/ai-analytics" element={
+                          <TwoFAProtectedRoute>
+                            <AIAnalyticsDashboard />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/security-dashboard" element={
+                          <TwoFAProtectedRoute>
+                            <SecurityDashboard />
+                          </TwoFAProtectedRoute>
+                        } />
+                        {/* New pages for different user types */}
+                        <Route path="/patients" element={
+                          <TwoFAProtectedRoute>
+                            <PatientsPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/protocols" element={
+                          <TwoFAProtectedRoute>
+                            <ProtocolsPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/population" element={
+                          <TwoFAProtectedRoute>
+                            <PopulationPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/epidemiology" element={
+                          <TwoFAProtectedRoute>
+                            <EpidemiologyPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/resources" element={
+                          <TwoFAProtectedRoute>
+                            <ResourcesPage />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/lab-exams" element={
+                          <TwoFAProtectedRoute>
+                            <LabExams />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="/epidemic-alerts" element={
+                          <TwoFAProtectedRoute>
+                            <EpidemicAlerts />
+                          </TwoFAProtectedRoute>
+                        } />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </PreLoginGuard>
+                  </BrowserRouter>
+                </div>
+              </TooltipProvider>
+            </LanguageProvider>
+          </ProfileAccessProvider>
         </AuthProvider>
-      </PreLoginGuard>
-    </SiteAccessProvider>
-  </QueryClientProvider>
+      </SiteAccessProvider>
+    </QueryClientProvider>
   </ErrorBoundary>
 );
 
