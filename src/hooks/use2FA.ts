@@ -125,39 +125,44 @@ export const use2FA = () => {
   const verify2FACode = async (code: string): Promise<boolean> => {
     if (!user) return false;
 
-    try {
-      // First try the edge function
-      try {
-        const { data, error } = await supabase.functions.invoke('verify-totp', {
-          body: { code, user_id: user.id }
-        });
+    console.log('🔐 Verificando código 2FA:', { userId: user.id, code: code.substring(0, 2) + '****' });
 
-        if (!error && data?.valid === true) {
-          setIs2FAVerified(true);
-          sessionStorage.setItem('2fa_verified', 'true');
-          return true;
-        }
-      } catch (functionError) {
-        console.warn('Edge function failed, trying local verification:', functionError);
+    try {
+      // Try edge function first
+      const { data, error } = await supabase.functions.invoke('verify-totp', {
+        body: { code, user_id: user.id }
+      });
+
+      console.log('🌐 Resposta da Edge Function:', { data, error });
+
+      if (!error && data?.valid === true) {
+        console.log('✅ Verificação via Edge Function bem-sucedida');
+        setIs2FAVerified(true);
+        sessionStorage.setItem('2fa_verified', 'true');
+        return true;
       }
 
-      // Fallback to local verification if edge function fails
+      // Fallback to local verification
+      console.log('🔄 Tentando verificação local...');
+      
       const { data: secretData, error: secretError } = await supabase
         .from('user_2fa_secrets')
         .select('encrypted_secret')
         .eq('user_id', user.id)
-        .eq('is_active', false) // Still in setup mode
         .single();
 
       if (secretError || !secretData) {
-        console.error('Error fetching 2FA secret for verification:', secretError);
+        console.error('❌ Erro ao buscar segredo 2FA:', secretError);
         return false;
       }
 
-      // Use local verification as fallback
+      console.log('🔑 Segredo 2FA encontrado, verificando localmente...');
+
       const { decryptSecret, verifyTOTP } = await import('@/utils/totp');
       const secret = decryptSecret(secretData.encrypted_secret);
       const isValid = verifyTOTP(code, secret);
+
+      console.log('🎯 Resultado da verificação local:', isValid);
 
       if (isValid) {
         setIs2FAVerified(true);
@@ -166,7 +171,7 @@ export const use2FA = () => {
 
       return isValid;
     } catch (error) {
-      console.error('Error verifying 2FA code:', error);
+      console.error('❌ Erro na verificação 2FA:', error);
       return false;
     }
   };

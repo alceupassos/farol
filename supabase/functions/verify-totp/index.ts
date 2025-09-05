@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { authenticator } from 'https://esm.sh/otplib@12.0.1'
-import { AES, enc } from 'https://esm.sh/crypto-js@4.2.0'
+import CryptoJS from 'https://esm.sh/crypto-js@4.2.0'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,8 +12,8 @@ const corsHeaders = {
 const ENCRYPTION_KEY = 'SaudeMunicipalSecretKey2024!';
 
 const decryptSecret = (encryptedSecret: string): string => {
-  const bytes = AES.decrypt(encryptedSecret, ENCRYPTION_KEY);
-  return bytes.toString(enc.Utf8);
+  const bytes = CryptoJS.AES.decrypt(encryptedSecret, ENCRYPTION_KEY);
+  return bytes.toString(CryptoJS.enc.Utf8);
 };
 
 serve(async (req) => {
@@ -39,7 +39,6 @@ serve(async (req) => {
       .from('user_2fa_secrets')
       .select('encrypted_secret')
       .eq('user_id', user_id)
-      .eq('is_active', true)
       .single()
 
     if (secretError || !secretData) {
