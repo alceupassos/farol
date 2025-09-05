@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Squares } from '@/components/ui/squares-background';
@@ -21,6 +22,7 @@ import { useMunicipalityConfig } from '@/hooks/useMunicipalityConfig';
 const AngraSaudeHero = () => {
   const navigate = useNavigate();
   const { config, isDemoMode } = useMunicipalityConfig();
+  const { switchGuestRole } = useAuth();
 
   return (
     <section className="relative py-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
@@ -149,7 +151,10 @@ const AngraSaudeHero = () => {
             variant="default" 
             size="lg" 
             className="text-lg px-8 py-4 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90" 
-            onClick={() => navigate('/auth')}
+            onClick={() => {
+              switchGuestRole('gestor');
+              navigate('/dashboard');
+            }}
           >
             <LogIn className="w-5 h-5 mr-2" />
             Entrar no Sistema Angra Saúde

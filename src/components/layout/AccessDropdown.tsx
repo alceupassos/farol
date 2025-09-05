@@ -13,7 +13,7 @@ import { useProfileAccess } from '@/contexts/ProfileAccessContext';
 
 const AccessDropdown = () => {
   const navigate = useNavigate();
-  const { signOut } = useAuth();
+  const { switchGuestRole } = useAuth();
   const { isFullAccessEnabled } = useProfileAccess();
 
   const accessOptions = [
@@ -40,10 +40,10 @@ const AccessDropdown = () => {
     }
   ];
 
-  const handleAccessSelect = async (role: string) => {
-    // Fazer logout antes de redirecionar para nova autenticação
-    await signOut();
-    navigate(`/auth?role=${role}`);
+  const handleAccessSelect = (role: string) => {
+    // Trocar role e navegar para dashboard
+    switchGuestRole(role);
+    navigate('/dashboard');
   };
 
   // Filtrar opções baseado no estado do ProfileAccess

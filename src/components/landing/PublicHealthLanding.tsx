@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfileAccess } from '@/contexts/ProfileAccessContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from "@/components/ui/button";
 import medicalTechBg from '@/assets/medical-tech-bg.jpg';
 import medicalHeroBg from '@/assets/medical-hero-bg.jpg';
@@ -48,6 +49,7 @@ import AdaptabilityDisclaimer from './AdaptabilityDisclaimer';
 const PublicHealthLanding = () => {
   const navigate = useNavigate();
   const { isFullAccessEnabled } = useProfileAccess();
+  const { switchGuestRole } = useAuth();
   const [formData, setFormData] = useState({
     municipality: '',
     contact: '',
@@ -118,7 +120,10 @@ const PublicHealthLanding = () => {
                   variant="default"
                   size="lg"
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300" 
-                  onClick={() => navigate('/auth?role=gestor')}
+                  onClick={() => {
+                    switchGuestRole('gestor');
+                    navigate('/dashboard');
+                  }}
                 >
                   <Building className="w-5 h-5 mr-2" />
                   Acesso Gestor
@@ -142,7 +147,10 @@ const PublicHealthLanding = () => {
                   variant="secondary" 
                   size="lg"
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
-                  onClick={() => navigate('/auth?role=medico')}
+                  onClick={() => {
+                    switchGuestRole('medico');
+                    navigate('/dashboard');
+                  }}
                 >
                   <Stethoscope className="w-5 h-5 mr-2" />
                   Acesso Médico
@@ -167,7 +175,10 @@ const PublicHealthLanding = () => {
                   variant="outline" 
                   size="lg"
                   className="w-full text-lg py-3 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
-                  onClick={() => navigate('/auth?role=paciente')}
+                  onClick={() => {
+                    switchGuestRole('paciente');
+                    navigate('/dashboard');
+                  }}
                 >
                   <Heart className="w-5 h-5 mr-2" />
                   Acesso Paciente
