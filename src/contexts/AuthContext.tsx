@@ -7,14 +7,11 @@ interface AuthContextType {
   session: Session | null;
   userRole: string | null;
   loading: boolean;
-  is2FARequired: boolean;
-  is2FAVerified: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signInAsGuest: (role: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, role: string, additionalData?: any) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   switchGuestRole: (newRole: string) => void;
-  set2FAVerified: (verified: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,8 +29,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [is2FARequired, setIs2FARequired] = useState<boolean>(false);
-  const [is2FAVerified, setIs2FAVerified] = useState<boolean>(false);
 
   const fetchUserRole = async (userId: string, userEmail?: string) => {
     // Check if this is a guest user and has a stored role
@@ -359,10 +354,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    // Clear 2FA verification state
-    setIs2FAVerified(false);
-    setIs2FARequired(false);
-    sessionStorage.removeItem('2fa_verified');
+    // Clear any stored session data
+    sessionStorage.clear();
   };
 
   const switchGuestRole = (newRole: string) => {
@@ -372,28 +365,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const set2FAVerified = (verified: boolean) => {
-    setIs2FAVerified(verified);
-    if (verified) {
-      sessionStorage.setItem('2fa_verified', 'true');
-    } else {
-      sessionStorage.removeItem('2fa_verified');
-    }
-  };
 
   const value = {
     user,
     session,
     userRole,
     loading,
-    is2FARequired,
-    is2FAVerified,
     signIn,
     signInAsGuest,
     signUp,
     signOut,
     switchGuestRole,
-    set2FAVerified,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

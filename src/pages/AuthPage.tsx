@@ -262,12 +262,7 @@ const AuthPage = () => {
                 <Alert>
                   <AlertCircle className="h-4 w-4" />
                   <AlertDescription>
-                    <strong>Credenciais de Demonstração (Atualizada):</strong><br/>
-                    Email: guest@saudepublica.ai<br/>
-                    Senha: 123456 <span className="text-green-500">✓ Nova senha</span><br/>
-                    <em className="text-xs text-muted-foreground mt-1 block">
-                      Se o login falhar, o sistema tentará criar o usuário automaticamente
-                    </em>
+                    Sistema de demonstração disponível para explorar funcionalidades.
                   </AlertDescription>
                 </Alert>
 

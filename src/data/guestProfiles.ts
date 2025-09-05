@@ -3,7 +3,7 @@ export const guestProfiles = {
     name: "Dr. Carlos Mendes",
     role: "Secretário de Saúde",
     municipality: "Pindamonhangaba - SP",
-    email: "guest@saudepublica.ai",
+    email: "demo@sistema.local",
     avatar: "👨‍💼",
     description: "Gestor público com 15 anos de experiência em administração de saúde municipal"
   },
@@ -12,7 +12,7 @@ export const guestProfiles = {
     role: "Médica Cardiologista", 
     crm: "CRM/SP 123.456",
     specialty: "Cardiologia",
-    email: "guest@saudepublica.ai",
+    email: "demo@sistema.local",
     avatar: "👩‍⚕️",
     description: "Cardiologista com 10 anos de experiência, especialista em medicina preventiva"
   },
@@ -22,7 +22,7 @@ export const guestProfiles = {
     age: "43 anos",
     gender: "Masculino",
     bloodType: "O+",
-    email: "guest@saudepublica.ai",
+    email: "demo@sistema.local",
     avatar: "👨",
     description: "Paciente com histórico de diabetes tipo 2 e hipertensão arterial"
   }

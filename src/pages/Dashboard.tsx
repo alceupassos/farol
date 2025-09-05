@@ -105,25 +105,6 @@ const Dashboard = () => {
                   <div className="glass-card rounded-xl p-6 border-l-4 border-l-yellow-500">
                     <div className="flex items-start space-x-4">
                       <div className="flex-shrink-0">
-                        <Shield className="h-8 w-8 text-yellow-500" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-yellow-500 mb-2">
-                          Configure Autenticação em Duas Etapas
-                        </h3>
-                        <p className="text-gray-300 mb-4">
-                          Proteja sua conta com 2FA para maior segurança dos seus dados de saúde.
-                        </p>
-                        <Link to="/setup-2fa">
-                          <AppButton 
-                            variant="outline" 
-                            className="border-yellow-500 text-yellow-500 hover:bg-yellow-500/10"
-                            icon={<Shield size={16} />}
-                            iconPosition="left"
-                          >
-                            Configurar 2FA
-                          </AppButton>
-                        </Link>
                       </div>
                     </div>
                   </div>

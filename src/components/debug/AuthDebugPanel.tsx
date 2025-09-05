@@ -28,31 +28,27 @@ const AuthDebugPanel = () => {
     const results: any = {};
 
     try {
-      // Test 1: Check if guest user exists
+      // Test 1: Check database connectivity
       try {
-        const { error: guestCheckError } = await supabase.auth.signInWithPassword({
-          email: 'guest@saudepublica.ai',
-          password: '123456'
-        });
-        
-        if (!guestCheckError) {
-          results.guestUserExists = { status: 'success', message: 'Usuário guest existe e pode fazer login' };
-          // Sign out immediately after test
-          await supabase.auth.signOut();
+        const { data: testData, error: testError } = await supabase
+          .from('profiles')
+          .select('id')
+          .limit(1);
+          
+        if (!testError) {
+          results.databaseConnection = { status: 'success', message: 'Conexão com banco de dados funcionando' };
         } else {
-          results.guestUserExists = { status: 'error', message: `Erro: ${guestCheckError.message}` };
+          results.databaseConnection = { status: 'error', message: 'Erro na conexão: ' + testError.message };
         }
-      } catch (error: any) {
-        results.guestUserExists = { status: 'error', message: `Erro inesperado: ${error.message}` };
+      } catch (error) {
+        results.databaseConnection = { status: 'error', message: 'Erro na conexão com banco: ' + (error as Error).message };
       }
 
-      // Test 2: Check database connection
+      // Test 2: Check authentication system
       try {
-        const { data, error } = await supabase.from('profiles').select('count').limit(1);
-        if (!error) {
-          results.databaseConnection = { status: 'success', message: 'Conexão com database OK' };
-        } else {
-          results.databaseConnection = { status: 'error', message: `Erro DB: ${error.message}` };
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          results.authSystem = { status: 'success', message: 'Sistema de autenticação funcionando' };
         }
       } catch (error: any) {
         results.databaseConnection = { status: 'error', message: `Erro DB: ${error.message}` };
