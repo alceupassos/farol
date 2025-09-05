@@ -50,6 +50,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_2fa_secrets: {
+        Row: {
+          backup_codes: string[] | null
+          created_at: string
+          encrypted_secret: string
+          id: string
+          is_active: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_codes?: string[] | null
+          created_at?: string
+          encrypted_secret: string
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_codes?: string[] | null
+          created_at?: string
+          encrypted_secret?: string
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

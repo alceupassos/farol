@@ -33,7 +33,7 @@ import ProtocolsPage from "./pages/ProtocolsPage";
 import PopulationPage from "./pages/PopulationPage";
 import EpidemiologyPage from "./pages/EpidemiologyPage";
 import ResourcesPage from "./pages/ResourcesPage";
-import QrAnaAtivoPage from "./pages/QrAnaAtivoPage"; // Importa a nova página
+import QrAnaAtivoPage from "./pages/QrAnaAtivoPage";
 import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
@@ -41,11 +41,14 @@ import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
 import AuthPage from "./pages/AuthPage";
+import Auth2FA from "./pages/Auth2FA";
+import Setup2FA from "./pages/Setup2FA";
 import DemoPage from "./pages/DemoPage";
 import HelpPage from "./pages/HelpPage";
 import SupportPage from "./pages/SupportPage";
 import DocumentationPage from "./pages/DocumentationPage";
 import EpidemicAlerts from "./pages/EpidemicAlerts";
+import { TwoFAProtectedRoute } from "./components/auth/2FAProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -82,6 +85,8 @@ const App = () => (
                 <Route path="/demo" element={<DemoPage />} />
                 <Route path="/documentation" element={<DocumentationPage />} />
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/auth-2fa" element={<Auth2FA />} />
+                <Route path="/setup-2fa" element={<Setup2FA />} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <Dashboard />
