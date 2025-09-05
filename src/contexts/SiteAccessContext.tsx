@@ -24,10 +24,24 @@ interface SiteAccessProviderProps {
 }
 
 export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
-  const [siteAccessGranted, setSiteAccessGranted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // Temporary bypass until September 9, 2025
+  const [siteAccessGranted, setSiteAccessGranted] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const checkSiteAccess = () => {
+    // Temporary bypass until September 9, 2025 - 23:59:59
+    const bypassEndDate = new Date('2025-09-09T23:59:59');
+    const currentDate = new Date();
+    
+    if (currentDate <= bypassEndDate) {
+      console.log('🔓 Site access TEMPORARIAMENTE LIBERADO até 09 de setembro de 2025');
+      setSiteAccessGranted(true);
+      setLoading(false);
+      return;
+    }
+
+    // Original access check logic (will be active after September 9, 2025)
+    console.log('🔐 Verificação de acesso reativada após 09/09/2025');
     const sessionToken = sessionStorage.getItem('site_access_token');
     const accessTime = sessionStorage.getItem('site_access_time');
     
@@ -50,6 +64,17 @@ export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
   };
 
   const verifySiteCode = async (code: string): Promise<boolean> => {
+    // Temporary bypass until September 9, 2025
+    const bypassEndDate = new Date('2025-09-09T23:59:59');
+    const currentDate = new Date();
+    
+    if (currentDate <= bypassEndDate) {
+      console.log('🔓 Verificação de código TEMPORARIAMENTE LIBERADA até 09 de setembro de 2025');
+      setSiteAccessGranted(true);
+      return true;
+    }
+
+    // Original verification logic (will be active after September 9, 2025)
     try {
       setLoading(true);
       
