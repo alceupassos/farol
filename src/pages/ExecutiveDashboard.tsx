@@ -8,7 +8,7 @@ import NeighborhoodComparisonDashboard from "@/components/executive/Neighborhood
 import NeighborhoodAlertSystem from "@/components/executive/NeighborhoodAlertSystem";
 import RealTimeNeighborhoodCenter from "@/components/executive/RealTimeNeighborhoodCenter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Crown, MapPin, Users, DollarSign, TrendingUp, Activity } from "lucide-react";
+import { Crown, MapPin, Users, DollarSign, TrendingUp, Activity, AlertTriangle } from "lucide-react";
 
 const ExecutiveDashboard = () => {
   return (
