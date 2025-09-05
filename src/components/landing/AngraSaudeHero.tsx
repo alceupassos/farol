@@ -12,24 +12,15 @@ import {
   Users, 
   Activity,
   LogIn,
-  BarChart3 
+  BarChart3,
+  Info
 } from 'lucide-react';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { GENERIC_DEMO_NEIGHBORHOODS, getRiskColor, getTotalDemoPopulation, getTotalDemoActiveCases } from '@/data/genericNeighborhoodsDemo';
+import { useMunicipalityConfig } from '@/hooks/useMunicipalityConfig';
 
 const AngraSaudeHero = () => {
   const navigate = useNavigate();
-
-  // Função para obter cor do nível de risco
-  const getRiskColor = (riskLevel: string) => {
-    switch (riskLevel) {
-      case 'BAIXO': return 'hsl(var(--success))';
-      case 'MODERADO': return 'hsl(var(--warning))';
-      case 'ALTO': return 'hsl(var(--destructive))';
-      case 'CRÍTICO': return 'hsl(var(--destructive-dark))';
-      case 'EMERGÊNCIA': return 'hsl(var(--destructive-darker))';
-      default: return 'hsl(var(--muted-foreground))';
-    }
-  };
+  const { config, isDemoMode } = useMunicipalityConfig();
 
   return (
     <section className="relative py-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
@@ -74,16 +65,28 @@ const AngraSaudeHero = () => {
           <span className="text-accent font-semibold"> gestão eficiente</span> da saúde pública.
         </p>
 
-        {/* Mapa Interativo de Bairros */}
+        {/* Mapa Interativo de Bairros - Dados Demonstrativos */}
         <div className="mb-10 bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border max-w-4xl mx-auto">
-          <h3 className="text-lg font-semibold mb-4 flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <MapPin className="w-5 h-5 text-primary" />
-            Monitoramento por Bairros - Pindamonhangaba
-          </h3>
+            <h3 className="text-lg font-semibold">
+              Monitoramento por Bairros - {config.name}
+            </h3>
+          </div>
+          
+          {isDemoMode && (
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Badge variant="secondary" className="text-xs px-3 py-1">
+                <Info className="w-3 h-3 mr-1" />
+                Dados Demonstrativos
+              </Badge>
+            </div>
+          )}
+          
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
-            {pindamonhangabaNeighborhoods.slice(0, 10).map((neighborhood) => (
+            {GENERIC_DEMO_NEIGHBORHOODS.slice(0, 10).map((neighborhood, index) => (
               <div 
-                key={neighborhood.id}
+                key={index}
                 className="flex items-center justify-between p-2 rounded-lg border transition-colors hover:bg-muted/50"
                 style={{ borderColor: getRiskColor(neighborhood.riskLevel) + '40' }}
               >
@@ -105,7 +108,7 @@ const AngraSaudeHero = () => {
         {/* Métricas Destacadas */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10 max-w-3xl mx-auto">
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">10</div>
+            <div className="text-2xl font-bold text-primary">{GENERIC_DEMO_NEIGHBORHOODS.length}</div>
             <div className="text-sm text-muted-foreground">Bairros Monitorados</div>
           </div>
           <div className="text-center">

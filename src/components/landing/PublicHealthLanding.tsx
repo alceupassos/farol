@@ -43,6 +43,7 @@ import {
 import AngraSaudeHero from './AngraSaudeHero';
 import FivePillarsWithNeighborhoods from './FivePillarsWithNeighborhoods';
 import NeighborhoodTransformation from './NeighborhoodTransformation';
+import AdaptabilityDisclaimer from './AdaptabilityDisclaimer';
 
 const PublicHealthLanding = () => {
   const navigate = useNavigate();
@@ -89,6 +90,9 @@ const PublicHealthLanding = () => {
 
       {/* Transformation Section */}
       <NeighborhoodTransformation />
+      
+      {/* Adaptability Disclaimer */}
+      <AdaptabilityDisclaimer />
 
       {/* Quick Access Section - Moved up for better visibility */}
       <section className="py-20 px-4 bg-gradient-to-br from-muted/10 to-background relative">

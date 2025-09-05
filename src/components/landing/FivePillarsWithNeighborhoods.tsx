@@ -10,8 +10,10 @@ import {
   MapPin,
   Clock,
   AlertTriangle,
-  TrendingUp
+  TrendingUp,
+  Info
 } from 'lucide-react';
+import { GENERIC_DEMO_NEIGHBORHOODS } from '@/data/genericNeighborhoodsDemo';
 
 const FivePillarsWithNeighborhoods = () => {
   const pillars = [
@@ -20,8 +22,8 @@ const FivePillarsWithNeighborhoods = () => {
       title: "Monitoramento Contínuo",
       description: "Dispositivos vestíveis, aplicativos móveis e integração com prontuários eletrônicos",
       example: {
-        neighborhood: "Vila Operária",
-        metric: "82 casos ativos",
+        neighborhood: GENERIC_DEMO_NEIGHBORHOODS[5].name, // Vila Operária
+        metric: `${GENERIC_DEMO_NEIGHBORHOODS[5].activeCases} casos ativos`,
         status: "monitoring",
         detail: "Dados coletados de 234 wearables"
       },
@@ -32,7 +34,7 @@ const FivePillarsWithNeighborhoods = () => {
       title: "Gestão Preditiva",
       description: "Algoritmos de análise de dados para identificar riscos antes que se tornem emergências",
       example: {
-        neighborhood: "Bosque da Princesa",
+        neighborhood: GENERIC_DEMO_NEIGHBORHOODS[6].name, // Bairro Novo
         metric: "Risco de surto em 7 dias",
         status: "warning",
         detail: "IA detectou padrão epidemiológico"
@@ -44,7 +46,7 @@ const FivePillarsWithNeighborhoods = () => {
       title: "Atendimento Ágil",
       description: "Alertas em tempo real para equipes de saúde, reduzindo tempo de resposta",
       example: {
-        neighborhood: "Centro",
+        neighborhood: GENERIC_DEMO_NEIGHBORHOODS[0].name, // Centro
         metric: "3 alertas críticos",
         status: "urgent",
         detail: "Tempo médio resposta: 12 min"
@@ -59,7 +61,7 @@ const FivePillarsWithNeighborhoods = () => {
         neighborhood: "Todos os bairros",
         metric: "Dashboard comparativo",
         status: "active",
-        detail: "10 regiões em análise simultânea"
+        detail: `${GENERIC_DEMO_NEIGHBORHOODS.length} regiões em análise simultânea`
       },
       color: "chart-1"
     },
@@ -68,7 +70,7 @@ const FivePillarsWithNeighborhoods = () => {
       title: "Engajamento do Cidadão",
       description: "O próprio munícipe acompanha sua saúde e recebe recomendações personalizadas",
       example: {
-        neighborhood: "Jardim Regina",
+        neighborhood: GENERIC_DEMO_NEIGHBORHOODS[3].name, // Jardim Popular
         metric: "1.247 cidadãos ativos",
         status: "engaged",
         detail: "85% engajamento semanal"
@@ -113,6 +115,13 @@ const FivePillarsWithNeighborhoods = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Cada pilar trabalha em sinergia para transformar a saúde municipal de reativa para preventiva e inteligente
           </p>
+          
+          <div className="flex justify-center mt-4">
+            <Badge variant="secondary" className="text-xs px-4 py-2">
+              <Info className="w-3 h-3 mr-1" />
+              Exemplos com dados demonstrativos
+            </Badge>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">

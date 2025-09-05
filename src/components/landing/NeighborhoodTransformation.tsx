@@ -12,8 +12,11 @@ import {
   Activity,
   Shield,
   Zap,
-  Target
+  Target,
+  Info
 } from 'lucide-react';
+import { GENERIC_DEMO_NEIGHBORHOODS } from '@/data/genericNeighborhoodsDemo';
+import { DEMO_METRICS } from '@/utils/municipalityConstants';
 
 const NeighborhoodTransformation = () => {
   const transformationAspects = [
@@ -65,10 +68,10 @@ const NeighborhoodTransformation = () => {
   ];
 
   const neighborhoodMetrics = [
-    { neighborhood: "Centro", before: "45 casos", after: "12 casos (-73%)", improvement: "excellent" },
-    { neighborhood: "Jardim Regina", before: "78 casos", after: "23 casos (-71%)", improvement: "excellent" },
-    { neighborhood: "Vila Operária", before: "82 casos", after: "28 casos (-66%)", improvement: "good" },
-    { neighborhood: "Bosque da Princesa", before: "125 casos", after: "35 casos (-72%)", improvement: "excellent" }
+    { neighborhood: GENERIC_DEMO_NEIGHBORHOODS[0].name, before: "45 casos", after: "12 casos (-73%)", improvement: "excellent" },
+    { neighborhood: GENERIC_DEMO_NEIGHBORHOODS[3].name, before: "78 casos", after: "23 casos (-71%)", improvement: "excellent" },
+    { neighborhood: GENERIC_DEMO_NEIGHBORHOODS[5].name, before: "82 casos", after: "28 casos (-66%)", improvement: "good" },
+    { neighborhood: GENERIC_DEMO_NEIGHBORHOODS[6].name, before: "125 casos", after: "35 casos (-72%)", improvement: "excellent" }
   ];
 
   const getImprovementColor = (improvement: string) => {
@@ -93,6 +96,13 @@ const NeighborhoodTransformation = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Veja como a Angra Saúde revoluciona a gestão municipal ao oferecer visibilidade e controle granular por bairros
           </p>
+          
+          <div className="flex justify-center mt-4">
+            <Badge variant="secondary" className="text-xs px-4 py-2">
+              <Info className="w-3 h-3 mr-1" />
+              Dados demonstrativos para ilustração
+            </Badge>
+          </div>
         </div>
 
         {/* Comparação Principal */}
@@ -133,7 +143,7 @@ const NeighborhoodTransformation = () => {
               <div className="p-4 bg-success/10 rounded-lg border border-success/20">
                 <h4 className="font-semibold text-success mb-2">Benefícios Transformadores:</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Monitoramento detalhado de 10 bairros</li>
+                  <li>• Monitoramento detalhado de {GENERIC_DEMO_NEIGHBORHOODS.length} bairros</li>
                   <li>• Alertas geo-específicos inteligentes</li>
                   <li>• Intervenções preventivas localizadas</li>
                   <li>• Otimização de recursos por área</li>
@@ -238,19 +248,19 @@ const NeighborhoodTransformation = () => {
               <h4 className="text-lg font-semibold mb-2">Impacto Global da Transformação</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                 <div>
-                  <div className="text-2xl font-bold text-success">-70%</div>
+                  <div className="text-2xl font-bold text-success">-{DEMO_METRICS.CASE_REDUCTION}%</div>
                   <div className="text-sm text-muted-foreground">Casos Ativos</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-primary">+85%</div>
+                  <div className="text-2xl font-bold text-primary">+{DEMO_METRICS.EFFICIENCY_INCREASE}%</div>
                   <div className="text-sm text-muted-foreground">Eficiência</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-secondary">-60%</div>
+                  <div className="text-2xl font-bold text-secondary">-{DEMO_METRICS.RESPONSE_TIME_IMPROVEMENT}%</div>
                   <div className="text-sm text-muted-foreground">Tempo Resposta</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-accent">+90%</div>
+                  <div className="text-2xl font-bold text-accent">+{DEMO_METRICS.CITIZEN_SATISFACTION}%</div>
                   <div className="text-sm text-muted-foreground">Satisfação</div>
                 </div>
               </div>
@@ -262,8 +272,11 @@ const NeighborhoodTransformation = () => {
         <div className="text-center mt-16">
           <Button size="lg" className="px-8 py-4 text-lg bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90">
             <Shield className="w-5 h-5 mr-2" />
-            Transforme Seu Município Agora
+            Adapte para Seu Município
           </Button>
+          <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
+            Sistema totalmente personalizável para as necessidades específicas da sua região
+          </p>
         </div>
       </div>
     </section>
