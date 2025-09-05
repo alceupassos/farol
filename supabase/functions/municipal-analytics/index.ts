@@ -143,7 +143,7 @@ async function generateExecutiveKPIs(municipality: string, dateRange?: string): 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-2025-08-07',
+        model: 'gpt-4.1-2025-04-14',
         messages: [
           { 
             role: 'system', 
@@ -182,16 +182,18 @@ async function generateExecutiveKPIs(municipality: string, dateRange?: string): 
 }
 
 async function generateHeatMapData(municipality: string, layer?: string): Promise<{ heatMapData: HeatMapPoint[] }> {
-  // Generate realistic heat map data for a Brazilian city
+  // Coordenadas reais de Pindamonhangaba e bairros
   const neighborhoods = [
-    { name: "Centro", coords: [-46.6361, -23.5505] as [number, number] },
-    { name: "Jardim América", coords: [-46.6600, -23.5650] as [number, number] },
-    { name: "Vila Madalena", coords: [-46.6900, -23.5450] as [number, number] },
-    { name: "Mooca", coords: [-46.5950, -23.5400] as [number, number] },
-    { name: "Itaim Bibi", coords: [-46.6750, -23.5900] as [number, number] },
-    { name: "Liberdade", coords: [-46.6333, -23.5589] as [number, number] },
-    { name: "Bela Vista", coords: [-46.6444, -23.5556] as [number, number] },
-    { name: "Consolação", coords: [-46.6611, -23.5539] as [number, number] }
+    { name: "Centro", coords: [-45.4616, -22.9249] as [number, number] },
+    { name: "Jardim das Palmeiras", coords: [-45.4450, -22.9180] as [number, number] },
+    { name: "Vila São Benedito", coords: [-45.4750, -22.9320] as [number, number] },
+    { name: "Cidade Nova", coords: [-45.4380, -22.9150] as [number, number] },
+    { name: "Jardim América", coords: [-45.4520, -22.9280] as [number, number] },
+    { name: "Bela Vista", coords: [-45.4680, -22.9200] as [number, number] },
+    { name: "Vila Davi", coords: [-45.4580, -22.9350] as [number, number] },
+    { name: "Crispim", coords: [-45.4420, -22.9100] as [number, number] },
+    { name: "Araretama", coords: [-45.4800, -22.9400] as [number, number] },
+    { name: "Mombaça", coords: [-45.4350, -22.9050] as [number, number] }
   ];
 
   const heatMapData: HeatMapPoint[] = neighborhoods.map(neighborhood => {

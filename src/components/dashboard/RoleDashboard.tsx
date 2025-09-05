@@ -1,6 +1,10 @@
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import dashboardBg from '@/assets/dashboard-bg.jpg';
+import HealthRiskScore from '@/components/health/HealthRiskScore';
+import PatientRiskList from '@/components/health/PatientRiskList';
+import PopulationRiskMetrics from '@/components/health/PopulationRiskMetrics';
+import { calculateRiskScore, mockPatientData } from '@/utils/riskCalculator';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -32,6 +36,9 @@ const RoleDashboard = () => {
     <div className="space-y-6">
       {/* Alert Widget */}
       <DashboardAlertWidget className="mb-6" />
+      
+      {/* Population Risk Metrics - Nova seção */}
+      <PopulationRiskMetrics />
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="glass-morphism border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
@@ -134,6 +141,9 @@ const RoleDashboard = () => {
       {/* Alert Widget */}
       <DashboardAlertWidget className="mb-6" />
       
+      {/* Patient Risk List - Nova seção para médicos */}
+      <PatientRiskList />
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -214,10 +224,22 @@ const RoleDashboard = () => {
     </div>
   );
 
-  const renderPacienteDashboard = () => (
+  const renderPacienteDashboard = () => {
+    // Calcular score de risco para o paciente logado (usando dados mock)
+    const patientRisk = calculateRiskScore(mockPatientData['joao-silva']);
+    
+    return (
     <div className="space-y-6">
       {/* Alert Widget */}
       <DashboardAlertWidget className="mb-6" />
+      
+      {/* Score de Risco - Destaque para o paciente */}
+      <HealthRiskScore 
+        riskScore={patientRisk}
+        patientName="João Silva"
+        size="lg"
+        showDetails={true}
+      />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
@@ -301,7 +323,8 @@ const RoleDashboard = () => {
         </Card>
       </div>
     </div>
-  );
+    );
+  };
 
   return (
     <div className="relative space-y-6">

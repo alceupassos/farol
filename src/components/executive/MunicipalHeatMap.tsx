@@ -57,49 +57,81 @@ export const MunicipalHeatMap = () => {
   const mockHeatMapData: HeatMapData[] = [
     {
       neighborhood: "Centro",
-      coordinates: [-45.4612, -22.9242],
+      coordinates: [-45.4616, -22.9249],
       healthScore: 85,
       totalResidences: 1250,
       riskLevel: 'low',
       alertCount: 2
     },
     {
-      neighborhood: "Cidade Nova",
-      coordinates: [-45.4580, -22.9180],
-      healthScore: 72,
+      neighborhood: "Jardim das Palmeiras",
+      coordinates: [-45.4450, -22.9180],
+      healthScore: 82,
       totalResidences: 890,
-      riskLevel: 'medium',
-      alertCount: 8
+      riskLevel: 'low',
+      alertCount: 1
     },
     {
-      neighborhood: "Vila Santa Clara",
-      coordinates: [-45.4700, -22.9300],
-      healthScore: 68,
+      neighborhood: "Vila São Benedito",
+      coordinates: [-45.4750, -22.9320],
+      healthScore: 65,
       totalResidences: 980,
       riskLevel: 'high',
       alertCount: 15
     },
     {
-      neighborhood: "Jardim Regina",
-      coordinates: [-45.4550, -22.9400],
-      healthScore: 79,
+      neighborhood: "Cidade Nova",
+      coordinates: [-45.4380, -22.9150],
+      healthScore: 88,
       totalResidences: 720,
       riskLevel: 'low',
+      alertCount: 0
+    },
+    {
+      neighborhood: "Jardim América",
+      coordinates: [-45.4520, -22.9280],
+      healthScore: 72,
+      totalResidences: 750,
+      riskLevel: 'medium',
       alertCount: 4
     },
     {
-      neighborhood: "Mombaça",
-      coordinates: [-45.4400, -22.9500],
-      healthScore: 91,
-      totalResidences: 1500,
+      neighborhood: "Bela Vista",
+      coordinates: [-45.4680, -22.9200],
+      healthScore: 85,
+      totalResidences: 650,
       riskLevel: 'low',
-      alertCount: 1
+      alertCount: 2
     },
     {
-      neighborhood: "Vila Operária",
-      coordinates: [-45.4650, -22.9150],
-      healthScore: 74,
-      totalResidences: 680,
+      neighborhood: "Vila Davi",
+      coordinates: [-45.4580, -22.9350],
+      healthScore: 69,
+      totalResidences: 820,
+      riskLevel: 'medium',
+      alertCount: 5
+    },
+    {
+      neighborhood: "Crispim",
+      coordinates: [-45.4420, -22.9100],
+      healthScore: 91,
+      totalResidences: 1100,
+      riskLevel: 'low',
+      alertCount: 0
+    },
+    {
+      neighborhood: "Araretama",
+      coordinates: [-45.4800, -22.9400],
+      healthScore: 58,
+      totalResidences: 920,
+      riskLevel: 'high',
+      alertCount: 12
+    },
+    {
+      neighborhood: "Mombaça",
+      coordinates: [-45.4350, -22.9050],
+      healthScore: 76,
+      totalResidences: 1050,
       riskLevel: 'medium',
       alertCount: 6
     }
@@ -123,10 +155,10 @@ export const MunicipalHeatMap = () => {
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
-      center: [-45.4612, -22.9242], // Pindamonhangaba coordinates
-      zoom: 11,
-      pitch: 45,
+      style: 'mapbox://styles/mapbox/light-v11',
+      center: [-45.4616, -22.9249], // Centro de Pindamonhangaba
+      zoom: 12,
+      pitch: 0,
       bearing: 0
     });
 
@@ -296,7 +328,7 @@ export const MunicipalHeatMap = () => {
       const { data, error } = await supabase.functions.invoke('municipal-analytics', {
         body: { 
           type: 'heat-map-data',
-          municipality: 'default',
+          municipality: 'Pindamonhangaba',
           layer: selectedLayer
         }
       });
