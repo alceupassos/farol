@@ -10,8 +10,21 @@ authenticator.options = {
 // Secret for encryption (in production, this should be from environment)
 const ENCRYPTION_KEY = 'SaudeMunicipalSecretKey2024!';
 
+// Base32 alphabet for secret generation
+const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+
+// Browser-compatible secret generation using Web Crypto API
 export const generateSecret = (): string => {
-  return authenticator.generateSecret();
+  const bytes = new Uint8Array(20); // 160 bits for TOTP secret
+  crypto.getRandomValues(bytes);
+  
+  // Convert to base32
+  let secret = '';
+  for (let i = 0; i < bytes.length; i++) {
+    secret += BASE32_ALPHABET[bytes[i] % 32];
+  }
+  
+  return secret;
 };
 
 export const generateTOTPUri = (secret: string, email: string): string => {
@@ -33,9 +46,17 @@ export const decryptSecret = (encryptedSecret: string): string => {
 
 export const generateBackupCodes = (): string[] => {
   const codes: string[] = [];
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  
   for (let i = 0; i < 10; i++) {
-    // Generate 8-character backup codes
-    const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+    // Generate 8-character backup codes using Web Crypto API
+    const bytes = new Uint8Array(8);
+    crypto.getRandomValues(bytes);
+    
+    let code = '';
+    for (let j = 0; j < 8; j++) {
+      code += chars[bytes[j] % chars.length];
+    }
     codes.push(code);
   }
   return codes;
