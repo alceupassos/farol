@@ -69,6 +69,8 @@ const SiteAccess = () => {
           return;
         } else {
           setError(`Erro no banco: ${error.message}`);
+          // Clear localStorage on error
+          localStorage.removeItem('site_initial_setup_completed');
         }
       } else {
         console.log('✅ Access code saved successfully:', data?.id);
@@ -79,8 +81,10 @@ const SiteAccess = () => {
       
     } catch (error) {
       console.error('💥 Error generating access code:', error);
-      setError(`Erro interno: ${(error as Error).message}`);
-      setStep('verify');
+      setError(`Erro ao gerar código: ${(error as Error).message}`);
+      // Clear localStorage on error
+      localStorage.removeItem('site_initial_setup_completed');
+      setStep('setup'); // Stay on setup to show error with retry button
     } finally {
       setIsCreatingCode(false);
     }
@@ -262,6 +266,30 @@ const SiteAccess = () => {
                           <CheckCircle className="w-4 h-4" />
                           Configurado! Inserir código
                         </div>
+                      </Button>
+                    </div>
+                  ) : error ? (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-destructive/10 rounded-lg text-center">
+                        <p className="text-destructive font-medium">Erro ao gerar QR Code</p>
+                        <p className="text-sm text-muted-foreground mt-1">{error}</p>
+                      </div>
+                      <Button
+                        onClick={() => {
+                          localStorage.removeItem('site_initial_setup_completed');
+                          autoGenerateQR();
+                        }}
+                        className="w-full"
+                        disabled={isCreatingCode}
+                      >
+                        {isCreatingCode ? (
+                          <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            Gerando...
+                          </div>
+                        ) : (
+                          '🔄 Tentar Novamente'
+                        )}
                       </Button>
                     </div>
                   ) : (

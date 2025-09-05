@@ -32,6 +32,9 @@ verify_jwt = false
 [functions.site-auth]
 verify_jwt = false
 
+[functions.get-encryption-key]
+verify_jwt = false
+
 [db]
 port = 54322
 

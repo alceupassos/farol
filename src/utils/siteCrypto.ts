@@ -5,15 +5,25 @@ import { supabase } from '@/integrations/supabase/client';
 // Get encryption key from Supabase secrets
 const getEncryptionKey = async (): Promise<string> => {
   try {
-    // Try to get from edge function that has access to secrets
+    console.log('🔑 Attempting to get encryption key from Supabase...');
     const { data, error } = await supabase.functions.invoke('get-encryption-key');
-    if (error || !data?.key) {
-      throw new Error('Failed to get encryption key');
+    
+    if (error) {
+      console.error('❌ Edge function error:', error);
+      throw new Error(`Edge function error: ${error.message}`);
     }
+    
+    if (!data?.key) {
+      console.error('❌ No encryption key in response:', data);
+      throw new Error('No encryption key received from server');
+    }
+    
+    console.log('✅ Successfully retrieved encryption key');
     return data.key;
   } catch (error) {
-    console.error('Failed to get encryption key:', error);
+    console.error('❌ Failed to get encryption key:', error);
     // Fallback for development - this should be replaced with proper key management
+    console.log('🔄 Using fallback encryption key');
     return 'SiteAccess2024SuperSecureKey!';
   }
 };
