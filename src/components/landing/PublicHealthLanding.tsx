@@ -40,6 +40,9 @@ import {
   Stethoscope,
   Heart
 } from 'lucide-react';
+import AngraSaudeHero from './AngraSaudeHero';
+import FivePillarsWithNeighborhoods from './FivePillarsWithNeighborhoods';
+import NeighborhoodTransformation from './NeighborhoodTransformation';
 
 const PublicHealthLanding = () => {
   const navigate = useNavigate();
@@ -78,55 +81,14 @@ const PublicHealthLanding = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background/90 to-muted/20">
       <Navbar toggleSidebar={() => {}} />
       <div className="pt-16">
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-          style={{ backgroundImage: `url(${medicalHeroBg})` }}
-        />
-        
-        {/* Squares Background Animation */}
-        <div className="absolute inset-0 opacity-30">
-          <Squares 
-            direction="diagonal"
-            speed={0.3}
-            squareSize={60}
-            borderColor="hsl(var(--primary) / 0.1)"
-            hoverFillColor="hsl(var(--primary) / 0.05)"
-          />
-        </div>
-        
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-        <div className="relative max-w-7xl mx-auto text-center z-10">
-          <Badge className="mb-6 px-4 py-2 text-sm">
-            <Shield className="w-4 h-4 mr-2" />
-            Saúde Pública Inteligente
-          </Badge>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-fade-in">
-            Transforme a Saúde Pública do seu Município
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed animate-slide-up">
-            Plataforma completa de gestão inteligente para secretarias de saúde. 
-            Dashboards executivos, análise epidemiológica com IA e otimização de recursos.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in">
-            <Button variant="default" size="lg" className="text-lg px-8 py-4" onClick={() => navigate('/auth')}>
-              <LogIn className="w-5 h-5 mr-2" />
-              Entrar no Sistema
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4" onClick={() => navigate('/dashboard')}>
-              <BarChart3 className="w-5 h-5 mr-2" />
-              Ver Dashboard
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section - Angra Saúde */}
+      <AngraSaudeHero />
+
+      {/* Five Pillars Section */}
+      <FivePillarsWithNeighborhoods />
+
+      {/* Transformation Section */}
+      <NeighborhoodTransformation />
 
       {/* Quick Access Section - Moved up for better visibility */}
       <section className="py-20 px-4 bg-gradient-to-br from-muted/10 to-background relative">

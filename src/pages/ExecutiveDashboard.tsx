@@ -4,6 +4,9 @@ import { ExecutiveKPIs } from "@/components/executive/ExecutiveKPIs";
 import { MunicipalHeatMap } from "@/components/executive/MunicipalHeatMap";
 import { PopulationAnalytics } from "@/components/executive/PopulationAnalytics";
 import { BudgetROIDashboard } from "@/components/executive/BudgetROIDashboard";
+import NeighborhoodComparisonDashboard from "@/components/executive/NeighborhoodComparisonDashboard";
+import NeighborhoodAlertSystem from "@/components/executive/NeighborhoodAlertSystem";
+import RealTimeNeighborhoodCenter from "@/components/executive/RealTimeNeighborhoodCenter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Crown, MapPin, Users, DollarSign, TrendingUp, Activity } from "lucide-react";
 
@@ -27,14 +30,22 @@ const ExecutiveDashboard = () => {
 
         {/* Main Dashboard Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-[600px]">
+          <TabsList className="grid w-full grid-cols-6 lg:w-[800px]">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               Visão Geral
             </TabsTrigger>
-            <TabsTrigger value="map" className="flex items-center gap-2">
+            <TabsTrigger value="neighborhoods" className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
-              Mapa Municipal
+              Bairros
+            </TabsTrigger>
+            <TabsTrigger value="alerts" className="flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4" />
+              Alertas
+            </TabsTrigger>
+            <TabsTrigger value="realtime" className="flex items-center gap-2">
+              <Activity className="w-4 h-4" />
+              Tempo Real
             </TabsTrigger>
             <TabsTrigger value="population" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
@@ -42,7 +53,7 @@ const ExecutiveDashboard = () => {
             </TabsTrigger>
             <TabsTrigger value="budget" className="flex items-center gap-2">
               <DollarSign className="w-4 h-4" />
-              Orçamento & ROI
+              Orçamento
             </TabsTrigger>
           </TabsList>
 
@@ -65,12 +76,16 @@ const ExecutiveDashboard = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="map" className="space-y-4">
-            <h3 className="text-xl font-semibold flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-primary" />
-              Mapa de Calor Municipal
-            </h3>
-            <MunicipalHeatMap />
+          <TabsContent value="neighborhoods" className="space-y-4">
+            <NeighborhoodComparisonDashboard />
+          </TabsContent>
+
+          <TabsContent value="alerts" className="space-y-4">
+            <NeighborhoodAlertSystem />
+          </TabsContent>
+
+          <TabsContent value="realtime" className="space-y-4">
+            <RealTimeNeighborhoodCenter />
           </TabsContent>
 
           <TabsContent value="population" className="space-y-4">
