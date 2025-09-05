@@ -92,6 +92,16 @@ const SiteAccess = () => {
       try {
         console.log('🔍 Checking for existing access codes...');
         
+        // Check if initial setup was already completed
+        const setupCompleted = localStorage.getItem('site_initial_setup_completed');
+        
+        if (setupCompleted === 'true') {
+          console.log('🔒 System already configured (localStorage) - showing verification');
+          setIsFirstAccess(false);
+          setStep('verify');
+          return;
+        }
+        
         const { data: accessCodes, error } = await supabase
           .from('site_access_codes')
           .select('*')
@@ -123,6 +133,8 @@ const SiteAccess = () => {
           await autoGenerateQR();
         } else {
           console.log('🔒 System already configured - showing verification');
+          // Mark setup as completed if not already marked
+          localStorage.setItem('site_initial_setup_completed', 'true');
           setIsFirstAccess(false);
           setStep('verify');
         }
@@ -239,7 +251,11 @@ const SiteAccess = () => {
                       </div>
 
                       <Button
-                        onClick={() => setStep('verify')}
+                        onClick={() => {
+                          // Mark initial setup as completed
+                          localStorage.setItem('site_initial_setup_completed', 'true');
+                          setStep('verify');
+                        }}
                         className="w-full"
                       >
                         <div className="flex items-center gap-2">
