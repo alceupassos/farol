@@ -9,11 +9,9 @@ import HealthMetric from '@/components/ui/HealthMetric';
 import MainLayout from '@/components/layout/MainLayout';
 import RoleDashboard from '@/components/dashboard/RoleDashboard';
 import { useAuth } from '@/contexts/AuthContext';
-import { use2FA } from '@/hooks/use2FA';
 
 const Dashboard = () => {
   const { userRole } = useAuth();
-  const { has2FA } = use2FA();
   const [recentActivities] = useState([
     {
       id: '1',
@@ -99,17 +97,6 @@ const Dashboard = () => {
           {/* Legacy Patient Dashboard - shown only for patients */}
           {userRole === 'paciente' && (
             <>
-              {/* 2FA Setup Card - Show if not configured */}
-              {!has2FA && (
-                <div className="mb-6 animate-fade-in">
-                  <div className="glass-card rounded-xl p-6 border-l-4 border-l-yellow-500">
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 mt-8">

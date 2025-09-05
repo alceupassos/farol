@@ -1,18 +1,15 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ProfileAccessProvider } from "@/contexts/ProfileAccessContext";
-import { SecureTOTPProvider } from "@/contexts/SecureTOTPContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
 import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
 import ErrorBoundary from "./components/ErrorBoundary";
-import HealthCheckDashboard from "./components/debug/HealthCheckDashboard";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -41,7 +38,6 @@ import OperationalDashboard from "./pages/OperationalDashboard";
 import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
-import AuthPage from "./pages/AuthPage";
 import DemoPage from "./pages/DemoPage";
 import HelpPage from "./pages/HelpPage";
 import SupportPage from "./pages/SupportPage";
@@ -54,28 +50,17 @@ import AdminPanel from "./pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
-// Protected Route component
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
-  
-  if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
-  }
-  
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-  
+// No authentication required - direct access to all routes
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <SiteAccessProvider>
-        <AuthProvider>
-          <ProfileAccessProvider>
-            <SecureTOTPProvider>
+        <SiteAccessProvider>
+          <AuthProvider>
+            <ProfileAccessProvider>
               <LanguageProvider>
               <TooltipProvider>
                 <div>
@@ -91,172 +76,48 @@ const App = () => (
                         <Route path="/" element={<Index />} />
                         <Route path="/demo" element={<DemoPage />} />
                         <Route path="/documentation" element={<DocumentationPage />} />
-                        <Route path="/auth" element={<AuthPage />} />
-                        <Route path="/dashboard" element={
-                          <ProtectedRoute>
-                            <Dashboard />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/profile" element={
-                          <ProtectedRoute>
-                            <Profile />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/records" element={
-                          <ProtectedRoute>
-                            <Records />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/medications" element={
-                          <ProtectedRoute>
-                            <Medications />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/appointments" element={
-                          <ProtectedRoute>
-                            <Appointments />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/metrics" element={
-                          <ProtectedRoute>
-                            <Metrics />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/access" element={
-                          <ProtectedRoute>
-                            <Access />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/emergency" element={
-                          <ProtectedRoute>
-                            <Emergency />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/labexams" element={
-                          <ProtectedRoute>
-                            <LabExams />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/genetic-data" element={
-                          <ProtectedRoute>
-                            <GeneticDataPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/quality-of-life" element={
-                          <ProtectedRoute>
-                            <QualityOfLifePage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/help" element={
-                          <ProtectedRoute>
-                            <HelpPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/support" element={
-                          <ProtectedRoute>
-                            <SupportPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/manage-access" element={
-                          <ProtectedRoute>
-                            <ManageAccessPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/settings" element={
-                          <ProtectedRoute>
-                            <SettingsPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/technical-details" element={
-                          <ProtectedRoute>
-                            <TechnicalDetailsPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/qr-ana-ativo" element={
-                          <ProtectedRoute>
-                            <QrAnaAtivoPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/intelligent-reading" element={
-                          <ProtectedRoute>
-                            <IntelligentReading />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/executive-dashboard" element={
-                          <ProtectedRoute>
-                            <ExecutiveDashboard />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/operational-dashboard" element={
-                          <ProtectedRoute>
-                            <OperationalDashboard />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/integrations-dashboard" element={
-                          <ProtectedRoute>
-                            <IntegrationsDashboard />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/ai-analytics" element={
-                          <ProtectedRoute>
-                            <AIAnalyticsDashboard />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/security-dashboard" element={
-                          <ProtectedRoute>
-                            <SecurityDashboard />
-                          </ProtectedRoute>
-                        } />
-                        {/* New pages for different user types */}
-                        <Route path="/patients" element={
-                          <ProtectedRoute>
-                            <PatientsPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/protocols" element={
-                          <ProtectedRoute>
-                            <ProtocolsPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/population" element={
-                          <ProtectedRoute>
-                            <PopulationPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/epidemiology" element={
-                          <ProtectedRoute>
-                            <EpidemiologyPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/resources" element={
-                          <ProtectedRoute>
-                            <ResourcesPage />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/lab-exams" element={
-                          <ProtectedRoute>
-                            <LabExams />
-                          </ProtectedRoute>
-                        } />
-                        <Route path="/epidemic-alerts" element={
-                          <ProtectedRoute>
-                            <EpidemicAlerts />
-                          </ProtectedRoute>
-                        } />
+                        <Route path="/dashboard" element={<PublicRoute><Dashboard /></PublicRoute>} />
+                        <Route path="/profile" element={<PublicRoute><Profile /></PublicRoute>} />
+                        <Route path="/records" element={<PublicRoute><Records /></PublicRoute>} />
+                        <Route path="/medications" element={<PublicRoute><Medications /></PublicRoute>} />
+                        <Route path="/appointments" element={<PublicRoute><Appointments /></PublicRoute>} />
+                        <Route path="/metrics" element={<PublicRoute><Metrics /></PublicRoute>} />
+                        <Route path="/access" element={<PublicRoute><Access /></PublicRoute>} />
+                        <Route path="/emergency" element={<PublicRoute><Emergency /></PublicRoute>} />
+                        <Route path="/labexams" element={<PublicRoute><LabExams /></PublicRoute>} />
+                        <Route path="/genetic-data" element={<PublicRoute><GeneticDataPage /></PublicRoute>} />
+                        <Route path="/quality-of-life" element={<PublicRoute><QualityOfLifePage /></PublicRoute>} />
+                        <Route path="/help" element={<PublicRoute><HelpPage /></PublicRoute>} />
+                        <Route path="/support" element={<PublicRoute><SupportPage /></PublicRoute>} />
+                        <Route path="/manage-access" element={<PublicRoute><ManageAccessPage /></PublicRoute>} />
+                        <Route path="/settings" element={<PublicRoute><SettingsPage /></PublicRoute>} />
+                        <Route path="/technical-details" element={<PublicRoute><TechnicalDetailsPage /></PublicRoute>} />
+                        <Route path="/qr-ana-ativo" element={<PublicRoute><QrAnaAtivoPage /></PublicRoute>} />
+                        <Route path="/intelligent-reading" element={<PublicRoute><IntelligentReading /></PublicRoute>} />
+                        <Route path="/executive-dashboard" element={<PublicRoute><ExecutiveDashboard /></PublicRoute>} />
+                        <Route path="/operational-dashboard" element={<PublicRoute><OperationalDashboard /></PublicRoute>} />
+                        <Route path="/integrations-dashboard" element={<PublicRoute><IntegrationsDashboard /></PublicRoute>} />
+                        <Route path="/ai-analytics" element={<PublicRoute><AIAnalyticsDashboard /></PublicRoute>} />
+                        <Route path="/security-dashboard" element={<PublicRoute><SecurityDashboard /></PublicRoute>} />
+                        <Route path="/patients" element={<PublicRoute><PatientsPage /></PublicRoute>} />
+                        <Route path="/protocols" element={<PublicRoute><ProtocolsPage /></PublicRoute>} />
+                        <Route path="/population" element={<PublicRoute><PopulationPage /></PublicRoute>} />
+                        <Route path="/epidemiology" element={<PublicRoute><EpidemiologyPage /></PublicRoute>} />
+                        <Route path="/resources" element={<PublicRoute><ResourcesPage /></PublicRoute>} />
+                        <Route path="/lab-exams" element={<PublicRoute><LabExams /></PublicRoute>} />
+                        <Route path="/epidemic-alerts" element={<PublicRoute><EpidemicAlerts /></PublicRoute>} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </PreLoginGuard>
                   </BrowserRouter>
                 </div>
               </TooltipProvider>
-            </LanguageProvider>
-            </SecureTOTPProvider>
-          </ProfileAccessProvider>
-        </AuthProvider>
-      </SiteAccessProvider>
+              </LanguageProvider>
+            </ProfileAccessProvider>
+          </AuthProvider>
+        </SiteAccessProvider>
     </QueryClientProvider>
   </ErrorBoundary>
 );
 
 export default App;
-

@@ -91,26 +91,14 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
         <div className="flex items-center space-x-2">
           <LanguageSwitcher />
           
-          {/* Mostrar info do usuário logado ou AccessDropdown */}
-          {user ? (
-            <div className="flex items-center space-x-2">
-              <div className="flex items-center space-x-2 px-3 py-2 bg-gray-800 rounded-lg">
-                <User size={16} className="text-gray-400" />
-                <span className="text-sm text-gray-300">{getRoleDisplayName(userRole)}</span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSignOut}
-                className="text-gray-400 hover:text-white hover:bg-gray-800"
-              >
-                <LogOut size={16} />
-                <span className="sr-only">Sair</span>
-              </Button>
+          {/* Show current role */}
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 px-3 py-2 bg-gray-800 rounded-lg">
+              <User size={16} className="text-gray-400" />
+              <span className="text-sm text-gray-300">{getRoleDisplayName(userRole)}</span>
             </div>
-          ) : (
             <AccessDropdown />
-          )}
+          </div>
           
           <UserSpecificAlerts />
           
