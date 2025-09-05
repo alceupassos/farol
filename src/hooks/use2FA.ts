@@ -48,32 +48,53 @@ export const use2FA = () => {
   };
 
   const setup2FA = async () => {
-    if (!user) throw new Error('No user authenticated');
+    if (!user) {
+      console.error('2FA Setup Error: No user authenticated');
+      throw new Error('No user authenticated');
+    }
 
+    console.log('Starting 2FA setup for user:', user.id);
     setLoading(true);
+    
     try {
+      // Generate and encrypt secrets
+      console.log('Generating 2FA secret...');
       const secret = generateSecret();
       const encryptedSecret = encryptSecret(secret);
       const backupCodes = generateBackupCodes();
       const encryptedBackupCodes = encryptBackupCodes(backupCodes);
+      
+      console.log('Secrets generated successfully');
 
       // First, remove any existing 2FA setup for this user
-      await supabase
+      console.log('Removing existing 2FA setup...');
+      const { error: deleteError } = await supabase
         .from('user_2fa_secrets')
         .delete()
         .eq('user_id', user.id);
 
-      const { error } = await supabase
+      if (deleteError) {
+        console.error('Error deleting existing 2FA:', deleteError);
+      }
+
+      // Insert new 2FA setup
+      console.log('Inserting new 2FA setup...');
+      const { error: insertError, data } = await supabase
         .from('user_2fa_secrets')
         .insert({
           user_id: user.id,
           encrypted_secret: encryptedSecret,
           backup_codes: encryptedBackupCodes,
           is_active: false, // Will be activated after verification
-        });
+        })
+        .select();
 
-      if (error) throw error;
+      if (insertError) {
+        console.error('Error inserting 2FA setup:', insertError);
+        throw insertError;
+      }
 
+      console.log('2FA setup completed successfully:', data);
       return { secret, backupCodes };
     } catch (error) {
       console.error('Error setting up 2FA:', error);
