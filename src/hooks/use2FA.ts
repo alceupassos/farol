@@ -126,16 +126,41 @@ export const use2FA = () => {
     if (!user) return false;
 
     try {
-      const { data, error } = await supabase.functions.invoke('verify-totp', {
-        body: { code, user_id: user.id }
-      });
+      // First try the edge function
+      try {
+        const { data, error } = await supabase.functions.invoke('verify-totp', {
+          body: { code, user_id: user.id }
+        });
 
-      if (error) throw error;
+        if (!error && data?.valid === true) {
+          setIs2FAVerified(true);
+          sessionStorage.setItem('2fa_verified', 'true');
+          return true;
+        }
+      } catch (functionError) {
+        console.warn('Edge function failed, trying local verification:', functionError);
+      }
 
-      const isValid = data?.valid === true;
+      // Fallback to local verification if edge function fails
+      const { data: secretData, error: secretError } = await supabase
+        .from('user_2fa_secrets')
+        .select('encrypted_secret')
+        .eq('user_id', user.id)
+        .eq('is_active', false) // Still in setup mode
+        .single();
+
+      if (secretError || !secretData) {
+        console.error('Error fetching 2FA secret for verification:', secretError);
+        return false;
+      }
+
+      // Use local verification as fallback
+      const { decryptSecret, verifyTOTP } = await import('@/utils/totp');
+      const secret = decryptSecret(secretData.encrypted_secret);
+      const isValid = verifyTOTP(code, secret);
+
       if (isValid) {
         setIs2FAVerified(true);
-        // Store verification in session storage for this session
         sessionStorage.setItem('2fa_verified', 'true');
       }
 
