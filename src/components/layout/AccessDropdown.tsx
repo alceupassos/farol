@@ -9,10 +9,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useProfileAccess } from '@/contexts/ProfileAccessContext';
 
 const AccessDropdown = () => {
   const navigate = useNavigate();
   const { signOut } = useAuth();
+  const { isFullAccessEnabled } = useProfileAccess();
 
   const accessOptions = [
     {
@@ -44,18 +46,23 @@ const AccessDropdown = () => {
     navigate(`/auth?role=${role}`);
   };
 
+  // Filtrar opções baseado no estado do ProfileAccess
+  const filteredOptions = isFullAccessEnabled 
+    ? accessOptions 
+    : accessOptions.filter(option => option.id === 'gestor');
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
           className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          Acessar Sistema
+          {isFullAccessEnabled ? 'Acessar Sistema' : 'Acessar como Gestor'}
           <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-72 p-2" align="end">
-        {accessOptions.map((option) => {
+        {filteredOptions.map((option) => {
           const IconComponent = option.icon;
           return (
             <DropdownMenuItem

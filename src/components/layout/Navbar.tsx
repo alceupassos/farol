@@ -13,6 +13,7 @@ import {
 import { cn } from '@/lib/utils';
 import LanguageSwitcher from '@/components/language/LanguageSwitcher';
 import AccessDropdown from './AccessDropdown';
+import ProfileAccessSwitch from './ProfileAccessSwitch';
 import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
 import { useAuth } from '@/contexts/AuthContext';
@@ -113,14 +114,7 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           
           <UserSpecificAlerts />
           
-          <button
-            type="button"
-            className="p-2 rounded-md text-gray-400 hover:bg-gray-800"
-            onClick={toggleTheme}
-          >
-            {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            <span className="sr-only">Alternar tema</span>
-          </button>
+          <ProfileAccessSwitch />
         </div>
       </div>
     </header>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProfileAccess } from '@/contexts/ProfileAccessContext';
 import { Button } from "@/components/ui/button";
 import medicalTechBg from '@/assets/medical-tech-bg.jpg';
 import medicalHeroBg from '@/assets/medical-hero-bg.jpg';
@@ -42,6 +43,7 @@ import {
 
 const PublicHealthLanding = () => {
   const navigate = useNavigate();
+  const { isFullAccessEnabled } = useProfileAccess();
   const [formData, setFormData] = useState({
     municipality: '',
     contact: '',
@@ -134,7 +136,7 @@ const PublicHealthLanding = () => {
             Entre diretamente como demonstração para seu perfil
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className={`grid gap-8 mb-12 ${isFullAccessEnabled ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 max-w-md mx-auto'}`}>
             <Card className="group hover:shadow-2xl transition-all duration-500 border-2 border-primary/20 hover:border-primary/40 hover:scale-105 animate-scale-in bg-card/90 backdrop-blur-sm">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/50 group-hover:to-primary/30 transition-all duration-300 group-hover:animate-pulse shadow-lg">
@@ -158,6 +160,7 @@ const PublicHealthLanding = () => {
               </CardContent>
             </Card>
 
+            {isFullAccessEnabled && (
             <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-secondary/20 hover:border-secondary/40 bg-card/90 backdrop-blur-sm hover:scale-105">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-secondary/30 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/40 transition-colors shadow-lg">
@@ -180,7 +183,9 @@ const PublicHealthLanding = () => {
                 </Button>
               </CardContent>
             </Card>
+            )}
 
+            {isFullAccessEnabled && (
             <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-accent/20 hover:border-accent/40 bg-card/90 backdrop-blur-sm hover:scale-105">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-accent/30 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/40 transition-colors shadow-lg">
@@ -203,6 +208,7 @@ const PublicHealthLanding = () => {
                 </Button>
               </CardContent>
             </Card>
+            )}
           </div>
         </div>
       </section>

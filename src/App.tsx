@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { ProfileAccessProvider } from "@/contexts/ProfileAccessContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
 import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -67,8 +68,9 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <LanguageProvider>
-          <TooltipProvider>
+        <ProfileAccessProvider>
+          <LanguageProvider>
+            <TooltipProvider>
             <div>
               <Toaster />
               <Sonner />
@@ -237,6 +239,7 @@ const App = () => (
           </div>
         </TooltipProvider>
       </LanguageProvider>
+    </ProfileAccessProvider>
     </AuthProvider>
   </QueryClientProvider>
   </ErrorBoundary>

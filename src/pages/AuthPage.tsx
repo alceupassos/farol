@@ -21,6 +21,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthRedirect } from '@/hooks/useAuthRedirect';
+import { useProfileAccess } from '@/contexts/ProfileAccessContext';
 import { toast } from 'sonner';
 import AuthDebugPanel from '@/components/debug/AuthDebugPanel';
 
@@ -41,6 +42,7 @@ const AuthPage = () => {
   const { signIn, signInAsGuest, signUp } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { isFullAccessEnabled } = useProfileAccess();
   
   // Auto-redirect if user is already authenticated
   useAuthRedirect();
@@ -48,10 +50,17 @@ const AuthPage = () => {
   // Auto-select role from URL parameter
   useEffect(() => {
     const roleParam = searchParams.get('role');
-    if (roleParam && ['gestor', 'medico', 'paciente'].includes(roleParam)) {
+    const allowedRoles = isFullAccessEnabled 
+      ? ['gestor', 'medico', 'paciente'] 
+      : ['gestor'];
+    
+    if (roleParam && allowedRoles.includes(roleParam)) {
       setSelectedRole(roleParam);
+    } else if (roleParam && !allowedRoles.includes(roleParam) && !isFullAccessEnabled) {
+      // Redirecionar para gestor se role não permitido
+      setSelectedRole('gestor');
     }
-  }, [searchParams]);
+  }, [searchParams, isFullAccessEnabled]);
 
   const userTypes = [
     {
@@ -211,8 +220,8 @@ const AuthPage = () => {
         {/* User Type Selection */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Selecione seu tipo de usuário</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {userTypes.map((type) => (
+          <div className={`grid gap-4 ${isFullAccessEnabled ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 max-w-sm mx-auto'}`}>
+            {userTypes.filter(type => isFullAccessEnabled || type.id === 'gestor').map((type) => (
               <Card
                 key={type.id}
                 className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
