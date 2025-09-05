@@ -53,6 +53,8 @@ export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
     try {
       setLoading(true);
       
+      console.log(`🔐 Verifying site code: ${code.substring(0, 2)}****`);
+      
       // Use the site-auth edge function
       const { data, error } = await supabase.functions.invoke('site-auth', {
         body: { 
@@ -63,11 +65,16 @@ export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
       });
 
       if (error) {
-        console.error('Error calling site-auth function:', error);
+        console.error('❌ Error calling site-auth function:', error);
+        console.error('Full error details:', error);
         return false;
       }
 
+      console.log('📋 Site-auth response:', data);
+
       if (data?.valid) {
+        console.log('✅ Site access granted!');
+        
         // Store session token
         const sessionToken = data.session_token;
         const accessTime = Date.now().toString();
@@ -77,11 +84,13 @@ export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
         
         setSiteAccessGranted(true);
         return true;
+      } else {
+        console.log('❌ Site access denied:', data?.error || 'Invalid code');
       }
 
       return false;
     } catch (error) {
-      console.error('Error verifying site code:', error);
+      console.error('💥 Error verifying site code:', error);
       return false;
     } finally {
       setLoading(false);

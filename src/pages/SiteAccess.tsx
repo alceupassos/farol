@@ -24,32 +24,51 @@ const SiteAccess = () => {
   // Auto-generate QR Code function
   const autoGenerateQR = async () => {
     setIsCreatingCode(true);
+    setError(''); // Clear any previous errors
+    
     try {
+      console.log('🔧 Generating new site access code...');
+      
       const { secret, salt, encryptedSecret, qrUri } = generateSiteAccessCode('Sistema Principal');
       
+      console.log('🔑 Generated crypto data:', {
+        secretLength: secret.length,
+        saltLength: salt.length,
+        encryptedLength: encryptedSecret.length,
+        qrUriLength: qrUri.length
+      });
+
       // Save to database
-      const { error } = await supabase
+      console.log('💾 Saving access code to database...');
+      const { data, error } = await supabase
         .from('site_access_codes')
         .insert({
           code_name: 'Sistema Principal',
           encrypted_secret: encryptedSecret,
           salt: salt,
           is_active: true
-        });
+        })
+        .select()
+        .single();
 
       if (error) {
-        console.error('Error saving access code:', error);
-        setError('Erro ao configurar o código de acesso');
+        console.error('❌ Error saving access code:', error);
+        setError('Erro ao salvar código de acesso no banco de dados');
         setStep('verify');
         return;
       }
 
+      console.log('✅ Access code saved successfully:', data?.id);
+      
       setQrCodeData({ qrUri, secret });
       setStep('setup');
       setIsFirstAccess(true);
+      
+      console.log('🎯 QR Code ready - moving to setup step');
+      
     } catch (error) {
-      console.error('Error generating access code:', error);
-      setError('Erro ao gerar código de acesso');
+      console.error('💥 Error generating access code:', error);
+      setError(`Erro ao gerar código de acesso: ${error.message}`);
       setStep('verify');
     } finally {
       setIsCreatingCode(false);
@@ -60,35 +79,45 @@ const SiteAccess = () => {
   useEffect(() => {
     const checkFirstAccessAndSetup = async () => {
       try {
+        console.log('🔍 Checking for existing access codes...');
+        
         const { data: accessCodes, error } = await supabase
           .from('site_access_codes')
           .select('*')
           .eq('is_active', true);
 
         if (error) {
-          console.error('Error checking access codes:', error);
+          console.error('❌ Error checking access codes:', error);
+          setError('Erro ao verificar configuração do sistema');
           setStep('verify');
           return;
         }
 
+        console.log('📊 Access codes found:', accessCodes?.length || 0);
+
         // Check if codes exist and are valid (not temporary)
         const validCodes = accessCodes?.filter(code => 
-          code.encrypted_secret !== 'temp_encrypted_secret' && 
-          code.salt !== 'temp_salt' &&
           code.encrypted_secret && 
-          code.salt
+          code.salt &&
+          code.encrypted_secret.length > 10 &&
+          code.salt.length > 10
         ) || [];
 
+        console.log('✅ Valid codes found:', validCodes.length);
+
         if (validCodes.length === 0) {
+          console.log('🆕 First access detected - generating QR code...');
           setIsFirstAccess(true);
           // Auto-generate QR on first access
           await autoGenerateQR();
         } else {
+          console.log('🔒 System already configured - showing verification');
           setIsFirstAccess(false);
           setStep('verify');
         }
       } catch (error) {
-        console.error('Error in checkFirstAccess:', error);
+        console.error('💥 Error in checkFirstAccess:', error);
+        setError('Erro inesperado ao verificar configuração');
         setStep('verify');
       }
     };
@@ -181,7 +210,7 @@ const SiteAccess = () => {
                 <div className="p-4 bg-muted/50 rounded-lg">
                   <h3 className="font-semibold mb-2 flex items-center gap-2">
                     <QrCode className="w-4 h-4" />
-                    Passo 2: Configure o acesso
+                    Passo 2: Escaneie o QR Code
                   </h3>
                   {qrCodeData ? (
                     <div className="space-y-4">
@@ -190,7 +219,7 @@ const SiteAccess = () => {
                       </div>
                       
                       <div className="p-3 bg-muted/50 rounded-lg">
-                        <p className="text-xs font-medium mb-1">Código manual:</p>
+                        <p className="text-xs font-medium mb-1">Código manual (se não conseguir escanear):</p>
                         <p className="text-xs font-mono bg-background p-2 rounded border break-all">
                           {qrCodeData.secret}
                         </p>
@@ -202,14 +231,15 @@ const SiteAccess = () => {
                       >
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4" />
-                          Já configurei, continuar
+                          Configurado! Inserir código
                         </div>
                       </Button>
                     </div>
                   ) : (
-                    <p className="text-sm text-muted-foreground">
-                      QR Code será gerado automaticamente...
-                    </p>
+                    <div className="flex items-center justify-center p-4">
+                      <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                      <span className="ml-2 text-sm text-muted-foreground">Gerando QR Code...</span>
+                    </div>
                   )}
                 </div>
 
@@ -231,64 +261,24 @@ const SiteAccess = () => {
     );
   }
 
+  // Verify step - always show code input, QR code only if available
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
       <div className="w-full max-w-lg">
         <Card className="shadow-2xl border-0 bg-card/95 backdrop-blur">
-          {qrCodeData && (
-            <CardHeader className="text-center space-y-4">
-              <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-primary" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl font-bold">Configure o Google Authenticator</CardTitle>
-                <CardDescription className="text-muted-foreground mt-2">
-                  Escaneie o QR Code abaixo com seu aplicativo Google Authenticator
-                </CardDescription>
-              </div>
-            </CardHeader>
-          )}
-
-          {!qrCodeData && (
-            <CardHeader className="text-center space-y-4">
-              <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                <Shield className="w-10 h-10 text-primary" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl font-bold">Acesso Protegido</CardTitle>
-                <CardDescription className="text-muted-foreground mt-2">
-                  Digite o código do seu aplicativo autenticador para acessar o sistema
-                </CardDescription>
-              </div>
-            </CardHeader>
-          )}
+          <CardHeader className="text-center space-y-4">
+            <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+              <Shield className="w-10 h-10 text-primary" />
+            </div>
+            <div>
+              <CardTitle className="text-2xl font-bold">Acesso Protegido</CardTitle>
+              <CardDescription className="text-muted-foreground mt-2">
+                Digite o código do seu aplicativo Google Authenticator
+              </CardDescription>
+            </div>
+          </CardHeader>
 
           <CardContent className="space-y-6">
-            {qrCodeData && (
-              <div className="space-y-4">
-                <div className="bg-white p-6 rounded-lg mx-auto flex justify-center">
-                  <QRCodeSVG value={qrCodeData.qrUri} size={200} />
-                </div>
-                
-                <div className="p-4 bg-muted/50 rounded-lg">
-                  <p className="text-sm font-medium mb-2">Código manual (se não conseguir escanear):</p>
-                  <p className="text-xs font-mono bg-background p-2 rounded border break-all">
-                    {qrCodeData.secret}
-                  </p>
-                </div>
-
-                <div className="p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Como configurar:</h4>
-                  <ol className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-                    <li>1. Abra o Google Authenticator</li>
-                    <li>2. Toque em "+" ou "Adicionar conta"</li>
-                    <li>3. Escaneie o QR Code acima</li>
-                    <li>4. Digite o código de 6 dígitos gerado</li>
-                  </ol>
-                </div>
-              </div>
-            )}
-
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="code" className="text-sm font-medium flex items-center gap-2">
