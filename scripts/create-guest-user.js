@@ -12,9 +12,22 @@ async function createGuestUser() {
   try {
     console.log('Criando usuário guest...');
     
+    // Generate secure random password
+    const generateSecurePassword = () => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+      let password = '';
+      for (let i = 0; i < 16; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return password;
+    };
+
+    const securePassword = generateSecurePassword();
+    console.log('Generated secure password:', securePassword);
+
     const { data, error } = await supabase.auth.signUp({
       email: 'guest@saudepublica.ai',
-      password: '123456',
+      password: securePassword,
       options: {
         data: {
           role: 'paciente',

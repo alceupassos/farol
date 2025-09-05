@@ -29,7 +29,7 @@ const SiteAccess = () => {
     try {
       console.log('🔧 Generating new site access code...');
       
-      const { secret, salt, encryptedSecret, qrUri } = generateSiteAccessCode('Sistema Principal');
+      const { secret, salt, encryptedSecret, qrUri } = await generateSiteAccessCode('Sistema Principal');
       
       console.log('🔑 Generated crypto data:', {
         secretLength: secret.length,

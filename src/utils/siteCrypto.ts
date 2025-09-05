@@ -1,8 +1,22 @@
 import CryptoJS from 'crypto-js';
 import { generateSecret, generateTOTPUri, verifyTOTP } from './totp';
+import { supabase } from '@/integrations/supabase/client';
 
-// Enhanced encryption based on MCP best practices
-const ENCRYPTION_KEY = 'SiteAccess2024SuperSecureKey!';
+// Get encryption key from Supabase secrets
+const getEncryptionKey = async (): Promise<string> => {
+  try {
+    // Try to get from edge function that has access to secrets
+    const { data, error } = await supabase.functions.invoke('get-encryption-key');
+    if (error || !data?.key) {
+      throw new Error('Failed to get encryption key');
+    }
+    return data.key;
+  } catch (error) {
+    console.error('Failed to get encryption key:', error);
+    // Fallback for development - this should be replaced with proper key management
+    return 'SiteAccess2024SuperSecureKey!';
+  }
+};
 
 // Generate secure salt using Web Crypto API
 export const generateSalt = (): string => {
@@ -12,9 +26,10 @@ export const generateSalt = (): string => {
 };
 
 // AES-256-GCM encryption with PBKDF2 key derivation
-export const encryptSiteSecret = (secret: string, salt: string): string => {
+export const encryptSiteSecret = async (secret: string, salt: string): Promise<string> => {
+  const encryptionKey = await getEncryptionKey();
   // Derive key using PBKDF2 with 100,000 iterations (MCP standard)
-  const key = CryptoJS.PBKDF2(ENCRYPTION_KEY, salt, {
+  const key = CryptoJS.PBKDF2(encryptionKey, salt, {
     keySize: 256/32,
     iterations: 100000
   });
@@ -22,8 +37,9 @@ export const encryptSiteSecret = (secret: string, salt: string): string => {
   return CryptoJS.AES.encrypt(secret, key.toString()).toString();
 };
 
-export const decryptSiteSecret = (encryptedSecret: string, salt: string): string => {
-  const key = CryptoJS.PBKDF2(ENCRYPTION_KEY, salt, {
+export const decryptSiteSecret = async (encryptedSecret: string, salt: string): Promise<string> => {
+  const encryptionKey = await getEncryptionKey();
+  const key = CryptoJS.PBKDF2(encryptionKey, salt, {
     keySize: 256/32,
     iterations: 100000
   });
@@ -33,15 +49,15 @@ export const decryptSiteSecret = (encryptedSecret: string, salt: string): string
 };
 
 // Generate site access QR code data
-export const generateSiteAccessCode = (codeName: string): {
+export const generateSiteAccessCode = async (codeName: string): Promise<{
   secret: string;
   salt: string;
   encryptedSecret: string;
   qrUri: string;
-} => {
+}> => {
   const secret = generateSecret();
   const salt = generateSalt();
-  const encryptedSecret = encryptSiteSecret(secret, salt);
+  const encryptedSecret = await encryptSiteSecret(secret, salt);
   const qrUri = generateTOTPUri(secret, `Site Access - ${codeName}`);
   
   return {
@@ -53,9 +69,9 @@ export const generateSiteAccessCode = (codeName: string): {
 };
 
 // Verify site access code
-export const verifySiteAccessCode = (token: string, encryptedSecret: string, salt: string): boolean => {
+export const verifySiteAccessCode = async (token: string, encryptedSecret: string, salt: string): Promise<boolean> => {
   try {
-    const secret = decryptSiteSecret(encryptedSecret, salt);
+    const secret = await decryptSiteSecret(encryptedSecret, salt);
     return verifyTOTP(token, secret);
   } catch (error) {
     console.error('Error verifying site access code:', error);

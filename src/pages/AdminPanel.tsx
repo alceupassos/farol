@@ -98,7 +98,7 @@ const AdminPanel = () => {
 
     try {
       setLoading(true);
-      const { secret, salt, encryptedSecret, qrUri } = generateSiteAccessCode(newCodeName);
+      const { secret, salt, encryptedSecret, qrUri } = await generateSiteAccessCode(newCodeName);
 
       const { error } = await supabase
         .from('site_access_codes')

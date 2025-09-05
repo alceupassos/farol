@@ -34,17 +34,7 @@ serve(async (req) => {
       throw new Error('Missing code or user_id')
     }
 
-    // TEMPORARY: Accept fixed code 322322 for development
-    if (code === '322322') {
-      console.log(`🧪 DESENVOLVIMENTO: Usando código fixo para user ${user_id}`)
-      return new Response(
-        JSON.stringify({ valid: true }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
-        }
-      )
-    }
+    // REMOVED: Development bypass code for security
 
     // Get user's 2FA secret from database
     const { data: secretData, error: secretError } = await supabaseClient

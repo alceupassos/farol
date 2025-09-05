@@ -14,24 +14,74 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_sessions: {
+        Row: {
+          admin_user_id: string
+          created_at: string
+          expires_at: string
+          id: string
+          ip_address: unknown | null
+          session_token: string
+          user_agent: string | null
+        }
+        Insert: {
+          admin_user_id: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          ip_address?: unknown | null
+          session_token: string
+          user_agent?: string | null
+        }
+        Update: {
+          admin_user_id?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          ip_address?: unknown | null
+          session_token?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_sessions_admin_user_id_fkey"
+            columns: ["admin_user_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       admin_users: {
         Row: {
           created_at: string
           email: string
+          failed_login_attempts: number | null
           id: string
+          last_login_at: string | null
+          locked_until: string | null
           password_hash: string
+          salt: string | null
         }
         Insert: {
           created_at?: string
           email: string
+          failed_login_attempts?: number | null
           id?: string
+          last_login_at?: string | null
+          locked_until?: string | null
           password_hash: string
+          salt?: string | null
         }
         Update: {
           created_at?: string
           email?: string
+          failed_login_attempts?: number | null
           id?: string
+          last_login_at?: string | null
+          locked_until?: string | null
           password_hash?: string
+          salt?: string | null
         }
         Relationships: []
       }
@@ -198,6 +248,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_expired_admin_sessions: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

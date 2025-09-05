@@ -127,13 +127,7 @@ export const use2FA = () => {
 
     console.log('🔐 Verificando código 2FA:', { userId: user.id, code: code.substring(0, 2) + '****' });
 
-    // TEMPORARY: Accept fixed code 322322 for development
-    if (code === '322322') {
-      console.log('🧪 MODO DESENVOLVIMENTO: Usando código fixo 322322');
-      setIs2FAVerified(true);
-      sessionStorage.setItem('2fa_verified', 'true');
-      return true;
-    }
+    // REMOVED: Development bypass code for security
 
     try {
       // Try edge function first
