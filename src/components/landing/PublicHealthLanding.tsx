@@ -47,6 +47,8 @@ import NeighborhoodTransformation from './NeighborhoodTransformation';
 import AdaptabilityDisclaimer from './AdaptabilityDisclaimer';
 
 const PublicHealthLanding = () => {
+  console.log('🏥 PublicHealthLanding component rendering');
+  
   const navigate = useNavigate();
   const { isFullAccessEnabled } = useProfileAccess();
   const { switchGuestRole } = useAuth();
