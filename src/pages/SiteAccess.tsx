@@ -98,13 +98,6 @@ const SiteAccess = () => {
                 </Alert>
               )}
 
-              {/* Development mode indicator */}
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                <p className="text-sm text-yellow-800">
-                  🧪 <strong>Modo Desenvolvimento:</strong> Use o código{' '}
-                  <code className="bg-yellow-100 px-1 rounded">322322</code> para entrar
-                </p>
-              </div>
 
               <Button
                 type="submit"

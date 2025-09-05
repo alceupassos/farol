@@ -42,6 +42,7 @@ const AdminPanel = () => {
   const [newCodeName, setNewCodeName] = useState('');
   const [showSecret, setShowSecret] = useState<string | null>(null);
   const [generatedQR, setGeneratedQR] = useState<{ qrUri: string; secret: string } | null>(null);
+  const [hasActiveCodes, setHasActiveCodes] = useState(false);
 
   const adminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +72,10 @@ const AdminPanel = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (codes) setAccessCodes(codes);
+      if (codes) {
+        setAccessCodes(codes);
+        setHasActiveCodes(codes.some(code => code.is_active));
+      }
 
       // Load access logs
       const { data: logs } = await supabase
@@ -303,6 +307,14 @@ const AdminPanel = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                {!hasActiveCodes && (
+                  <Alert>
+                    <AlertDescription>
+                      🔐 <strong>Primeiro acesso:</strong> Gere seu primeiro código QR para configurar o Google Authenticator e proteger o sistema.
+                    </AlertDescription>
+                  </Alert>
+                )}
+                
                 <div className="flex gap-2">
                   <Input
                     placeholder="Nome do código (ex: Admin Principal)"
@@ -315,23 +327,33 @@ const AdminPanel = () => {
                 </div>
 
                 {generatedQR && (
-                  <div className="space-y-4 p-4 border rounded-lg bg-card">
-                    <h3 className="font-medium">QR Code Gerado</h3>
+                  <div className="space-y-4 p-4 border rounded-lg bg-primary/5">
+                    <h3 className="font-medium text-primary">🔐 Configure seu Google Authenticator</h3>
                     <div className="flex flex-col items-center space-y-4">
-                      <QRCodeSVG value={generatedQR.qrUri} size={200} />
+                      <QRCodeSVG value={generatedQR.qrUri} size={200} className="border-2 border-primary/20 rounded-lg p-2" />
                       <div className="text-center space-y-2">
                         <p className="text-sm text-muted-foreground">
-                          Escaneie este QR code com seu aplicativo autenticador
+                          <strong>1.</strong> Abra o Google Authenticator no seu celular<br/>
+                          <strong>2.</strong> Toque em "+" e escolha "Escanear código QR"<br/>
+                          <strong>3.</strong> Aponte a câmera para o código acima
                         </p>
-                        <p className="text-xs font-mono bg-muted p-2 rounded">
-                          Secret: {generatedQR.secret}
-                        </p>
+                        <div className="bg-muted p-3 rounded-lg">
+                          <p className="text-xs text-muted-foreground mb-1">Chave manual (se não conseguir escanear):</p>
+                          <p className="text-xs font-mono text-primary break-all">
+                            {generatedQR.secret}
+                          </p>
+                        </div>
+                        <Alert>
+                          <AlertDescription className="text-sm">
+                            ⚠️ <strong>IMPORTANTE:</strong> Guarde esta chave em local seguro. Este QR code só aparece uma vez!
+                          </AlertDescription>
+                        </Alert>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => setGeneratedQR(null)}
                         >
-                          Fechar
+                          Código Configurado
                         </Button>
                       </div>
                     </div>

@@ -54,14 +54,13 @@ export const generateSiteAccessCode = (codeName: string): {
 
 // Verify site access code
 export const verifySiteAccessCode = (token: string, encryptedSecret: string, salt: string): boolean => {
-  // Accept fixed code for development
-  if (token === '322322') {
-    console.log('🧪 SITE ACCESS: Using fixed development code');
-    return true;
+  try {
+    const secret = decryptSiteSecret(encryptedSecret, salt);
+    return verifyTOTP(token, secret);
+  } catch (error) {
+    console.error('Error verifying site access code:', error);
+    return false;
   }
-  
-  const secret = decryptSiteSecret(encryptedSecret, salt);
-  return verifyTOTP(token, secret);
 };
 
 // Generate session token for site access

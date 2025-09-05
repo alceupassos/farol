@@ -25,27 +25,6 @@ serve(async (req) => {
 
     console.log(`🔐 Site access attempt with code: ${code.substring(0, 2)}****`);
 
-    // TEMPORARY: Accept fixed code 322322 for development
-    if (code === '322322') {
-      console.log('🧪 SITE ACCESS: Using fixed development code');
-      
-      // Log the access attempt
-      await supabaseClient.from('site_access_logs').insert({
-        success: true,
-        ip_address,
-        user_agent,
-        attempted_at: new Date().toISOString()
-      });
-
-      return new Response(
-        JSON.stringify({ valid: true, session_token: 'dev_token_322322' }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
-        }
-      )
-    }
-
     // Get all active site access codes
     const { data: accessCodes, error: codesError } = await supabaseClient
       .from('site_access_codes')
@@ -72,38 +51,58 @@ serve(async (req) => {
       )
     }
 
-    // Try to verify against any active code
+    // Try to verify against any active code using real TOTP verification
     for (const accessCode of accessCodes) {
-      // Here we would decrypt and verify the TOTP code
-      // For now, we'll accept any 6-digit code as valid for active codes
-      if (code.length === 6 && /^\d{6}$/.test(code)) {
-        console.log(`✅ Site access granted for code: ${accessCode.code_name}`);
+      try {
+        // Import crypto functions (we need to recreate them here since we can't import from src)
+        const CryptoJS = await import('https://esm.sh/crypto-js@4.2.0');
         
-        // Log successful access
-        await supabaseClient.from('site_access_logs').insert({
-          code_used: accessCode.id,
-          success: true,
-          ip_address,
-          user_agent,
-          attempted_at: new Date().toISOString()
+        // Recreate the decryption function
+        const ENCRYPTION_KEY = 'SiteAccess2024SuperSecureKey!';
+        const key = CryptoJS.PBKDF2(ENCRYPTION_KEY, accessCode.salt, {
+          keySize: 256/32,
+          iterations: 100000
         });
+        
+        const bytes = CryptoJS.AES.decrypt(accessCode.encrypted_secret, key.toString());
+        const secret = bytes.toString(CryptoJS.enc.Utf8);
+        
+        // Verify TOTP code
+        const otplib = await import('https://esm.sh/otplib@12.0.1');
+        const isValid = otplib.authenticator.verify({ token: code, secret });
+        
+        if (isValid) {
+          console.log(`✅ Site access granted for code: ${accessCode.code_name}`);
+          
+          // Log successful access
+          await supabaseClient.from('site_access_logs').insert({
+            code_used: accessCode.id,
+            success: true,
+            ip_address,
+            user_agent,
+            attempted_at: new Date().toISOString()
+          });
 
-        // Update last used time
-        await supabaseClient
-          .from('site_access_codes')
-          .update({ last_used_at: new Date().toISOString() })
-          .eq('id', accessCode.id);
+          // Update last used time
+          await supabaseClient
+            .from('site_access_codes')
+            .update({ last_used_at: new Date().toISOString() })
+            .eq('id', accessCode.id);
 
-        // Generate session token (simplified for now)
-        const sessionToken = `site_token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+          // Generate session token
+          const sessionToken = `site_token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-        return new Response(
-          JSON.stringify({ valid: true, session_token: sessionToken }),
-          { 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 200
-          }
-        )
+          return new Response(
+            JSON.stringify({ valid: true, session_token: sessionToken }),
+            { 
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+              status: 200
+            }
+          )
+        }
+      } catch (decryptError) {
+        console.error(`Error verifying code ${accessCode.code_name}:`, decryptError);
+        continue; // Try next code
       }
     }
 
