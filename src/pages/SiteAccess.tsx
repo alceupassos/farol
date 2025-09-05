@@ -53,7 +53,13 @@ const SiteAccess = () => {
 
       if (error) {
         console.error('❌ Error saving access code:', error);
-        setError('Erro ao salvar código de acesso no banco de dados');
+        if (error.code === '42501') {
+          setError('Erro de permissão. O sistema está se configurando automaticamente...');
+        } else if (error.code === '23505') {
+          setError('Código já existe. Redirecionando para verificação...');
+        } else {
+          setError(`Erro ao salvar: ${error.message}`);
+        }
         setStep('verify');
         return;
       }
@@ -68,7 +74,7 @@ const SiteAccess = () => {
       
     } catch (error) {
       console.error('💥 Error generating access code:', error);
-      setError(`Erro ao gerar código de acesso: ${error.message}`);
+      setError(`Erro ao gerar código de acesso: ${(error as Error).message}`);
       setStep('verify');
     } finally {
       setIsCreatingCode(false);
@@ -88,7 +94,7 @@ const SiteAccess = () => {
 
         if (error) {
           console.error('❌ Error checking access codes:', error);
-          setError('Erro ao verificar configuração do sistema');
+          setError(`Erro ao verificar configuração: ${error.message}`);
           setStep('verify');
           return;
         }
