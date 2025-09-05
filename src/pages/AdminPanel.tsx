@@ -301,19 +301,17 @@ const AdminPanel = () => {
           <TabsContent value="generate" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Gerar Novo Código</CardTitle>
+                <CardTitle>Gerar Código Adicional</CardTitle>
                 <CardDescription>
-                  Criar um novo código de acesso ao sistema
+                  Criar códigos adicionais para outros administradores
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {!hasActiveCodes && (
-                  <Alert>
-                    <AlertDescription>
-                      🔐 <strong>Primeiro acesso:</strong> Gere seu primeiro código QR para configurar o Google Authenticator e proteger o sistema.
-                    </AlertDescription>
-                  </Alert>
-                )}
+                <Alert>
+                  <AlertDescription>
+                    👥 <strong>Códigos adicionais:</strong> O primeiro código é criado automaticamente na página de acesso. Aqui você pode gerar códigos para outros administradores.
+                  </AlertDescription>
+                </Alert>
                 
                 <div className="flex gap-2">
                   <Input
