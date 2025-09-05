@@ -173,6 +173,11 @@ export const GoogleAuthenticatorSetup: React.FC<GoogleAuthenticatorSetupProps> =
             {/* Verification */}
             <div className="space-y-3">
               <Label htmlFor="verification">Digite o código do seu app:</Label>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+                <p className="text-sm text-yellow-800">
+                  🧪 <strong>Modo Desenvolvimento:</strong> Use o código <code className="bg-yellow-100 px-1 rounded">322322</code> para testar
+                </p>
+              </div>
               <div className="flex gap-2">
                 <Input
                   id="verification"

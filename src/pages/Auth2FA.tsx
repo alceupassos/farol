@@ -123,9 +123,14 @@ const Auth2FA = () => {
                 autoFocus
                 onKeyPress={handleKeyPress}
               />
-              <p className="text-xs text-muted-foreground text-center">
+               <p className="text-xs text-muted-foreground text-center">
                 O código muda a cada 30 segundos
               </p>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                <p className="text-sm text-yellow-800">
+                  🧪 <strong>Modo Desenvolvimento:</strong> Use o código <code className="bg-yellow-100 px-1 rounded">322322</code> para entrar
+                </p>
+              </div>
             </div>
 
             {attempts > 0 && (
