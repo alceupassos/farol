@@ -1,218 +1,116 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { generateSecret, encryptSecret, generateBackupCodes, encryptBackupCodes } from '@/utils/totp';
-
-interface User2FASecret {
-  id: string;
-  user_id: string;
-  encrypted_secret: string;
-  backup_codes: string[] | null;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-}
+import { useSecureTOTP } from '@/contexts/SecureTOTPContext';
+import { secureStorage, logSecurityEvent } from '@/utils/securityUtils';
 
 export const use2FA = () => {
   const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const [has2FA, setHas2FA] = useState(false);
-  const [is2FAVerified, setIs2FAVerified] = useState(false);
+  const { is2FAEnabled, verify2FACode, generate2FASetup, activate2FA, disable2FA, loading } = useSecureTOTP();
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     if (user) {
-      check2FAStatus();
+      checkVerificationStatus();
+    } else {
+      setIsVerified(false);
     }
-  }, [user]);
+  }, [user, is2FAEnabled]);
 
-  const check2FAStatus = async () => {
-    if (!user) return;
-
-    try {
-      const { data, error } = await supabase
-        .from('user_2fa_secrets')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('is_active', true)
-        .single();
-
-      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
-        console.error('Error checking 2FA status:', error);
-        return;
-      }
-
-      setHas2FA(!!data);
-    } catch (error) {
-      console.error('Error checking 2FA status:', error);
+  const checkVerificationStatus = () => {
+    const sessionData = secureStorage.get('2fa_session');
+    if (sessionData && sessionData.expiry && Date.now() < sessionData.expiry) {
+      setIsVerified(true);
+    } else {
+      setIsVerified(false);
+      secureStorage.remove('2fa_session');
     }
   };
 
   const setup2FA = async () => {
-    if (!user) {
-      console.error('2FA Setup Error: No user authenticated');
-      throw new Error('No user authenticated');
-    }
-
-    console.log('Starting 2FA setup for user:', user.id);
-    setLoading(true);
-    
     try {
-      // Generate and encrypt secrets
-      console.log('Generating 2FA secret...');
-      const secret = generateSecret();
-      const encryptedSecret = encryptSecret(secret);
-      const backupCodes = generateBackupCodes();
-      const encryptedBackupCodes = encryptBackupCodes(backupCodes);
-      
-      console.log('Secrets generated successfully');
-
-      // First, remove any existing 2FA setup for this user
-      console.log('Removing existing 2FA setup...');
-      const { error: deleteError } = await supabase
-        .from('user_2fa_secrets')
-        .delete()
-        .eq('user_id', user.id);
-
-      if (deleteError) {
-        console.error('Error deleting existing 2FA:', deleteError);
+      const result = await generate2FASetup();
+      if (result) {
+        logSecurityEvent('2fa_setup_initiated');
       }
-
-      // Insert new 2FA setup
-      console.log('Inserting new 2FA setup...');
-      const { error: insertError, data } = await supabase
-        .from('user_2fa_secrets')
-        .insert({
-          user_id: user.id,
-          encrypted_secret: encryptedSecret,
-          backup_codes: encryptedBackupCodes,
-          is_active: false, // Will be activated after verification
-        })
-        .select();
-
-      if (insertError) {
-        console.error('Error inserting 2FA setup:', insertError);
-        throw insertError;
-      }
-
-      console.log('2FA setup completed successfully:', data);
-      return { secret, backupCodes };
+      return result;
     } catch (error) {
-      console.error('Error setting up 2FA:', error);
-      throw error;
-    } finally {
-      setLoading(false);
+      console.error('Error in setup2FA:', error);
+      logSecurityEvent('2fa_setup_failed', { error: (error as Error).message });
+      return null;
     }
   };
 
-  const activate2FA = async () => {
-    if (!user) throw new Error('No user authenticated');
-
+  const verify2FACodeLocal = async (code: string) => {
     try {
-      const { error } = await supabase
-        .from('user_2fa_secrets')
-        .update({ is_active: true })
-        .eq('user_id', user.id);
-
-      if (error) throw error;
-
-      setHas2FA(true);
-    } catch (error) {
-      console.error('Error activating 2FA:', error);
-      throw error;
-    }
-  };
-
-  const verify2FACode = async (code: string): Promise<boolean> => {
-    if (!user) return false;
-
-    console.log('🔐 Verificando código 2FA:', { userId: user.id, code: code.substring(0, 2) + '****' });
-
-    // REMOVED: Development bypass code for security
-
-    try {
-      // Try edge function first
-      const { data, error } = await supabase.functions.invoke('verify-totp', {
-        body: { code, user_id: user.id }
-      });
-
-      console.log('🌐 Resposta da Edge Function:', { data, error });
-
-      if (!error && data?.valid === true) {
-        console.log('✅ Verificação via Edge Function bem-sucedida');
-        setIs2FAVerified(true);
-        sessionStorage.setItem('2fa_verified', 'true');
-        return true;
-      }
-
-      // Fallback to local verification
-      console.log('🔄 Tentando verificação local...');
-      
-      const { data: secretData, error: secretError } = await supabase
-        .from('user_2fa_secrets')
-        .select('encrypted_secret')
-        .eq('user_id', user.id)
-        .single();
-
-      if (secretError || !secretData) {
-        console.error('❌ Erro ao buscar segredo 2FA:', secretError);
-        return false;
-      }
-
-      console.log('🔑 Segredo 2FA encontrado, verificando localmente...');
-
-      const { decryptSecret, verifyTOTP } = await import('@/utils/totp');
-      const secret = decryptSecret(secretData.encrypted_secret);
-      const isValid = verifyTOTP(code, secret);
-
-      console.log('🎯 Resultado da verificação local:', isValid);
-
+      const isValid = await verify2FACode(code);
       if (isValid) {
-        setIs2FAVerified(true);
-        sessionStorage.setItem('2fa_verified', 'true');
+        logSecurityEvent('2fa_verification_success');
+      } else {
+        logSecurityEvent('2fa_verification_failed', { code_length: code.length });
       }
-
       return isValid;
     } catch (error) {
-      console.error('❌ Erro na verificação 2FA:', error);
+      console.error('Error in verify2FACode:', error);
+      logSecurityEvent('2fa_verification_error', { error: (error as Error).message });
       return false;
     }
   };
 
-  const disable2FA = async () => {
-    if (!user) throw new Error('No user authenticated');
-
+  const activate2FALocal = async () => {
     try {
-      const { error } = await supabase
-        .from('user_2fa_secrets')
-        .delete()
-        .eq('user_id', user.id);
-
-      if (error) throw error;
-
-      setHas2FA(false);
-      setIs2FAVerified(false);
-      sessionStorage.removeItem('2fa_verified');
+      const success = await activate2FA();
+      if (success) {
+        logSecurityEvent('2fa_activated');
+      }
+      return success;
     } catch (error) {
-      console.error('Error disabling 2FA:', error);
-      throw error;
+      console.error('Error in activate2FA:', error);
+      logSecurityEvent('2fa_activation_failed', { error: (error as Error).message });
+      return false;
     }
   };
 
+  const markAsVerified = () => {
+    const expiry = Date.now() + (30 * 60 * 1000); // 30 minutes
+    secureStorage.set('2fa_session', { expiry, timestamp: Date.now() });
+    setIsVerified(true);
+    logSecurityEvent('2fa_session_verified');
+  };
+
+  const clearVerification = () => {
+    secureStorage.remove('2fa_session');
+    setIsVerified(false);
+    logSecurityEvent('2fa_session_cleared');
+  };
+
+  // Legacy compatibility
+  const has2FA = is2FAEnabled;
+  const is2FAVerified = isVerified;
+  
+  const check2FAStatus = async () => {
+    // This is now handled by SecureTOTPProvider
+    return is2FAEnabled;
+  };
+
   const checkSessionVerification = () => {
-    const verified = sessionStorage.getItem('2fa_verified') === 'true';
-    setIs2FAVerified(verified);
-    return verified;
+    checkVerificationStatus();
+    return isVerified;
   };
 
   return {
+    is2FAEnabled,
+    isVerified,
     loading,
+    setup2FA,
+    verify2FACode: verify2FACodeLocal,
+    activate2FA: activate2FALocal,
+    markAsVerified,
+    clearVerification,
+    disable2FA,
+    // Legacy compatibility
     has2FA,
     is2FAVerified,
-    setup2FA,
-    activate2FA,
-    verify2FACode,
-    disable2FA,
     check2FAStatus,
-    checkSessionVerification,
+    checkSessionVerification
   };
 };

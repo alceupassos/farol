@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ProfileAccessProvider } from "@/contexts/ProfileAccessContext";
+import { SecureTOTPProvider } from "@/contexts/SecureTOTPContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
 import { ServiceWorkerManager } from "./components/pwa/ServiceWorkerManager";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -77,7 +78,8 @@ const App = () => (
       <SiteAccessProvider>
         <AuthProvider>
           <ProfileAccessProvider>
-            <LanguageProvider>
+            <SecureTOTPProvider>
+              <LanguageProvider>
               <TooltipProvider>
                 <div>
                   <Toaster />
@@ -253,6 +255,7 @@ const App = () => (
                 </div>
               </TooltipProvider>
             </LanguageProvider>
+            </SecureTOTPProvider>
           </ProfileAccessProvider>
         </AuthProvider>
       </SiteAccessProvider>

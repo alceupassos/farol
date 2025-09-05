@@ -35,6 +35,9 @@ verify_jwt = false
 [functions.get-encryption-key]
 verify_jwt = false
 
+[functions.secure-totp]
+verify_jwt = true
+
 [db]
 port = 54322
 
