@@ -49,6 +49,10 @@ import SupportPage from "./pages/SupportPage";
 import DocumentationPage from "./pages/DocumentationPage";
 import EpidemicAlerts from "./pages/EpidemicAlerts";
 import { TwoFAProtectedRoute } from "./components/auth/2FAProtectedRoute";
+import { SiteAccessProvider } from "./contexts/SiteAccessContext";
+import PreLoginGuard from "./components/auth/PreLoginGuard";
+import SiteAccess from "./pages/SiteAccess";
+import AdminPanel from "./pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
@@ -70,17 +74,21 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ProfileAccessProvider>
-          <LanguageProvider>
-            <TooltipProvider>
-            <div>
-              <Toaster />
-              <Sonner />
-              <PWAInstallPrompt />
-              <ServiceWorkerManager />
-              <BrowserRouter>
-              <Routes>
+      <SiteAccessProvider>
+        <PreLoginGuard>
+          <AuthProvider>
+            <ProfileAccessProvider>
+              <LanguageProvider>
+                <TooltipProvider>
+                <div>
+                  <Toaster />
+                  <Sonner />
+                  <PWAInstallPrompt />
+                  <ServiceWorkerManager />
+                  <BrowserRouter>
+                  <Routes>
+                    <Route path="/site-access" element={<SiteAccess />} />
+                    <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/" element={<Index />} />
                 <Route path="/demo" element={<DemoPage />} />
                 <Route path="/documentation" element={<DocumentationPage />} />
@@ -239,13 +247,15 @@ const App = () => (
                   </TwoFAProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </div>
-        </TooltipProvider>
-      </LanguageProvider>
-    </ProfileAccessProvider>
-    </AuthProvider>
+                  </Routes>
+                </BrowserRouter>
+              </div>
+            </TooltipProvider>
+          </LanguageProvider>
+        </ProfileAccessProvider>
+        </AuthProvider>
+      </PreLoginGuard>
+    </SiteAccessProvider>
   </QueryClientProvider>
   </ErrorBoundary>
 );

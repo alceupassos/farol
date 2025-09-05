@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          password_hash: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          password_hash: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          password_hash?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -49,6 +70,77 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      site_access_codes: {
+        Row: {
+          code_name: string
+          created_at: string
+          created_by: string | null
+          encrypted_secret: string
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          last_used_at: string | null
+          salt: string
+        }
+        Insert: {
+          code_name: string
+          created_at?: string
+          created_by?: string | null
+          encrypted_secret: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          last_used_at?: string | null
+          salt: string
+        }
+        Update: {
+          code_name?: string
+          created_at?: string
+          created_by?: string | null
+          encrypted_secret?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          last_used_at?: string | null
+          salt?: string
+        }
+        Relationships: []
+      }
+      site_access_logs: {
+        Row: {
+          attempted_at: string
+          code_used: string | null
+          id: string
+          ip_address: unknown | null
+          success: boolean
+          user_agent: string | null
+        }
+        Insert: {
+          attempted_at?: string
+          code_used?: string | null
+          id?: string
+          ip_address?: unknown | null
+          success: boolean
+          user_agent?: string | null
+        }
+        Update: {
+          attempted_at?: string
+          code_used?: string | null
+          id?: string
+          ip_address?: unknown | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "site_access_logs_code_used_fkey"
+            columns: ["code_used"]
+            isOneToOne: false
+            referencedRelation: "site_access_codes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_2fa_secrets: {
         Row: {
