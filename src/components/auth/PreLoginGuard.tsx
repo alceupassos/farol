@@ -10,14 +10,7 @@ const PreLoginGuard = ({ children }: PreLoginGuardProps) => {
   const { siteAccessGranted, loading } = useSiteAccess();
   const location = useLocation();
 
-  // Temporary bypass until September 9, 2025
-  const bypassEndDate = new Date('2025-09-09T23:59:59');
-  const currentDate = new Date();
-  
-  if (currentDate <= bypassEndDate) {
-    console.log('🔓 PreLoginGuard TEMPORARIAMENTE LIBERADO até 09 de setembro de 2025');
-    return <>{children}</>;
-  }
+  // Bypass removed - authentication is now required
 
   // Allow access to site access page and admin page without site access
   const publicRoutes = ['/site-access', '/admin'];
