@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AuthContextType {
   user: User | null;
@@ -24,38 +25,70 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Create a mock user that's always "logged in" for demo purposes
-  const mockUser = {
-    id: 'demo-user',
-    email: 'demo@sistema.local',
-    aud: 'authenticated',
-    role: 'authenticated',
-    email_confirmed_at: new Date().toISOString(),
-    app_metadata: {},
-    user_metadata: {},
-    identities: [],
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
-  } as User;
-
-  const [user] = useState<User | null>(mockUser);
-  const [session] = useState<Session | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<string | null>('gestor');
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set default role from localStorage or default to 'gestor'
-    const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-    setUserRole(savedRole);
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state changed:', event, session);
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          // Fetch user role from database
+          const { data: roleData } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .single();
+          
+          if (roleData) {
+            setUserRole(roleData.role);
+            localStorage.setItem('demo_user_role', roleData.role);
+          }
+        } else {
+          // If no session, use saved role for demo purposes
+          const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
+          setUserRole(savedRole);
+        }
+        setLoading(false);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    // In demo mode, just set the role based on email
-    const role = email.includes('gestor') ? 'gestor' : 
-                 email.includes('medico') ? 'medico' : 'paciente';
-    setUserRole(role);
-    localStorage.setItem('demo_user_role', role);
-    return { error: null };
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (error) {
+        console.error('Login error:', error);
+        return { error };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected login error:', error);
+      return { error };
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signInAsGuest = async (role: string) => {
@@ -65,17 +98,49 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signUp = async (email: string, password: string, role: string, additionalData?: any) => {
-    // In demo mode, just act as if signup was successful
-    const newRole = role || 'paciente'; // Default role for new signups
-    setUserRole(newRole);
-    localStorage.setItem('demo_user_role', newRole);
-    return { error: null };
+    try {
+      setLoading(true);
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: additionalData?.full_name || '',
+            role: role || 'paciente'
+          }
+        }
+      });
+      
+      if (error) {
+        console.error('Signup error:', error);
+        return { error };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      console.error('Unexpected signup error:', error);
+      return { error };
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signOut = async () => {
-    // In demo mode, just switch to default role
-    setUserRole('gestor');
-    localStorage.setItem('demo_user_role', 'gestor');
+    try {
+      setLoading(true);
+      await supabase.auth.signOut();
+      setUser(null);
+      setSession(null);
+      setUserRole('gestor');
+      localStorage.setItem('demo_user_role', 'gestor');
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const switchGuestRole = (newRole: string) => {
