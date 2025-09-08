@@ -75,11 +75,11 @@ const PublicHealthLanding = () => {
   };
 
   const handleDemoClick = () => {
-    navigate('/demo');
+    navigate('/login');
   };
 
   const handleDocumentationClick = () => {
-    navigate('/documentation');
+    navigate('/login');
   };
 
   return (
@@ -124,7 +124,7 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300" 
                   onClick={() => {
                     switchGuestRole('gestor');
-                    navigate('/dashboard');
+                    navigate('/login');
                   }}
                 >
                   <Building className="w-5 h-5 mr-2" />
@@ -151,7 +151,7 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => {
                     switchGuestRole('medico');
-                    navigate('/dashboard');
+                    navigate('/login');
                   }}
                 >
                   <Stethoscope className="w-5 h-5 mr-2" />
@@ -179,7 +179,7 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => {
                     switchGuestRole('paciente');
-                    navigate('/dashboard');
+                    navigate('/login');
                   }}
                 >
                   <Heart className="w-5 h-5 mr-2" />
