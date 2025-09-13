@@ -51,14 +51,20 @@ serve(async (req) => {
       )
     }
 
+    // Get encryption key from environment
+    const ENCRYPTION_KEY = Deno.env.get('SITE_ENCRYPTION_KEY');
+    if (!ENCRYPTION_KEY) {
+      console.error('SITE_ENCRYPTION_KEY not found in environment');
+      throw new Error('Encryption key not configured on the server.');
+    }
+
     // Try to verify against any active code using real TOTP verification
     for (const accessCode of accessCodes) {
       try {
         // Import crypto functions (we need to recreate them here since we can't import from src)
         const CryptoJS = await import('https://esm.sh/crypto-js@4.2.0');
         
-        // Recreate the decryption function
-        const ENCRYPTION_KEY = 'SiteAccess2024SuperSecureKey!';
+        // Derive key using PBKDF2
         const key = CryptoJS.PBKDF2(ENCRYPTION_KEY, accessCode.salt, {
           keySize: 256/32,
           iterations: 100000
