@@ -4,6 +4,8 @@ import dashboardBg from '@/assets/dashboard-bg.jpg';
 import HealthRiskScore from '@/components/health/HealthRiskScore';
 import PatientRiskList from '@/components/health/PatientRiskList';
 import PopulationRiskMetrics from '@/components/health/PopulationRiskMetrics';
+import EnhancedExecutiveCharts from '@/components/executive/EnhancedExecutiveCharts';
+import SpecialtyRiskRanking from '@/components/patient/SpecialtyRiskRanking';
 import { calculateRiskScore, mockPatientData } from '@/utils/riskCalculator';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -39,6 +41,9 @@ const RoleDashboard = () => {
       
       {/* Population Risk Metrics - Nova seção */}
       <PopulationRiskMetrics />
+      
+      {/* Enhanced Executive Charts - Novos gráficos expandidos */}
+      <EnhancedExecutiveCharts />
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="glass-morphism border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
@@ -240,6 +245,9 @@ const RoleDashboard = () => {
         size="lg"
         showDetails={true}
       />
+      
+      {/* Ranking de Risco por Especialidade - Nova funcionalidade */}
+      <SpecialtyRiskRanking />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>

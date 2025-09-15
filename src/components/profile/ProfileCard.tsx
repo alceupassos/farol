@@ -36,8 +36,8 @@ const ProfileCard = ({
 
   return (
     <div className={cn("glass-card rounded-xl overflow-hidden", className)}>
-      <div className="p-5 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
-        <h3 className="text-lg font-medium">Perfil Médico</h3>
+      <div className="p-5 border-b border-border flex justify-between items-center">
+        <h3 className="text-lg font-medium text-foreground">Perfil Médico</h3>
         <AppButton 
           variant="outline" 
           size="sm"

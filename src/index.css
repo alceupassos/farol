@@ -84,15 +84,18 @@
     
     --primary: 142 76% 36%;
     --primary-foreground: 0 0% 98%;
+    --primary-glow: 142 76% 45%;
     --primary-light: 142 60% 50%;
     --primary-dark: 142 80% 25%;
     
-    --secondary: 210 20% 95%;
-    --secondary-foreground: 210 20% 10%;
+    --secondary: 25 95% 53%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-glow: 25 95% 65%;
     --muted: 210 20% 95%;
     --muted-foreground: 210 10% 45%;
     --accent: 20 100% 60%;
     --accent-foreground: 0 0% 98%;
+    --accent-glow: 217 100% 75%;
     
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 98%;

@@ -25,13 +25,13 @@ const ProfileSidebar = ({
     <div className="space-y-6">
       <div className="glass-card rounded-xl p-5 animate-slide-up">
         <div className="flex flex-col items-center text-center mb-4">
-          <div className="w-20 h-20 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mb-3">
-            <span className="text-2xl font-medium text-gray-700 dark:text-gray-300">
+          <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-3 border-2 border-primary/20">
+            <span className="text-2xl font-medium text-primary">
               {name.split(' ').map(n => n[0]).join('').substring(0, 2)}
             </span>
           </div>
-          <h3 className="text-lg font-medium">{name}</h3>
-          <p className="text-sm text-gray-500">{age}, {gender}</p>
+          <h3 className="text-lg font-medium text-foreground">{name}</h3>
+          <p className="text-sm text-muted-foreground">{age}, {gender}</p>
         </div>
         
         <div className="flex justify-center mb-4">
@@ -42,21 +42,21 @@ const ProfileSidebar = ({
         </div>
         
         <div className="text-sm">
-          <div className="flex justify-between py-2 border-t border-gray-200 dark:border-gray-800">
-            <span className="text-gray-500">Última Atualização</span>
-            <span className="font-medium">{lastUpdate}</span>
+          <div className="flex justify-between py-2 border-t border-border">
+            <span className="text-muted-foreground">Última Atualização</span>
+            <span className="font-medium text-foreground">{lastUpdate}</span>
           </div>
-          <div className="flex justify-between py-2 border-t border-gray-200 dark:border-gray-800">
-            <span className="text-gray-500">Tipo Sanguíneo</span>
-            <span className="font-medium">{bloodType}</span>
+          <div className="flex justify-between py-2 border-t border-border">
+            <span className="text-muted-foreground">Tipo Sanguíneo</span>
+            <span className="font-medium text-foreground">{bloodType}</span>
           </div>
-          <div className="flex justify-between py-2 border-t border-gray-200 dark:border-gray-800">
-            <span className="text-gray-500">Alergias</span>
-            <span className="font-medium">{allergies}</span>
+          <div className="flex justify-between py-2 border-t border-border">
+            <span className="text-muted-foreground">Alergias</span>
+            <span className="font-medium text-foreground">{allergies}</span>
           </div>
-          <div className="flex justify-between py-2 border-t border-b border-gray-200 dark:border-gray-800">
-            <span className="text-gray-500">Medicamentos Ativos</span>
-            <span className="font-medium">{activeMedications}</span>
+          <div className="flex justify-between py-2 border-t border-b border-border">
+            <span className="text-muted-foreground">Medicamentos Ativos</span>
+            <span className="font-medium text-foreground">{activeMedications}</span>
           </div>
         </div>
         
@@ -80,20 +80,20 @@ const PrivacyStatus = () => {
         <h3 className="text-base font-medium">Status de Privacidade</h3>
       </div>
       
-      <div className="space-y-3 text-sm">
+        <div className="space-y-3 text-sm">
         <div className="flex justify-between items-center">
-          <span>Compartilhamento de Perfil</span>
-          <span className="px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 text-xs">Ativo</span>
+          <span className="text-foreground">Compartilhamento de Perfil</span>
+          <span className="px-2 py-0.5 rounded bg-success/10 text-success border border-success/20 text-xs">Ativo</span>
         </div>
         <div className="flex justify-between items-center">
-          <span>Acesso de Emergência</span>
-          <span className="px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 text-xs">Habilitado</span>
+          <span className="text-foreground">Acesso de Emergência</span>
+          <span className="px-2 py-0.5 rounded bg-success/10 text-success border border-success/20 text-xs">Habilitado</span>
         </div>
         <div className="flex justify-between items-center">
-          <span>Criptografia de Dados</span>
-          <span className="px-2 py-0.5 rounded bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 text-xs">Habilitada</span>
+          <span className="text-foreground">Criptografia de Dados</span>
+          <span className="px-2 py-0.5 rounded bg-success/10 text-success border border-success/20 text-xs">Habilitada</span>
         </div>
-        <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+        <div className="pt-2 border-t border-border">
           <button className="text-primary text-sm font-medium hover:underline">
             Gerenciar Configurações de Privacidade
           </button>
