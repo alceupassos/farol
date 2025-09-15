@@ -278,9 +278,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      authenticate_admin: {
+        Args: { p_email: string; p_password_hash: string }
+        Returns: {
+          admin_id: string
+          expires_at: string
+          session_token: string
+        }[]
+      }
       cleanup_expired_admin_sessions: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      create_admin_user: {
+        Args: { p_email: string; p_password_hash: string; p_salt?: string }
+        Returns: string
       }
       has_role: {
         Args: {
@@ -306,6 +318,10 @@ export type Database = {
           p_user_id: string
         }
         Returns: undefined
+      }
+      validate_admin_session: {
+        Args: { session_token: string }
+        Returns: boolean
       }
     }
     Enums: {
