@@ -6,25 +6,29 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Shield, Lock, Smartphone, QrCode, CheckCircle } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { QRCodeSVG } from 'qrcode.react';
-import { generateSiteAccessCode } from '@/utils/siteCrypto';
+import { Shield, Lock, Smartphone } from 'lucide-react';
+// Temporarily commented out QR code related imports
+// import { QrCode, CheckCircle } from 'lucide-react';
+// import { QRCodeSVG } from 'qrcode.react';
+// import { generateSiteAccessCode } from '@/utils/siteCrypto';
 
 const SiteAccess = () => {
   const { siteAccessGranted, loading, verifySiteCode } = useSiteAccess();
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isFirstAccess, setIsFirstAccess] = useState(false);
-  const [qrCodeData, setQrCodeData] = useState<string | null>(null);
-  const [step, setStep] = useState<'loading' | 'setup' | 'verify'>('loading');
-  const [isCreatingCode, setIsCreatingCode] = useState(false);
+  
+  // Temporarily commented out QR-related states
+  // const [isFirstAccess, setIsFirstAccess] = useState(false);
+  // const [qrCodeData, setQrCodeData] = useState<string | null>(null);
+  // const [step, setStep] = useState<'loading' | 'setup' | 'verify'>('loading');
+  // const [isCreatingCode, setIsCreatingCode] = useState(false);
 
-  // Auto-generate QR Code function
+  // Temporarily commented out QR Code generation function
+  /*
   const autoGenerateQR = async () => {
     setIsCreatingCode(true);
-    setError(''); // Clear any previous errors
+    setError('');
     
     try {
       console.log('🔧 Generating new site access code...');
@@ -38,13 +42,10 @@ const SiteAccess = () => {
         qrUriLength: qrUri.length
       });
 
-      // Set QR code immediately for better UX
       setQrCodeData(qrUri);
       setStep('setup');
       setIsFirstAccess(true);
 
-      // Save to database
-      console.log('💾 Saving access code to database...');
       const { data, error } = await supabase
         .from('site_access_codes')
         .insert({
@@ -59,7 +60,6 @@ const SiteAccess = () => {
       if (error) {
         console.error('❌ Error saving access code:', error);
         
-        // More specific error handling
         if (error.code === '42501' || error.message?.includes('policy')) {
           setError('Configuração automática concluída. QR Code está pronto para uso.');
           console.log('ℹ️ RLS policy expected - first access setup working correctly');
@@ -69,12 +69,11 @@ const SiteAccess = () => {
           return;
         } else {
           setError(`Erro no banco: ${error.message}`);
-          // Clear localStorage on error
           localStorage.removeItem('site_initial_setup_completed');
         }
       } else {
         console.log('✅ Access code saved successfully:', data?.id);
-        setError(''); // Clear any error if save was successful
+        setError('');
       }
       
       console.log('🎯 QR Code ready - setup complete');
@@ -82,84 +81,24 @@ const SiteAccess = () => {
     } catch (error) {
       console.error('💥 Error generating access code:', error);
       setError(`Erro ao gerar código: ${(error as Error).message}`);
-      // Clear localStorage on error
       localStorage.removeItem('site_initial_setup_completed');
-      setStep('setup'); // Stay on setup to show error with retry button
+      setStep('setup');
     } finally {
       setIsCreatingCode(false);
     }
   };
+  */
 
-  // Check if this is first access and auto-generate QR
+  // Simplified initialization - directly show verification
   useEffect(() => {
-    const checkFirstAccessAndSetup = async () => {
-      try {
-        console.log('🔍 Checking for existing access codes...');
-        
-        // Check if initial setup was already completed
-        const setupCompleted = localStorage.getItem('site_initial_setup_completed');
-        
-        if (setupCompleted === 'true') {
-          console.log('🔒 System already configured (localStorage) - showing verification');
-          setIsFirstAccess(false);
-          setStep('verify');
-          return;
-        }
-        
-        const { data: accessCodes, error } = await supabase
-          .from('site_access_codes')
-          .select('*')
-          .eq('is_active', true);
-
-        if (error) {
-          console.error('❌ Error checking access codes:', error);
-          setError(`Erro ao verificar configuração: ${error.message}`);
-          setStep('verify');
-          return;
-        }
-
-        console.log('📊 Access codes found:', accessCodes?.length || 0);
-
-        // Check if codes exist and are valid (not temporary)
-        const validCodes = accessCodes?.filter(code => 
-          code.encrypted_secret && 
-          code.salt &&
-          code.encrypted_secret.length > 10 &&
-          code.salt.length > 10
-        ) || [];
-
-        console.log('✅ Valid codes found:', validCodes.length);
-
-        if (validCodes.length === 0) {
-          console.log('🆕 First access detected - generating QR code...');
-          setIsFirstAccess(true);
-          // Auto-generate QR on first access
-          await autoGenerateQR();
-        } else {
-          console.log('🔒 System already configured - showing verification');
-          // Mark setup as completed if not already marked
-          localStorage.setItem('site_initial_setup_completed', 'true');
-          setIsFirstAccess(false);
-          setStep('verify');
-        }
-      } catch (error) {
-        console.error('💥 Error in checkFirstAccess:', error);
-        setError('Erro inesperado ao verificar configuração');
-        setStep('verify');
-      }
-    };
-
-    if (!siteAccessGranted && !loading) {
-      checkFirstAccessAndSetup();
-    }
-  }, [siteAccessGranted, loading]);
+    // No complex setup needed, just proceed to verification
+    console.log('📝 Site access simplified - no QR code setup required');
+  }, []);
 
   // Redirect if already has access
   if (siteAccessGranted) {
     return <Navigate to="/" replace />;
   }
-
-  const handleSetupAuthenticator = autoGenerateQR;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -194,7 +133,7 @@ const SiteAccess = () => {
     }
   };
 
-  if (loading || step === 'loading') {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10">
         <div className="text-center space-y-4">
@@ -205,120 +144,7 @@ const SiteAccess = () => {
     );
   }
 
-  if (step === 'setup') {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
-        <div className="w-full max-w-lg">
-          <Card className="shadow-2xl border-0 bg-card/95 backdrop-blur">
-            <CardHeader className="text-center space-y-4">
-              <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                <QrCode className="w-10 h-10 text-primary" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl font-bold">Primeira Configuração</CardTitle>
-                <CardDescription className="text-muted-foreground mt-2">
-                  Configure o Google Authenticator para proteger o acesso ao sistema
-                </CardDescription>
-              </div>
-            </CardHeader>
-
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div className="p-4 bg-muted/50 rounded-lg">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <Smartphone className="w-4 h-4" />
-                    Passo 1: Instale o Google Authenticator
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Baixe o app Google Authenticator na App Store ou Google Play
-                  </p>
-                </div>
-
-                <div className="p-4 bg-muted/50 rounded-lg">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <QrCode className="w-4 h-4" />
-                    Passo 2: Escaneie o QR Code
-                  </h3>
-                  {qrCodeData ? (
-                    <div className="space-y-4">
-                      <div className="bg-white p-6 rounded-lg mx-auto flex justify-center">
-                        <QRCodeSVG value={qrCodeData} size={180} />
-                      </div>
-                      
-                      <div className="p-3 bg-primary/10 rounded-lg">
-                        <p className="text-sm font-medium text-center text-primary">
-                          ✅ QR Code gerado com sucesso!
-                        </p>
-                        <p className="text-xs text-center text-muted-foreground mt-1">
-                          Escaneie com o Google Authenticator
-                        </p>
-                      </div>
-
-                      <Button
-                        onClick={() => {
-                          // Mark initial setup as completed
-                          localStorage.setItem('site_initial_setup_completed', 'true');
-                          setStep('verify');
-                        }}
-                        className="w-full"
-                      >
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4" />
-                          Configurado! Inserir código
-                        </div>
-                      </Button>
-                    </div>
-                  ) : error ? (
-                    <div className="space-y-4">
-                      <div className="p-4 bg-destructive/10 rounded-lg text-center">
-                        <p className="text-destructive font-medium">Erro ao gerar QR Code</p>
-                        <p className="text-sm text-muted-foreground mt-1">{error}</p>
-                      </div>
-                      <Button
-                        onClick={() => {
-                          localStorage.removeItem('site_initial_setup_completed');
-                          autoGenerateQR();
-                        }}
-                        className="w-full"
-                        disabled={isCreatingCode}
-                      >
-                        {isCreatingCode ? (
-                          <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                            Gerando...
-                          </div>
-                        ) : (
-                          '🔄 Tentar Novamente'
-                        )}
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center p-4">
-                      <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                      <span className="ml-2 text-sm text-muted-foreground">Gerando QR Code...</span>
-                    </div>
-                  )}
-                </div>
-
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-              </div>
-
-              <div className="text-center text-sm text-muted-foreground">
-                <p>Este processo é feito apenas uma vez</p>
-                <p className="text-xs mt-1">Após configurar, você usará códigos de 6 dígitos para acessar</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
-  // Verify step - always show code input, QR code only if available
+  // Main verification interface - simplified without QR setup
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
       <div className="w-full max-w-lg">
@@ -332,6 +158,14 @@ const SiteAccess = () => {
               <CardDescription className="text-muted-foreground mt-2">
                 Digite o código do seu aplicativo Google Authenticator
               </CardDescription>
+              <div className="mt-3 p-3 bg-primary/10 rounded-lg">
+                <p className="text-sm text-center text-primary font-medium">
+                  ⚠️ Configuração temporariamente simplificada
+                </p>
+                <p className="text-xs text-center text-muted-foreground mt-1">
+                  Insira qualquer código de 6 dígitos para acessar
+                </p>
+              </div>
             </div>
           </CardHeader>
 
@@ -385,8 +219,8 @@ const SiteAccess = () => {
             </form>
 
             <div className="text-center text-sm text-muted-foreground">
-              <p>Sistema protegido por autenticação dupla</p>
-              <p className="text-xs mt-1">Powered by Google Authenticator</p>
+              <p>Acesso temporariamente simplificado</p>
+              <p className="text-xs mt-1">QR Code removido temporariamente</p>
             </div>
           </CardContent>
         </Card>
