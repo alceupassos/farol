@@ -20,24 +20,45 @@ interface ProfileAccessProviderProps {
 }
 
 export const ProfileAccessProvider: React.FC<ProfileAccessProviderProps> = ({ children }) => {
-  const [isFullAccessEnabled, setIsFullAccessEnabled] = useState(() => {
-    // Carregar do localStorage, default false (apenas gestor)
-    const saved = localStorage.getItem('profileAccessEnabled');
-    return saved ? JSON.parse(saved) : false;
-  });
+  const [isFullAccessEnabled, setIsFullAccessEnabled] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    // Inicializar do localStorage apenas no lado do cliente
+    try {
+      const saved = localStorage.getItem('profileAccessEnabled');
+      if (saved) {
+        setIsFullAccessEnabled(JSON.parse(saved));
+      }
+    } catch (error) {
+      console.warn('Error loading profile access state:', error);
+    } finally {
+      setIsInitialized(true);
+    }
+  }, []);
 
   const toggleProfileAccess = () => {
     setIsFullAccessEnabled(prev => {
       const newValue = !prev;
-      localStorage.setItem('profileAccessEnabled', JSON.stringify(newValue));
+      try {
+        localStorage.setItem('profileAccessEnabled', JSON.stringify(newValue));
+      } catch (error) {
+        console.warn('Error saving profile access state:', error);
+      }
       return newValue;
     });
   };
 
   useEffect(() => {
-    // Sincronizar com localStorage quando o valor muda
-    localStorage.setItem('profileAccessEnabled', JSON.stringify(isFullAccessEnabled));
-  }, [isFullAccessEnabled]);
+    // Sincronizar com localStorage quando o valor muda, mas apenas depois da inicialização
+    if (isInitialized) {
+      try {
+        localStorage.setItem('profileAccessEnabled', JSON.stringify(isFullAccessEnabled));
+      } catch (error) {
+        console.warn('Error syncing profile access state:', error);
+      }
+    }
+  }, [isFullAccessEnabled, isInitialized]);
 
   return (
     <ProfileAccessContext.Provider value={{ isFullAccessEnabled, toggleProfileAccess }}>
