@@ -54,6 +54,7 @@ import GestaoOrcamentariaPage from "./pages/GestaoOrcamentariaPage";
 import SimuladorIEDPage from "./pages/SimuladorIEDPage";
 import IndicadoresDesempenhoPage from "./pages/IndicadoresDesempenhoPage";
 import GovernancaDadosPage from "./pages/GovernancaDadosPage";
+import ComissoesCIRPage from "./pages/ComissoesCIRPage";
 
 const queryClient = new QueryClient();
 
@@ -122,6 +123,7 @@ const App = () => (
                     <Route path="/simulador-ied" element={<ProtectedRoute><SimuladorIEDPage /></ProtectedRoute>} />
                     <Route path="/indicadores-desempenho" element={<ProtectedRoute><IndicadoresDesempenhoPage /></ProtectedRoute>} />
                     <Route path="/governanca-dados" element={<ProtectedRoute><GovernancaDadosPage /></ProtectedRoute>} />
+                    <Route path="/comissoes-cir" element={<ProtectedRoute><ComissoesCIRPage /></ProtectedRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
                     <Route path="*" element={<NotFound />} />
