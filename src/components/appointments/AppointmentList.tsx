@@ -20,7 +20,7 @@ interface AppointmentListProps {
 const AppointmentList = ({ appointments }: AppointmentListProps) => {
   return (
     <div className="space-y-4">
-      <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800">
+      <div className="bg-card rounded-lg border border-border">
         <Table>
           <TableHeader>
             <TableRow>
@@ -64,36 +64,36 @@ const AppointmentList = ({ appointments }: AppointmentListProps) => {
           <h3 className="text-lg font-medium mb-3">Dicas para suas consultas</h3>
           <div className="space-y-4">
             <div className="flex gap-3">
-              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Calendar className="h-4 w-4 text-primary" />
               </div>
               <div>
                 <h4 className="font-medium text-sm">Chegue com antecedência</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   Recomendamos chegar 15 minutos antes do horário marcado para completar qualquer documentação necessária.
                 </p>
               </div>
             </div>
             
             <div className="flex gap-3">
-              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <Clock className="h-4 w-4 text-primary" />
               </div>
               <div>
                 <h4 className="font-medium text-sm">Prepare suas perguntas</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   Anote suas dúvidas com antecedência para aproveitar ao máximo o tempo com o médico.
                 </p>
               </div>
             </div>
             
             <div className="flex gap-3">
-              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                <MapPin className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <div className="flex-shrink-0 h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <MapPin className="h-4 w-4 text-primary" />
               </div>
               <div>
                 <h4 className="font-medium text-sm">Verifique o local</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   Confira o endereço e como chegar com antecedência, especialmente se for um local novo.
                 </p>
               </div>
