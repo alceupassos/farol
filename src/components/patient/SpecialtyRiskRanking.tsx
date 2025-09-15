@@ -30,6 +30,7 @@ export interface SpecialtyRisk {
   dalys: number; // Disability-Adjusted Life Years
   icon: React.ReactNode;
   patientRisk: number; // Risco específico do paciente (0-100)
+  riskCalculation: string; // Descrição resumida de como o risco é calculado
 }
 
 const specialtyRisks: SpecialtyRisk[] = [
@@ -48,7 +49,8 @@ const specialtyRisks: SpecialtyRisk[] = [
     ylls: 15.2,
     dalys: 68.5,
     icon: <Heart className="h-5 w-5" />,
-    patientRisk: 78
+    patientRisk: 78,
+    riskCalculation: "Calcula anos de vida perdidos por mortes prematuras cardiovasculares. Fórmula: (Expectativa de vida - Idade da morte) × Número de mortes. Peso maior para mortes em idades jovens."
   },
   {
     specialty: "Oncologia",
@@ -65,7 +67,8 @@ const specialtyRisks: SpecialtyRisk[] = [
     ylls: 12.8,
     dalys: 58.2,
     icon: <Microscope className="h-5 w-5" />,
-    patientRisk: 35
+    patientRisk: 35,
+    riskCalculation: "Combina mortalidade prematura (YLL) + anos vividos com incapacidade (YLD). Fórmula: DALY = YLL + YLD. Considera impacto fatal e redução da qualidade de vida."
   },
   {
     specialty: "Nefrologia",
@@ -82,7 +85,8 @@ const specialtyRisks: SpecialtyRisk[] = [
     ylls: 9.5,
     dalys: 42.1,
     icon: <Droplets className="h-5 w-5" />,
-    patientRisk: 45
+    patientRisk: 45,
+    riskCalculation: "Avalia risco por múltiplas condições associadas. Score baseado em: diabetes, hipertensão, doença cardiovascular, idade >65 anos. Peso multiplicativo entre comorbidades."
   },
   {
     specialty: "Pneumologia",
@@ -99,7 +103,8 @@ const specialtyRisks: SpecialtyRisk[] = [
     ylls: 7.2,
     dalys: 34.8,
     icon: <Wind className="h-5 w-5" />,
-    patientRisk: 28
+    patientRisk: 28,
+    riskCalculation: "Baseado em frequência de internações, tempo de UTI, mortalidade hospitalar e dependência de oxigênio. Score 0-100 onde >75 indica alta gravidade sistêmica."
   },
   {
     specialty: "Neurologia",
@@ -116,7 +121,8 @@ const specialtyRisks: SpecialtyRisk[] = [
     ylls: 6.8,
     dalys: 31.5,
     icon: <Brain className="h-5 w-5" />,
-    patientRisk: 52
+    patientRisk: 52,
+    riskCalculation: "Escala 0-6 aplicada em população. Calcula prevalência de incapacidade funcional por AVC/doenças neurológicas. Score ponderado por impacto na autonomia e mortalidade."
   }
 ];
 
@@ -201,20 +207,30 @@ const SpecialtyRiskRanking: React.FC<SpecialtyRiskRankingProps> = ({ className }
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Seu Risco:</span>
-                      <span className="font-semibold">{specialty.patientRisk}%</span>
-                    </div>
-                    <Progress 
-                      value={specialty.patientRisk} 
-                      className="h-2"
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>YLL: {specialty.ylls}</span>
-                      <span>DALY: {specialty.dalys}</span>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="flex justify-between text-sm">
+                       <span>Seu Risco:</span>
+                       <span className="font-semibold">{specialty.patientRisk}%</span>
+                     </div>
+                     <Progress 
+                       value={specialty.patientRisk} 
+                       className="h-2"
+                     />
+                     <div className="flex justify-between text-xs text-muted-foreground">
+                       <span>YLL: {specialty.ylls}</span>
+                       <span>DALY: {specialty.dalys}</span>
+                     </div>
+                   </div>
+                   
+                   <div className="mt-3 p-3 bg-muted/20 rounded-lg border-l-4 border-primary/30">
+                     <div className="flex items-start gap-2">
+                       <Info className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                       <div>
+                         <p className="text-xs font-medium text-primary mb-1">Como é calculado:</p>
+                         <p className="text-xs text-muted-foreground">{specialty.riskCalculation}</p>
+                       </div>
+                     </div>
+                   </div>
                 </Card>
               ))}
             </div>
