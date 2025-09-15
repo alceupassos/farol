@@ -50,14 +50,15 @@ serve(async (req) => {
         )
       }
 
-      // Check if admin exists
+      // Get admin user securely to check salt
       const { data: adminUser, error: adminError } = await supabaseClient
         .from('admin_users')
-        .select('*')
+        .select('id, email, salt, failed_login_attempts, locked_until')
         .eq('email', email.toLowerCase())
-        .single()
+        .maybeSingle()
 
       if (adminError || !adminUser) {
+        console.error('Admin lookup error:', adminError)
         return new Response(
           JSON.stringify({ success: false, error: 'Invalid credentials' }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 401 }
@@ -72,66 +73,49 @@ serve(async (req) => {
         )
       }
 
-      // Verify password
+      // Hash the provided password with the stored salt
       const hashedPassword = hashPassword(password, adminUser.salt);
-      if (hashedPassword !== adminUser.password_hash) {
-        // Increment failed attempts
-        const failedAttempts = (adminUser.failed_login_attempts || 0) + 1;
-        const lockUntil = failedAttempts >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : null; // 15 minutes lock
 
-        await supabaseClient
-          .from('admin_users')
-          .update({ 
-            failed_login_attempts: failedAttempts,
-            locked_until: lockUntil?.toISOString()
-          })
-          .eq('id', adminUser.id)
+      // Use the secure authenticate_admin function
+      const { data: authResult, error: authError } = await supabaseClient
+        .rpc('authenticate_admin', {
+          p_email: email.toLowerCase(),
+          p_password_hash: hashedPassword
+        })
 
+      if (authError || !authResult || authResult.length === 0) {
+        console.error('Authentication error:', authError)
         return new Response(
           JSON.stringify({ success: false, error: 'Invalid credentials' }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 401 }
         )
       }
 
-      // Reset failed attempts on successful login
-      await supabaseClient
-        .from('admin_users')
-        .update({ 
-          failed_login_attempts: 0,
-          locked_until: null,
-          last_login_at: new Date().toISOString()
-        })
-        .eq('id', adminUser.id)
+      const { admin_id, session_token, expires_at } = authResult[0];
 
-      // Create session
-      const sessionTokenValue = generateSessionToken();
+      // Update session with client info
       const clientInfo = req.headers.get('user-agent') || 'Unknown';
       const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'Unknown';
 
-      const { error: sessionError } = await supabaseClient
+      const { error: sessionUpdateError } = await supabaseClient
         .from('admin_sessions')
-        .insert({
-          admin_user_id: adminUser.id,
-          session_token: sessionTokenValue,
+        .update({
           ip_address: clientIP,
           user_agent: clientInfo
         })
+        .eq('session_token', session_token)
 
-      if (sessionError) {
-        console.error('Failed to create session:', sessionError)
-        return new Response(
-          JSON.stringify({ success: false, error: 'Failed to create session' }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
-        )
+      if (sessionUpdateError) {
+        console.error('Failed to update session info:', sessionUpdateError)
       }
 
       return new Response(
         JSON.stringify({ 
           success: true, 
-          sessionToken: sessionTokenValue,
+          sessionToken: session_token,
           adminUser: {
-            id: adminUser.id,
-            email: adminUser.email
+            id: admin_id,
+            email: email.toLowerCase()
           }
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -146,23 +130,36 @@ serve(async (req) => {
         )
       }
 
-      // Verify session
+      // Use the secure validate_admin_session function
+      const { data: isValid, error: validationError } = await supabaseClient
+        .rpc('validate_admin_session', {
+          session_token: sessionToken
+        })
+
+      if (validationError || !isValid) {
+        return new Response(
+          JSON.stringify({ success: false, error: 'Invalid or expired session' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 401 }
+        )
+      }
+
+      // Get admin user info from session (still need basic info for UI)
       const { data: session, error: sessionError } = await supabaseClient
         .from('admin_sessions')
         .select(`
-          *,
-          admin_users (
+          admin_user_id,
+          admin_users!inner (
             id,
             email
           )
         `)
         .eq('session_token', sessionToken)
         .gte('expires_at', new Date().toISOString())
-        .single()
+        .maybeSingle()
 
       if (sessionError || !session) {
         return new Response(
-          JSON.stringify({ success: false, error: 'Invalid or expired session' }),
+          JSON.stringify({ success: false, error: 'Session not found' }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 401 }
         )
       }
