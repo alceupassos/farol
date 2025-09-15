@@ -31,40 +31,61 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener
+    // Check for existing session immediately
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        // Fetch user role from database
+        const { data: roleData } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id)
+          .single();
+        
+        if (roleData) {
+          setUserRole(roleData.role);
+          localStorage.setItem('demo_user_role', roleData.role);
+        }
+      } else {
+        // If no session, use saved role for demo purposes
+        const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
+        setUserRole(savedRole);
+      }
+      setLoading(false);
+    };
+
+    checkSession();
+
+    // Set up auth state listener for future changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         console.log('Auth state changed:', event, session);
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Fetch user role from database
-          const { data: roleData } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', session.user.id)
-            .single();
-          
-          if (roleData) {
-            setUserRole(roleData.role);
-            localStorage.setItem('demo_user_role', roleData.role);
-          }
+          // Defer role fetching to avoid deadlock
+          setTimeout(async () => {
+            const { data: roleData } = await supabase
+              .from('user_roles')
+              .select('role')
+              .eq('user_id', session.user.id)
+              .single();
+            
+            if (roleData) {
+              setUserRole(roleData.role);
+              localStorage.setItem('demo_user_role', roleData.role);
+            }
+          }, 0);
         } else {
-          // If no session, use saved role for demo purposes
           const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
           setUserRole(savedRole);
         }
-        setLoading(false);
       }
     );
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        setLoading(false);
-      }
-    });
 
     return () => subscription.unsubscribe();
   }, []);

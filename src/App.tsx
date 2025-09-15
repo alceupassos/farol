@@ -73,6 +73,7 @@ const App = () => (
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
+                  <Route path="/public-health-landing" element={<PublicRoute><Index /></PublicRoute>} />
                   <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                   <Route path="/admin" element={<PublicRoute><AdminPanel /></PublicRoute>} />
                   <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
