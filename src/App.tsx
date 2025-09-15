@@ -69,69 +69,69 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ProfileAccessProvider>
-          <LanguageProvider>
-          <TooltipProvider>
-            <div>
-              <Toaster />
-              <Sonner />
-              <PWAInstallPrompt />
-              <ServiceWorkerManager />
+      <TooltipProvider>
+        <AuthProvider>
+          <ProfileAccessProvider>
+            <LanguageProvider>
               <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
-                  <Route path="/public-health-landing" element={<PublicRoute><Index /></PublicRoute>} />
-                  <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                  <Route path="/admin" element={<PublicRoute><AdminPanel /></PublicRoute>} />
-                  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                  <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
-                  <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />
-                  <Route path="/appointments" element={<ProtectedRoute><Appointments /></ProtectedRoute>} />
-                  <Route path="/metrics" element={<ProtectedRoute><Metrics /></ProtectedRoute>} />
-                  <Route path="/access" element={<ProtectedRoute><Access /></ProtectedRoute>} />
-                  <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
-                  <Route path="/labexams" element={<ProtectedRoute><LabExams /></ProtectedRoute>} />
-                  <Route path="/lab-exams" element={<ProtectedRoute><LabExams /></ProtectedRoute>} />
-                  <Route path="/genetic-data" element={<ProtectedRoute><GeneticDataPage /></ProtectedRoute>} />
-                  <Route path="/quality-of-life" element={<ProtectedRoute><QualityOfLifePage /></ProtectedRoute>} />
-                  <Route path="/help" element={<ProtectedRoute><HelpPage /></ProtectedRoute>} />
-                  <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
-                  <Route path="/manage-access" element={<ProtectedRoute><ManageAccessPage /></ProtectedRoute>} />
-                  <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-                  <Route path="/technical-details" element={<ProtectedRoute><TechnicalDetailsPage /></ProtectedRoute>} />
-                  <Route path="/qr-ana-ativo" element={<ProtectedRoute><QrAnaAtivoPage /></ProtectedRoute>} />
-                  <Route path="/intelligent-reading" element={<ProtectedRoute><IntelligentReading /></ProtectedRoute>} />
-                  <Route path="/executive-dashboard" element={<ProtectedRoute><ExecutiveDashboard /></ProtectedRoute>} />
-                  <Route path="/operational-dashboard" element={<ProtectedRoute><OperationalDashboard /></ProtectedRoute>} />
-                  <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboard /></ProtectedRoute>} />
-                  <Route path="/ai-analytics" element={<ProtectedRoute><AIAnalyticsDashboard /></ProtectedRoute>} />
-                  <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboard /></ProtectedRoute>} />
-                  <Route path="/patients" element={<ProtectedRoute><PatientsPage /></ProtectedRoute>} />
-                  <Route path="/protocols" element={<ProtectedRoute><ProtocolsPage /></ProtectedRoute>} />
-                  <Route path="/population" element={<ProtectedRoute><PopulationPage /></ProtectedRoute>} />
-                  <Route path="/epidemiology" element={<ProtectedRoute><EpidemiologyPage /></ProtectedRoute>} />
-                  <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
-                  <Route path="/epidemic-alerts" element={<ProtectedRoute><EpidemicAlerts /></ProtectedRoute>} />
-                  <Route path="/monitoramento-aps" element={<ProtectedRoute><MonitoramentoAPSPage /></ProtectedRoute>} />
-                  <Route path="/controle-judicializacao" element={<ProtectedRoute><ControleJudicializacaoPage /></ProtectedRoute>} />
-                  <Route path="/capacitacao-gestores" element={<ProtectedRoute><CapacitacaoGestoresPage /></ProtectedRoute>} />
-                  <Route path="/transicao-gestao" element={<ProtectedRoute><TransicaoGestaoPage /></ProtectedRoute>} />
-                  <Route path="/gestao-orcamentaria" element={<ProtectedRoute><GestaoOrcamentariaPage /></ProtectedRoute>} />
-                  <Route path="/simulador-ied" element={<ProtectedRoute><SimuladorIEDPage /></ProtectedRoute>} />
-                  <Route path="/indicadores-desempenho" element={<ProtectedRoute><IndicadoresDesempenhoPage /></ProtectedRoute>} />
-                  <Route path="/governanca-dados" element={<ProtectedRoute><GovernancaDadosPage /></ProtectedRoute>} />
-                  <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
-                  <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+                <div>
+                  <Toaster />
+                  <Sonner />
+                  <PWAInstallPrompt />
+                  <ServiceWorkerManager />
+                  <Routes>
+                    <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
+                    <Route path="/public-health-landing" element={<PublicRoute><Index /></PublicRoute>} />
+                    <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                    <Route path="/admin" element={<PublicRoute><AdminPanel /></PublicRoute>} />
+                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                    <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
+                    <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />
+                    <Route path="/appointments" element={<ProtectedRoute><Appointments /></ProtectedRoute>} />
+                    <Route path="/metrics" element={<ProtectedRoute><Metrics /></ProtectedRoute>} />
+                    <Route path="/access" element={<ProtectedRoute><Access /></ProtectedRoute>} />
+                    <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
+                    <Route path="/labexams" element={<ProtectedRoute><LabExams /></ProtectedRoute>} />
+                    <Route path="/lab-exams" element={<ProtectedRoute><LabExams /></ProtectedRoute>} />
+                    <Route path="/genetic-data" element={<ProtectedRoute><GeneticDataPage /></ProtectedRoute>} />
+                    <Route path="/quality-of-life" element={<ProtectedRoute><QualityOfLifePage /></ProtectedRoute>} />
+                    <Route path="/help" element={<ProtectedRoute><HelpPage /></ProtectedRoute>} />
+                    <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
+                    <Route path="/manage-access" element={<ProtectedRoute><ManageAccessPage /></ProtectedRoute>} />
+                    <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+                    <Route path="/technical-details" element={<ProtectedRoute><TechnicalDetailsPage /></ProtectedRoute>} />
+                    <Route path="/qr-ana-ativo" element={<ProtectedRoute><QrAnaAtivoPage /></ProtectedRoute>} />
+                    <Route path="/intelligent-reading" element={<ProtectedRoute><IntelligentReading /></ProtectedRoute>} />
+                    <Route path="/executive-dashboard" element={<ProtectedRoute><ExecutiveDashboard /></ProtectedRoute>} />
+                    <Route path="/operational-dashboard" element={<ProtectedRoute><OperationalDashboard /></ProtectedRoute>} />
+                    <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboard /></ProtectedRoute>} />
+                    <Route path="/ai-analytics" element={<ProtectedRoute><AIAnalyticsDashboard /></ProtectedRoute>} />
+                    <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboard /></ProtectedRoute>} />
+                    <Route path="/patients" element={<ProtectedRoute><PatientsPage /></ProtectedRoute>} />
+                    <Route path="/protocols" element={<ProtectedRoute><ProtocolsPage /></ProtectedRoute>} />
+                    <Route path="/population" element={<ProtectedRoute><PopulationPage /></ProtectedRoute>} />
+                    <Route path="/epidemiology" element={<ProtectedRoute><EpidemiologyPage /></ProtectedRoute>} />
+                    <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
+                    <Route path="/epidemic-alerts" element={<ProtectedRoute><EpidemicAlerts /></ProtectedRoute>} />
+                    <Route path="/monitoramento-aps" element={<ProtectedRoute><MonitoramentoAPSPage /></ProtectedRoute>} />
+                    <Route path="/controle-judicializacao" element={<ProtectedRoute><ControleJudicializacaoPage /></ProtectedRoute>} />
+                    <Route path="/capacitacao-gestores" element={<ProtectedRoute><CapacitacaoGestoresPage /></ProtectedRoute>} />
+                    <Route path="/transicao-gestao" element={<ProtectedRoute><TransicaoGestaoPage /></ProtectedRoute>} />
+                    <Route path="/gestao-orcamentaria" element={<ProtectedRoute><GestaoOrcamentariaPage /></ProtectedRoute>} />
+                    <Route path="/simulador-ied" element={<ProtectedRoute><SimuladorIEDPage /></ProtectedRoute>} />
+                    <Route path="/indicadores-desempenho" element={<ProtectedRoute><IndicadoresDesempenhoPage /></ProtectedRoute>} />
+                    <Route path="/governanca-dados" element={<ProtectedRoute><GovernancaDadosPage /></ProtectedRoute>} />
+                    <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
+                    <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </div>
               </BrowserRouter>
-            </div>
-          </TooltipProvider>
-          </LanguageProvider>
-        </ProfileAccessProvider>
-      </AuthProvider>
+            </LanguageProvider>
+          </ProfileAccessProvider>
+        </AuthProvider>
+      </TooltipProvider>
     </QueryClientProvider>
   </ErrorBoundary>
 );
