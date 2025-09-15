@@ -35,9 +35,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     const initializeAuth = async () => {
       try {
+        // Verificar se é a primeira carga da sessão e fazer logout automático
+        const isFirstLoad = !sessionStorage.getItem('auth_initialized');
+        
+        if (isFirstLoad) {
+          console.log('Primeira carga detectada - fazendo logout automático');
+          try {
+            await supabase.auth.signOut();
+            // Limpar localStorage
+            localStorage.removeItem('demo_user_role');
+            localStorage.removeItem('profileAccessEnabled');
+            // Marcar como inicializado para esta sessão
+            sessionStorage.setItem('auth_initialized', 'true');
+          } catch (error) {
+            console.warn('Erro no logout automático inicial:', error);
+          }
+        }
+
         // Set up auth state listener first
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
+          (event, session) => {
             if (!mounted) return;
             
             console.log('Auth state changed:', event, session);
@@ -45,52 +62,74 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setUser(session?.user ?? null);
             
             if (session?.user) {
-              try {
-                const { data: roleData } = await supabase
-                  .from('user_roles')
-                  .select('role')
-                  .eq('user_id', session.user.id)
-                  .single();
-                
-                if (roleData && mounted) {
-                  setUserRole(roleData.role);
-                  localStorage.setItem('demo_user_role', roleData.role);
-                }
-              } catch (error) {
-                console.warn('Error fetching user role:', error);
-              }
+              // Para usuários autenticados, buscar role no banco
+               setTimeout(async () => {
+                 try {
+                   const { data: roleData } = await supabase
+                     .from('user_roles')
+                     .select('role')
+                     .eq('user_id', session.user.id)
+                     .single();
+                   
+                   if (roleData && mounted) {
+                     setUserRole(roleData.role);
+                     localStorage.setItem('demo_user_role', roleData.role);
+                   }
+                 } catch (error) {
+                   console.warn('Error fetching user role:', error);
+                 }
+               }, 0);
             } else {
+              // Para usuários não autenticados, usar role do localStorage ou padrão
               const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
               if (mounted) setUserRole(savedRole);
             }
           }
         );
 
-        // Then check for existing session
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!mounted) return;
+        // Then check for existing session with timeout
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Session check timeout')), 3000)
+        );
         
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          try {
-            const { data: roleData } = await supabase
-              .from('user_roles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .single();
-            
-            if (roleData && mounted) {
-              setUserRole(roleData.role);
-              localStorage.setItem('demo_user_role', roleData.role);
-            }
-          } catch (error) {
-            console.warn('Error fetching user role:', error);
+        try {
+          const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]) as any;
+          if (!mounted) return;
+          
+          setSession(session);
+          setUser(session?.user ?? null);
+          
+           if (session?.user) {
+             setTimeout(async () => {
+               try {
+                 const { data: roleData } = await supabase
+                   .from('user_roles')
+                   .select('role')
+                   .eq('user_id', session.user.id)
+                   .single();
+                 
+                 if (roleData && mounted) {
+                   setUserRole(roleData.role);
+                   localStorage.setItem('demo_user_role', roleData.role);
+                 }
+               } catch (error) {
+                 console.warn('Error fetching user role:', error);
+               }
+             }, 0);
+          } else {
+            const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
+            if (mounted) setUserRole(savedRole);
           }
-        } else {
-          const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-          if (mounted) setUserRole(savedRole);
+        } catch (error) {
+          console.warn('Session check failed or timeout:', error);
+          // Em caso de erro/timeout, assumir não autenticado
+          if (mounted) {
+            setSession(null);
+            setUser(null);
+            const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
+            setUserRole(savedRole);
+          }
         }
 
         return () => subscription.unsubscribe();
