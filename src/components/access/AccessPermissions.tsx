@@ -134,9 +134,9 @@ const AccessPermissions = () => {
                         <h4 className="font-medium">{permission.name}</h4>
                         <p className="text-sm text-gray-500 dark:text-gray-400">{permission.role}</p>
                       </div>
-                      <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
-                        Pendente
-                      </Badge>
+                       <Badge variant="outline" className="border-warning text-warning bg-warning/10">
+                         Pendente
+                       </Badge>
                     </div>
                     <div className="mt-3 space-y-2">
                       <p className="text-sm">Solicita acesso a:</p>
@@ -243,15 +243,15 @@ const AccessPermissions = () => {
 const StatusBadge = ({ status }: { status: string }) => {
   switch (status) {
     case "Ativo":
-      return <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Ativo</Badge>;
+      return <Badge variant="outline" className="border-success text-success bg-success/10">Ativo</Badge>;
     case "Pendente":
-      return <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pendente</Badge>;
+      return <Badge variant="outline" className="border-warning text-warning bg-warning/10">Pendente</Badge>;
     case "Expirado":
-      return <Badge className="bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400">Expirado</Badge>;
+      return <Badge variant="outline" className="border-muted-foreground text-muted-foreground bg-muted/10">Expirado</Badge>;
     case "Revogado":
-      return <Badge className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Revogado</Badge>;
+      return <Badge variant="outline" className="border-error text-error bg-error/10">Revogado</Badge>;
     default:
-      return <Badge>{status}</Badge>;
+      return <Badge variant="outline">{status}</Badge>;
   }
 };
 
