@@ -7,7 +7,7 @@ interface AuthGuardProps {
 }
 
 const AuthGuard = ({ children }: AuthGuardProps) => {
-  const { user, loading } = useAuth();
+  const { user, loading, userRole } = useAuth();
   const location = useLocation();
 
   // Show loading indicator
@@ -22,7 +22,12 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
     );
   }
 
-  // If user is not authenticated, redirect to login
+  // Allow guest access if userRole exists (for demo purposes)
+  if (!user && userRole) {
+    return <>{children}</>;
+  }
+
+  // If user is not authenticated and no guest role, redirect to login
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }

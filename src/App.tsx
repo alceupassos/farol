@@ -50,6 +50,10 @@ import EpidemicAlerts from "./pages/EpidemicAlerts";
 import AuthGuard from "./components/auth/AuthGuard";
 import AdminPanel from "./pages/AdminPanel";
 import Login from "./pages/Login";
+import GestaoOrcamentariaPage from "./pages/GestaoOrcamentariaPage";
+import SimuladorIEDPage from "./pages/SimuladorIEDPage";
+import IndicadoresDesempenhoPage from "./pages/IndicadoresDesempenhoPage";
+import GovernancaDadosPage from "./pages/GovernancaDadosPage";
 
 const queryClient = new QueryClient();
 
@@ -114,6 +118,10 @@ const App = () => (
                   <Route path="/controle-judicializacao" element={<ProtectedRoute><ControleJudicializacaoPage /></ProtectedRoute>} />
                   <Route path="/capacitacao-gestores" element={<ProtectedRoute><CapacitacaoGestoresPage /></ProtectedRoute>} />
                   <Route path="/transicao-gestao" element={<ProtectedRoute><TransicaoGestaoPage /></ProtectedRoute>} />
+                  <Route path="/gestao-orcamentaria" element={<ProtectedRoute><GestaoOrcamentariaPage /></ProtectedRoute>} />
+                  <Route path="/simulador-ied" element={<ProtectedRoute><SimuladorIEDPage /></ProtectedRoute>} />
+                  <Route path="/indicadores-desempenho" element={<ProtectedRoute><IndicadoresDesempenhoPage /></ProtectedRoute>} />
+                  <Route path="/governanca-dados" element={<ProtectedRoute><GovernancaDadosPage /></ProtectedRoute>} />
                   <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                   <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
                   <Route path="*" element={<NotFound />} />

@@ -31,63 +31,82 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing session immediately
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        // Fetch user role from database
-        const { data: roleData } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id)
-          .single();
+    let mounted = true;
+    
+    const initializeAuth = async () => {
+      try {
+        // Set up auth state listener first
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            if (!mounted) return;
+            
+            console.log('Auth state changed:', event, session);
+            setSession(session);
+            setUser(session?.user ?? null);
+            
+            if (session?.user) {
+              try {
+                const { data: roleData } = await supabase
+                  .from('user_roles')
+                  .select('role')
+                  .eq('user_id', session.user.id)
+                  .single();
+                
+                if (roleData && mounted) {
+                  setUserRole(roleData.role);
+                  localStorage.setItem('demo_user_role', roleData.role);
+                }
+              } catch (error) {
+                console.warn('Error fetching user role:', error);
+              }
+            } else {
+              const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
+              if (mounted) setUserRole(savedRole);
+            }
+          }
+        );
+
+        // Then check for existing session
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!mounted) return;
         
-        if (roleData) {
-          setUserRole(roleData.role);
-          localStorage.setItem('demo_user_role', roleData.role);
-        }
-      } else {
-        // If no session, use saved role for demo purposes
-        const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-        setUserRole(savedRole);
-      }
-      setLoading(false);
-    };
-
-    checkSession();
-
-    // Set up auth state listener for future changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log('Auth state changed:', event, session);
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Defer role fetching to avoid deadlock
-          setTimeout(async () => {
+          try {
             const { data: roleData } = await supabase
               .from('user_roles')
               .select('role')
               .eq('user_id', session.user.id)
               .single();
             
-            if (roleData) {
+            if (roleData && mounted) {
               setUserRole(roleData.role);
               localStorage.setItem('demo_user_role', roleData.role);
             }
-          }, 0);
+          } catch (error) {
+            console.warn('Error fetching user role:', error);
+          }
         } else {
           const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-          setUserRole(savedRole);
+          if (mounted) setUserRole(savedRole);
         }
-      }
-    );
 
-    return () => subscription.unsubscribe();
+        return () => subscription.unsubscribe();
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    const cleanup = initializeAuth();
+    
+    return () => {
+      mounted = false;
+      cleanup?.then(cleanupFn => cleanupFn?.());
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {

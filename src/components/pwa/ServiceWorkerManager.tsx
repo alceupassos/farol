@@ -56,11 +56,16 @@ export const ServiceWorkerManager = () => {
 
   const handleUpdate = () => {
     if (waitingWorker) {
-      waitingWorker.postMessage({ type: 'SKIP_WAITING' });
-      setUpdateAvailable(false);
-      
-      // Reload page to activate new service worker
-      window.location.reload();
+      try {
+        waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+        setUpdateAvailable(false);
+        
+        // Reload page to activate new service worker
+        window.location.reload();
+      } catch (error) {
+        console.error('Error updating service worker:', error);
+        setUpdateAvailable(false);
+      }
     }
   };
 
