@@ -38,6 +38,10 @@ import OperationalDashboard from "./pages/OperationalDashboard";
 import IntegrationsDashboard from "./pages/IntegrationsDashboard";
 import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
+import MonitoramentoAPSPage from './pages/MonitoramentoAPSPage';
+import ControleJudicializacaoPage from './pages/ControleJudicializacaoPage';
+import CapacitacaoGestoresPage from './pages/CapacitacaoGestoresPage';
+import TransicaoGestaoPage from './pages/TransicaoGestaoPage';
 import DemoPage from "./pages/DemoPage";
 import HelpPage from "./pages/HelpPage";
 import SupportPage from "./pages/SupportPage";
@@ -106,6 +110,10 @@ const App = () => (
                   <Route path="/epidemiology" element={<ProtectedRoute><EpidemiologyPage /></ProtectedRoute>} />
                   <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
                   <Route path="/epidemic-alerts" element={<ProtectedRoute><EpidemicAlerts /></ProtectedRoute>} />
+                  <Route path="/monitoramento-aps" element={<ProtectedRoute><MonitoramentoAPSPage /></ProtectedRoute>} />
+                  <Route path="/controle-judicializacao" element={<ProtectedRoute><ControleJudicializacaoPage /></ProtectedRoute>} />
+                  <Route path="/capacitacao-gestores" element={<ProtectedRoute><CapacitacaoGestoresPage /></ProtectedRoute>} />
+                  <Route path="/transicao-gestao" element={<ProtectedRoute><TransicaoGestaoPage /></ProtectedRoute>} />
                   <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                   <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
                   <Route path="*" element={<NotFound />} />
