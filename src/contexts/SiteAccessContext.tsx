@@ -24,19 +24,23 @@ interface SiteAccessProviderProps {
 }
 
 export const SiteAccessProvider = ({ children }: SiteAccessProviderProps) => {
-  // Temporary bypass until September 9, 2025
-  const [siteAccessGranted, setSiteAccessGranted] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [siteAccessGranted, setSiteAccessGranted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const checkSiteAccess = () => {
+    setLoading(true);
+    
     // Temporary bypass until September 9, 2025 - 23:59:59
     const bypassEndDate = new Date('2025-09-09T23:59:59');
     const currentDate = new Date();
     
     if (currentDate <= bypassEndDate) {
       console.log('🔓 Site access TEMPORARIAMENTE LIBERADO até 09 de setembro de 2025');
-      setSiteAccessGranted(true);
-      setLoading(false);
+      // Small delay to allow the site access page to render first
+      setTimeout(() => {
+        setSiteAccessGranted(true);
+        setLoading(false);
+      }, 100);
       return;
     }
 
