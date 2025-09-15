@@ -20,18 +20,18 @@ const PersonalData = ({ sections }: PersonalDataProps) => {
   };
 
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-800">
+    <div className="divide-y divide-border">
       {sections.map((section) => (
         <div key={section.id} className="overflow-hidden">
           <button
             onClick={() => toggleSection(section.id)}
-            className="w-full flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left"
+            className="w-full flex items-center justify-between p-4 hover:bg-muted/50 transition-colors text-left"
           >
             <span className="font-medium">{section.title}</span>
             {expandedSections[section.id] ? (
-              <ChevronUp size={18} className="text-gray-500" />
+              <ChevronUp size={18} className="text-muted-foreground" />
             ) : (
-              <ChevronDown size={18} className="text-gray-500" />
+              <ChevronDown size={18} className="text-muted-foreground" />
             )}
           </button>
           
@@ -39,13 +39,13 @@ const PersonalData = ({ sections }: PersonalDataProps) => {
             <div className="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               {section.fields.map((field) => (
                 <div key={field.id} className="space-y-1">
-                  <div className="text-sm text-gray-500">{field.label}</div>
+                  <div className="text-sm text-muted-foreground">{field.label}</div>
                   {field.isArray ? (
                     <div className="space-y-1">
                       {(field.value as string[]).map((item, index) => (
                         <div 
                           key={index}
-                          className="bg-gray-100 dark:bg-gray-800 text-sm py-1 px-2 rounded"
+                          className="bg-muted text-foreground text-sm py-1 px-2 rounded"
                         >
                           {item}
                         </div>
@@ -57,7 +57,7 @@ const PersonalData = ({ sections }: PersonalDataProps) => {
                     </div>
                   ) : (
                     <div className="text-sm font-medium">
-                      {field.value || <span className="text-gray-400 italic">Não especificado</span>}
+                      {field.value || <span className="text-muted-foreground italic">Não especificado</span>}
                     </div>
                   )}
                 </div>
