@@ -431,7 +431,7 @@ const PublicHealthLanding = () => {
                   </Button>
                   <Button type="button" variant="outline" size="lg">
                     <Phone className="w-5 h-5 mr-2" />
-                    Ligar Agora: (11) 3000-0000
+                    Ligar Agora: (11) 91903-3347
                   </Button>
                 </div>
               </form>
