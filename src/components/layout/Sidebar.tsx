@@ -167,6 +167,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
           { to: "/operational-dashboard", icon: <Zap className="h-5 w-5 mr-3" />, label: "Dashboard Operacional" },
           { to: "/population", icon: <Users className="h-5 w-5 mr-3" />, label: "Análise Populacional" },
           { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" },
+          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas Epidemiológicos" },
           { to: "/resources", icon: <ClipboardList className="h-5 w-5 mr-3" />, label: "Gestão de Recursos" }
         ]
       });
