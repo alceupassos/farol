@@ -20,7 +20,7 @@ interface ProfileAccessProviderProps {
 }
 
 export const ProfileAccessProvider: React.FC<ProfileAccessProviderProps> = ({ children }) => {
-  const [isFullAccessEnabled, setIsFullAccessEnabled] = useState(false);
+  const [isFullAccessEnabled, setIsFullAccessEnabled] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
