@@ -41,7 +41,12 @@ import {
   Globe,
   Handshake,
   Map,
-  BrainCircuit
+  BrainCircuit,
+  Bone,
+  Activity,
+  Eye,
+  Ear,
+  Thermometer
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -155,13 +160,22 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
   const getMenuItemsByRole = () => {
     const menuSections = [];
 
-    // Dashboard comum para todos
-    menuSections.push({
-      title: "Dashboard",
-      items: [
-        { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral" }
-      ]
-    });
+    // Dashboard diferenciado por tipo de usuário
+    if (userRole === 'gestor') {
+      menuSections.push({
+        title: "Dashboard",
+        items: [
+          { to: "/prefeitura-dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral Prefeitura" }
+        ]
+      });
+    } else if (userRole === 'hospital') {
+      menuSections.push({
+        title: "Dashboard",
+        items: [
+          { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral Hospital" }
+        ]
+      });
+    }
 
     if (userRole === 'gestor') {
       menuSections.push({
@@ -272,7 +286,8 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
       menuSections.push({
         title: "Integrações Técnicas",
         items: [
-          { to: "/integracoes-tecnicas", icon: <RefreshCw className="h-5 w-5 mr-3" />, label: "Integrações Necessárias" }
+          { to: "/integracoes-tecnicas", icon: <Zap className="h-5 w-5 mr-3" />, label: "Integrações Técnicas" },
+          { to: "/integracao-erp", icon: <Database className="h-5 w-5 mr-3" />, label: "Integração ERP" }
         ]
       });
     }
@@ -320,24 +335,28 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
           { to: "/medications", icon: <Pill className="h-5 w-5 mr-3" />, label: "Medicamentos" },
           { to: "/appointments", icon: <Calendar className="h-5 w-5 mr-3" />, label: "Minhas Consultas" },
           { to: "/metrics", icon: <BarChart2 className="h-5 w-5 mr-3" />, label: "Métricas de Saúde" },
-          { to: "/labexams", icon: <Microscope className="h-5 w-5 mr-3" />, label: "Meus Exames" },
-          { to: "/quality-of-life", icon: <Smile className="h-5 w-5 mr-3" />, label: "Qualidade de Vida" },
-          { to: "/genetic-data", icon: <Dna className="h-5 w-5 mr-3" />, label: "Dados Genéticos" }
+          { to: "/labexams", icon: <Microscope className="h-5 w-5 mr-3" />, label: "Meus Exames" }
         ]
       });
+      
       menuSections.push({
-        title: "Mapas e Localização",
+        title: "Cuidados para Idosos",
         items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Consultar Mapas" },
-          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas de Saúde" }
+          { to: "/diabetes-care", icon: <Heart className="h-5 w-5 mr-3" />, label: "Controle Diabetes" },
+          { to: "/osteoporosis-care", icon: <Bone className="h-5 w-5 mr-3" />, label: "Cuidados Osteoporose" },
+          { to: "/erectile-dysfunction", icon: <Activity className="h-5 w-5 mr-3" />, label: "Função Erétil" },
+          { to: "/glucose-monitoring", icon: <Thermometer className="h-5 w-5 mr-3" />, label: "Monitoramento Glicêmico" },
+          { to: "/neurology-care", icon: <Brain className="h-5 w-5 mr-3" />, label: "Cuidados Neurológicos" },
+          { to: "/vision-care", icon: <Eye className="h-5 w-5 mr-3" />, label: "Cuidados Visuais" },
+          { to: "/hearing-care", icon: <Ear className="h-5 w-5 mr-3" />, label: "Cuidados Auditivos" }
         ]
       });
+      
       menuSections.push({
         title: "Emergência e Acesso",
         items: [
           { to: "/emergency", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "QR Emergência" },
-          { to: "/manage-access", icon: <KeyRound className="h-5 w-5 mr-3" />, label: "Gerenciar Acesso" },
-          { to: "/qr-ana-ativo", icon: <QrCode className="h-5 w-5 mr-3" />, label: "QR ANA+ATIVO" }
+          { to: "/manage-access", icon: <KeyRound className="h-5 w-5 mr-3" />, label: "Gerenciar Acesso" }
         ]
       });
     }

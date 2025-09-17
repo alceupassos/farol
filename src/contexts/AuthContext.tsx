@@ -223,8 +223,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const switchGuestRole = (newRole: string) => {
+    console.log('Switching to role:', newRole);
     setUserRole(newRole);
     localStorage.setItem('demo_user_role', newRole);
+    
+    // Redirecionar automaticamente para o dashboard apropriado
+    if (typeof window !== 'undefined') {
+      if (newRole === 'gestor') {
+        console.log('Redirecting to prefeitura dashboard');
+        window.location.href = '/prefeitura-dashboard';
+      } else if (newRole === 'hospital') {
+        console.log('Redirecting to hospital dashboard');
+        window.location.href = '/dashboard';
+      } else if (newRole === 'medico') {
+        console.log('Redirecting to medical dashboard');
+        window.location.href = '/profile';
+      } else if (newRole === 'paciente') {
+        console.log('Redirecting to patient profile');
+        window.location.href = '/profile';
+      } else {
+        console.log('Redirecting to default dashboard');
+        window.location.href = '/dashboard';
+      }
+    }
   };
 
   const value = {

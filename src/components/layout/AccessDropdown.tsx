@@ -9,12 +9,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { useProfileAccess } from '@/contexts/ProfileAccessContext';
 
 const AccessDropdown = () => {
   const navigate = useNavigate();
   const { switchGuestRole } = useAuth();
-  const { isFullAccessEnabled } = useProfileAccess();
 
   const accessOptions = [
     {
@@ -48,15 +46,12 @@ const AccessDropdown = () => {
   ];
 
   const handleAccessSelect = (role: string) => {
-    // Trocar role e navegar para dashboard
+    // Trocar role - o redirecionamento será feito automaticamente pelo switchGuestRole
     switchGuestRole(role);
-    navigate('/dashboard');
   };
 
-  // Filtrar opções baseado no estado do ProfileAccess
-  const filteredOptions = isFullAccessEnabled 
-    ? accessOptions 
-    : accessOptions.filter(option => option.id === 'gestor');
+  // Sempre mostrar todas as opções
+  const filteredOptions = accessOptions;
 
   return (
     <DropdownMenu>
@@ -64,7 +59,7 @@ const AccessDropdown = () => {
         <Button 
           className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          {isFullAccessEnabled ? 'Acessar Sistema' : 'Acessar como Gestor'}
+          Acessar Sistema
           <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>

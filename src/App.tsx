@@ -76,6 +76,17 @@ import AIAnalyticsPage from './pages/AIAnalyticsPage';
 import SecurityDashboardPage from './pages/SecurityDashboardPage';
 import IntegrationsDashboardPage from './pages/IntegrationsDashboardPage';
 import IntegracoesTecnicasPage from "./pages/IntegracoesTecnicasPage";
+import DiabetesCarePage from "./pages/DiabetesCarePage";
+import OsteoporosisCarePage from "./pages/OsteoporosisCarePage";
+import ErectileDysfunctionPage from "./pages/ErectileDysfunctionPage";
+import GlucoseMonitoringPage from "./pages/GlucoseMonitoringPage";
+import NeurologyCarePage from "./pages/NeurologyCarePage";
+import VisionCarePage from "./pages/VisionCarePage";
+import HearingCarePage from "./pages/HearingCarePage";
+import PrefeituraDashboard from "./pages/PrefeituraDashboard";
+import DashboardRedirect from "./components/DashboardRedirect";
+import IntegracaoERPPage from "./pages/IntegracaoERPPage";
+import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
 
 const queryClient = new QueryClient();
 
@@ -106,7 +117,9 @@ const App = () => (
                     <Route path="/public-health-landing" element={<PublicRoute><Index /></PublicRoute>} />
                     <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                     <Route path="/admin" element={<PublicRoute><AdminPanel /></PublicRoute>} />
+                    <Route path="/dashboard-redirect" element={<ProtectedRoute><DashboardRedirect /></ProtectedRoute>} />
                     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="/prefeitura-dashboard" element={<ProtectedRoute><PrefeituraDashboard /></ProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
                     <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />
@@ -164,6 +177,15 @@ const App = () => (
                     <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboardPage /></ProtectedRoute>} />
                     <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboardPage /></ProtectedRoute>} />
                     <Route path="/integracoes-tecnicas" element={<ProtectedRoute><IntegracoesTecnicasPage /></ProtectedRoute>} />
+                    <Route path="/integracao-erp" element={<ProtectedRoute><IntegracaoERPPage /></ProtectedRoute>} />
+                    <Route path="/philips-tasy-integration" element={<ProtectedRoute><PhilipsTasyIntegrationPage /></ProtectedRoute>} />
+                    <Route path="/diabetes-care" element={<ProtectedRoute><DiabetesCarePage /></ProtectedRoute>} />
+                    <Route path="/osteoporosis-care" element={<ProtectedRoute><OsteoporosisCarePage /></ProtectedRoute>} />
+                    <Route path="/erectile-dysfunction" element={<ProtectedRoute><ErectileDysfunctionPage /></ProtectedRoute>} />
+                    <Route path="/glucose-monitoring" element={<ProtectedRoute><GlucoseMonitoringPage /></ProtectedRoute>} />
+                    <Route path="/neurology-care" element={<ProtectedRoute><NeurologyCarePage /></ProtectedRoute>} />
+                    <Route path="/vision-care" element={<ProtectedRoute><VisionCarePage /></ProtectedRoute>} />
+                    <Route path="/hearing-care" element={<ProtectedRoute><HearingCarePage /></ProtectedRoute>} />
                     <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />

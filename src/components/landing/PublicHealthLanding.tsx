@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProfileAccess } from '@/contexts/ProfileAccessContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from "@/components/ui/button";
 import medicalTechBg from '@/assets/medical-tech-bg.jpg';
@@ -50,7 +49,6 @@ const PublicHealthLanding = () => {
   console.log('🏥 PublicHealthLanding component rendering');
   
   const navigate = useNavigate();
-  const { isFullAccessEnabled } = useProfileAccess();
   const { switchGuestRole } = useAuth();
   const [formData, setFormData] = useState({
     municipality: '',
@@ -106,7 +104,7 @@ const PublicHealthLanding = () => {
             Entre diretamente como demonstração para seu perfil
           </p>
 
-          <div className={`grid gap-8 mb-12 ${isFullAccessEnabled ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 max-w-md mx-auto'}`}>
+          <div className="grid gap-8 mb-12 grid-cols-1 md:grid-cols-3">
             <Card className="group hover:shadow-2xl transition-all duration-500 border-2 border-primary/20 hover:border-primary/40 hover:scale-105 animate-scale-in bg-card/90 backdrop-blur-sm">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/50 group-hover:to-primary/30 transition-all duration-300 group-hover:animate-pulse shadow-lg">
@@ -124,7 +122,6 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300" 
                   onClick={() => {
                     switchGuestRole('gestor');
-                    navigate('/login');
                   }}
                 >
                   <Building className="w-5 h-5 mr-2" />
@@ -133,7 +130,6 @@ const PublicHealthLanding = () => {
               </CardContent>
             </Card>
 
-            {isFullAccessEnabled && (
             <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-secondary/20 hover:border-secondary/40 bg-card/90 backdrop-blur-sm hover:scale-105">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-secondary/30 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/40 transition-colors shadow-lg">
@@ -151,7 +147,6 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => {
                     switchGuestRole('medico');
-                    navigate('/login');
                   }}
                 >
                   <Stethoscope className="w-5 h-5 mr-2" />
@@ -159,9 +154,7 @@ const PublicHealthLanding = () => {
                 </Button>
               </CardContent>
             </Card>
-            )}
 
-            {isFullAccessEnabled && (
             <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-accent/20 hover:border-accent/40 bg-card/90 backdrop-blur-sm hover:scale-105">
               <CardHeader className="pb-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-accent/30 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/40 transition-colors shadow-lg">
@@ -179,7 +172,6 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => {
                     switchGuestRole('paciente');
-                    navigate('/login');
                   }}
                 >
                   <Heart className="w-5 h-5 mr-2" />
@@ -187,7 +179,6 @@ const PublicHealthLanding = () => {
                 </Button>
               </CardContent>
             </Card>
-            )}
           </div>
         </div>
       </section>

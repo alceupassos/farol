@@ -14,7 +14,6 @@ import {
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 import AccessDropdown from './AccessDropdown';
-import ProfileAccessSwitch from './ProfileAccessSwitch';
 import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
 import TelemedicineModal from '@/components/telemedicine/TelemedicineModal';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
@@ -167,8 +166,6 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           </div>
           
           <UserSpecificAlerts />
-          
-          <ProfileAccessSwitch />
         </div>
       </div>
     </header>
