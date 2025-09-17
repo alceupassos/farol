@@ -122,6 +122,7 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300" 
                   onClick={() => {
                     switchGuestRole('gestor');
+                    setTimeout(() => navigate('/prefeitura-dashboard'), 100);
                   }}
                 >
                   <Building className="w-5 h-5 mr-2" />
@@ -147,6 +148,7 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => {
                     switchGuestRole('medico');
+                    setTimeout(() => navigate('/profile'), 100);
                   }}
                 >
                   <Stethoscope className="w-5 h-5 mr-2" />
@@ -172,6 +174,7 @@ const PublicHealthLanding = () => {
                   className="w-full text-lg py-3 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => {
                     switchGuestRole('paciente');
+                    setTimeout(() => navigate('/profile'), 100);
                   }}
                 >
                   <Heart className="w-5 h-5 mr-2" />

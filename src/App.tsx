@@ -87,6 +87,7 @@ import PrefeituraDashboard from "./pages/PrefeituraDashboard";
 import DashboardRedirect from "./components/DashboardRedirect";
 import IntegracaoERPPage from "./pages/IntegracaoERPPage";
 import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
+import ESUSIntegrationPage from "./pages/ESUSIntegrationPage";
 
 const queryClient = new QueryClient();
 
@@ -179,6 +180,7 @@ const App = () => (
                     <Route path="/integracoes-tecnicas" element={<ProtectedRoute><IntegracoesTecnicasPage /></ProtectedRoute>} />
                     <Route path="/integracao-erp" element={<ProtectedRoute><IntegracaoERPPage /></ProtectedRoute>} />
                     <Route path="/philips-tasy-integration" element={<ProtectedRoute><PhilipsTasyIntegrationPage /></ProtectedRoute>} />
+                    <Route path="/esus-integration" element={<ProtectedRoute><ESUSIntegrationPage /></ProtectedRoute>} />
                     <Route path="/diabetes-care" element={<ProtectedRoute><DiabetesCarePage /></ProtectedRoute>} />
                     <Route path="/osteoporosis-care" element={<ProtectedRoute><OsteoporosisCarePage /></ProtectedRoute>} />
                     <Route path="/erectile-dysfunction" element={<ProtectedRoute><ErectileDysfunctionPage /></ProtectedRoute>} />

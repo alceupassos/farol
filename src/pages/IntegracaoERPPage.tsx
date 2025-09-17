@@ -63,7 +63,9 @@ const IntegracaoERPPage = () => {
         {
           name: "e-SUS APS PEC – LEDI APS e DW PEC",
           description: "Integração de sistemas próprios via LEDI (Apache Thrift/XML) e acesso ao data warehouse para relatórios e extração de dados.",
-          icon: <Database className="h-5 w-5" />
+          icon: <Database className="h-5 w-5" />,
+          hasIntegration: true,
+          route: "/esus-integration"
         },
         {
           name: "API de transmissão LEDI no PEC",
@@ -78,7 +80,9 @@ const IntegracaoERPPage = () => {
         {
           name: "SISREG – Sistema de Regulação",
           description: "API oficial para extração de informações de agendamento, marcação e cancelamento; o MS realizou atualização tecnológica recente na API.",
-          icon: <Calendar className="h-5 w-5" />
+          icon: <Calendar className="h-5 w-5" />,
+          hasIntegration: true,
+          route: "/sisreg-integration"
         }
       ]
     },
@@ -88,7 +92,9 @@ const IntegracaoERPPage = () => {
         {
           name: "CNES – Cadastro Nacional de Estabelecimentos de Saúde",
           description: "Web services oficiais (WSDL/SOAP) para consumo de dados do cadastro nacional; também há APIs/dumps públicos para integração analítica.",
-          icon: <Building className="h-5 w-5" />
+          icon: <Building className="h-5 w-5" />,
+          hasIntegration: true,
+          route: "/cnes-integration"
         },
         {
           name: "CADSUS/CNS – Cartão Nacional de Saúde",
@@ -231,9 +237,15 @@ const IntegracaoERPPage = () => {
                         <Button 
                           className="bg-green-600 hover:bg-green-700 text-white flex-shrink-0"
                           size="sm"
+                          onClick={() => {
+                            if (service.hasIntegration && service.route) {
+                              navigate(service.route);
+                            }
+                          }}
                         >
                           {service.icon}
                           <span className="ml-2 text-xs">{service.name}</span>
+                          {service.hasIntegration && <ArrowRight className="h-3 w-3 ml-1" />}
                         </Button>
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">

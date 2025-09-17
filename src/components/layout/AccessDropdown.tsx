@@ -46,8 +46,30 @@ const AccessDropdown = () => {
   ];
 
   const handleAccessSelect = (role: string) => {
-    // Trocar role - o redirecionamento será feito automaticamente pelo switchGuestRole
+    console.log('AccessDropdown: Selecting role:', role);
+    
+    // Primeiro trocar o role
     switchGuestRole(role);
+    
+    // Depois fazer redirecionamento manual
+    setTimeout(() => {
+      if (role === 'gestor') {
+        console.log('AccessDropdown: Redirecting to prefeitura dashboard');
+        navigate('/prefeitura-dashboard');
+      } else if (role === 'hospital') {
+        console.log('AccessDropdown: Redirecting to hospital dashboard');
+        navigate('/dashboard');
+      } else if (role === 'medico') {
+        console.log('AccessDropdown: Redirecting to medical profile');
+        navigate('/profile');
+      } else if (role === 'paciente') {
+        console.log('AccessDropdown: Redirecting to patient profile');
+        navigate('/profile');
+      } else {
+        console.log('AccessDropdown: Redirecting to default dashboard');
+        navigate('/dashboard');
+      }
+    }, 100); // Pequeno delay para garantir que o role foi atualizado
   };
 
   // Sempre mostrar todas as opções

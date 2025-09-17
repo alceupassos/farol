@@ -27,7 +27,7 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [userRole, setUserRole] = useState<string | null>('gestor');
+  const [userRole, setUserRole] = useState<string | null>(localStorage.getItem('demo_user_role') || null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -80,9 +80,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                  }
                }, 0);
             } else {
-              // Para usuários não autenticados, usar role do localStorage ou padrão
-              const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-              if (mounted) setUserRole(savedRole);
+              // Para usuários não autenticados, manter o role atual ou usar do localStorage
+              const savedRole = localStorage.getItem('demo_user_role');
+              if (savedRole && mounted) {
+                setUserRole(savedRole);
+              }
             }
           }
         );
@@ -118,8 +120,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                }
              }, 0);
           } else {
-            const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-            if (mounted) setUserRole(savedRole);
+            const savedRole = localStorage.getItem('demo_user_role');
+            if (savedRole && mounted) {
+              setUserRole(savedRole);
+            }
           }
         } catch (error) {
           console.warn('Session check failed or timeout:', error);
@@ -127,8 +131,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (mounted) {
             setSession(null);
             setUser(null);
-            const savedRole = localStorage.getItem('demo_user_role') || 'gestor';
-            setUserRole(savedRole);
+            const savedRole = localStorage.getItem('demo_user_role');
+            if (savedRole) {
+              setUserRole(savedRole);
+            }
           }
         }
 
@@ -213,8 +219,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await supabase.auth.signOut();
       setUser(null);
       setSession(null);
-      setUserRole('gestor');
-      localStorage.setItem('demo_user_role', 'gestor');
+      // Manter o role atual após logout para demo
+      // setUserRole('gestor');
+      // localStorage.setItem('demo_user_role', 'gestor');
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -227,25 +234,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUserRole(newRole);
     localStorage.setItem('demo_user_role', newRole);
     
-    // Redirecionar automaticamente para o dashboard apropriado
-    if (typeof window !== 'undefined') {
-      if (newRole === 'gestor') {
-        console.log('Redirecting to prefeitura dashboard');
-        window.location.href = '/prefeitura-dashboard';
-      } else if (newRole === 'hospital') {
-        console.log('Redirecting to hospital dashboard');
-        window.location.href = '/dashboard';
-      } else if (newRole === 'medico') {
-        console.log('Redirecting to medical dashboard');
-        window.location.href = '/profile';
-      } else if (newRole === 'paciente') {
-        console.log('Redirecting to patient profile');
-        window.location.href = '/profile';
-      } else {
-        console.log('Redirecting to default dashboard');
-        window.location.href = '/dashboard';
-      }
-    }
+    // Remover redirecionamento automático - será feito manualmente no AccessDropdown
+    console.log('Role switched successfully to:', newRole);
   };
 
   const value = {

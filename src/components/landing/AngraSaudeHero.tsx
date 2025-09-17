@@ -153,6 +153,7 @@ const AngraSaudeHero = () => {
             className="text-lg px-8 py-4 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90" 
             onClick={() => {
               switchGuestRole('gestor');
+              setTimeout(() => navigate('/prefeitura-dashboard'), 100);
             }}
           >
             <LogIn className="w-5 h-5 mr-2" />
