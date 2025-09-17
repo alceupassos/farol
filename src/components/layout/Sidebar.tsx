@@ -268,6 +268,13 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
           { to: "/ai-insights", icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: "Insights de IA" }
         ]
       });
+      
+      menuSections.push({
+        title: "Integrações Técnicas",
+        items: [
+          { to: "/integracoes-tecnicas", icon: <RefreshCw className="h-5 w-5 mr-3" />, label: "Integrações Necessárias" }
+        ]
+      });
     }
 
     if (userRole === 'medico') {

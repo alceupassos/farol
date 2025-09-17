@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, UserCircle, Clock, MapPin, Phone, Mail, ChevronRight, Calendar } from 'lucide-react';
+import { Search, Filter, UserCircle, Clock, MapPin, Phone, Mail, ChevronRight, Calendar, Heart, Bone, Activity, AlertTriangle } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -85,6 +85,45 @@ const mockPatients: Patient[] = [
     condition: 'Ansiedade',
     status: 'Recuperação',
     riskLevel: 'Baixo'
+  },
+  {
+    id: '6',
+    name: 'Carlos Eduardo Santos',
+    age: 58,
+    gender: 'Masculino',
+    phone: '(11) 94444-1122',
+    email: 'carlos.santos@email.com',
+    lastVisit: '2024-01-19',
+    nextAppointment: '2024-01-26',
+    condition: 'Diabetes Tipo 2',
+    status: 'Atenção',
+    riskLevel: 'Alto'
+  },
+  {
+    id: '7',
+    name: 'Margareth Silva Oliveira',
+    age: 67,
+    gender: 'Feminino',
+    phone: '(11) 93333-5566',
+    email: 'margareth.oliveira@email.com',
+    lastVisit: '2024-01-17',
+    nextAppointment: '2024-01-24',
+    condition: 'Osteoporose',
+    status: 'Atenção',
+    riskLevel: 'Médio'
+  },
+  {
+    id: '8',
+    name: 'Fernando Rodrigues Lima',
+    age: 52,
+    gender: 'Masculino',
+    phone: '(11) 92222-7788',
+    email: 'fernando.lima@email.com',
+    lastVisit: '2024-01-21',
+    nextAppointment: '2024-01-29',
+    condition: 'Disfunção Erétil',
+    status: 'Estável',
+    riskLevel: 'Médio'
   }
 ];
 
@@ -121,6 +160,28 @@ const PatientsPage = () => {
     }
   };
 
+  const getConditionIcon = (condition: string) => {
+    if (condition.toLowerCase().includes('diabetes')) {
+      return <Heart className="h-4 w-4 text-red-500" />;
+    }
+    if (condition.toLowerCase().includes('osteoporose')) {
+      return <Bone className="h-4 w-4 text-blue-500" />;
+    }
+    if (condition.toLowerCase().includes('disfunção erétil')) {
+      return <Activity className="h-4 w-4 text-purple-500" />;
+    }
+    return null;
+  };
+
+  const getSpecialConditions = () => {
+    const diabetes = mockPatients.filter(p => p.condition.toLowerCase().includes('diabetes')).length;
+    const osteoporose = mockPatients.filter(p => p.condition.toLowerCase().includes('osteoporose')).length;
+    const disfuncao = mockPatients.filter(p => p.condition.toLowerCase().includes('disfunção')).length;
+    return { diabetes, osteoporose, disfuncao };
+  };
+
+  const specialConditions = getSpecialConditions();
+
   return (
     <MainLayout>
       <div className="pt-8 pb-10 px-4">
@@ -132,6 +193,63 @@ const PatientsPage = () => {
             <p className="text-muted-foreground">
               Gerencie seus pacientes e acompanhe seus tratamentos
             </p>
+          </div>
+
+          {/* Indicadores Especiais em Destaque */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <Card className="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-950 dark:to-red-900 border-red-200 dark:border-red-800">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-red-100 dark:bg-red-800 rounded-lg">
+                      <Heart className="h-6 w-6 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-red-800 dark:text-red-200">Pacientes com Diabetes</p>
+                      <p className="text-2xl font-bold text-red-900 dark:text-red-100">{specialConditions.diabetes}</p>
+                    </div>
+                  </div>
+                  <AlertTriangle className="h-5 w-5 text-red-500" />
+                </div>
+                <p className="text-xs text-red-600 dark:text-red-400 mt-2">Monitoramento glicêmico necessário</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg">
+                      <Bone className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-blue-800 dark:text-blue-200">Pacientes com Osteoporose</p>
+                      <p className="text-2xl font-bold text-blue-900 dark:text-blue-100">{specialConditions.osteoporose}</p>
+                    </div>
+                  </div>
+                  <AlertTriangle className="h-5 w-5 text-blue-500" />
+                </div>
+                <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">Densidade óssea em acompanhamento</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-purple-100 dark:bg-purple-800 rounded-lg">
+                      <Activity className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-purple-800 dark:text-purple-200">Pacientes com Disfunção Erétil</p>
+                      <p className="text-2xl font-bold text-purple-900 dark:text-purple-100">{specialConditions.disfuncao}</p>
+                    </div>
+                  </div>
+                  <AlertTriangle className="h-5 w-5 text-purple-500" />
+                </div>
+                <p className="text-xs text-purple-600 dark:text-purple-400 mt-2">Avaliação urológica especializada</p>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Filters */}
@@ -230,8 +348,12 @@ const PatientsPage = () => {
                             Risco {patient.riskLevel}
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          {patient.age} anos • {patient.gender} • {patient.condition}
+                        <p className="text-sm text-muted-foreground mb-2 flex items-center">
+                          {patient.age} anos • {patient.gender} • 
+                          <span className="flex items-center ml-1">
+                            {getConditionIcon(patient.condition)}
+                            <span className="ml-1">{patient.condition}</span>
+                          </span>
                         </p>
                         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">

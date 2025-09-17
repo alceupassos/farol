@@ -17,7 +17,7 @@ import MetricsControlPanel from '@/components/metrics/MetricsControlPanel';
 import ImportMetricsModal from '@/components/metrics/ImportMetricsModal';
 import { HealthGoal, HealthMetric } from '@/components/profile/types';
 import { bloodPressureData, glucoseData, heartRateData, weightData } from '@/data/metricsData';
-import { Download, FileUp, BarChart3, Goal, Share2, Bell, Plus } from 'lucide-react';
+import { Download, FileUp, BarChart3, Goal, Share2, Bell, Plus, AlertTriangle, CheckCircle, TrendingUp, Heart, Bone, Activity } from 'lucide-react';
 
 const Metrics = () => {
   const { toast } = useToast();
@@ -141,6 +141,96 @@ const Metrics = () => {
           </div>
         </div>
         
+        {/* Indicadores Específicos em Destaque */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950 dark:to-red-900 border-red-200 dark:border-red-800">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-red-800 dark:text-red-200 flex items-center text-lg">
+                <Heart className="h-5 w-5 mr-2" />
+                Diabetes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-red-700 dark:text-red-300">Glicemia Atual</span>
+                  <span className="font-bold text-red-800 dark:text-red-200">142 mg/dL</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-red-700 dark:text-red-300">HbA1c</span>
+                  <span className="font-bold text-red-800 dark:text-red-200">7.2%</span>
+                </div>
+                <div className="flex items-center space-x-2 mt-3">
+                  <AlertTriangle className="h-4 w-4 text-red-600" />
+                  <span className="text-xs text-red-700 dark:text-red-300">Acima do ideal - Consulte seu médico</span>
+                </div>
+                <div className="bg-red-200 dark:bg-red-800 rounded-full h-2 mt-2">
+                  <div className="bg-red-600 h-2 rounded-full" style={{ width: '75%' }}></div>
+                </div>
+                <p className="text-xs text-red-600 dark:text-red-400 mt-1">Meta: &lt; 130 mg/dL | HbA1c &lt; 7%</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-blue-800 dark:text-blue-200 flex items-center text-lg">
+                <Bone className="h-5 w-5 mr-2" />
+                Osteoporose
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-blue-700 dark:text-blue-300">Densidade Óssea</span>
+                  <span className="font-bold text-blue-800 dark:text-blue-200">-2.1 T-score</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-blue-700 dark:text-blue-300">Cálcio Sérico</span>
+                  <span className="font-bold text-blue-800 dark:text-blue-200">9.8 mg/dL</span>
+                </div>
+                <div className="flex items-center space-x-2 mt-3">
+                  <AlertTriangle className="h-4 w-4 text-blue-600" />
+                  <span className="text-xs text-blue-700 dark:text-blue-300">Osteoporose detectada - Tratamento necessário</span>
+                </div>
+                <div className="bg-blue-200 dark:bg-blue-800 rounded-full h-2 mt-2">
+                  <div className="bg-blue-600 h-2 rounded-full" style={{ width: '40%' }}></div>
+                </div>
+                <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">Meta: T-score &gt; -1.0 | Cálcio: 8.5-10.5 mg/dL</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-purple-800 dark:text-purple-200 flex items-center text-lg">
+                <Activity className="h-5 w-5 mr-2" />
+                Disfunção Erétil
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-purple-700 dark:text-purple-300">IIEF-5 Score</span>
+                  <span className="font-bold text-purple-800 dark:text-purple-200">12/25</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-purple-700 dark:text-purple-300">Testosterona</span>
+                  <span className="font-bold text-purple-800 dark:text-purple-200">285 ng/dL</span>
+                </div>
+                <div className="flex items-center space-x-2 mt-3">
+                  <AlertTriangle className="h-4 w-4 text-purple-600" />
+                  <span className="text-xs text-purple-700 dark:text-purple-300">DE moderada - Avaliação urológica</span>
+                </div>
+                <div className="bg-purple-200 dark:bg-purple-800 rounded-full h-2 mt-2">
+                  <div className="bg-purple-600 h-2 rounded-full" style={{ width: '48%' }}></div>
+                </div>
+                <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">Meta: IIEF-5 &gt; 21 | Testosterona: 300-1000 ng/dL</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-6">
           <div className="space-y-6">
             <MetricsSummary />

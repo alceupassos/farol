@@ -75,6 +75,7 @@ import GestaoFarmaceuticaPage from './pages/GestaoFarmaceuticaPage';
 import AIAnalyticsPage from './pages/AIAnalyticsPage';
 import SecurityDashboardPage from './pages/SecurityDashboardPage';
 import IntegrationsDashboardPage from './pages/IntegrationsDashboardPage';
+import IntegracoesTecnicasPage from "./pages/IntegracoesTecnicasPage";
 
 const queryClient = new QueryClient();
 
@@ -162,6 +163,7 @@ const App = () => (
                     <Route path="/ai-analytics" element={<ProtectedRoute><AIAnalyticsPage /></ProtectedRoute>} />
                     <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboardPage /></ProtectedRoute>} />
                     <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboardPage /></ProtectedRoute>} />
+                    <Route path="/integracoes-tecnicas" element={<ProtectedRoute><IntegracoesTecnicasPage /></ProtectedRoute>} />
                     <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
