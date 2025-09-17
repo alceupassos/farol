@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TC001",
+    "title": "multi profile authentication redirection",
+    "description": "Verify that the multi-profile authentication system correctly supports dynamic profile switching and automatically redirects users to the appropriate dashboard based on the selected profile (Gestor, Hospital, Médico, Paciente)."
+  },
+  {
+    "id": "TC002",
+    "title": "municipal dashboard kpi display",
+    "description": "Test that the municipal dashboard displays updated and functional KPIs and SUS indicators with the correct dark theme and glassmorphism style."
+  },
+  {
+    "id": "TC003",
+    "title": "hospital dashboard operational indicators",
+    "description": "Validate that the hospital dashboard shows accurate operational indicators, bed management data, billing information, and analysis reports."
+  },
+  {
+    "id": "TC004",
+    "title": "erp integration error rate and response time",
+    "description": "Ensure that the integration with hospital ERP systems and DATASUS APIs maintains an error rate below 1% and response times under 500ms."
+  },
+  {
+    "id": "TC005",
+    "title": "e sus aps integration configuration",
+    "description": "Verify the complete integration with e-SUS APS via LEDI and DW PEC, including all 8 configuration sections and orchestration via MCP Server."
+  },
+  {
+    "id": "TC006",
+    "title": "epidemic alert notifications",
+    "description": "Check that the epidemic alert system sends automatic notifications correctly and displays risk maps and indicators by neighborhood according to the user's profile."
+  },
+  {
+    "id": "TC007",
+    "title": "navigation sidebar responsiveness",
+    "description": "Test the responsive navigation system including dynamic sidebar, navbar, and specialized layouts for different user profiles."
+  },
+  {
+    "id": "TC008",
+    "title": "telemedicine session management",
+    "description": "Validate the telemedicine system's ability to manage consultation sessions and display the modal for teleconsultations properly."
+  },
+  {
+    "id": "TC009",
+    "title": "ai analytics predictive insights",
+    "description": "Verify that the AI analytics dashboard provides accurate predictive analysis and advanced insights based on health data."
+  },
+  {
+    "id": "TC010",
+    "title": "internationalization language support",
+    "description": "Ensure the system supports full internationalization with correct translations and functionality in Portuguese, English, Spanish, and French."
+  }
+]

@@ -1,0 +1,162 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React 18",
+    "Vite",
+    "Tailwind CSS",
+    "Shadcn/UI",
+    "React Router v6",
+    "Supabase",
+    "PostgreSQL",
+    "React Context API",
+    "React i18next",
+    "Recharts",
+    "Lucide React"
+  ],
+  "features": [
+    {
+      "name": "Multi-Profile Authentication System",
+      "description": "Sistema de autenticação com múltiplos perfis (Gestor, Hospital, Médico, Paciente) com troca dinâmica e redirecionamento automático",
+      "files": [
+        "src/contexts/AuthContext.tsx",
+        "src/components/layout/AccessDropdown.tsx",
+        "src/components/DashboardRedirect.tsx"
+      ]
+    },
+    {
+      "name": "Municipal Dashboard",
+      "description": "Dashboard especializado para gestores municipais com KPIs, indicadores SUS e tema dark com glassmorphism",
+      "files": [
+        "src/pages/PrefeituraDashboard.tsx",
+        "src/components/dashboard/RoleDashboard.tsx"
+      ]
+    },
+    {
+      "name": "Hospital Dashboard",
+      "description": "Dashboard hospitalar com indicadores operacionais, gestão de leitos, faturamento e análises",
+      "files": [
+        "src/pages/Dashboard.tsx",
+        "src/pages/DashboardFinanceiroPage.tsx",
+        "src/pages/RelatoriosAnalyticsPage.tsx",
+        "src/pages/AnalisesLaboratoriaisPage.tsx",
+        "src/pages/GestaoFarmaceuticaPage.tsx"
+      ]
+    },
+    {
+      "name": "ERP Integration System",
+      "description": "Sistema de integração com ERPs hospitalares (Philips Tasy, SOUL MV, etc.) e APIs DATASUS",
+      "files": [
+        "src/pages/IntegracaoERPPage.tsx",
+        "src/pages/PhilipsTasyIntegrationPage.tsx",
+        "src/pages/IntegracoesTecnicasPage.tsx"
+      ]
+    },
+    {
+      "name": "e-SUS APS Integration",
+      "description": "Integração completa com e-SUS APS via LEDI e DW PEC com 8 seções de configuração",
+      "files": [
+        "src/pages/ESUSIntegrationPage.tsx"
+      ]
+    },
+    {
+      "name": "Geriatric Care System",
+      "description": "Sistema de cuidados geriátricos com 7 páginas especializadas (Diabetes, Osteoporose, etc.)",
+      "files": [
+        "src/pages/DiabetesCarePage.tsx",
+        "src/pages/OsteoporosisCarePage.tsx",
+        "src/pages/ErectileDysfunctionPage.tsx",
+        "src/pages/GlucoseMonitoringPage.tsx",
+        "src/pages/NeurologyCarePage.tsx",
+        "src/pages/VisionCarePage.tsx",
+        "src/pages/HearingCarePage.tsx"
+      ]
+    },
+    {
+      "name": "Epidemic Alert System",
+      "description": "Sistema de alertas epidemiológicos com mapas de risco, indicadores por bairro e notificações automáticas",
+      "files": [
+        "src/components/epidemic/EpidemicAlertPanel.tsx",
+        "src/components/epidemic/UserSpecificAlerts.tsx",
+        "src/components/epidemic/DashboardAlertWidget.tsx",
+        "src/components/epidemic/RiskLevelIndicator.tsx"
+      ]
+    },
+    {
+      "name": "Navigation and Layout System",
+      "description": "Sistema de navegação responsivo com sidebar dinâmica, navbar e layouts especializados por perfil",
+      "files": [
+        "src/components/layout/MainLayout.tsx",
+        "src/components/layout/Sidebar.tsx",
+        "src/components/layout/Navbar.tsx"
+      ]
+    },
+    {
+      "name": "Landing Pages",
+      "description": "Páginas de entrada com seleção de perfis e apresentação do sistema",
+      "files": [
+        "src/components/landing/PublicHealthLanding.tsx",
+        "src/components/landing/AngraSaudeHero.tsx",
+        "src/pages/Index.tsx"
+      ]
+    },
+    {
+      "name": "Public Health Management",
+      "description": "Ferramentas de gestão pública incluindo capacitação de gestores, transição de gestão e indicadores APS",
+      "files": [
+        "src/pages/CapacitacaoGestoresPage.tsx",
+        "src/pages/TransicaoGestaoPage.tsx",
+        "src/pages/IndicadoresDesempenhoPage.tsx",
+        "src/pages/GovernancaDadosPage.tsx"
+      ]
+    },
+    {
+      "name": "Telemedicine System",
+      "description": "Sistema de telemedicina com modal de consultas e gestão de sessões",
+      "files": [
+        "src/components/telemedicine/TelemedicineModal.tsx",
+        "src/pages/TelemedicinePatient.tsx"
+      ]
+    },
+    {
+      "name": "AI Analytics Dashboard",
+      "description": "Dashboard de analytics com IA para análise preditiva e insights avançados",
+      "files": [
+        "src/pages/AIAnalyticsPage.tsx"
+      ]
+    },
+    {
+      "name": "Security Dashboard",
+      "description": "Dashboard de segurança com monitoramento de acessos e compliance LGPD",
+      "files": [
+        "src/pages/SecurityDashboardPage.tsx"
+      ]
+    },
+    {
+      "name": "Internationalization System",
+      "description": "Sistema de internacionalização com suporte a PT, EN, ES, FR",
+      "files": [
+        "src/locales/pt/translation.json",
+        "src/locales/en/translation.json",
+        "src/locales/es/translation.json",
+        "src/locales/fr/translation.json",
+        "public/locales/pt/common.json",
+        "public/locales/en/common.json"
+      ]
+    },
+    {
+      "name": "DATASUS MCP Server",
+      "description": "Servidor MCP para orquestração de integrações com APIs do DATASUS",
+      "files": [
+        "src/services/datasus-mcp-server.ts"
+      ]
+    },
+    {
+      "name": "User Profile Management",
+      "description": "Sistema de gestão de perfis de usuários com dados específicos por tipo",
+      "files": [
+        "src/data/guestProfiles.ts",
+        "src/pages/Profile.tsx"
+      ]
+    }
+  ]
+}

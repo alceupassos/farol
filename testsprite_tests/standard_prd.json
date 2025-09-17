@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "project": "Sistema de Saúde Pública - Plataforma Integrada de Gestão",
+    "date": "2025-09-13",
+    "prepared_by": "Equipe de Desenvolvimento"
+  },
+  "product_overview": "O Sistema de Saúde Pública é uma plataforma web integrada para modernizar e centralizar a gestão da saúde pública no Brasil, oferecendo dashboards especializados, integrações com APIs governamentais e ferramentas avançadas de análise epidemiológica para múltiplos perfis de usuários.",
+  "core_goals": [
+    "Centralizar a gestão de saúde pública em uma única plataforma acessível a diversos perfis.",
+    "Integrar sistemas ERP hospitalares e APIs governamentais do DATASUS para melhorar a interoperabilidade.",
+    "Modernizar o acesso a dados epidemiológicos e indicadores SUS para facilitar a tomada de decisão baseada em dados.",
+    "Oferecer dashboards especializados e ferramentas de análise para gestores municipais, administradores hospitalares, profissionais de saúde e pacientes.",
+    "Garantir a segurança dos dados com compliance LGPD e controles robustos de autenticação e autorização."
+  ],
+  "key_features": [
+    "Sistema de autenticação multi-perfil com troca dinâmica e redirecionamento automático para dashboards específicos.",
+    "Dashboards especializados: Municipal com KPIs SUS e Hospitalar com gestão de leitos, faturamento e análises.",
+    "Integração com 12 sistemas ERP hospitalares (ex: Philips Tasy, SOUL MV) e 16 serviços da API DATASUS.",
+    "Integração completa com e-SUS APS via LEDI e DW PEC com diversas configurações e orquestração via MCP Server.",
+    "Sistema de cuidados geriátricos com módulos para diabetes, osteoporose, visão, audição, entre outros.",
+    "Sistema de alertas epidemiológicos com mapas de risco, indicadores por bairro e notificações automáticas personalizadas.",
+    "Sistema responsivo de navegação com sidebar dinâmica e layouts adaptados por perfil de usuário.",
+    "Ferramentas de gestão pública incluindo capacitação de gestores, transição de gestão e indicadores de desempenho APS.",
+    "Sistema de telemedicina com gestão de sessões e consultas em modal dedicado.",
+    "Dashboard de analytics com inteligência artificial para análise preditiva e insights avançados.",
+    "Suporte a internacionalização em PT, EN, ES e FR para ampla acessibilidade."
+  ],
+  "user_flow_summary": [
+    "Usuário realiza autenticação e seleciona o perfil desejado (Gestor, Hospital, Médico, Paciente).",
+    "O sistema redireciona automaticamente para o dashboard especializado conforme o perfil.",
+    "Gestores municipais acessam KPIs estratégicos, configuram metas e acompanham indicadores de saúde pública municipal.",
+    "Administradores hospitalares gerenciam leitos, monitoram faturamento e acessam integrações ERP para dados operacionais.",
+    "Profissionais de saúde utilizam cuidados geriátricos, acompanham protocolos clínicos e realizam teleconsultas pelo sistema.",
+    "Pacientes acessam informações pessoais, histórico médico e orientações preventivas para autocuidado.",
+    "Usuários recebem alertas epidemiológicos customizados e têm acesso a mapas de risco e notificações em tempo real.",
+    "Configuração e integração com serviços externos (ERP, e-SUS APS, DATASUS) são realizadas via interfaces administrativas dedicadas."
+  ],
+  "validation_criteria": [
+    "A autenticação multi-perfil deve suportar troca dinâmica e redirecionar corretamente para o dashboard do perfil selecionado.",
+    "Dashboards municipais e hospitalares devem apresentar KPIs e gráficos atualizados e funcionais.",
+    "Integrações com sistemas ERP e APIs DATASUS devem ter taxa de erro inferior a 1% e tempo de resposta menor que 500ms.",
+    "Sistema deve garantir compliance LGPD com criptografia, logs de auditoria e controle de acessos RBAC.",
+    "Alertas epidemiológicos devem ser enviados automaticamente e exibidos corretamente conforme o perfil do usuário.",
+    "Testes automatizados de unidade, integração, e2e e API devem cobrir os principais fluxos funcionais do sistema.",
+    "Performance do sistema deve manter tempo de carregamento inferior a 2 segundos e disponibilidade de 99.9%.",
+    "Internacionalização deve suportar completamente os idiomas PT, EN, ES e FR conforme as traduções fornecidas."
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "TypeScript",
+      "React 18",
+      "Vite",
+      "Tailwind CSS",
+      "Shadcn/UI",
+      "React Router v6",
+      "Supabase",
+      "PostgreSQL",
+      "React Context API",
+      "React i18next",
+      "Recharts",
+      "Lucide React"
+    ],
+    "features": [
+      {
+        "name": "Multi-Profile Authentication System",
+        "description": "Sistema de autenticação com múltiplos perfis (Gestor, Hospital, Médico, Paciente) com troca dinâmica e redirecionamento automático",
+        "files": [
+          "src/contexts/AuthContext.tsx",
+          "src/components/layout/AccessDropdown.tsx",
+          "src/components/DashboardRedirect.tsx"
+        ]
+      },
+      {
+        "name": "Municipal Dashboard",
+        "description": "Dashboard especializado para gestores municipais com KPIs, indicadores SUS e tema dark com glassmorphism",
+        "files": [
+          "src/pages/PrefeituraDashboard.tsx",
+          "src/components/dashboard/RoleDashboard.tsx"
+        ]
+      },
+      {
+        "name": "Hospital Dashboard",
+        "description": "Dashboard hospitalar com indicadores operacionais, gestão de leitos, faturamento e análises",
+        "files": [
+          "src/pages/Dashboard.tsx",
+          "src/pages/DashboardFinanceiroPage.tsx",
+          "src/pages/RelatoriosAnalyticsPage.tsx",
+          "src/pages/AnalisesLaboratoriaisPage.tsx",
+          "src/pages/GestaoFarmaceuticaPage.tsx"
+        ]
+      },
+      {
+        "name": "ERP Integration System",
+        "description": "Sistema de integração com ERPs hospitalares (Philips Tasy, SOUL MV, etc.) e APIs DATASUS",
+        "files": [
+          "src/pages/IntegracaoERPPage.tsx",
+          "src/pages/PhilipsTasyIntegrationPage.tsx",
+          "src/pages/IntegracoesTecnicasPage.tsx"
+        ]
+      },
+      {
+        "name": "e-SUS APS Integration",
+        "description": "Integração completa com e-SUS APS via LEDI e DW PEC com 8 seções de configuração",
+        "files": [
+          "src/pages/ESUSIntegrationPage.tsx"
+        ]
+      },
+      {
+        "name": "Geriatric Care System",
+        "description": "Sistema de cuidados geriátricos com 7 páginas especializadas (Diabetes, Osteoporose, etc.)",
+        "files": [
+          "src/pages/DiabetesCarePage.tsx",
+          "src/pages/OsteoporosisCarePage.tsx",
+          "src/pages/ErectileDysfunctionPage.tsx",
+          "src/pages/GlucoseMonitoringPage.tsx",
+          "src/pages/NeurologyCarePage.tsx",
+          "src/pages/VisionCarePage.tsx",
+          "src/pages/HearingCarePage.tsx"
+        ]
+      },
+      {
+        "name": "Epidemic Alert System",
+        "description": "Sistema de alertas epidemiológicos com mapas de risco, indicadores por bairro e notificações automáticas",
+        "files": [
+          "src/components/epidemic/EpidemicAlertPanel.tsx",
+          "src/components/epidemic/UserSpecificAlerts.tsx",
+          "src/components/epidemic/DashboardAlertWidget.tsx",
+          "src/components/epidemic/RiskLevelIndicator.tsx"
+        ]
+      },
+      {
+        "name": "Navigation and Layout System",
+        "description": "Sistema de navegação responsivo com sidebar dinâmica, navbar e layouts especializados por perfil",
+        "files": [
+          "src/components/layout/MainLayout.tsx",
+          "src/components/layout/Sidebar.tsx",
+          "src/components/layout/Navbar.tsx"
+        ]
+      },
+      {
+        "name": "Landing Pages",
+        "description": "Páginas de entrada com seleção de perfis e apresentação do sistema",
+        "files": [
+          "src/components/landing/PublicHealthLanding.tsx",
+          "src/components/landing/AngraSaudeHero.tsx",
+          "src/pages/Index.tsx"
+        ]
+      },
+      {
+        "name": "Public Health Management",
+        "description": "Ferramentas de gestão pública incluindo capacitação de gestores, transição de gestão e indicadores APS",
+        "files": [
+          "src/pages/CapacitacaoGestoresPage.tsx",
+          "src/pages/TransicaoGestaoPage.tsx",
+          "src/pages/IndicadoresDesempenhoPage.tsx",
+          "src/pages/GovernancaDadosPage.tsx"
+        ]
+      },
+      {
+        "name": "Telemedicine System",
+        "description": "Sistema de telemedicina com modal de consultas e gestão de sessões",
+        "files": [
+          "src/components/telemedicine/TelemedicineModal.tsx",
+          "src/pages/TelemedicinePatient.tsx"
+        ]
+      },
+      {
+        "name": "AI Analytics Dashboard",
+        "description": "Dashboard de analytics com IA para análise preditiva e insights avançados",
+        "files": [
+          "src/pages/AIAnalyticsPage.tsx"
+        ]
+      },
+      {
+        "name": "Security Dashboard",
+        "description": "Dashboard de segurança com monitoramento de acessos e compliance LGPD",
+        "files": [
+          "src/pages/SecurityDashboardPage.tsx"
+        ]
+      },
+      {
+        "name": "Internationalization System",
+        "description": "Sistema de internacionalização com suporte a PT, EN, ES, FR",
+        "files": [
+          "src/locales/pt/translation.json",
+          "src/locales/en/translation.json",
+          "src/locales/es/translation.json",
+          "src/locales/fr/translation.json",
+          "public/locales/pt/common.json",
+          "public/locales/en/common.json"
+        ]
+      },
+      {
+        "name": "DATASUS MCP Server",
+        "description": "Servidor MCP para orquestração de integrações com APIs do DATASUS",
+        "files": [
+          "src/services/datasus-mcp-server.ts"
+        ]
+      },
+      {
+        "name": "User Profile Management",
+        "description": "Sistema de gestão de perfis de usuários com dados específicos por tipo",
+        "files": [
+          "src/data/guestProfiles.ts",
+          "src/pages/Profile.tsx"
+        ]
+      }
+    ]
+  }
+}

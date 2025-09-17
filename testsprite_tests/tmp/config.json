@@ -1,0 +1,17 @@
+{
+  "status": "commited",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:8080",
+  "backendAuthType": "public",
+  "executionArgs": {
+    "projectName": "saudepublica",
+    "projectPath": "/Users/alceualvespasssosmac/saudepublica/saudepublica",
+    "testIds": [],
+    "additionalInstruction": "Execute comprehensive backend tests for Sistema de Saúde Pública focusing on:\n\n**Backend Infrastructure Testing:**\n1. **Supabase Integration**: \n   - Database connections and queries\n   - Authentication service endpoints\n   - Edge functions (create-demo-user)\n   - Real-time subscriptions\n\n2. **API Endpoints Testing**:\n   - REST API responses and status codes\n   - Data validation and sanitization\n   - Error handling and edge cases\n   - Rate limiting and security\n\n3. **DATASUS Integration Testing**:\n   - RNDS API connectivity and responses\n   - CNES data retrieval\n   - SIGTAP integration\n   - e-SUS APS LEDI endpoints\n   - Error handling for external APIs\n\n4. **Database Operations**:\n   - User roles and permissions\n   - Data persistence and retrieval\n   - Transaction handling\n   - Data integrity constraints\n\n5. **Security Testing**:\n   - JWT token validation\n   - RBAC implementation\n   - LGPD compliance checks\n   - Input sanitization\n\n6. **Performance Testing**:\n   - Database query performance\n   - API response times\n   - Concurrent user handling\n   - Memory and resource usage\n\n7. **Integration Testing**:\n   - ERP system connections (Philips Tasy, SOUL MV)\n   - MCP Server orchestration\n   - External service dependencies\n   - Data synchronization\n\nTest all backend services, APIs, and integrations thoroughly.",
+    "envs": {
+      "API_KEY": "sk-user-nsn7449bkZeGcPPVtefHqV9TXte74LeOvnvgYqRlQigdm3Oz8bMYmCNr0m33DQGU3iwr_ec516_xq4T41tJMy0WeQZm6NIf9GTD_EjHbwp1fQnaWJt8x-gosOySNdVImDpM"
+    }
+  },
+  "proxy": "http://69a2912e-b300-47a9-add6-31f5f048a778:eUthG1rA42c7bsNnBniGAEF0toTo7T3D@tun.testsprite.com:8080"
+}

@@ -1,0 +1,34 @@
+/* Scrollbar styles that will definitely work */
+.medical-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 #1e293b;
+}
+
+.medical-scrollbar::-webkit-scrollbar {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.medical-scrollbar::-webkit-scrollbar-track {
+  background: #1e293b !important;
+  border-radius: 8px !important;
+}
+
+.medical-scrollbar::-webkit-scrollbar-thumb {
+  background: #475569 !important;
+  border-radius: 8px !important;
+  border: 2px solid #1e293b !important;
+}
+
+.medical-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #334155 !important;
+}
+
+.medical-scrollbar::-webkit-scrollbar-corner {
+  background: #1e293b !important;
+}
+
+/* Force scrollbar to always show */
+.medical-scrollbar::-webkit-scrollbar-thumb {
+  min-height: 20px !important;
+}

@@ -1,0 +1,553 @@
+[
+  {
+    "id": "TC001",
+    "title": "Multi-Profile Authentication Success",
+    "description": "Verify that users can authenticate successfully for each profile (Gestor, Hospital, Médico, Paciente) and are redirected to the correct dashboard.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid credentials for Gestor profile"
+      },
+      {
+        "type": "action",
+        "description": "Select Gestor profile from profile selection"
+      },
+      {
+        "type": "action",
+        "description": "Click login button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify redirection to Municipal Dashboard with Gestor KPIs visible"
+      },
+      {
+        "type": "action",
+        "description": "Logout and repeat login for Hospital profile"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid credentials for Hospital profile"
+      },
+      {
+        "type": "action",
+        "description": "Select Hospital profile and login"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify redirection to Hospital Dashboard with leitos and faturamento management"
+      },
+      {
+        "type": "action",
+        "description": "Logout and repeat login for Médico profile"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid credentials for Médico profile"
+      },
+      {
+        "type": "action",
+        "description": "Select Médico profile and login"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access to geriatric care modules and telemedicine session management"
+      },
+      {
+        "type": "action",
+        "description": "Logout and repeat login for Paciente profile"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid credentials for Paciente profile"
+      },
+      {
+        "type": "action",
+        "description": "Select Paciente profile and login"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access to personal medical history and preventive guidance"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Multi-Profile Authentication Failure",
+    "description": "Verify system behavior when incorrect credentials are entered or profile selection is invalid.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page"
+      },
+      {
+        "type": "action",
+        "description": "Enter invalid username and password"
+      },
+      {
+        "type": "action",
+        "description": "Attempt login"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that login is denied with error message"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid credentials but do not select profile"
+      },
+      {
+        "type": "action",
+        "description": "Attempt login"
+      },
+      {
+        "type": "assertion",
+        "description": "Check for prompt to select a profile before login"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Municipal Dashboard KPIs Display and Update",
+    "description": "Verify that Municipal Dashboard loads correctly, displays KPIs SUS, graphs and updates data in real-time for gestores municipais.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as Gestor profile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard loads with all KPIs and indicators visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify graphs and metrics data correspond to latest available data"
+      },
+      {
+        "type": "action",
+        "description": "Trigger update of KPIs by data refresh"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify KPIs data refreshes within 2 seconds and displays updated values"
+      },
+      {
+        "type": "action",
+        "description": "Change dashboard theme to dark mode with glassmorphism"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI theme applies correctly without display issues"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Hospital Dashboard Functional Testing",
+    "description": "Verify Hospital Dashboard loads and allows management of leitos, faturamento and shows analytic reports correctly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as Hospital profile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard loads with leitos and faturamento modules"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Gestão Farmacêutica page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify pharmaceutical inventory and controls are visible and functional"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Relatórios Analytics and Analises Laboratoriais"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm analytic charts display correct hospital performance data"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "ERP Hospital Integration with Philips Tasy and SOUL MV",
+    "description": "Verify integration with 12 ERP hospital systems including connectivity, data fetch, and error handling with Philips Tasy and SOUL MV.",
+    "category": "integration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access ERP Integration page"
+      },
+      {
+        "type": "action",
+        "description": "Configure connection for Philips Tasy system"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that data from Philips Tasy loads successfully with response time < 500ms"
+      },
+      {
+        "type": "action",
+        "description": "Configure connection for SOUL MV system"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that data from SOUL MV loads successfully within performance limits"
+      },
+      {
+        "type": "action",
+        "description": "Simulate API failure for one ERP system"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that error rate remains below 1% and user receives clear error notification"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Integration with DATASUS API Services",
+    "description": "Verify system integration with 16 API DATASUS services, including data retrieval, error handling, and compliance with expected response times.",
+    "category": "integration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access DATASUS Integration technical page"
+      },
+      {
+        "type": "action",
+        "description": "Trigger calls to all 16 DATASUS API services"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all API calls succeed with error rate under 1% and response times under 500ms"
+      },
+      {
+        "type": "action",
+        "description": "Simulate network timeout for a DATASUS API"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify system handles timeout gracefully and logs appropriate audit entry"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "e-SUS APS Integration Configuration and Orchestration",
+    "description": "Verify complete integration with e-SUS APS via LEDI and DW PEC including all 8 configuration sections and orchestration via MCP Server.",
+    "category": "integration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to e-SUS APS Integration page"
+      },
+      {
+        "type": "action",
+        "description": "Complete configuration for all 8 sections correctly"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify orchestration triggers calls via MCP Server and data synchronizes successfully"
+      },
+      {
+        "type": "action",
+        "description": "Submit invalid configuration in one section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify system detects error and prevents saving invalid configurations"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Geriatric Care System Module Access and Functionality",
+    "description": "Verify the 7 geriatric care modules (Diabetes, Osteoporose, etc.) load and display relevant clinical protocols correctly for medical professionals.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as Médico profile"
+      },
+      {
+        "type": "action",
+        "description": "Sequentially access each geriatric care module"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify clinical protocols, patient data, and care suggestions display correctly"
+      },
+      {
+        "type": "action",
+        "description": "Test data input and protocol updates"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify data validation and saving works without errors"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Epidemic Alert System Notification and Mapping",
+    "description": "Verify that epidemic alerts generate automatically, display correct risk maps and indicators by neighborhood, and send notifications personalized per user profile.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as any profile with alert subscription"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify risk maps load with correct color-coded risk levels"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user-specific alerts panel shows relevant notifications"
+      },
+      {
+        "type": "action",
+        "description": "Trigger simulated epidemiological event"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify automatic alert notification is received and displayed promptly"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Responsive Navigation Sidebar and Layout per Profile",
+    "description": "Verify that navigation menus, sidebar, and layouts adapt responsively and dynamically according to user profile and screen size.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as each profile type"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sidebar shows correct menu items per profile"
+      },
+      {
+        "type": "action",
+        "description": "Resize browser window to mobile size"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sidebar collapses and navigation remains usable"
+      },
+      {
+        "type": "action",
+        "description": "Resize window back to desktop"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sidebar and layout adapt back correctly without UI glitches"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Telemedicine Session Management Functionality",
+    "description": "Verify telemedicine system modal allows scheduling, managing, and conducting consultations without errors.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as Médico or Paciente profile"
+      },
+      {
+        "type": "action",
+        "description": "Open telemedicine modal and schedule a new consultation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify consultation details are saved and appear in session list"
+      },
+      {
+        "type": "action",
+        "description": "Start a scheduled teleconsultation session"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify communication modal opens with expected controls"
+      },
+      {
+        "type": "action",
+        "description": "End teleconsultation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify session is marked completed and stored in history"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Security Compliance with LGPD and RBAC Access Control",
+    "description": "Verify the system implements data encryption, audit logs, and role-based access control according to LGPD compliance requirements.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as different user roles"
+      },
+      {
+        "type": "action",
+        "description": "Try accessing restricted resources unauthorized for that role"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access denied with appropriate user feedback"
+      },
+      {
+        "type": "action",
+        "description": "Trigger data operations and check that audit logs are generated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify audit logs capture user, action, timestamp, and affected data"
+      },
+      {
+        "type": "action",
+        "description": "Inspect data storage and transmissions to verify encryption is active"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm encrypted storage and secure network communications"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Internationalization and Language Switching",
+    "description": "Verify system supports full internationalization with correct translations and UI layout for PT, EN, ES, and FR languages.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and access any major page with UI text"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to English (EN)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all UI text and labels are accurately translated"
+      },
+      {
+        "type": "action",
+        "description": "Switch language to Spanish (ES) and French (FR) sequentially"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify complete and correct translations in each language"
+      },
+      {
+        "type": "action",
+        "description": "Check UI layout for text overflow or truncation in all languages"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no layout breaks or alignment issues occur"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Performance and Load Testing",
+    "description": "Verify system maintains response times under 2 seconds and availability above 99.9% under expected user load.",
+    "category": "performance",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate concurrent user logins with mixed profiles"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify authentication and dashboard loading times remain under 2 seconds"
+      },
+      {
+        "type": "action",
+        "description": "Execute data refresh and integration calls with load"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify system availability does not drop below 99.9% during peak usage"
+      },
+      {
+        "type": "action",
+        "description": "Simulate unexpected peak traffic spikes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify system handles spikes gracefully without crashes and recovers stability quickly"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Public Health Management Tools Functional Test",
+    "description": "Verify tools for capacitação de gestores, transição de gestão and indicadores de desempenho APS load data correctly and support user interactions.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as Gestor profile"
+      },
+      {
+        "type": "action",
+        "description": "Access Capacitacao Gestores and load available training programs"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify trainings display details and user can register"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Transicao Gestao and configure transition data"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify data saves and reflects correctly in dependent fields"
+      },
+      {
+        "type": "action",
+        "description": "Access Indicadores Desempenho APS and load performance indicators"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify indicator charts are accurate and update on user interaction"
+      }
+    ]
+  }
+]
