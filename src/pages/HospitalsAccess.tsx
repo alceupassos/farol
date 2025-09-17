@@ -1,5 +1,6 @@
 import React from 'react';
 import MainLayout from '@/components/layout/MainLayout';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   Activity, 
   Users, 
@@ -17,9 +18,10 @@ import {
   CheckCircle,
   Clock,
   BarChart3,
-  PieChart,
-  LineChart
+  Stethoscope,
+  TestTube
 } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 
 const KpiCard: React.FC<{ 
   title: string; 
@@ -50,17 +52,10 @@ const KpiCard: React.FC<{
   </div>
 );
 
-const ChartPlaceholder: React.FC<{ title: string; type: 'bar' | 'line' | 'pie' }> = ({ title, type }) => (
-  <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
-    <h3 className="text-white font-semibold mb-4">{title}</h3>
-    <div className="h-64 bg-gray-800 rounded-lg flex items-center justify-center">
-      {type === 'bar' && <BarChart3 size={48} className="text-gray-600" />}
-      {type === 'line' && <LineChart size={48} className="text-gray-600" />}
-      {type === 'pie' && <PieChart size={48} className="text-gray-600" />}
-      <span className="ml-2 text-gray-600">Gráfico {type === 'bar' ? 'de Barras' : type === 'line' ? 'de Linha' : 'de Pizza'}</span>
-    </div>
-  </div>
-);
+const faturamentoData = [{ name: 'SUS', value: 57 }, { name: 'TISS', value: 43 }];
+const ocupacaoData = [{ name: 'Clínica', Ocupação: 85 }, { name: 'Cirúrgica', Ocupação: 92 }, { name: 'UTI', Ocupação: 95 }, { name: 'Pediatria', Ocupação: 75 }];
+const qualidadeData = [{ name: 'Jan', Infecção: 2.5, Readmissão: 8.5 }, { name: 'Fev', Infecção: 2.3, Readmissão: 8.2 }, { name: 'Mar', Infecção: 2.1, Readmissão: 8.3 }];
+const COLORS = ['#8884d8', '#82ca9d'];
 
 const HospitalsAccess = () => {
   return (
@@ -193,13 +188,41 @@ const HospitalsAccess = () => {
         <div id="graficos" className="mb-8">
           <h2 className="text-2xl font-bold text-white mb-6">📈 Análises Gráficas</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <ChartPlaceholder title="Produção Mensal SUS vs Convênios" type="bar" />
-            <ChartPlaceholder title="Evolução Taxa de Ocupação" type="line" />
+            <Card className="bg-gray-800/50 border border-gray-700 rounded-xl"><CardHeader><CardTitle>Produção Mensal SUS vs Convênios</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><BarChart data={ocupacaoData}><CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="name" /><YAxis /><Tooltip /><Legend /><Bar dataKey="Ocupação" fill="#8884d8" name="Ocupação (%)" /></BarChart></ResponsiveContainer></CardContent></Card>
+            <Card className="bg-gray-800/50 border border-gray-700 rounded-xl"><CardHeader><CardTitle>Evolução da Taxa de Ocupação</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={300}><LineChart data={qualidadeData}><CartesianGrid strokeDasharray="3 3" /><XAxis dataKey="name" /><YAxis /><Tooltip /><Legend /><Line type="monotone" dataKey="Infecção" stroke="#e53e3e" name="Infecção (%)" /><Line type="monotone" dataKey="Readmissão" stroke="#f59e0b" name="Readmissão (%)" /></LineChart></ResponsiveContainer></CardContent></Card>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <ChartPlaceholder title="Distribuição por Especialidade" type="pie" />
-            <ChartPlaceholder title="Faturamento por Fonte" type="pie" />
-            <ChartPlaceholder title="Indicadores de Qualidade" type="bar" />
+            <Card className="bg-gray-800/50 border border-gray-700 rounded-xl"><CardHeader><CardTitle>Faturamento por Fonte</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={200}><PieChart><Pie data={faturamentoData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label>{faturamentoData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer></CardContent></Card>
+            <Card className="bg-gray-800/50 border border-gray-700 rounded-xl"><CardHeader><CardTitle>Indicadores de Qualidade</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={200}><BarChart data={qualidadeData}><Tooltip /><Bar dataKey="Infecção" fill="#e53e3e" /></BarChart></ResponsiveContainer></CardContent></Card>
+            <Card className="bg-gray-800/50 border border-gray-700 rounded-xl"><CardHeader><CardTitle>Distribuição por Especialidade</CardTitle></CardHeader><CardContent><ResponsiveContainer width="100%" height={200}><BarChart data={ocupacaoData} layout="vertical"><YAxis type="category" dataKey="name" /><XAxis type="number" /><Tooltip /><Bar dataKey="Ocupação" fill="#82ca9d" /></BarChart></ResponsiveContainer></CardContent></Card>
+          </div>
+        </div>
+
+        {/* Novas Seções de Gestão */}
+        <div id="gestao-clinica" className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">🩺 Gestão Clínica</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <KpiCard title="Total de Pacientes Ativos" value="1,234" icon={<Users size={24} />} color="blue" />
+            <KpiCard title="Média de Consultas/Dia" value="432" icon={<Calendar size={24} />} color="green" />
+            <KpiCard title="Taxa de Adesão a Protocolos" value="97%" icon={<CheckCircle size={24} />} color="purple" />
+          </div>
+        </div>
+
+        <div id="laboratorio" className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">🔬 Análises Laboratoriais (Agregado)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <KpiCard title="Exames Realizados (Mês)" value="12,456" icon={<TestTube size={24} />} color="orange" />
+            <KpiCard title="Tempo Médio de Resultado" value="4 horas" icon={<Clock size={24} />} color="blue" />
+            <KpiCard title="Custo Médio por Exame" value="R$ 45,80" icon={<DollarSign size={24} />} color="red" />
+          </div>
+        </div>
+
+        <div id="farmacia" className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">💊 Gestão Farmacêutica (Agregado)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <KpiCard title="Dispensações de Medicamentos (Mês)" value="34,567" icon={<Pill size={24} />} color="green" />
+            <KpiCard title="Valor em Estoque" value="R$ 1.2M" icon={<Database size={24} />} color="purple" />
+            <KpiCard title="Taxa de Medicamentos Vencidos" value="0.8%" icon={<AlertTriangle size={24} />} color="red" />
           </div>
         </div>
 

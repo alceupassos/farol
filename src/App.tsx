@@ -60,6 +60,13 @@ import TelemedicinePatient from "./pages/TelemedicinePatient";
 import HospitalsAccess from "./pages/HospitalsAccess";
 import PactuacaoRegionalPage from "./pages/PactuacaoRegionalPage";
 import TerritorializacaoPage from "./pages/TerritorializacaoPage";
+import AIInsightsPage from './pages/AIInsightsPage';
+import FaturamentoSUSPage from './pages/FaturamentoSUSPage';
+import TISSTUSSPage from './pages/TISSTUSSPage';
+import APACOncologiaPage from './pages/APACOncologiaPage';
+import RNDSDATASUSPage from './pages/RNDSDATASUSPage';
+import ConformidadeLGPDPage from './pages/ConformidadeLGPDPage';
+import ProntuarioDigitalPage from './pages/ProntuarioDigitalPage';
 
 const queryClient = new QueryClient();
 
@@ -132,6 +139,13 @@ const App = () => (
                     <Route path="/hospitals-access" element={<ProtectedRoute><HospitalsAccess /></ProtectedRoute>} />
                     <Route path="/pactuacao-regional" element={<ProtectedRoute><PactuacaoRegionalPage /></ProtectedRoute>} />
                     <Route path="/territorializacao" element={<ProtectedRoute><TerritorializacaoPage /></ProtectedRoute>} />
+                    <Route path="/ai-insights" element={<ProtectedRoute><AIInsightsPage /></ProtectedRoute>} />
+                    <Route path="/faturamento-sus" element={<ProtectedRoute><FaturamentoSUSPage /></ProtectedRoute>} />
+                    <Route path="/tiss-tuss" element={<ProtectedRoute><TISSTUSSPage /></ProtectedRoute>} />
+                    <Route path="/apac-oncologia" element={<ProtectedRoute><APACOncologiaPage /></ProtectedRoute>} />
+                    <Route path="/rnds-datasus" element={<ProtectedRoute><RNDSDATASUSPage /></ProtectedRoute>} />
+                    <Route path="/conformidade-lgpd" element={<ProtectedRoute><ConformidadeLGPDPage /></ProtectedRoute>} />
+                    <Route path="/prontuario-digital" element={<ProtectedRoute><ProntuarioDigitalPage /></ProtectedRoute>} />
                     <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />

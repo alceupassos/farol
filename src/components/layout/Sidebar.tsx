@@ -38,11 +38,13 @@ import {
   Globe,
   Handshake,
   Map,
-  Heart
+  Heart,
+  BrainCircuit
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarItemProps {
   to: string;
@@ -101,19 +103,43 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
 };
 
 const SidebarItem = ({ to, icon, label, currentPath, onClick }: SidebarItemProps) => {
+  const navigate = useNavigate();
+  
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    if (to.includes('#')) {
+      const [path, anchor] = to.split('#');
+      
+      // Navega para a página primeiro
+      navigate(path);
+      
+      // Aguarda um pouco e depois rola para a seção
+      setTimeout(() => {
+        const element = document.getElementById(anchor);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      navigate(to);
+    }
+    
+    if (onClick) onClick(); // Fecha o sidebar no mobile
+  };
+
   const isExternal = to.startsWith('http');
 
-  if (isExternal) {
+  if (to.includes('#')) {
+    const [path, anchor] = to.split('#');
     return (
       <a
         href={to}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={onClick} // Permite que o onClick (ex: fechar sidebar no mobile) ainda funcione
-        className="block" // Garante que o link <a> ocupe o espaço do botão
+        onClick={handleAnchorClick}
+        className="block"
       >
         <Button
-          variant={'ghost'} // Links externos geralmente não têm estado "ativo" da mesma forma
+          variant={'ghost'}
           className="w-full justify-start text-base py-3 h-auto"
         >
           {icon}
@@ -230,27 +256,27 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
       menuSections.push({
         title: "Faturamento e Financeiro",
         items: [
-          { to: "/hospitals-access#faturamento-sus", icon: <FileText className="h-5 w-5 mr-3" />, label: "Faturamento SUS" },
-          { to: "/hospitals-access#tiss-tuss", icon: <Shield className="h-5 w-5 mr-3" />, label: "TISS/TUSS" },
-          { to: "/hospitals-access#oncologia", icon: <Heart className="h-5 w-5 mr-3" />, label: "APAC Oncologia" }
+          { to: "/faturamento-sus", icon: <FileText className="h-5 w-5 mr-3" />, label: "Faturamento SUS" },
+          { to: "/tiss-tuss", icon: <Shield className="h-5 w-5 mr-3" />, label: "TISS/TUSS" },
+          { to: "/apac-oncologia", icon: <Heart className="h-5 w-5 mr-3" />, label: "APAC Oncologia" }
         ]
       });
       
       menuSections.push({
         title: "Interoperabilidade",
         items: [
-          { to: "/hospitals-access#rnds", icon: <Database className="h-5 w-5 mr-3" />, label: "RNDS/DATASUS" },
-          { to: "/hospitals-access#conformidade", icon: <Shield className="h-5 w-5 mr-3" />, label: "Conformidade LGPD" },
-          { to: "/hospitals-access#prontuario", icon: <FileText className="h-5 w-5 mr-3" />, label: "Prontuário Digital" }
+          { to: "/rnds-datasus", icon: <Database className="h-5 w-5 mr-3" />, label: "RNDS/DATASUS" },
+          { to: "/conformidade-lgpd", icon: <Shield className="h-5 w-5 mr-3" />, label: "Conformidade LGPD" },
+          { to: "/prontuario-digital", icon: <FileText className="h-5 w-5 mr-3" />, label: "Prontuário Digital" }
         ]
       });
       
       menuSections.push({
         title: "Gestão Clínica",
         items: [
-          { to: "/patients", icon: <Users className="h-5 w-5 mr-3" />, label: "Pacientes Internados" },
-          { to: "/lab-exams", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Laboratório" },
-          { to: "/medications", icon: <Pill className="h-5 w-5 mr-3" />, label: "Farmácia Hospitalar" }
+          { to: "/hospitals-access#gestao-clinica", icon: <Stethoscope className="h-5 w-5 mr-3" />, label: "Visão Geral Clínica" },
+          { to: "/hospitals-access#laboratorio", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Análises Laboratoriais" },
+          { to: "/hospitals-access#farmacia", icon: <Pill className="h-5 w-5 mr-3" />, label: "Gestão Farmacêutica" }
         ]
       });
       
@@ -258,8 +284,14 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
         title: "Relatórios e Analytics",
         items: [
           { to: "/hospitals-access#kpis", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "KPIs Hospitalares" },
-          { to: "/hospitals-access#graficos", icon: <TrendingUp className="h-5 w-5 mr-3" />, label: "Análises Gráficas" },
-          { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" }
+          { to: "/hospitals-access#graficos", icon: <TrendingUp className="h-5 w-5 mr-3" />, label: "Análises Gráficas" }
+        ]
+      });
+
+      menuSections.push({
+        title: "Inteligência Artificial",
+        items: [
+          { to: "/ai-insights", icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: "IA Insights" }
         ]
       });
     }
