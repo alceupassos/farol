@@ -37,7 +37,8 @@ import {
   BarChart3,
   Globe,
   Handshake,
-  Map
+  Map,
+  Heart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -202,11 +203,63 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
       });
       
       menuSections.push({
+        title: "Gestão Hospitalar",
+        items: [
+          { to: "/hospitals-access", icon: <Building className="h-5 w-5 mr-3" />, label: "Acesso Hospitais" }
+        ]
+      });
+      
+      menuSections.push({
         title: "Analytics",
         items: [
           { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" },
           { to: "/security-dashboard", icon: <Shield className="h-5 w-5 mr-3" />, label: "Segurança" },
           { to: "/integrations-dashboard", icon: <Database className="h-5 w-5 mr-3" />, label: "Integrações" }
+        ]
+      });
+    }
+
+    if (userRole === 'hospital') {
+      menuSections.push({
+        title: "Dashboard Hospitalar",
+        items: [
+          { to: "/hospitals-access", icon: <Building className="h-5 w-5 mr-3" />, label: "Sistema HIS/HMIS" }
+        ]
+      });
+      
+      menuSections.push({
+        title: "Faturamento e Financeiro",
+        items: [
+          { to: "/hospitals-access#faturamento-sus", icon: <FileText className="h-5 w-5 mr-3" />, label: "Faturamento SUS" },
+          { to: "/hospitals-access#tiss-tuss", icon: <Shield className="h-5 w-5 mr-3" />, label: "TISS/TUSS" },
+          { to: "/hospitals-access#oncologia", icon: <Heart className="h-5 w-5 mr-3" />, label: "APAC Oncologia" }
+        ]
+      });
+      
+      menuSections.push({
+        title: "Interoperabilidade",
+        items: [
+          { to: "/hospitals-access#rnds", icon: <Database className="h-5 w-5 mr-3" />, label: "RNDS/DATASUS" },
+          { to: "/hospitals-access#conformidade", icon: <Shield className="h-5 w-5 mr-3" />, label: "Conformidade LGPD" },
+          { to: "/hospitals-access#prontuario", icon: <FileText className="h-5 w-5 mr-3" />, label: "Prontuário Digital" }
+        ]
+      });
+      
+      menuSections.push({
+        title: "Gestão Clínica",
+        items: [
+          { to: "/patients", icon: <Users className="h-5 w-5 mr-3" />, label: "Pacientes Internados" },
+          { to: "/lab-exams", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Laboratório" },
+          { to: "/medications", icon: <Pill className="h-5 w-5 mr-3" />, label: "Farmácia Hospitalar" }
+        ]
+      });
+      
+      menuSections.push({
+        title: "Relatórios e Analytics",
+        items: [
+          { to: "/hospitals-access#kpis", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "KPIs Hospitalares" },
+          { to: "/hospitals-access#graficos", icon: <TrendingUp className="h-5 w-5 mr-3" />, label: "Análises Gráficas" },
+          { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" }
         ]
       });
     }
@@ -220,6 +273,13 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
           { to: "/lab-exams", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Exames e Resultados" },
           { to: "/protocols", icon: <FileText className="h-5 w-5 mr-3" />, label: "Protocolos Médicos" },
           { to: "https://www.angrasaude.com.br", icon: <Video className="h-5 w-5 mr-3" />, label: "Telemedicina" }
+        ]
+      });
+      
+      menuSections.push({
+        title: "Gestão Hospitalar",
+        items: [
+          { to: "/hospitals-access", icon: <Building className="h-5 w-5 mr-3" />, label: "Acesso Hospitais" }
         ]
       });
       menuSections.push({

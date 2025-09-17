@@ -1,10 +1,11 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 type Language = 'pt' | 'en' | 'fr' | 'es';
 
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
+  changeLanguage: (lang: Language) => void;
   t: (key: string) => string;
 };
 
@@ -47,6 +48,35 @@ const translations = {
     'emergency.info.blood': 'Tipo sanguíneo',
     'emergency.info.allergies': 'Alergias e condições críticas',
     'emergency.info.medications': 'Medicamentos atuais',
+    
+    // Telemedicine
+    'telemedicine.welcome': 'Bem-vindo à Telemedicina',
+    'telemedicine.waitingForPatient': 'Aguardando paciente...',
+    'telemedicine.patientConnected': 'Paciente conectado',
+    'telemedicine.connectionQuality': 'Qualidade da Conexão',
+    'telemedicine.excellent': 'Excelente',
+    'telemedicine.consultation': 'Consulta de Telemedicina',
+    'telemedicine.telemedicineConsultation': 'Consulta de Telemedicina',
+    'telemedicine.inProgress': 'Em Andamento',
+    'telemedicine.recording': 'Gravando',
+    'telemedicine.you': 'Você',
+    'telemedicine.noMessages': 'Nenhuma mensagem',
+    'telemedicine.sendMessageToStartConversation': 'Envie uma mensagem para iniciar a conversa',
+    'telemedicine.typeMessage': 'Digite uma mensagem...',
+    'telemedicine.sendMessage': 'Enviar Mensagem',
+    'telemedicine.close': 'Fechar',
+    'telemedicine.fullscreen': 'Tela Cheia',
+    'telemedicine.exitFullscreen': 'Sair da Tela Cheia',
+    'telemedicine.cameraOn': 'Câmera Ativada',
+    'telemedicine.cameraOff': 'Câmera Desativada',
+    'telemedicine.copyLink': 'Copiar Link',
+    'telemedicine.linkCopied': 'Link copiado!',
+    'telemedicine.sessionId': 'ID da Sessão',
+    'telemedicine.patientLink': 'Link do Paciente',
+    'telemedicine.copyConsultationLink': 'Copiar link da consulta',
+    'telemedicine.chat': 'Chat',
+    'telemedicine.participants': 'Participantes',
+    'telemedicine.inviteParticipant': 'Convidar Participante',
   },
   en: {
     // Onboarding
@@ -86,6 +116,35 @@ const translations = {
     'emergency.info.blood': 'Blood type',
     'emergency.info.allergies': 'Allergies and critical conditions',
     'emergency.info.medications': 'Current medications',
+    
+    // Telemedicine
+    'telemedicine.welcome': 'Welcome to Telemedicine',
+    'telemedicine.waitingForPatient': 'Waiting for patient to join...',
+    'telemedicine.patientConnected': 'Patient connected',
+    'telemedicine.connectionQuality': 'Connection Quality',
+    'telemedicine.excellent': 'Excellent',
+    'telemedicine.consultation': 'Telemedicine Consultation',
+    'telemedicine.telemedicineConsultation': 'Telemedicine Consultation',
+    'telemedicine.inProgress': 'In Progress',
+    'telemedicine.recording': 'Recording',
+    'telemedicine.you': 'You',
+    'telemedicine.noMessages': 'No messages',
+    'telemedicine.sendMessageToStartConversation': 'Send a message to start the conversation',
+    'telemedicine.typeMessage': 'Type a message...',
+    'telemedicine.sendMessage': 'Send Message',
+    'telemedicine.close': 'Close',
+    'telemedicine.fullscreen': 'Fullscreen',
+    'telemedicine.exitFullscreen': 'Exit Fullscreen',
+    'telemedicine.cameraOn': 'Camera On',
+    'telemedicine.cameraOff': 'Camera Off',
+    'telemedicine.copyLink': 'Copy Link',
+    'telemedicine.linkCopied': 'Link copied!',
+    'telemedicine.sessionId': 'Session ID',
+    'telemedicine.patientLink': 'Patient Link',
+    'telemedicine.copyConsultationLink': 'Copy consultation link',
+    'telemedicine.chat': 'Chat',
+    'telemedicine.participants': 'Participants',
+    'telemedicine.inviteParticipant': 'Invite Participant',
   },
   fr: {
     // Onboarding
@@ -125,6 +184,35 @@ const translations = {
     'emergency.info.blood': 'Groupe sanguin',
     'emergency.info.allergies': 'Allergies et conditions critiques',
     'emergency.info.medications': 'Médicaments actuels',
+    
+    // Telemedicine
+    'telemedicine.welcome': 'Bienvenue en Télémédecine',
+    'telemedicine.waitingForPatient': 'En attente du patient...',
+    'telemedicine.patientConnected': 'Patient connecté',
+    'telemedicine.connectionQuality': 'Qualité de Connexion',
+    'telemedicine.excellent': 'Excellente',
+    'telemedicine.consultation': 'Consultation de Télémédecine',
+    'telemedicine.telemedicineConsultation': 'Consultation de Télémédecine',
+    'telemedicine.inProgress': 'En Cours',
+    'telemedicine.recording': 'Enregistrement',
+    'telemedicine.you': 'Vous',
+    'telemedicine.noMessages': 'Aucun message',
+    'telemedicine.sendMessageToStartConversation': 'Envoyez un message pour démarrer la conversation',
+    'telemedicine.typeMessage': 'Tapez un message...',
+    'telemedicine.sendMessage': 'Envoyer un Message',
+    'telemedicine.close': 'Fermer',
+    'telemedicine.fullscreen': 'Plein Écran',
+    'telemedicine.exitFullscreen': 'Quitter le Mode Plein Écran',
+    'telemedicine.cameraOn': 'Caméra Activée',
+    'telemedicine.cameraOff': 'Caméra Désactivée',
+    'telemedicine.copyLink': 'Copier le Lien',
+    'telemedicine.linkCopied': 'Lien copié !',
+    'telemedicine.sessionId': 'ID de Session',
+    'telemedicine.patientLink': 'Lien du Patient',
+    'telemedicine.copyConsultationLink': 'Copier le lien de consultation',
+    'telemedicine.chat': 'Chat',
+    'telemedicine.participants': 'Participants',
+    'telemedicine.inviteParticipant': 'Inviter un Participant',
   },
   es: {
     // Onboarding
@@ -164,6 +252,35 @@ const translations = {
     'emergency.info.blood': 'Tipo de sangre',
     'emergency.info.allergies': 'Alergias y condiciones críticas',
     'emergency.info.medications': 'Medicamentos actuales',
+    
+    // Telemedicine
+    'telemedicine.welcome': 'Bienvenido a Telemedicina',
+    'telemedicine.waitingForPatient': 'Esperando a que se una el paciente...',
+    'telemedicine.patientConnected': 'Paciente conectado',
+    'telemedicine.connectionQuality': 'Calidad de Conexión',
+    'telemedicine.excellent': 'Excelente',
+    'telemedicine.consultation': 'Consulta de Telemedicina',
+    'telemedicine.telemedicineConsultation': 'Consulta de Telemedicina',
+    'telemedicine.inProgress': 'En Progreso',
+    'telemedicine.recording': 'Grabando',
+    'telemedicine.you': 'Tú',
+    'telemedicine.noMessages': 'Sin mensajes',
+    'telemedicine.sendMessageToStartConversation': 'Envía un mensaje para iniciar la conversación',
+    'telemedicine.typeMessage': 'Escribe un mensaje...',
+    'telemedicine.sendMessage': 'Enviar Mensaje',
+    'telemedicine.close': 'Cerrar',
+    'telemedicine.fullscreen': 'Pantalla Completa',
+    'telemedicine.exitFullscreen': 'Salir de Pantalla Completa',
+    'telemedicine.cameraOn': 'Cámara Activada',
+    'telemedicine.cameraOff': 'Cámara Desactivada',
+    'telemedicine.copyLink': 'Copiar Enlace',
+    'telemedicine.linkCopied': '¡Enlace copiado!',
+    'telemedicine.sessionId': 'ID de Sesión',
+    'telemedicine.patientLink': 'Enlace del Paciente',
+    'telemedicine.copyConsultationLink': 'Copiar enlace de consulta',
+    'telemedicine.chat': 'Chat',
+    'telemedicine.participants': 'Participantes',
+    'telemedicine.inviteParticipant': 'Invitar Participante',
   }
 };
 
@@ -171,13 +288,36 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('pt');
-  
-  const t = (key: string) => {
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+
+  const changeLanguage = (newLanguage: Language) => {
+    console.log('LanguageProvider: Changing language from', language, 'to', newLanguage);
+    setLanguage(newLanguage);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', newLanguage);
+    }
   };
   
+  const t = (key: string) => {
+    const translation = translations[language]?.[key as keyof typeof translations[typeof language]];
+    if (translation) {
+      return translation as string;
+    }
+    console.warn(`Translation missing for key: ${key} in language: ${language}`);
+    return key;
+  };
+  
+  // Load language from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedLanguage = localStorage.getItem('language') as Language;
+      if (savedLanguage && ['pt', 'en', 'es', 'fr'].includes(savedLanguage)) {
+        setLanguage(savedLanguage);
+      }
+    }
+  }, []);
+  
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, changeLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

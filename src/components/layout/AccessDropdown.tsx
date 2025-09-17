@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, User, UserCheck, Building2 } from 'lucide-react';
+import { ChevronDown, User, UserCheck, Building2, Hospital } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -23,6 +23,13 @@ const AccessDropdown = () => {
       icon: Building2,
       description: 'Acesso para gestores públicos',
       color: 'text-primary'
+    },
+    {
+      id: 'hospital',
+      label: 'Hospital',
+      icon: Hospital,
+      description: 'Acesso para gestão hospitalar',
+      color: 'text-blue-500'
     },
     {
       id: 'medico',

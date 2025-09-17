@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { guestProfiles, samplePatients, municipalityData, appointments } from '@/data/guestProfiles';
 import { Link } from 'react-router-dom';
+import DataSUSIntegration from '@/components/hospital/DataSUSIntegration';
 
 const RoleDashboard = () => {
   const { userRole } = useAuth();
@@ -334,6 +335,33 @@ const RoleDashboard = () => {
     );
   };
 
+  const renderHospitalDashboard = () => (
+    <div className="space-y-6">
+      {/* Alert Widget */}
+      <DashboardAlertWidget className="mb-6" />
+      
+      {/* Integração DATASUS */}
+      <DataSUSIntegration />
+      
+      {/* Link para Sistema HIS/HMIS */}
+      <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold mb-2">Sistema HIS/HMIS Completo</h3>
+              <p className="text-blue-100">Acesse o dashboard completo com RNDS, DATASUS, TISS/TUSS e muito mais</p>
+            </div>
+            <Link to="/hospitals-access">
+              <Button variant="secondary" size="lg">
+                Acessar Sistema
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   return (
     <div className="relative space-y-6">
       {/* Background with image overlay */}
@@ -355,6 +383,7 @@ const RoleDashboard = () => {
                 <Badge variant="outline">{profile.role}</Badge>
                 {userRole === 'gestor' && 'municipality' in profile && <Badge variant="secondary">{profile.municipality}</Badge>}
                 {userRole === 'medico' && 'crm' in profile && <Badge variant="secondary">{profile.crm}</Badge>}
+                {userRole === 'hospital' && 'institution' in profile && <Badge variant="secondary">{profile.institution}</Badge>}
                 {userRole === 'paciente' && 'age' in profile && <Badge variant="secondary">{profile.age}</Badge>}
               </div>
             </div>
@@ -365,6 +394,7 @@ const RoleDashboard = () => {
       {/* Role-specific Dashboard */}
       {userRole === 'gestor' && renderGestorDashboard()}
       {userRole === 'medico' && renderMedicoDashboard()}
+      {userRole === 'hospital' && renderHospitalDashboard()}
       {userRole === 'paciente' && renderPacienteDashboard()}
     </div>
   );

@@ -16,6 +16,15 @@ export const guestProfiles = {
     avatar: "👩‍⚕️",
     description: "Cardiologista com 10 anos de experiência, especialista em medicina preventiva"
   },
+  hospital: {
+    name: "Santa Casa de Misericórdia",
+    role: "Administrador Hospitalar",
+    institution: "Hospital Filantrópico",
+    cnpj: "12.345.678/0001-90",
+    email: "demo@sistema.local",
+    avatar: "🏥",
+    description: "Gestão hospitalar integrada com SUS e saúde suplementar"
+  },
   paciente: {
     name: "João Silva",
     role: "Paciente",

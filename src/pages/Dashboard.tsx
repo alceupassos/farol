@@ -8,7 +8,9 @@ import RecentActivity from '@/components/dashboard/RecentActivity';
 import HealthMetric from '@/components/ui/HealthMetric';
 import MainLayout from '@/components/layout/MainLayout';
 import RoleDashboard from '@/components/dashboard/RoleDashboard';
+import TranslatedExample from '@/components/common/TranslatedExample';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGlobalTranslation } from '@/contexts/GlobalTranslationContext';
 
 const Dashboard = () => {
   const { userRole } = useAuth();
@@ -225,6 +227,11 @@ const Dashboard = () => {
                 
                 <div className="animate-scale-in [animation-delay:200ms]">
                   <RecentActivity activities={recentActivities} />
+                </div>
+                
+                {/* Exemplo de Traduções */}
+                <div className="animate-scale-in [animation-delay:300ms] mt-6">
+                  <TranslatedExample />
                 </div>
               </div>
             </>

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
+import "./i18n";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "./contexts/LanguageContext";
+// Removed custom translation providers in favor of react-i18next global init
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProfileAccessProvider } from "@/contexts/ProfileAccessContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
@@ -55,6 +56,10 @@ import SimuladorIEDPage from "./pages/SimuladorIEDPage";
 import IndicadoresDesempenhoPage from "./pages/IndicadoresDesempenhoPage";
 import GovernancaDadosPage from "./pages/GovernancaDadosPage";
 import ComissoesCIRPage from "./pages/ComissoesCIRPage";
+import TelemedicinePatient from "./pages/TelemedicinePatient";
+import HospitalsAccess from "./pages/HospitalsAccess";
+import PactuacaoRegionalPage from "./pages/PactuacaoRegionalPage";
+import TerritorializacaoPage from "./pages/TerritorializacaoPage";
 
 const queryClient = new QueryClient();
 
@@ -71,9 +76,9 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <AuthProvider>
-          <ProfileAccessProvider>
-            <LanguageProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <AuthProvider>
+            <ProfileAccessProvider>
               <BrowserRouter>
                 <div>
                   <Toaster />
@@ -124,15 +129,19 @@ const App = () => (
                     <Route path="/indicadores-desempenho" element={<ProtectedRoute><IndicadoresDesempenhoPage /></ProtectedRoute>} />
                     <Route path="/governanca-dados" element={<ProtectedRoute><GovernancaDadosPage /></ProtectedRoute>} />
                     <Route path="/comissoes-cir" element={<ProtectedRoute><ComissoesCIRPage /></ProtectedRoute>} />
+                    <Route path="/hospitals-access" element={<ProtectedRoute><HospitalsAccess /></ProtectedRoute>} />
+                    <Route path="/pactuacao-regional" element={<ProtectedRoute><PactuacaoRegionalPage /></ProtectedRoute>} />
+                    <Route path="/territorializacao" element={<ProtectedRoute><TerritorializacaoPage /></ProtectedRoute>} />
+                    <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </div>
               </BrowserRouter>
-            </LanguageProvider>
-          </ProfileAccessProvider>
-        </AuthProvider>
+            </ProfileAccessProvider>
+          </AuthProvider>
+        </Suspense>
       </TooltipProvider>
     </QueryClientProvider>
   </ErrorBoundary>

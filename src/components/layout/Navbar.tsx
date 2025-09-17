@@ -8,13 +8,15 @@ import {
   Settings,
   Sun,
   LogOut,
-  User
+  User,
+  Video
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import LanguageSwitcher from '@/components/language/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 import AccessDropdown from './AccessDropdown';
 import ProfileAccessSwitch from './ProfileAccessSwitch';
 import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
+import TelemedicineModal from '@/components/telemedicine/TelemedicineModal';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -26,6 +28,12 @@ interface NavbarProps {
 const Navbar = ({ toggleSidebar }: NavbarProps) => {
   const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
   const { user, userRole, signOut } = useAuth();
+  const { t, i18n } = useTranslation();
+  const currentLang = (i18n.language || 'pt').split('-')[0] as 'pt' | 'en' | 'es' | 'fr';
+  
+  const handleLanguageChange = (lang: 'pt' | 'en' | 'es' | 'fr') => {
+    i18n.changeLanguage(lang);
+  };
   
   const toggleTheme = () => {
     const newIsDark = !isDark;
@@ -82,14 +90,72 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
             <Search className="absolute left-3 top-1/2 -mt-2 h-4 w-4 text-gray-400" />
             <input
               type="text"
-              placeholder="Pesquisar..."
+              placeholder={t('nav.search')}
               className="w-full bg-gray-800 text-gray-100 pl-10 pr-4 py-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
         </div>
 
         <div className="flex items-center space-x-2">
-          <LanguageSwitcher />
+          {/* Language Test */}
+          <div className="text-white text-sm mr-2">
+            {t('telemedicine.welcome')}
+          </div>
+          
+          {/* Language Flags */}
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={() => handleLanguageChange('pt')}
+              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
+                currentLang === 'pt' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
+              }`}
+              title="Português"
+            >
+              🇧🇷
+            </button>
+            <button
+              onClick={() => handleLanguageChange('en')}
+              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
+                currentLang === 'en' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
+              }`}
+              title="English"
+            >
+              🇺🇸
+            </button>
+            <button
+              onClick={() => handleLanguageChange('es')}
+              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
+                currentLang === 'es' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
+              }`}
+              title="Español"
+            >
+              🇪🇸
+            </button>
+            <button
+              onClick={() => handleLanguageChange('fr')}
+              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
+                currentLang === 'fr' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
+              }`}
+              title="Français"
+            >
+              🇫🇷
+            </button>
+          </div>
+          
+          {/* Telemedicine button for doctors */}
+          {userRole === 'medico' && (
+            <TelemedicineModal>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
+              >
+                <Video size={16} className="animate-pulse" />
+                <span className="hidden sm:inline font-semibold">Telemedicina</span>
+                <div className="hidden sm:block w-2 h-2 bg-green-400 rounded-full animate-pulse ml-1" />
+              </Button>
+            </TelemedicineModal>
+          )}
           
           {/* Show current role */}
           <div className="flex items-center space-x-2">
