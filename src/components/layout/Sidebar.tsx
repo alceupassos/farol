@@ -18,6 +18,10 @@ import {
   Users,
   Building,
   Stethoscope,
+  Scissors,
+  Heart,
+  CheckCircle,
+  DollarSign,
   TrendingUp,
   Zap,
   MapPin,
@@ -28,7 +32,6 @@ import {
   Database,
   Pin,
   PinOff,
-  DollarSign,
   Target,
   Calculator,
   Scale,
@@ -38,13 +41,11 @@ import {
   Globe,
   Handshake,
   Map,
-  Heart,
   BrainCircuit
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 interface SidebarItemProps {
   to: string;
@@ -103,39 +104,15 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
 };
 
 const SidebarItem = ({ to, icon, label, currentPath, onClick }: SidebarItemProps) => {
-  const navigate = useNavigate();
-  
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    
-    if (to.includes('#')) {
-      const [path, anchor] = to.split('#');
-      
-      // Navega para a página primeiro
-      navigate(path);
-      
-      // Aguarda um pouco e depois rola para a seção
-      setTimeout(() => {
-        const element = document.getElementById(anchor);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 100);
-    } else {
-      navigate(to);
-    }
-    
-    if (onClick) onClick(); // Fecha o sidebar no mobile
-  };
-
   const isExternal = to.startsWith('http');
 
-  if (to.includes('#')) {
-    const [path, anchor] = to.split('#');
+  if (isExternal) {
     return (
       <a
         href={to}
-        onClick={handleAnchorClick}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
         className="block"
       >
         <Button
@@ -274,24 +251,21 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
       menuSections.push({
         title: "Gestão Clínica",
         items: [
-          { to: "/hospitals-access#gestao-clinica", icon: <Stethoscope className="h-5 w-5 mr-3" />, label: "Visão Geral Clínica" },
-          { to: "/hospitals-access#laboratorio", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Análises Laboratoriais" },
-          { to: "/hospitals-access#farmacia", icon: <Pill className="h-5 w-5 mr-3" />, label: "Gestão Farmacêutica" }
+          { to: "/gestao-clinica", icon: <Stethoscope className="h-5 w-5 mr-3" />, label: "Gestão Clínica" },
+          { to: "/centro-cirurgico", icon: <Scissors className="h-5 w-5 mr-3" />, label: "Centro Cirúrgico" },
+          { to: "/uti-terapia-intensiva", icon: <Heart className="h-5 w-5 mr-3" />, label: "UTI e Terapia Intensiva" },
+          { to: "/indicadores-qualidade", icon: <CheckCircle className="h-5 w-5 mr-3" />, label: "Indicadores de Qualidade" },
+          { to: "/analises-laboratoriais", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Análises Laboratoriais" },
+          { to: "/gestao-farmaceutica", icon: <Pill className="h-5 w-5 mr-3" />, label: "Gestão Farmacêutica" }
         ]
       });
       
       menuSections.push({
-        title: "Relatórios e Analytics",
+        title: "Analytics e Inteligência",
         items: [
-          { to: "/hospitals-access#kpis", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "KPIs Hospitalares" },
-          { to: "/hospitals-access#graficos", icon: <TrendingUp className="h-5 w-5 mr-3" />, label: "Análises Gráficas" }
-        ]
-      });
-
-      menuSections.push({
-        title: "Inteligência Artificial",
-        items: [
-          { to: "/ai-insights", icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: "IA Insights" }
+          { to: "/relatorios-analytics", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "Relatórios e Analytics" },
+          { to: "/dashboard-financeiro", icon: <DollarSign className="h-5 w-5 mr-3" />, label: "Dashboard Financeiro" },
+          { to: "/ai-insights", icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: "Insights de IA" }
         ]
       });
     }

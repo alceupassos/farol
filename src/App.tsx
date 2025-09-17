@@ -36,9 +36,6 @@ import QrAnaAtivoPage from "./pages/QrAnaAtivoPage";
 import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
-import IntegrationsDashboard from "./pages/IntegrationsDashboard";
-import AIAnalyticsDashboard from "./pages/AIAnalyticsDashboard";
-import SecurityDashboard from "./pages/SecurityDashboard";
 import MonitoramentoAPSPage from './pages/MonitoramentoAPSPage';
 import ControleJudicializacaoPage from './pages/ControleJudicializacaoPage';
 import CapacitacaoGestoresPage from './pages/CapacitacaoGestoresPage';
@@ -67,6 +64,17 @@ import APACOncologiaPage from './pages/APACOncologiaPage';
 import RNDSDATASUSPage from './pages/RNDSDATASUSPage';
 import ConformidadeLGPDPage from './pages/ConformidadeLGPDPage';
 import ProntuarioDigitalPage from './pages/ProntuarioDigitalPage';
+import GestaoClinicaPage from './pages/GestaoClinicaPage';
+import CentroCircurgicoPage from './pages/CentroCircurgicoPage';
+import UTITerapiaIntensivaPage from './pages/UTITerapiaIntensivaPage';
+import IndicadoresQualidadePage from './pages/IndicadoresQualidadePage';
+import DashboardFinanceiroPage from './pages/DashboardFinanceiroPage';
+import RelatoriosAnalyticsPage from './pages/RelatoriosAnalyticsPage';
+import AnalisesLaboratoriaisPage from './pages/AnalisesLaboratoriaisPage';
+import GestaoFarmaceuticaPage from './pages/GestaoFarmaceuticaPage';
+import AIAnalyticsPage from './pages/AIAnalyticsPage';
+import SecurityDashboardPage from './pages/SecurityDashboardPage';
+import IntegrationsDashboardPage from './pages/IntegrationsDashboardPage';
 
 const queryClient = new QueryClient();
 
@@ -118,9 +126,6 @@ const App = () => (
                     <Route path="/intelligent-reading" element={<ProtectedRoute><IntelligentReading /></ProtectedRoute>} />
                     <Route path="/executive-dashboard" element={<ProtectedRoute><ExecutiveDashboard /></ProtectedRoute>} />
                     <Route path="/operational-dashboard" element={<ProtectedRoute><OperationalDashboard /></ProtectedRoute>} />
-                    <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboard /></ProtectedRoute>} />
-                    <Route path="/ai-analytics" element={<ProtectedRoute><AIAnalyticsDashboard /></ProtectedRoute>} />
-                    <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboard /></ProtectedRoute>} />
                     <Route path="/patients" element={<ProtectedRoute><PatientsPage /></ProtectedRoute>} />
                     <Route path="/protocols" element={<ProtectedRoute><ProtocolsPage /></ProtectedRoute>} />
                     <Route path="/population" element={<ProtectedRoute><PopulationPage /></ProtectedRoute>} />
@@ -146,6 +151,17 @@ const App = () => (
                     <Route path="/rnds-datasus" element={<ProtectedRoute><RNDSDATASUSPage /></ProtectedRoute>} />
                     <Route path="/conformidade-lgpd" element={<ProtectedRoute><ConformidadeLGPDPage /></ProtectedRoute>} />
                     <Route path="/prontuario-digital" element={<ProtectedRoute><ProntuarioDigitalPage /></ProtectedRoute>} />
+                    <Route path="/gestao-clinica" element={<ProtectedRoute><GestaoClinicaPage /></ProtectedRoute>} />
+                    <Route path="/centro-cirurgico" element={<ProtectedRoute><CentroCircurgicoPage /></ProtectedRoute>} />
+                    <Route path="/uti-terapia-intensiva" element={<ProtectedRoute><UTITerapiaIntensivaPage /></ProtectedRoute>} />
+                    <Route path="/indicadores-qualidade" element={<ProtectedRoute><IndicadoresQualidadePage /></ProtectedRoute>} />
+                    <Route path="/dashboard-financeiro" element={<ProtectedRoute><DashboardFinanceiroPage /></ProtectedRoute>} />
+                    <Route path="/relatorios-analytics" element={<ProtectedRoute><RelatoriosAnalyticsPage /></ProtectedRoute>} />
+                    <Route path="/analises-laboratoriais" element={<ProtectedRoute><AnalisesLaboratoriaisPage /></ProtectedRoute>} />
+                    <Route path="/gestao-farmaceutica" element={<ProtectedRoute><GestaoFarmaceuticaPage /></ProtectedRoute>} />
+                    <Route path="/ai-analytics" element={<ProtectedRoute><AIAnalyticsPage /></ProtectedRoute>} />
+                    <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboardPage /></ProtectedRoute>} />
+                    <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboardPage /></ProtectedRoute>} />
                     <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
