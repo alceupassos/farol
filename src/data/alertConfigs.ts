@@ -1,5 +1,5 @@
 export interface AlertConfig {
-  userRole: 'paciente' | 'medico' | 'gestor';
+  userRole: 'paciente' | 'medico' | 'gestor' | 'laboratorio';
   alertTypes: {
     epidemic: {
       enabled: boolean;
@@ -105,6 +105,32 @@ export const defaultAlertConfigs: Record<string, AlertConfig> = {
         categories: ['reports', 'budget', 'resources', 'emergency', 'updates']
       }
     }
+  },
+  laboratorio: {
+    userRole: 'laboratorio',
+    alertTypes: {
+      epidemic: {
+        enabled: true,
+        thresholds: {
+          low: [],
+          medium: ['MODERADO'],
+          high: ['ALTO'],
+          critical: ['CRÍTICO', 'EMERGÊNCIA']
+        }
+      },
+      medication: {
+        enabled: false,
+        reminderTimes: []
+      },
+      appointments: {
+        enabled: true,
+        reminderHours: [120, 60] // 2h antes e 1h antes de janelas críticas
+      },
+      system: {
+        enabled: true,
+        categories: ['compliance', 'integrations', 'sla', 'security']
+      }
+    }
   }
 };
 
@@ -112,27 +138,32 @@ export const riskLevelRecommendations = {
   BAIXO: {
     paciente: ['Mantenha cuidados básicos de higiene', 'Continue atividades normais'],
     medico: ['Monitoramento de rotina', 'Protocolo padrão'],
-    gestor: ['Vigilância epidemiológica padrão']
+    gestor: ['Vigilância epidemiológica padrão'],
+    laboratorio: ['Monitoramento de estoque crítico', 'Sincronizar canais de publicação']
   },
   MODERADO: {
     paciente: ['Evite aglomerações desnecessárias', 'Reforce higiene das mãos', 'Use máscara em locais fechados'],
     medico: ['Atenção para sintomas respiratórios', 'Protocolo de triagem reforçado'],
-    gestor: ['Monitoramento intensificado', 'Preparação de recursos']
+    gestor: ['Monitoramento intensificado', 'Preparação de recursos'],
+    laboratorio: ['Garantir cadeia de frio', 'Planejar contingência de rotas']
   },
   ALTO: {
     paciente: ['Evite aglomerações', 'Use máscara sempre', 'Busque atendimento ao primeiro sintoma'],
     medico: ['Protocolo de isolamento', 'Teste rápido para suspeitos', 'Notificação compulsória'],
-    gestor: ['Mobilização de equipes', 'Campanha preventiva', 'Recursos adicionais']
+    gestor: ['Mobilização de equipes', 'Campanha preventiva', 'Recursos adicionais'],
+    laboratorio: ['Ativar runbook RNDS', 'Priorizar exames STAT', 'Comunicar parceiros hospitalares']
   },
   CRÍTICO: {
     paciente: ['Saia apenas se necessário', 'Máscara N95/PFF2', 'Isolamento ao menor sintoma'],
     medico: ['Protocolo de emergência', 'Testagem imediata', 'Isolamento rigoroso'],
-    gestor: ['Estado de alerta', 'Equipes de emergência', 'Comunicação oficial']
+    gestor: ['Estado de alerta', 'Equipes de emergência', 'Comunicação oficial'],
+    laboratorio: ['Escalonar produção 24x7', 'Ativar duplicação de dados', 'Priorizar distribuição crítica']
   },
   EMERGÊNCIA: {
     paciente: ['Isolamento social máximo', 'EPIs de proteção', 'Atendimento médico imediato'],
     medico: ['Protocolo de surto', 'Barreira sanitária', 'Notificação urgente'],
-    gestor: ['Estado de emergência', 'Lockdown localizado', 'Recursos emergenciais']
+    gestor: ['Estado de emergência', 'Lockdown localizado', 'Recursos emergenciais'],
+    laboratorio: ['Desencadear DR', 'Ativar centros redundantes', 'Comunicar ANVISA / parceiros privados']
   }
 };
 

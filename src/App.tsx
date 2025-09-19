@@ -91,6 +91,14 @@ import DashboardRedirect from "./components/DashboardRedirect";
 import IntegracaoERPPage from "./pages/IntegracaoERPPage";
 import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
 import ESUSIntegrationPage from "./pages/ESUSIntegrationPage";
+import LaboratoriosOverviewPage from "./pages/LaboratoriosOverviewPage";
+import LaboratoriosOperacaoPage from "./pages/LaboratoriosOperacaoPage";
+import LaboratoriosResultadosPage from "./pages/LaboratoriosResultadosPage";
+import LaboratoriosIntegracoesPage from "./pages/LaboratoriosIntegracoesPage";
+import LaboratoriosQualidadePage from "./pages/LaboratoriosQualidadePage";
+import LaboratoriosAnalyticsPage from "./pages/LaboratoriosAnalyticsPage";
+import LaboratoriosAdministracaoPage from "./pages/LaboratoriosAdministracaoPage";
+import LaboratorioIntegrationDetailPage from "./pages/LaboratorioIntegrationDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -193,6 +201,14 @@ const App = () => (
                     <Route path="/neurology-care" element={<ProtectedRoute><NeurologyCarePage /></ProtectedRoute>} />
                     <Route path="/vision-care" element={<ProtectedRoute><VisionCarePage /></ProtectedRoute>} />
                     <Route path="/hearing-care" element={<ProtectedRoute><HearingCarePage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/visao-geral" element={<ProtectedRoute><LaboratoriosOverviewPage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/operacao" element={<ProtectedRoute><LaboratoriosOperacaoPage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/resultados-laudos" element={<ProtectedRoute><LaboratoriosResultadosPage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/integracoes" element={<ProtectedRoute><LaboratoriosIntegracoesPage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/integracoes/:integrationId" element={<ProtectedRoute><LaboratorioIntegrationDetailPage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/qualidade-compliance" element={<ProtectedRoute><LaboratoriosQualidadePage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/analytics-kpis" element={<ProtectedRoute><LaboratoriosAnalyticsPage /></ProtectedRoute>} />
+                    <Route path="/laboratorios/administracao" element={<ProtectedRoute><LaboratoriosAdministracaoPage /></ProtectedRoute>} />
                     <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
                     <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
                     <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />

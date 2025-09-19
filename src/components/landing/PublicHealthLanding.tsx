@@ -1,53 +1,48 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { Button } from "@/components/ui/button";
-import medicalTechBg from '@/assets/medical-tech-bg.jpg';
-import medicalHeroBg from '@/assets/medical-hero-bg.jpg';
-import { Squares } from '@/components/ui/squares-background';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Navbar from '@/components/layout/Navbar';
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
-import { 
-  Shield, 
-  BarChart3, 
-  Users, 
-  MapPin, 
-  Calendar,
-  AlertTriangle,
-  TrendingUp,
-  Brain,
-  Smartphone,
-  Server,
-  Lock,
-  CheckCircle,
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Activity,
   ArrowRight,
-  Building,
-  DollarSign,
-  Trophy,
-  Target,
-  Clock,
-  FileText,
-  Phone,
-  Mail,
-  LogIn,
-  UserPlus,
+  BarChart3,
+  CheckCircle2,
+  Database,
+  HeartPulse,
+  Hospital,
+  Layers,
+  Lock,
+  Microscope,
+  ShieldCheck,
+  Sparkles,
   Stethoscope,
-  Heart
+  Users,
+  Wand2
 } from 'lucide-react';
-import AngraSaudeHero from './AngraSaudeHero';
-import FivePillarsWithNeighborhoods from './FivePillarsWithNeighborhoods';
-import NeighborhoodTransformation from './NeighborhoodTransformation';
-import AdaptabilityDisclaimer from './AdaptabilityDisclaimer';
+
+interface PersonaCard {
+  title: string;
+  subtitle: string;
+  description: string;
+  metrics: string[];
+  buttonLabel: string;
+  tag: string;
+  icon: React.ComponentType<{ className?: string }>;
+  role: 'gestor' | 'medico' | 'paciente' | 'hospital' | 'laboratorio';
+  navigateTo: string;
+  accent: string;
+}
+
+const gradientBlock = (route: string) => `bg-gradient-to-br ${route}`;
 
 const PublicHealthLanding = () => {
-  console.log('🏥 PublicHealthLanding component rendering');
-  
   const navigate = useNavigate();
   const { switchGuestRole } = useAuth();
   const [formData, setFormData] = useState({
@@ -56,406 +51,534 @@ const PublicHealthLanding = () => {
     email: '',
     phone: '',
     population: '',
-    healthBudget: '',
     currentSystems: '',
     mainChallenges: '',
     priority: ''
   });
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     console.log('Municipal contact form submitted:', formData);
-    // Here would integrate with your backend
   };
 
-  const handleDemoClick = () => {
-    navigate('/login');
-  };
+  const personaBlocks = useMemo<PersonaCard[]>(
+    () => [
+      {
+        title: 'Governos & Prefeituras',
+        subtitle: 'Planejamento populacional conectado',
+        description:
+          'Dashboards em tempo real para controlar indicadores, orçamentos e pactuações regionais com governança RNDS.',
+        metrics: ['Cobertura RNDS 98%', 'SLO 99,5% integrações', 'Alertas epidemiológicos automáticos'],
+        buttonLabel: 'Ativar visão gestor',
+        tag: 'Política Pública',
+        icon: ShieldCheck,
+        role: 'gestor',
+        navigateTo: '/prefeitura-dashboard',
+        accent: 'from-emerald-500/80 via-emerald-400/70 to-teal-500/80'
+      },
+      {
+        title: 'Secretarias de Saúde',
+        subtitle: 'Rede SUS com compliance total',
+        description:
+          'Auditoria LGPD, RNDS e gestão de contratos em um mosaico único. Elimine planilhas e centralize evidências.',
+        metrics: ['Bundles validados automaticamente', 'Runbooks CAPA', 'Monitoramento de certificados'],
+        buttonLabel: 'Ver painel de secretarias',
+        tag: 'Compliance',
+        icon: Layers,
+        role: 'gestor',
+        navigateTo: '/dashboard',
+        accent: 'from-cyan-500/80 via-sky-500/70 to-blue-500/80'
+      },
+      {
+        title: 'Clínicas de Imagem',
+        subtitle: 'PACS, DICOM e RNDS no mesmo fluxo',
+        description:
+          'Integração com deep links seguros, controle de laudos e publicação automatizada para portais e RNDS.',
+        metrics: ['Viewer 4K', 'Automação de laudos em 2 cliques', 'KPIs de disponibilidade'],
+        buttonLabel: 'Explorar jornada de imagem',
+        tag: 'Clínicas',
+        icon: Hospital,
+        role: 'hospital',
+        navigateTo: '/dashboard',
+        accent: 'from-purple-500/80 via-fuchsia-500/70 to-indigo-500/80'
+      },
+      {
+        title: 'Laboratórios & Genômica',
+        subtitle: 'Operação, VCF e genomics hub',
+        description:
+          'Monitoramento da cadeia de custódia, TAT por linha de exame e ingestão de VCF com controle de consentimentos.',
+        metrics: ['Runbooks RNDS', 'KPIs STAT / SLA', 'Integrações Fleury · Pardini · Dasa'],
+        buttonLabel: 'Entrar no hub laboratorial',
+        tag: 'Interoperabilidade',
+        icon: Microscope,
+        role: 'laboratorio',
+        navigateTo: '/laboratorios/visao-geral',
+        accent: 'from-amber-500/80 via-orange-500/70 to-red-500/80'
+      },
+      {
+        title: 'Profissionais de Saúde',
+        subtitle: 'Prontuário vivo e IA clínica',
+        description:
+          'Contexto completo do paciente, alertas inteligentes, protocolos e prescrição conectada ao território.',
+        metrics: ['Assistente de IA com guardrails', 'Checklist de qualidade', 'Corredor do paciente omnicanal'],
+        buttonLabel: 'Acessar workspace clínico',
+        tag: 'Assistência',
+        icon: Stethoscope,
+        role: 'medico',
+        navigateTo: '/profile',
+        accent: 'from-rose-500/80 via-pink-500/70 to-red-400/80'
+      },
+      {
+        title: 'Cidadãos & Pacientes',
+        subtitle: 'Carteira digital de saúde pública',
+        description:
+          'Cartão SUS inteligente, alertas preventivos e portabilidade de dados com privacidade e consentimento granular.',
+        metrics: ['Histórico longitudinal', 'Planos de cuidado personalizados', 'QR de emergência'],
+        buttonLabel: 'Testar experiência paciente',
+        tag: 'Engajamento',
+        icon: HeartPulse,
+        role: 'paciente',
+        navigateTo: '/profile',
+        accent: 'from-slate-500/80 via-slate-400/70 to-slate-300/80'
+      }
+    ],
+    []
+  );
 
-  const handleDocumentationClick = () => {
-    navigate('/login');
-  };
+  const previewScreens = useMemo(
+    () => [
+      {
+        title: 'Visão Executiva 360º',
+        description: 'KPIs de gestão pública, pactuações regionais e auditoria RNDS em um painel unificado.',
+        gradient: gradientBlock('from-emerald-600/80 via-slate-900/70 to-slate-950/80')
+      },
+      {
+        title: 'Orquestração Clínica com IA',
+        description: 'Assistente assistencial, protocolos contextuais e telemedicina integrada.',
+        gradient: gradientBlock('from-indigo-600/80 via-slate-900/70 to-slate-950/80')
+      },
+      {
+        title: 'Laboratório Operando no Verde',
+        description: 'Controle de cadeia fria, VCF e integrações privadas com runbooks de compliance.',
+        gradient: gradientBlock('from-amber-600/80 via-slate-900/70 to-slate-950/80')
+      }
+    ],
+    []
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/90 to-muted/20">
+    <div className="min-h-screen bg-slate-950">
       <Navbar toggleSidebar={() => {}} />
-      <div className="pt-16">
-      {/* Hero Section - Angra Saúde */}
-      <AngraSaudeHero />
-
-      {/* Five Pillars Section */}
-      <FivePillarsWithNeighborhoods />
-
-      {/* Transformation Section */}
-      <NeighborhoodTransformation />
-      
-      {/* Adaptability Disclaimer */}
-      <AdaptabilityDisclaimer />
-
-      {/* Quick Access Section - Moved up for better visibility */}
-      <section className="py-20 px-4 bg-gradient-to-br from-muted/10 to-background relative">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4 text-foreground">Acesso Rápido ao Sistema</h2>
-          <p className="text-xl text-muted-foreground mb-12">
-            Entre diretamente como demonstração para seu perfil
-          </p>
-
-          <div className="grid gap-8 mb-12 grid-cols-1 md:grid-cols-3">
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-2 border-primary/20 hover:border-primary/40 hover:scale-105 animate-scale-in bg-card/90 backdrop-blur-sm">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/50 group-hover:to-primary/30 transition-all duration-300 group-hover:animate-pulse shadow-lg">
-                  <Building className="w-8 h-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">Gestor/Prefeitura</CardTitle>
-                <CardDescription className="text-base">
-                  Dashboards executivos e análise epidemiológica
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  variant="default"
-                  size="lg"
-                  className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300" 
-                  onClick={() => {
-                    switchGuestRole('gestor');
-                    setTimeout(() => navigate('/prefeitura-dashboard'), 100);
-                  }}
-                >
-                  <Building className="w-5 h-5 mr-2" />
-                  Acesso Gestor
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-secondary/20 hover:border-secondary/40 bg-card/90 backdrop-blur-sm hover:scale-105">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-secondary/30 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/40 transition-colors shadow-lg">
-                  <Stethoscope className="w-8 h-8 text-secondary" />
-                </div>
-                <CardTitle className="text-xl group-hover:text-secondary transition-colors">Médico/Profissional</CardTitle>
-                <CardDescription className="text-base">
-                  Prontuários e análise de exames com IA
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  variant="secondary" 
-                  size="lg"
-                  className="w-full text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
-                  onClick={() => {
-                    switchGuestRole('medico');
-                    setTimeout(() => navigate('/profile'), 100);
-                  }}
-                >
-                  <Stethoscope className="w-5 h-5 mr-2" />
-                  Acesso Médico
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-accent/20 hover:border-accent/40 bg-card/90 backdrop-blur-sm hover:scale-105">
-              <CardHeader className="pb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-accent/30 to-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/40 transition-colors shadow-lg">
-                  <Heart className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl group-hover:text-accent transition-colors">Paciente</CardTitle>
-                <CardDescription className="text-base">
-                  Histórico médico e cartão digital de saúde
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="w-full text-lg py-3 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
-                  onClick={() => {
-                    switchGuestRole('paciente');
-                    setTimeout(() => navigate('/profile'), 100);
-                  }}
-                >
-                  <Heart className="w-5 h-5 mr-2" />
-                  Acesso Paciente
-                </Button>
-              </CardContent>
-            </Card>
+      <main className="pt-16">
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl" />
+            <div className="absolute top-0 right-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/20 blur-3xl" />
           </div>
-        </div>
-      </section>
-
-      {/* Key Features Grid */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Recursos Principais</h2>
-            <p className="text-xl text-muted-foreground">Tecnologia de ponta para gestão eficiente da saúde municipal</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 glass-morphism hover:scale-105 animate-fade-in">
-              <CardHeader>
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:animate-float">
-                  <BarChart3 className="w-6 h-6 text-primary" />
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div className="grid lg:grid-cols-[1.15fr,0.85fr] gap-12 items-center">
+              <div className="space-y-8">
+                <Badge className="bg-emerald-500/15 text-emerald-200 border border-emerald-500/40 rounded-full px-3 py-1 w-fit">
+                  HUB VIDA SEGURA · SAÚDE PÚBLICA AUGMENTADA
+                </Badge>
+                <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                  Uma plataforma única para conectar governos, clínicas e cidadãos em toda a jornada de saúde.
+                </h1>
+                <p className="text-lg md:text-xl text-slate-300 max-w-3xl">
+                  Automação RNDS, analytics em tempo real, carteira digital do paciente e integrações privadas. Tudo em conformidade com LGPD, pronto para hospitais, laboratórios, clínicas de imagem e secretarias de saúde.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button size="lg" className="px-8 py-6 text-lg shadow-xl" onClick={() => navigate('/login')}>
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    Explorar demo guiada
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="px-8 py-6 text-lg border-slate-500 text-slate-100 hover:bg-slate-800"
+                    onClick={() => navigate('/documentation')}
+                  >
+                    <Layers className="w-5 h-5 mr-2" />
+                    Baixar one-pager técnico
+                  </Button>
                 </div>
-                <CardTitle className="group-hover:text-primary transition-colors">Dashboards Executivos</CardTitle>
-                <CardDescription>
-                  Visualizações em tempo real para prefeitos e secretários tomarem decisões baseadas em dados
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
-              <CardHeader>
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
-                  <Brain className="w-6 h-6 text-secondary" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-slate-300">
+                  {[{
+                    label: 'Integrações públicas + privadas',
+                    value: '24 conectores homologados'
+                  }, {
+                    label: 'SLA de atendimento RNDS',
+                    value: 'Latência média 1.9s'
+                  }, {
+                    label: 'Governança de dados',
+                    value: 'LGPD · ISO 27701 · ICP-Brasil'
+                  }].map((item) => (
+                    <div key={item.label} className="bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur">
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-400 mb-1">{item.label}</p>
+                      <p className="text-base font-medium text-slate-100">{item.value}</p>
+                    </div>
+                  ))}
                 </div>
-                <CardTitle>Análise Epidemiológica IA</CardTitle>
-                <CardDescription>
-                  Predição de surtos, análise de tendências e alertas automáticos para tomada de decisão proativa
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
-              <CardHeader>
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors">
-                  <Users className="w-6 h-6 text-accent" />
-                </div>
-                <CardTitle>Gestão de Recursos</CardTitle>
-                <CardDescription>
-                  Otimização inteligente de equipes, agendamentos e alocação de recursos médicos
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
-              <CardHeader>
-                <div className="w-12 h-12 bg-chart-1/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-1/20 transition-colors">
-                  <MapPin className="w-6 h-6 text-chart-1" />
-                </div>
-                <CardTitle>Mapas de Calor</CardTitle>
-                <CardDescription>
-                  Visualização geográfica de indicadores de saúde, focos de doenças e cobertura de serviços
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
-              <CardHeader>
-                <div className="w-12 h-12 bg-chart-2/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-2/20 transition-colors">
-                  <Shield className="w-6 h-6 text-chart-2" />
-                </div>
-                <CardTitle>Conformidade Legal</CardTitle>
-                <CardDescription>
-                  Total conformidade com LGPD, transparência pública e requisitos de auditoria do SUS
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-card to-muted/30">
-              <CardHeader>
-                <div className="w-12 h-12 bg-chart-3/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-3/20 transition-colors">
-                  <Smartphone className="w-6 h-6 text-chart-3" />
-                </div>
-                <CardTitle>Integração SUS</CardTitle>
-                <CardDescription>
-                  Conectividade nativa com DataSUS, e-SUS, Gov.br e outros sistemas governamentais
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-muted/20 via-primary/5 to-secondary/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-background/50 to-transparent" />
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">Benefícios para seu Município</h2>
-            <p className="text-xl text-muted-foreground">Resultados comprovados em gestão pública de saúde</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center space-y-4 group animate-slide-up">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center mx-auto group-hover:bg-gradient-to-br group-hover:from-primary/30 group-hover:to-primary/20 transition-all duration-300 group-hover:scale-110">
-                <TrendingUp className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">+35%</h3>
-              <p className="text-muted-foreground group-hover:text-foreground transition-colors">Melhoria na eficiência operacional</p>
+              <div className="relative">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-500/20 via-slate-800/40 to-transparent blur-2xl" />
+                <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/80 via-slate-900/90 to-slate-950/95 p-8 shadow-2xl">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-slate-300">Impacto comprovado</p>
+                      <Badge variant="outline" className="border-emerald-500/30 text-emerald-300">
+                        Resultados 2024
+                      </Badge>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 text-left">
+                      <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
+                        <span className="text-3xl font-semibold text-emerald-300">-34%</span>
+                        <p className="text-xs text-slate-400 mt-2">Redução média de TAT em laboratórios</p>
+                      </div>
+                      <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
+                        <span className="text-3xl font-semibold text-emerald-300">+47%</span>
+                        <p className="text-xs text-slate-400 mt-2">Engajamento de profissionais em prontuário vivo</p>
+                      </div>
+                      <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
+                        <span className="text-3xl font-semibold text-emerald-300">8h</span>
+                        <p className="text-xs text-slate-400 mt-2">Economia diária em conciliações RNDS</p>
+                      </div>
+                      <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
+                        <span className="text-3xl font-semibold text-emerald-300">99.5%</span>
+                        <p className="text-xs text-slate-400 mt-2">Uptime em integrações críticas monitoradas</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-slate-400">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+                      Carteira digital do paciente – dados portáveis com consentimento granular
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
 
+        <section className="py-20 bg-slate-950">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto">
-                <DollarSign className="w-8 h-8 text-secondary" />
-              </div>
-              <h3 className="text-2xl font-bold">-25%</h3>
-              <p className="text-muted-foreground">Redução nos custos operacionais</p>
+              <Badge className="bg-white/10 text-slate-200 border border-white/20">Para cada elo da rede de saúde</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                Conectamos governos, clínicas, laboratórios, profissionais e pacientes.
+              </h2>
+              <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+                Personalize a jornada em segundos. Acesse ambientes simulados ou conecte-se via RNDS, parceiros privados e integrações hospitalares.
+              </p>
             </div>
-
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto">
-                <Clock className="w-8 h-8 text-accent" />
-              </div>
-              <h3 className="text-2xl font-bold">-50%</h3>
-              <p className="text-muted-foreground">Redução no tempo de atendimento</p>
-            </div>
-
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-chart-1/10 rounded-full flex items-center justify-center mx-auto">
-                <Trophy className="w-8 h-8 text-chart-1" />
-              </div>
-              <h3 className="text-2xl font-bold">+90%</h3>
-              <p className="text-muted-foreground">Satisfação dos cidadãos</p>
+            <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+              {personaBlocks.map((persona) => {
+                const Icon = persona.icon;
+                return (
+                  <div key={persona.title} className="group">
+                    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-950/90 p-8 shadow-xl transition-transform duration-300 group-hover:-translate-y-1">
+                      <div className={`absolute -top-24 -right-24 h-48 w-48 rounded-full blur-3xl opacity-60 ${persona.accent}`} />
+                      <div className="relative z-10 space-y-6">
+                        <div className="flex items-center justify-between">
+                          <Badge variant="outline" className="border-white/30 text-white/80">{persona.tag}</Badge>
+                          <Icon className="w-10 h-10 text-white/80" />
+                        </div>
+                        <div className="space-y-3 text-left">
+                          <h3 className="text-2xl font-semibold text-white">{persona.title}</h3>
+                          <p className="text-slate-200">{persona.subtitle}</p>
+                          <p className="text-sm text-slate-300/80">{persona.description}</p>
+                        </div>
+                        <ul className="space-y-2 text-sm text-slate-200/90">
+                          {persona.metrics.map((metric) => (
+                            <li key={metric} className="flex items-center gap-2">
+                              <Sparkles className="w-4 h-4 text-emerald-300" />
+                              {metric}
+                            </li>
+                          ))}
+                        </ul>
+                        <Button
+                          variant="secondary"
+                          className="w-full justify-between font-medium"
+                          onClick={() => {
+                            switchGuestRole(persona.role);
+                            setTimeout(() => navigate(persona.navigateTo), 80);
+                          }}
+                        >
+                          {persona.buttonLabel}
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-
-      {/* Municipal Contact Form */}
-      <section className="py-20 px-4 bg-gradient-to-br from-muted/20 to-background">
-        <div className="max-w-4xl mx-auto">
-          <Card className="border-0 shadow-2xl">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl">Solicite uma Demonstração</CardTitle>
-              <CardDescription className="text-lg">
-                Nossa equipe especializada entrará em contato em até 24h
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="municipality">Município *</Label>
-                    <Input 
-                      id="municipality"
-                      placeholder="Nome do município"
-                      value={formData.municipality}
-                      onChange={(e) => handleInputChange('municipality', e.target.value)}
-                      required
-                    />
+        <section className="py-20 bg-slate-900/60 backdrop-blur">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="text-center space-y-3">
+              <Badge className="bg-emerald-500/15 text-emerald-200 border border-emerald-500/30">Imersão visual</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                Painéis e telas ilustrativas para apresentar o impacto.
+              </h2>
+              <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+                Inspiradas em ilustrações criadas via Gemini Flash Image 2.5, estas composições representam dashboards, jornadas do paciente e execução integrada para demonstrações comerciais.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-3">
+              {previewScreens.map((screen) => (
+                <div key={screen.title} className="group relative overflow-hidden rounded-3xl border border-white/10 shadow-xl">
+                  <div className={`h-56 ${screen.gradient} flex items-end p-6`}>
+                    <div className="space-y-2 text-white">
+                      <h3 className="text-lg font-semibold">{screen.title}</h3>
+                      <p className="text-sm text-white/80 max-w-sm">{screen.description}</p>
+                    </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="contact">Nome do Responsável *</Label>
-                    <Input 
-                      id="contact"
-                      placeholder="Secretário(a) ou responsável"
-                      value={formData.contact}
-                      onChange={(e) => handleInputChange('contact', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">E-mail Institucional *</Label>
-                    <Input 
-                      id="email"
-                      type="email"
-                      placeholder="email@prefeitura.gov.br"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Telefone *</Label>
-                    <Input 
-                      id="phone"
-                      placeholder="(11) 99999-9999"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="population">População</Label>
-                    <Select onValueChange={(value) => handleInputChange('population', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Porte do município" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="micro">Até 20.000 hab</SelectItem>
-                        <SelectItem value="small">20.000 - 50.000 hab</SelectItem>
-                        <SelectItem value="medium">50.000 - 100.000 hab</SelectItem>
-                        <SelectItem value="large">100.000 - 500.000 hab</SelectItem>
-                        <SelectItem value="metro">Acima de 500.000 hab</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="priority">Prioridade Principal</Label>
-                    <Select onValueChange={(value) => handleInputChange('priority', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Principal desafio" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="efficiency">Eficiência Operacional</SelectItem>
-                        <SelectItem value="transparency">Transparência e Auditoria</SelectItem>
-                        <SelectItem value="prevention">Medicina Preventiva</SelectItem>
-                        <SelectItem value="integration">Integração de Sistemas</SelectItem>
-                        <SelectItem value="costs">Redução de Custos</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="bg-slate-950/90 p-6 border-t border-white/10 text-sm text-slate-300">
+                    Substitua por imagens exportadas do Gemini com as dimensões recomendadas (1440x900) para apresentações de alta resolução.
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
+        <section className="py-20 bg-slate-950">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <Badge className="bg-white/10 text-white border border-white/20">Acesso instantâneo</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Teste agora mesmo com usuários de demonstração.</h2>
+            <p className="text-lg text-slate-300">
+              Entre com perfis configurados para evidenciar KPIs em minutos. Sem instalação, sem contratos.
+            </p>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 text-left">
+              {[{
+                label: 'Gestores Públicos',
+                description: 'Dashboards executivos, pactuações regionais e governança RNDS.',
+                role: 'gestor' as const,
+                navigateTo: '/prefeitura-dashboard',
+                icon: Users
+              }, {
+                label: 'Gestão Hospitalar',
+                description: 'Fluxos assistenciais, integração PACS e automações clínicas.',
+                role: 'hospital' as const,
+                navigateTo: '/dashboard',
+                icon: Hospital
+              }, {
+                label: 'Laboratórios',
+                description: 'Hub de coletas, TAT, RNDS e integrações privadas.',
+                role: 'laboratorio' as const,
+                navigateTo: '/laboratorios/visao-geral',
+                icon: Microscope
+              }, {
+                label: 'Profissionais de Saúde',
+                description: 'Workspace clínico com prontuário vivo e IA assistencial.',
+                role: 'medico' as const,
+                navigateTo: '/profile',
+                icon: Stethoscope
+              }, {
+                label: 'Pacientes',
+                description: 'Carteira digital, histórico longitudinal e alertas preventivos.',
+                role: 'paciente' as const,
+                navigateTo: '/profile',
+                icon: HeartPulse
+              }].map((entry) => {
+                const Icon = entry.icon;
+                return (
+                  <Card key={entry.label} className="border border-white/10 bg-slate-900/80 backdrop-blur">
+                    <CardHeader className="space-y-3">
+                      <Icon className="w-8 h-8 text-emerald-300" />
+                      <CardTitle className="text-slate-100">{entry.label}</CardTitle>
+                      <CardDescription className="text-slate-400">
+                        {entry.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button
+                        className="w-full"
+                        onClick={() => {
+                          switchGuestRole(entry.role);
+                          setTimeout(() => navigate(entry.navigateTo), 80);
+                        }}
+                      >
+                        <ArrowRight className="w-4 h-4 mr-2" />Entrar como {entry.label.split(' ')[0]}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 bg-slate-900/70">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div className="text-center space-y-4">
+              <Badge className="bg-emerald-500/15 text-emerald-200 border border-emerald-400/20">Recursos premium</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">Do território ao genoma: um ecossistema completo.</h2>
+              <p className="text-lg text-slate-300 max-w-4xl mx-auto">
+                Conecte dados administrativos, clínicos e laboratoriais com guardrails de segurança, IA confiável e automação operacional.
+              </p>
+            </div>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {[{
+                icon: BarChart3,
+                title: 'Analytics augmentado',
+                description: 'Dashboards executivos, monitoramento de TAT, pactuações regionais e simulações financeiras.'
+              }, {
+                icon: Database,
+                title: 'Interoperabilidade sem atrito',
+                description: 'RNDS, GAL/LACEN, Fleury, Pardini, Dasa, hospitais de referência e APIs proprietárias.'
+              }, {
+                icon: Lock,
+                title: 'Governança LGPD + ICP-Brasil',
+                description: 'Consentimento granular, auditoria AuditEvent, cofre de credenciais, rotação e evidências CAPA.'
+              }, {
+                icon: Activity,
+                title: 'IA assistencial segura',
+                description: 'Assistentes clínicos com explainability, validação humana e rastreabilidade de decisões.'
+              }, {
+                icon: HeartPulse,
+                title: 'Carteira digital do paciente',
+                description: 'Histórico longitudinal, QR de emergência, prescrições e notificações inteligentes.'
+              }, {
+                icon: Wand2,
+                title: 'Runbooks automatizados',
+                description: 'Playbooks para RNDS, integrações privadas, cadeia de frio e contingência de dados.'
+              }].map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <Card key={feature.title} className="border border-white/10 bg-slate-900/85 backdrop-blur">
+                    <CardHeader className="space-y-4">
+                      <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-300/20 flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-emerald-300" />
+                      </div>
+                      <CardTitle className="text-slate-100">{feature.title}</CardTitle>
+                      <CardDescription className="text-slate-300">{feature.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 bg-slate-950">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr,0.9fr] items-center">
+            <div className="space-y-6 text-left">
+              <Badge className="bg-emerald-500/15 text-emerald-200 border border-emerald-500/30">Conversar com especialistas</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">Pronto para levar sua rede de saúde para o próximo nível?</h2>
+              <p className="text-lg text-slate-300">
+                Envie seus dados ou agende uma demonstração personalizada. Nossa equipe configura protótipos com dados sintéticos da sua região em até 72 horas.
+              </p>
+              <ul className="space-y-3 text-sm text-slate-300">
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-300" /> Onboarding com RNDS e parceiros privados</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-300" /> Provas de conceito com dashboards dedicados</li>
+                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-300" /> Suporte integrado para equipes técnicas e clínicas</li>
+              </ul>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-6 bg-slate-900/85 border border-white/10 rounded-3xl p-8 backdrop-blur">
+              <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="challenges">Principais Desafios Atuais</Label>
-                  <Textarea 
-                    id="challenges"
-                    placeholder="Descreva os principais desafios da gestão de saúde no seu município..."
-                    rows={4}
-                    value={formData.mainChallenges}
-                    onChange={(e) => handleInputChange('mainChallenges', e.target.value)}
+                  <Label htmlFor="municipality" className="text-slate-200">Prefeitura / Instituição</Label>
+                  <Input
+                    id="municipality"
+                    placeholder="Secretaria Municipal de Saúde"
+                    value={formData.municipality}
+                    onChange={(event) => handleInputChange('municipality', event.target.value)}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
                   />
                 </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button type="submit" size="lg" className="flex-1">
-                    <Calendar className="w-5 h-5 mr-2" />
-                    Solicitar Demonstração
-                  </Button>
-                  <Button type="button" variant="outline" size="lg">
-                    <Phone className="w-5 h-5 mr-2" />
-                    Ligar Agora: (11) 91903-3347
-                  </Button>
+                <div className="space-y-2">
+                  <Label htmlFor="contact" className="text-slate-200">Nome do contato</Label>
+                  <Input
+                    id="contact"
+                    placeholder="Nome completo"
+                    value={formData.contact}
+                    onChange={(event) => handleInputChange('contact', event.target.value)}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
+                  />
                 </div>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Footer CTA */}
-      <section className="py-16 px-4 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">
-            Pronto para Transformar a Saúde Pública?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            Junte-se aos municípios que já estão revolucionando a gestão de saúde pública
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg px-8 py-4">
-              Começar Implementação
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-4">
-              <Mail className="w-5 h-5 mr-2" />
-              Falar com Especialista
-            </Button>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-slate-200">E-mail corporativo</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="contato@instituicao.gov.br"
+                    value={formData.email}
+                    onChange={(event) => handleInputChange('email', event.target.value)}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-slate-200">Telefone</Label>
+                  <Input
+                    id="phone"
+                    placeholder="(11) 99999-0000"
+                    value={formData.phone}
+                    onChange={(event) => handleInputChange('phone', event.target.value)}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
+                  />
+                </div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="population" className="text-slate-200">População atendida</Label>
+                  <Input
+                    id="population"
+                    placeholder="Ex: 320.000 habitantes"
+                    value={formData.population}
+                    onChange={(event) => handleInputChange('population', event.target.value)}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-slate-200">Prioridade principal</Label>
+                  <Select value={formData.priority} onValueChange={(value) => handleInputChange('priority', value)}>
+                    <SelectTrigger className="bg-slate-950/60 border-slate-700 text-slate-100">
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-900 text-slate-100">
+                      <SelectItem value="rnns">Integração RNDS</SelectItem>
+                      <SelectItem value="analytics">Analytics & KPIs</SelectItem>
+                      <SelectItem value="telehealth">Telemedicina & Assistência</SelectItem>
+                      <SelectItem value="lab">Laboratórios & Genômica</SelectItem>
+                      <SelectItem value="patient">Experiência do paciente</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="currentSystems" className="text-slate-200">Sistemas atuais</Label>
+                <Input
+                  id="currentSystems"
+                  placeholder="Ex: e-SUS, MV Soul, Tasy, LIS próprio..."
+                  value={formData.currentSystems}
+                  onChange={(event) => handleInputChange('currentSystems', event.target.value)}
+                  className="bg-slate-950/60 border-slate-700 text-slate-100"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mainChallenges" className="text-slate-200">Desafios principais</Label>
+                <Textarea
+                  id="mainChallenges"
+                  placeholder="Descreva necessidades, metas e prazos."
+                  value={formData.mainChallenges}
+                  onChange={(event) => handleInputChange('mainChallenges', event.target.value)}
+                  className="bg-slate-950/60 border-slate-700 text-slate-100 min-h-[120px]"
+                />
+              </div>
+              <Button type="submit" size="lg" className="w-full">
+                Enviar briefing e agendar conversa
+              </Button>
+            </form>
           </div>
-        </div>
-      </section>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };

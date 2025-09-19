@@ -46,7 +46,9 @@ import {
   Activity,
   Eye,
   Ear,
-  Thermometer
+  Thermometer,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -58,13 +60,14 @@ interface SidebarItemProps {
   label: string;
   currentPath: string;
   onClick?: () => void;
+  isChild?: boolean;
 }
 
 interface SidebarItemCollapsibleProps extends SidebarItemProps {
   isCollapsed: boolean;
 }
 
-const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isCollapsed }: SidebarItemCollapsibleProps) => {
+const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isCollapsed, isChild = false }: SidebarItemCollapsibleProps) => {
   const isExternal = to.startsWith('http');
 
   if (isExternal) {
@@ -80,8 +83,9 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
         <Button
           variant={'ghost'}
           className={cn(
-            "w-full text-base py-3 h-auto",
-            isCollapsed ? "justify-center px-0" : "justify-start"
+            "w-full h-auto",
+            isCollapsed ? "justify-center px-0" : "flex items-center",
+            isCollapsed ? '' : isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
           )}
         >
           {icon}
@@ -96,8 +100,9 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
       <Button
         variant={currentPath === to ? 'secondary' : 'ghost'}
         className={cn(
-          "w-full text-base py-3 h-auto",
-          isCollapsed ? "justify-center px-0" : "justify-start"
+          "w-full h-auto",
+          isCollapsed ? "justify-center px-0" : "flex items-center",
+          isCollapsed ? '' : isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
         )}
         title={isCollapsed ? label : undefined}
       >
@@ -108,7 +113,7 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
   );
 };
 
-const SidebarItem = ({ to, icon, label, currentPath, onClick }: SidebarItemProps) => {
+const SidebarItem = ({ to, icon, label, currentPath, onClick, isChild = false }: SidebarItemProps) => {
   const isExternal = to.startsWith('http');
 
   if (isExternal) {
@@ -122,7 +127,10 @@ const SidebarItem = ({ to, icon, label, currentPath, onClick }: SidebarItemProps
       >
         <Button
           variant={'ghost'}
-          className="w-full justify-start text-base py-3 h-auto"
+          className={cn(
+            "w-full h-auto",
+            isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
+          )}
         >
           {icon}
           {label}
@@ -136,7 +144,10 @@ const SidebarItem = ({ to, icon, label, currentPath, onClick }: SidebarItemProps
     <Link to={to} onClick={onClick}>
       <Button
         variant={currentPath === to ? 'secondary' : 'ghost'}
-        className="w-full justify-start text-base py-3 h-auto"
+        className={cn(
+          "w-full h-auto",
+          isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
+        )}
       >
         {icon}
         {label}
@@ -173,6 +184,24 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
         title: "Dashboard",
         items: [
           { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral Hospital" }
+        ]
+      });
+    }
+
+    if (userRole === 'laboratorio') {
+      menuSections.push({
+        title: "Laboratórios",
+        items: [
+          { to: "/laboratorios/visao-geral", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral" },
+          { to: "/laboratorios/operacao", icon: <ClipboardList className="h-5 w-5 mr-3" />, label: "Operação" },
+          { to: "/laboratorios/operacao#coleta-logistica", icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, label: "Coleta & Logística", isChild: true },
+          { to: "/laboratorios/operacao#amostras-lotes", icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, label: "Amostras & Lotes", isChild: true },
+          { to: "/laboratorios/operacao#triagem-prioridades", icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, label: "Triagem & Prioridades", isChild: true },
+          { to: "/laboratorios/resultados-laudos", icon: <FileText className="h-5 w-5 mr-3" />, label: "Resultados & Laudos" },
+          { to: "/laboratorios/integracoes", icon: <Handshake className="h-5 w-5 mr-3" />, label: "Integrações" },
+          { to: "/laboratorios/qualidade-compliance", icon: <Shield className="h-5 w-5 mr-3" />, label: "Qualidade & Compliance" },
+          { to: "/laboratorios/analytics-kpis", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "Analytics & KPIs" },
+          { to: "/laboratorios/administracao", icon: <Settings className="h-5 w-5 mr-3" />, label: "Administração" }
         ]
       });
     }
@@ -393,24 +422,36 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
         )}
       >
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-3">
-          {!isCollapsed ? (
-            <Link to="/dashboard" className="flex items-center gap-2">
-              <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
-              <span className="text-lg font-semibold text-sidebar-foreground">Vida Segura</span>
-            </Link>
-          ) : (
-            <Link to="/dashboard" className="flex items-center justify-center w-full">
-              <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
-            </Link>
-          )}
-          
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
+              onClick={toggleSidebar}
+              title={isOpen ? 'Recolher menu' : 'Abrir menu'}
+            >
+              {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </Button>
+            {!isCollapsed ? (
+              <Link to="/dashboard" className="flex items-center gap-2">
+                <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
+                <span className="text-lg font-semibold text-sidebar-foreground">Vida Segura</span>
+              </Link>
+            ) : (
+              <Link to="/dashboard" className="flex items-center justify-center w-full">
+                <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
+              </Link>
+            )}
+          </div>
+
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             onClick={toggleCollapsed}
-            className="p-1 h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
+            className="h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
+            title={isCollapsed ? 'Expandir' : 'Compactar'}
           >
-            {isCollapsed ? <Pin className="h-4 w-4" /> : <PinOff className="h-4 w-4" />}
+            {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
         </div>
 
@@ -420,9 +461,10 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
               <span className="text-sm font-medium text-sidebar-accent-foreground">
-                {userRole === 'gestor' && 'Gestor Municipal'}
+                {userRole === 'gestor' && 'Gestor Municipal'}  
                 {userRole === 'medico' && 'Profissional de Saúde'}  
                 {userRole === 'paciente' && 'Paciente'}
+                {userRole === 'laboratorio' && 'Gestor de Laboratórios'}
               </span>
             </div>
           </div>

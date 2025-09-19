@@ -25,7 +25,13 @@ import {
   UserCheck,
   DollarSign,
   TrendingDown,
-  CheckCircle
+  CheckCircle,
+  ShieldCheck,
+  ClipboardList,
+  Truck,
+  BarChart3,
+  Shield,
+  Handshake
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { guestProfiles, samplePatients, municipalityData, appointments } from '@/data/guestProfiles';
@@ -273,6 +279,143 @@ const RoleDashboard = () => {
     </div>
   );
 
+  const renderLaboratorioDashboard = () => (
+    <div className="space-y-6">
+      <DashboardAlertWidget className="mb-6" />
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card className="glass-morphism border-0 shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Coletas do dia</CardTitle>
+            <Truck className="h-4 w-4 text-emerald-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">24 agendadas</div>
+            <p className="text-xs text-muted-foreground">12 rotas em execução</p>
+          </CardContent>
+        </Card>
+        <Card className="glass-morphism border-0 shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">TAT médio (24h)</CardTitle>
+            <Clock className="h-4 w-4 text-sky-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">03h42</div>
+            <p className="text-xs text-muted-foreground">-14 min vs meta</p>
+          </CardContent>
+        </Card>
+        <Card className="glass-morphism border-0 shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Conformidade RNDS</CardTitle>
+            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">97,8%</div>
+            <p className="text-xs text-muted-foreground">Bundles aceitos</p>
+          </CardContent>
+        </Card>
+        <Card className="glass-morphism border-0 shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Alertas críticos</CardTitle>
+            <AlertCircle className="h-4 w-4 text-amber-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">6 ativos</div>
+            <p className="text-xs text-muted-foreground">3 compliance · 3 operação</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Operação logística</CardTitle>
+            <CardDescription>Coletas, cadeia fria e chain of custody</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center gap-2">
+              <ClipboardList className="h-4 w-4 text-emerald-400" />
+              <span className="text-sm">Checklists concluídos · 98%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Truck className="h-4 w-4 text-sky-400" />
+              <span className="text-sm">62 lotes em trânsito · 12 rotas ativas</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <span className="text-sm">Cadeia fria dentro da faixa · 2 alertas ativos</span>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Publicação de laudos</CardTitle>
+            <CardDescription>Portais médicos, pacientes e RNDS</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center gap-2">
+              <FileText className="h-4 w-4 text-sky-400" />
+              <span className="text-sm">37 laudos pendentes · fila genômica com 5 casos</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Handshake className="h-4 w-4 text-indigo-400" />
+              <span className="text-sm">Integrações hospitalares · 78% cobertura</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Shield className="h-4 w-4 text-emerald-400" />
+              <span className="text-sm">Auto-publicação RNDS com validador em lote</span>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>KPIs estratégicos</CardTitle>
+            <CardDescription>Monitoramento contínuo</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-emerald-400" />
+              <span className="text-sm">Cobertura RNDS 92% · meta 98%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-sky-400" />
+              <span className="text-sm">Integrações privadas em expansão · Fleury, Pardini, Dasa</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400" />
+              <span className="text-sm">Definition of Done atendida · runbooks publicados</span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Roadmap de integrações</CardTitle>
+          <CardDescription>Fases de rollout e status</CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
+          <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-4">
+            <p className="font-semibold text-emerald-200">Fase 1</p>
+            <p className="text-slate-300">RNDS + Fleury + Pardini — concluído</p>
+          </div>
+          <div className="rounded-lg border border-sky-500/40 bg-sky-500/10 p-4">
+            <p className="font-semibold text-sky-200">Fase 2</p>
+            <p className="text-slate-300">Dasa Nav/Nav Pro + Sabin — em andamento</p>
+          </div>
+          <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-4">
+            <p className="font-semibold text-amber-200">Fase 3</p>
+            <p className="text-slate-300">Hospitais prioritários + Imagem</p>
+          </div>
+          <div className="rounded-lg border border-indigo-500/40 bg-indigo-500/10 p-4">
+            <p className="font-semibold text-indigo-200">Fase 4</p>
+            <p className="text-slate-300">Genômica (Mendelics, Dasa, Fleury, GeneOne)</p>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   const renderPacienteDashboard = () => {
     // Calcular score de risco para o paciente logado (usando dados mock)
     const patientRisk = calculateRiskScore(mockPatientData['joao-silva']);
@@ -513,6 +656,7 @@ const RoleDashboard = () => {
       {/* Role-specific Dashboard */}
       {userRole === 'gestor' && renderGestorDashboard()}
       {userRole === 'medico' && renderMedicoDashboard()}
+      {userRole === 'laboratorio' && renderLaboratorioDashboard()}
       {userRole === 'hospital' && renderHospitalDashboard()}
       {userRole === 'paciente' && renderPacienteDashboard()}
     </div>

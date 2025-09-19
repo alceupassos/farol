@@ -100,6 +100,38 @@ const UserSpecificAlerts = () => {
           }
         );
       }
+
+      if (userRole === 'laboratorio') {
+        baseAlerts.push(
+          {
+            id: '7',
+            type: 'system',
+            title: 'RNDS — Bundles em Análise',
+            message: '3 Bundles rejeitados por "Observation.value[x]". Corrija mapeamento LOINC/UCUM.',
+            timestamp: '4 min atrás',
+            isRead: false,
+            priority: 'critical'
+          },
+          {
+            id: '8',
+            type: 'system',
+            title: 'Temperatura fora da faixa',
+            message: 'Lote LT-48294 (Zona Norte) registrou 9°C. Ative runbook de contingência.',
+            timestamp: '12 min atrás',
+            isRead: false,
+            priority: 'high'
+          },
+          {
+            id: '9',
+            type: 'system',
+            title: 'Certificado ICP-Brasil',
+            message: 'Certificado e-CNPJ expira em 7 dias. Planeje renovação.',
+            timestamp: '30 min atrás',
+            isRead: true,
+            priority: 'medium'
+          }
+        );
+      }
       
       return baseAlerts;
     };

@@ -25,6 +25,15 @@ export const guestProfiles = {
     avatar: "🏥",
     description: "Gestão hospitalar integrada com SUS e saúde suplementar"
   },
+  laboratorio: {
+    name: "Dra. Marina Torres",
+    role: "Gestora de Operações Laboratoriais",
+    institution: "Hub Integrado AngraLab",
+    cnpj: "98.765.432/0001-10",
+    email: "demo@sistema.local",
+    avatar: "🧪",
+    description: "Gestão de laboratório multiespecializado (analíticas, imagem e genômica) focada em compliance RNDS"
+  },
   paciente: {
     name: "João Silva",
     role: "Paciente",

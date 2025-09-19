@@ -206,6 +206,8 @@ const DashboardRedirect: React.FC = () => {
       navigate('/prefeitura-dashboard', { replace: true });
     } else if (userRole === 'hospital') {
       navigate('/dashboard', { replace: true });
+    } else if (userRole === 'laboratorio') {
+      navigate('/laboratorios/visao-geral', { replace: true });
     } else {
       navigate('/profile', { replace: true });
     }

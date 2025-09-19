@@ -54,7 +54,8 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
     const roleMap = {
       'gestor': 'Gestor Municipal',
       'medico': 'Profissional de Saúde',
-      'paciente': 'Paciente'
+      'paciente': 'Paciente',
+      'laboratorio': 'Gestor de Laboratórios'
     };
     return role ? roleMap[role as keyof typeof roleMap] || role : 'Visitante';
   };

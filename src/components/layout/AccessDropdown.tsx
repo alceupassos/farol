@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2 } from 'lucide-react';
+import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -45,6 +45,13 @@ const AccessDropdown = () => {
       color: 'text-blue-500'
     },
     {
+      id: 'laboratorio',
+      label: 'Laboratórios',
+      icon: TestTube,
+      description: 'Hub para gestores de análises clínicas e genômica',
+      color: 'text-emerald-400'
+    },
+    {
       id: 'medico',
       label: 'Profissional de Saúde',
       icon: UserCheck,
@@ -87,6 +94,9 @@ const AccessDropdown = () => {
     } else if (role === 'hospital') {
       console.log('AccessDropdown: Redirecting to hospital dashboard');
       navigate('/dashboard');
+    } else if (role === 'laboratorio') {
+      console.log('AccessDropdown: Redirecting to laboratory hub');
+      navigate('/laboratorios/visao-geral');
     } else if (role === 'medico') {
       console.log('AccessDropdown: Redirecting to medical profile');
       navigate('/profile');
