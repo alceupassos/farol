@@ -1,17 +1,25 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { useAccessLogger } from '@/hooks/useAccessLogger';
+import { authenticator } from 'otplib';
+
+// Configure once globally (RFC 6238 defaults)
+authenticator.options = { step: 30, digits: 6 };
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   userRole: string | null;
   loading: boolean;
+  isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signInAsGuest: (role: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, role: string, additionalData?: any) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   switchGuestRole: (newRole: string) => void;
+  verifyTOTP: (email: string, token: string) => Promise<{ success: boolean; error?: any }>;
+  generateTOTPSecret: (email: string) => Promise<{ secret?: string; qrCode?: string; error?: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,12 +37,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<string | null>(localStorage.getItem('demo_user_role') || null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     let mounted = true;
     
     const initializeAuth = async () => {
       try {
+        // Check TOTP authentication status
+        const totpAuth = localStorage.getItem('totp_authenticated');
+        if (totpAuth === 'true') {
+          setIsAuthenticated(true);
+        }
+        
         // Verificar se é a primeira carga da sessão e fazer logout automático
         const isFirstLoad = !sessionStorage.getItem('auth_initialized');
         
@@ -42,9 +57,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.log('Primeira carga detectada - fazendo logout automático');
           try {
             await supabase.auth.signOut();
-            // Limpar localStorage
+            // Limpar localStorage mas manter TOTP se válido
+            const totpAuth = localStorage.getItem('totp_authenticated');
             localStorage.removeItem('demo_user_role');
             localStorage.removeItem('profileAccessEnabled');
+            
+            // Se não há autenticação TOTP válida, limpar tudo
+            if (totpAuth !== 'true') {
+              localStorage.removeItem('totp_authenticated');
+              setIsAuthenticated(false);
+            }
+            
             // Marcar como inicializado para esta sessão
             sessionStorage.setItem('auth_initialized', 'true');
           } catch (error) {
@@ -219,9 +242,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await supabase.auth.signOut();
       setUser(null);
       setSession(null);
-      // Manter o role atual após logout para demo
-      // setUserRole('gestor');
-      // localStorage.setItem('demo_user_role', 'gestor');
+      setIsAuthenticated(false);
+      localStorage.removeItem('totp_authenticated');
+      localStorage.removeItem('demo_user_role');
+      localStorage.removeItem('profileAccessEnabled');
+      
+      // Force redirect to home page to trigger TOTP login
+      window.location.href = '/';
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -238,16 +265,115 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log('Role switched successfully to:', newRole);
   };
 
+  const verifyTOTP = async (email: string, token: string) => {
+    try {
+      // Validate token format
+      if (token.length !== 6 || !/^\d+$/.test(token)) {
+        return { success: false, error: 'Token deve ter 6 dígitos' };
+      }
+
+      console.log('Verifying Google Authenticator TOTP:', { email, token });
+
+      // Use the same secret that Google Authenticator uses
+      const secret = 'JBSWY3DPEHPK3PXP';
+      
+      // Generate current token for comparison
+      const currentToken = authenticator.generate(secret);
+      console.log('Authenticator config:', authenticator.options);
+      console.log('Current expected token:', currentToken);
+      console.log('User provided token:', token);
+      
+      // Verify the token (±2 steps manually)
+      const now = Date.now();
+      const offsets = [-60_000, -30_000, 0, 30_000, 60_000];
+      const isValid = offsets.some(off => token === authenticator.generate(secret, { epoch: now + off }));
+      
+      console.log('TOTP verification result:', isValid);
+      
+      // If verification fails, show debug info
+      if (!isValid) {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeStep = Math.floor(currentTime / 30);
+        
+        console.log('Debug info:');
+        console.log('Current timestamp:', currentTime);
+        console.log('Current time step:', timeStep);
+        console.log('Expected token:', currentToken);
+        console.log('Received token:', token);
+        
+        // Check if it's a timing issue
+        const prevToken = authenticator.generate(secret, { epoch: Date.now() - 30_000 });
+        console.log('Previous token (one window back):', prevToken);
+      }
+
+      // Log the attempt
+      try {
+        const logEntry = {
+          id: 'totp_' + Date.now(),
+          ip_address: '127.0.0.1',
+          user_agent: 'TOTP-' + (isValid ? 'SUCCESS' : 'FAILED') + '-' + token,
+          country: 'Brazil',
+          region: 'Rio de Janeiro', 
+          city: 'Angra dos Reis',
+          latitude: -23.0067,
+          longitude: -44.3186,
+          timezone: 'America/Sao_Paulo',
+          isp: 'Local Network',
+          page_accessed: '/totp-login',
+          referrer: '',
+          session_id: sessionStorage.getItem('session_id') || 'totp_session',
+          user_email: email,
+          access_time: new Date().toISOString()
+        };
+
+        const existingLogs = JSON.parse(localStorage.getItem('access_logs') || '[]');
+        existingLogs.unshift(logEntry);
+        localStorage.setItem('access_logs', JSON.stringify(existingLogs));
+      } catch (logError) {
+        console.error('Error logging TOTP attempt:', logError);
+      }
+      
+      if (isValid) {
+        setIsAuthenticated(true);
+        localStorage.setItem('totp_authenticated', 'true');
+        return { success: true };
+      }
+
+      if (!isValid) {
+        return { success: false, error: 'Código TOTP inválido ou expirado.' };
+      }
+    } catch (error) {
+      console.error('TOTP verification error:', error);
+      return { success: false, error: 'Erro na verificação TOTP' };
+    }
+  };
+
+  const generateTOTPSecret = async (email: string) => {
+    try {
+      // Use the same secret for consistency
+      const secret = 'JBSWY3DPEHPK3PXP'; // Base32 encoded secret
+      const qrCode = `otpauth://totp/SaudePublica:${email}?secret=${secret}&issuer=SaudePublica`;
+      
+      return { secret, qrCode };
+    } catch (error) {
+      console.error('TOTP generation error:', error);
+      return { error };
+    }
+  };
+
   const value = {
     user,
     session,
     userRole,
     loading,
+    isAuthenticated,
     signIn,
     signInAsGuest,
     signUp,
     signOut,
     switchGuestRole,
+    verifyTOTP,
+    generateTOTPSecret,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

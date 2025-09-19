@@ -19,6 +19,7 @@ import TelemedicineModal from '@/components/telemedicine/TelemedicineModal';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -163,6 +164,30 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
               <span className="text-sm text-gray-300">{getRoleDisplayName(userRole)}</span>
             </div>
             <AccessDropdown />
+            
+            {/* Logout button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                // Clear all authentication data immediately
+                localStorage.removeItem('totp_authenticated');
+                localStorage.removeItem('demo_user_role');
+                localStorage.removeItem('profileAccessEnabled');
+                sessionStorage.clear();
+                
+                toast.success('Logout realizado com sucesso!');
+                
+                // Force page reload to reset all state
+                setTimeout(() => {
+                  window.location.href = '/';
+                }, 500);
+              }}
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <LogOut size={16} />
+              <span className="hidden sm:inline">Sair</span>
+            </Button>
           </div>
           
           <UserSpecificAlerts />

@@ -48,6 +48,9 @@ import EpidemicAlerts from "./pages/EpidemicAlerts";
 import AuthGuard from "./components/auth/AuthGuard";
 import AdminPanel from "./pages/AdminPanel";
 import Login from "./pages/Login";
+import { ProtectedRoute as TOTPProtectedRoute } from "./components/auth/ProtectedRoute";
+import { QRCodeGenerator } from "./components/auth/QRCodeGenerator";
+import AccessLogsPage from "./pages/AccessLogsPage";
 import GestaoOrcamentariaPage from "./pages/GestaoOrcamentariaPage";
 import SimuladorIEDPage from "./pages/SimuladorIEDPage";
 import IndicadoresDesempenhoPage from "./pages/IndicadoresDesempenhoPage";
@@ -114,13 +117,15 @@ const App = () => (
                   <PWAInstallPrompt />
                   <ServiceWorkerManager />
                   <Routes>
-                    <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
-                    <Route path="/public-health-landing" element={<PublicRoute><Index /></PublicRoute>} />
+                    <Route path="/" element={<TOTPProtectedRoute><Index /></TOTPProtectedRoute>} />
+                    <Route path="/public-health-landing" element={<TOTPProtectedRoute><Index /></TOTPProtectedRoute>} />
                     <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                    <Route path="/qrcodenovo" element={<PublicRoute><QRCodeGenerator /></PublicRoute>} />
+                    <Route path="/access-logs" element={<PublicRoute><AccessLogsPage /></PublicRoute>} />
                     <Route path="/admin" element={<PublicRoute><AdminPanel /></PublicRoute>} />
-                    <Route path="/dashboard-redirect" element={<ProtectedRoute><DashboardRedirect /></ProtectedRoute>} />
-                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                    <Route path="/prefeitura-dashboard" element={<ProtectedRoute><PrefeituraDashboard /></ProtectedRoute>} />
+                    <Route path="/dashboard-redirect" element={<TOTPProtectedRoute><ProtectedRoute><DashboardRedirect /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/dashboard" element={<TOTPProtectedRoute><ProtectedRoute><Dashboard /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/prefeitura-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><PrefeituraDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
                     <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />
