@@ -1,17 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Bell,
-  Menu,
-  Moon,
-  Search,
-  Settings,
-  Sun,
-  LogOut,
-  User,
-  Video
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, Moon, Search, Sun, User, Video } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AccessDropdown from './AccessDropdown';
 import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
@@ -20,177 +9,147 @@ import saudePublicaLogo from '@/assets/saude-publica-logo.png';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 interface NavbarProps {
   toggleSidebar: () => void;
 }
 
 const Navbar = ({ toggleSidebar }: NavbarProps) => {
-  const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
+  const [isDark, setIsDark] = useState(() =>
+    typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
+  );
+  const navigate = useNavigate();
   const { user, userRole, signOut } = useAuth();
   const { t, i18n } = useTranslation();
   const currentLang = (i18n.language || 'pt').split('-')[0] as 'pt' | 'en' | 'es' | 'fr';
-  
+
+  const languages = useMemo(
+    () => [
+      { code: 'pt' as const, flag: '🇧🇷' },
+      { code: 'en' as const, flag: '🇺🇸' },
+      { code: 'es' as const, flag: '🇪🇸' },
+      { code: 'fr' as const, flag: '🇫🇷' },
+    ],
+    []
+  );
+
   const handleLanguageChange = (lang: 'pt' | 'en' | 'es' | 'fr') => {
     i18n.changeLanguage(lang);
   };
-  
+
   const toggleTheme = () => {
-    const newIsDark = !isDark;
-    setIsDark(newIsDark);
-    if (newIsDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    const next = !isDark;
+    setIsDark(next);
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', next);
     }
   };
 
-  // Ensure theme is set on mount based on existing class
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'));
+    if (typeof document !== 'undefined') {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    }
   }, []);
 
-  const getRoleDisplayName = (role: string | null) => {
-    const roleMap = {
-      'gestor': 'Gestor Municipal',
-      'medico': 'Profissional de Saúde',
-      'paciente': 'Paciente',
-      'laboratorio': 'Gestor de Laboratórios'
-    };
-    return role ? roleMap[role as keyof typeof roleMap] || role : 'Visitante';
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast.success(t('navbar.logoutSuccess'));
+    } catch (error) {
+      console.error('Navbar sign out error:', error);
+    }
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
+  const roleLabel = userRole ? t(`navbar.roles.${userRole}` as const) : t('navbar.roles.visitor');
 
   return (
-    <header className="fixed w-full h-16 z-50 bg-gray-900 border-b border-gray-800 px-4">
-      <div className="flex h-full items-center justify-between">
-        <div className="flex items-center">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+        <div className="flex items-center gap-3">
           <button
             type="button"
-            className="p-2 rounded-md text-gray-400 hover:bg-gray-800 mr-2"
+            className="rounded-full p-2 text-slate-300 transition-colors hover:bg-slate-800"
             onClick={toggleSidebar}
+            title={t('navbar.openMenu')}
           >
-            <Menu size={20} />
-            <span className="sr-only">Abrir menu</span>
+            <Menu className="h-5 w-5" />
           </button>
-          
-          <Link to="/" className="flex items-center">
-            <img 
-              src={saudePublicaLogo} 
-              alt="Saúde Pública Logo" 
-              className="h-10 w-auto"
-            />
+          <Link to="/" className="flex items-center gap-2 text-slate-100">
+            <img src={saudePublicaLogo} alt="Saúde Pública" className="h-9 w-auto" />
+            <span className="hidden text-sm font-semibold uppercase tracking-[0.2em] sm:block">
+              Saúde Pública
+            </span>
           </Link>
         </div>
 
-        <div className="flex-1 max-w-xl mx-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -mt-2 h-4 w-4 text-gray-400" />
+        <div className="hidden flex-1 items-center justify-center px-4 md:flex">
+          <div className="relative w-full max-w-md">
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
               placeholder={t('nav.search')}
-              className="w-full bg-gray-800 text-gray-100 pl-10 pr-4 py-2 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full rounded-full border border-white/5 bg-slate-900/70 py-2 pl-11 pr-4 text-sm text-slate-100 backdrop-blur placeholder:text-slate-500 focus:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
             />
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          {/* Language Test */}
-          <div className="text-white text-sm mr-2">
-            {t('telemedicine.welcome')}
+        <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-1 lg:flex">
+            {languages.map(({ code, flag }) => (
+              <button
+                key={code}
+                onClick={() => handleLanguageChange(code)}
+                className={cn(
+                  'rounded-full px-2 py-1 text-lg transition-colors hover:bg-slate-800',
+                  currentLang === code && 'bg-slate-800 ring-2 ring-emerald-500'
+                )}
+                title={t(`languages.${code}`)}
+              >
+                {flag}
+              </button>
+            ))}
           </div>
-          
-          {/* Language Flags */}
-          <div className="flex items-center space-x-1">
-            <button
-              onClick={() => handleLanguageChange('pt')}
-              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
-                currentLang === 'pt' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
-              }`}
-              title="Português"
-            >
-              🇧🇷
-            </button>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
-                currentLang === 'en' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
-              }`}
-              title="English"
-            >
-              🇺🇸
-            </button>
-            <button
-              onClick={() => handleLanguageChange('es')}
-              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
-                currentLang === 'es' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
-              }`}
-              title="Español"
-            >
-              🇪🇸
-            </button>
-            <button
-              onClick={() => handleLanguageChange('fr')}
-              className={`p-2 text-lg rounded hover:bg-gray-700 transition-colors cursor-pointer ${
-                currentLang === 'fr' ? 'bg-gray-700 ring-2 ring-blue-500' : ''
-              }`}
-              title="Français"
-            >
-              🇫🇷
-            </button>
-          </div>
-          
-          {/* Telemedicine button for doctors */}
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="rounded-full p-2 text-slate-300 transition-colors hover:bg-slate-800"
+            aria-label={isDark ? 'Ativar tema claro' : 'Ativar tema escuro'}
+          >
+            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+
           {userRole === 'medico' && (
             <TelemedicineModal>
               <Button
-                variant="outline"
                 size="sm"
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm"
+                className="hidden items-center gap-2 bg-gradient-to-r from-emerald-400 to-cyan-500 text-sm font-semibold text-emerald-950 shadow-lg hover:from-emerald-300 hover:to-cyan-400 md:flex"
               >
-                <Video size={16} className="animate-pulse" />
-                <span className="hidden sm:inline font-semibold">Telemedicina</span>
-                <div className="hidden sm:block w-2 h-2 bg-green-400 rounded-full animate-pulse ml-1" />
+                <Video className="h-4 w-4" />
+                {t('navbar.telemedicineButton')}
               </Button>
             </TelemedicineModal>
           )}
-          
-          {/* Show current role */}
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-2 px-3 py-2 bg-gray-800 rounded-lg">
-              <User size={16} className="text-gray-400" />
-              <span className="text-sm text-gray-300">{getRoleDisplayName(userRole)}</span>
-            </div>
-            <AccessDropdown />
-            
-            {/* Logout button */}
+
+          <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 md:flex">
+            <User className="h-4 w-4 text-emerald-300" />
+            <span className="font-medium">{roleLabel}</span>
+          </div>
+
+          {user ? (
             <Button
               variant="outline"
               size="sm"
-              onClick={() => {
-                // Clear all authentication data immediately
-                localStorage.removeItem('totp_authenticated');
-                localStorage.removeItem('demo_user_role');
-                localStorage.removeItem('profileAccessEnabled');
-                sessionStorage.clear();
-                
-                toast.success('Logout realizado com sucesso!');
-                
-                // Force page reload to reset all state
-                setTimeout(() => {
-                  window.location.href = '/';
-                }, 500);
-              }}
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="border-emerald-500/40 text-slate-100 hover:bg-emerald-500/10"
+              onClick={handleSignOut}
             >
-              <LogOut size={16} />
-              <span className="hidden sm:inline">Sair</span>
+              {t('nav.logout')}
             </Button>
-          </div>
-          
+          ) : (
+            <AccessDropdown />
+          )}
+
           <UserSpecificAlerts />
         </div>
       </div>

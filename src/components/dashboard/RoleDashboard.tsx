@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import DashboardAlertWidget from '@/components/epidemic/DashboardAlertWidget';
+import { useTranslation } from 'react-i18next';
 import { 
   Users, 
   Calendar, 
@@ -31,7 +32,9 @@ import {
   Truck,
   BarChart3,
   Shield,
-  Handshake
+  Handshake,
+  UploadCloud,
+  Images
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { guestProfiles, samplePatients, municipalityData, appointments } from '@/data/guestProfiles';
@@ -62,6 +65,7 @@ const KpiCard: React.FC<{
 
 const RoleDashboard = () => {
   const { userRole } = useAuth();
+  const { t } = useTranslation();
 
   if (!userRole) return null;
 
@@ -276,6 +280,43 @@ const RoleDashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="bg-gradient-to-r from-purple-900/60 via-slate-900/80 to-indigo-900/60 border border-purple-600/40 shadow-xl">
+        <CardHeader className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <CardTitle className="text-white text-xl flex items-center gap-2">
+              <UploadCloud className="h-5 w-5 text-purple-200" />
+              Workspace de Imagens clínicas
+            </CardTitle>
+            <CardDescription className="text-slate-200">
+              Faça upload de exames, receba análise preliminar com IA e gere prognósticos colaborativos durante a teleconsulta.
+            </CardDescription>
+          </div>
+          <div className="flex gap-2">
+            <Button asChild variant="secondary" className="bg-purple-500/80 hover:bg-purple-500 text-white">
+              <Link to="#" onClick={(event) => { event.preventDefault(); }}>Tutorial</Link>
+            </Button>
+            <Button asChild className="bg-emerald-500 hover:bg-emerald-400 text-white">
+              <Link to="#" onClick={(event) => { event.preventDefault(); }}>Abrir telemedicina</Link>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="grid gap-4 md:grid-cols-3">
+          {[
+            { title: 'Diagnóstico assistido', description: 'IA gera achados e recomendações a partir das imagens enviadas.' },
+            { title: 'Integração multi-modais', description: 'Suporte a RX, USG, RM/TC e anexos DICOM para comparação histórica.' },
+            { title: 'Parecer colaborativo', description: 'Compartilhe rapidamente com radiologistas e equipe multidisciplinar.' }
+          ].map((item) => (
+            <div key={item.title} className="rounded-xl border border-white/10 bg-slate-950/60 p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-purple-200">
+                <Images className="h-4 w-4" />
+                {item.title}
+              </div>
+              <p className="text-xs text-slate-200 mt-2">{item.description}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
     </div>
   );
 
@@ -640,9 +681,15 @@ const RoleDashboard = () => {
             <div className="text-4xl">{profile.avatar}</div>
             <div>
               <CardTitle>Bem-vindo, {profile.name}</CardTitle>
-              <CardDescription>{profile.description}</CardDescription>
+              <CardDescription>
+                {'descriptionKey' in profile && profile.descriptionKey
+                  ? t(profile.descriptionKey)
+                  : profile.description}
+              </CardDescription>
               <div className="flex gap-2 mt-2">
-                <Badge variant="outline">{profile.role}</Badge>
+                <Badge variant="outline">
+                  {'roleKey' in profile && profile.roleKey ? t(profile.roleKey) : profile.role}
+                </Badge>
                 {userRole === 'gestor' && 'municipality' in profile && <Badge variant="secondary">{profile.municipality}</Badge>}
                 {userRole === 'medico' && 'crm' in profile && <Badge variant="secondary">{profile.crm}</Badge>}
                 {userRole === 'hospital' && 'institution' in profile && <Badge variant="secondary">{profile.institution}</Badge>}

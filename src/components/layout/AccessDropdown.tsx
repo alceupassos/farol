@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,53 +19,58 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { SimpleTOTP } from '@/utils/simpleTOTP';
+import { useTranslation } from 'react-i18next';
 
 const AccessDropdown = () => {
   const navigate = useNavigate();
   const { switchGuestRole } = useAuth();
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [totpCode, setTotpCode] = useState('');
   const [totpError, setTotpError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
 
-  const accessOptions = [
-    {
-      id: 'gestor',
-      label: 'Gestão Municipal',
-      icon: Building2,
-      description: 'Acesso para gestores públicos',
-      color: 'text-primary'
-    },
-    {
-      id: 'hospital',
-      label: 'Hospital',
-      icon: Hospital,
-      description: 'Acesso para gestão hospitalar',
-      color: 'text-blue-500'
-    },
-    {
-      id: 'laboratorio',
-      label: 'Laboratórios',
-      icon: TestTube,
-      description: 'Hub para gestores de análises clínicas e genômica',
-      color: 'text-emerald-400'
-    },
-    {
-      id: 'medico',
-      label: 'Profissional de Saúde',
-      icon: UserCheck,
-      description: 'Acesso para médicos e enfermeiros',
-      color: 'text-secondary'
-    },
-    {
-      id: 'paciente',
-      label: 'Paciente',
-      icon: User,
-      description: 'Acesso para cidadãos',
-      color: 'text-accent'
-    }
-  ];
+  const accessOptions = useMemo(
+    () => [
+      {
+        id: 'gestor',
+        label: t('accessDropdown.options.gestor.label'),
+        icon: Building2,
+        description: t('accessDropdown.options.gestor.description'),
+        color: 'text-primary'
+      },
+      {
+        id: 'hospital',
+        label: t('accessDropdown.options.hospital.label'),
+        icon: Hospital,
+        description: t('accessDropdown.options.hospital.description'),
+        color: 'text-blue-500'
+      },
+      {
+        id: 'laboratorio',
+        label: t('accessDropdown.options.laboratory.label'),
+        icon: TestTube,
+        description: t('accessDropdown.options.laboratory.description'),
+        color: 'text-emerald-400'
+      },
+      {
+        id: 'medico',
+        label: t('accessDropdown.options.doctor.label'),
+        icon: UserCheck,
+        description: t('accessDropdown.options.doctor.description'),
+        color: 'text-secondary'
+      },
+      {
+        id: 'paciente',
+        label: t('accessDropdown.options.patient.label'),
+        icon: User,
+        description: t('accessDropdown.options.patient.description'),
+        color: 'text-accent'
+      }
+    ],
+    [t]
+  );
 
   const handleAccessSelect = (role: string) => {
     console.log('AccessDropdown: initiating TOTP verification for role:', role);
@@ -123,7 +128,7 @@ const AccessDropdown = () => {
       setTotpCode(sanitizedCode);
 
       if (sanitizedCode.length !== 6) {
-        setTotpError('Informe os 6 dígitos do código.');
+        setTotpError(t('accessDropdown.errors.codeLength'));
         return;
       }
 
@@ -137,11 +142,11 @@ const AccessDropdown = () => {
         setTimeout(() => redirectAfterRole(roleToApply), 100);
       } else {
         console.warn('AccessDropdown: Invalid TOTP code provided');
-        setTotpError('Código inválido. Tente novamente.');
+        setTotpError(t('accessDropdown.errors.invalid'));
       }
     } catch (error) {
       console.error('AccessDropdown: Error verifying TOTP code', error);
-      setTotpError('Erro ao validar o código. Tente novamente em instantes.');
+      setTotpError(t('accessDropdown.errors.generic'));
     } finally {
       setIsVerifying(false);
     }
@@ -157,7 +162,7 @@ const AccessDropdown = () => {
           <Button 
             className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            Acessar Sistema
+            {t('accessDropdown.trigger')}
             <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -188,16 +193,16 @@ const AccessDropdown = () => {
       <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Confirme seu acesso</DialogTitle>
+            <DialogTitle>{t('accessDropdown.modalTitle')}</DialogTitle>
             <DialogDescription>
-              Insira o código TOTP gerado pelo seu autenticador para continuar.
+              {t('accessDropdown.modalDescription')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-muted-foreground" htmlFor="totp-code">
-                Código de 6 dígitos
+                {t('accessDropdown.codeLabel')}
               </label>
               <Input
                 id="totp-code"
@@ -230,7 +235,7 @@ const AccessDropdown = () => {
               onClick={() => handleModalClose(false)}
               disabled={isVerifying}
             >
-              Cancelar
+              {t('common.cancel')}
             </Button>
             <Button
               type="button"
@@ -240,10 +245,10 @@ const AccessDropdown = () => {
               {isVerifying ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Validando...
+                  {t('accessDropdown.actions.validating')}
                 </>
               ) : (
-                'Confirmar acesso'
+                t('accessDropdown.actions.confirm')
               )}
             </Button>
           </DialogFooter>

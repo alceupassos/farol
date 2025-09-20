@@ -28,7 +28,64 @@
     "success": "Succès",
     "warning": "Avertissement",
     "info": "Information",
-    "close": "Fermer"
+    "close": "Fermer",
+    "selectLanguage": "Choisir la langue"
+  },
+  "languages": {
+    "pt": "Portugais",
+    "en": "Anglais",
+    "es": "Espagnol",
+    "fr": "Français"
+  },
+  "navbar": {
+    "openMenu": "Ouvrir le menu",
+    "telemedicineButton": "Télémédecine",
+    "logoutSuccess": "Déconnexion réussie !",
+    "roles": {
+      "manager": "Gestionnaire municipal",
+      "doctor": "Professionnel de santé",
+      "patient": "Patient",
+      "laboratory": "Gestionnaire de laboratoires",
+      "visitor": "Visiteur",
+      "hospital": "Administrateur hospitalier"
+    }
+  },
+  "accessDropdown": {
+    "trigger": "Accéder au système",
+    "modalTitle": "Confirmez votre accès",
+    "modalDescription": "Saisissez le code TOTP généré par votre application d'authentification pour continuer.",
+    "codeLabel": "Code à 6 chiffres",
+    "actions": {
+      "validating": "Validation...",
+      "confirm": "Confirmer l'accès"
+    },
+    "errors": {
+      "codeLength": "Saisissez les 6 chiffres du code.",
+      "invalid": "Code invalide. Réessayez.",
+      "generic": "Erreur lors de la validation du code. Réessayez dans quelques instants."
+    },
+    "options": {
+      "gestor": {
+        "label": "Gestion municipale",
+        "description": "Accès pour les gestionnaires publics"
+      },
+      "hospital": {
+        "label": "Hôpital",
+        "description": "Accès pour la gestion hospitalière"
+      },
+      "laboratory": {
+        "label": "Laboratoires",
+        "description": "Hub pour les gestionnaires de laboratoires cliniques et de génomique"
+      },
+      "doctor": {
+        "label": "Professionnel de santé",
+        "description": "Accès pour médecins et infirmiers"
+      },
+      "patient": {
+        "label": "Patient",
+        "description": "Accès pour les citoyens"
+      }
+    }
   },
   "telemedicine": {
     "telemedicineConsultation": "Consultation de Télémédecine",
@@ -68,5 +125,977 @@
     "overview": "Aperçu",
     "recentActivity": "Activité Récente",
     "quickActions": "Actions Rapides"
+  },
+  "sidebar": {
+    "brand": "Vida Segura",
+    "controls": {
+      "expand": "Déployer le menu",
+      "collapse": "Replier le menu",
+      "open": "Ouvrir le menu",
+      "close": "Fermer le menu"
+    },
+    "sections": {
+      "dashboard": {
+        "title": "Tableau de bord",
+        "items": {
+          "prefeituraOverview": "Vue municipale",
+          "hospitalOverview": "Vue hospitalière"
+        }
+      },
+      "laboratoryHub": {
+        "title": "Laboratoires",
+        "items": {
+          "overview": "Vue d'ensemble",
+          "operations": "Opérations",
+          "collectionLogistics": "Collecte et logistique",
+          "samplesBatches": "Échantillons et lots",
+          "triagePriorities": "Triage et priorités",
+          "resultsReports": "Résultats et rapports",
+          "integrations": "Intégrations",
+          "qualityCompliance": "Qualité et conformité",
+          "analytics": "Analyses et KPIs",
+          "administration": "Administration"
+        }
+      },
+      "publicManagement": {
+        "title": "Gestion publique",
+        "items": {
+          "executiveDashboard": "Tableau exécutif",
+          "operationalDashboard": "Tableau opérationnel",
+          "populationAnalysis": "Analyse populationnelle",
+          "epidemiologyMap": "Carte épidémiologique",
+          "epidemicAlerts": "Alertes épidémiques",
+          "resourceManagement": "Gestion des ressources"
+        }
+      },
+      "financeBudget": {
+        "title": "Finances et budget",
+        "items": {
+          "apsMonitoring": "Suivi APS",
+          "budgetManagement": "Gestion budgétaire",
+          "investmentSimulator": "Simulateur IED",
+          "legalControl": "Contrôle juridique"
+        }
+      },
+      "trainingManagement": {
+        "title": "Formation et pilotage",
+        "items": {
+          "susManagersProgram": "Programme Gestionnaires SUS",
+          "managementTransition": "Transition de gestion",
+          "apsIndicators": "Indicateurs APS",
+          "dataGovernance": "Gouvernance des données"
+        }
+      },
+      "regionalization": {
+        "title": "Régionalisation",
+        "items": {
+          "cirCommittees": "Commissions CIR",
+          "regionalAgreement": "Accords régionaux",
+          "territorialization": "Territorialisation"
+        }
+      },
+      "hospitalManagement": {
+        "title": "Gestion hospitalière",
+        "items": {
+          "hospitalAccess": "Accès hôpitaux"
+        }
+      },
+      "analytics": {
+        "title": "Analytique",
+        "items": {
+          "aiAnalytics": "Analytique IA",
+          "security": "Sécurité",
+          "integrations": "Intégrations"
+        }
+      },
+      "hospitalDashboard": {
+        "title": "Tableau hospitalier",
+        "items": {
+          "hisHmisSystem": "Système HIS/HMIS"
+        }
+      },
+      "billingFinance": {
+        "title": "Facturation et finances",
+        "items": {
+          "susBilling": "Facturation SUS",
+          "tissTuss": "TISS/TUSS",
+          "apacOncology": "APAC Oncologie"
+        }
+      },
+      "interoperability": {
+        "title": "Interopérabilité",
+        "items": {
+          "rndsDatasus": "RNDS/DATASUS",
+          "lgpdCompliance": "Conformité LGPD",
+          "digitalRecord": "Dossier médical numérique"
+        }
+      },
+      "clinicalManagement": {
+        "title": "Gestion clinique",
+        "items": {
+          "clinicalManagement": "Gestion clinique",
+          "surgeryCenter": "Bloc opératoire",
+          "icu": "USI et soins intensifs",
+          "qualityIndicators": "Indicateurs de qualité",
+          "labAnalysis": "Analyses de laboratoire",
+          "pharmacyManagement": "Gestion pharmaceutique"
+        }
+      },
+      "analyticsIntelligence": {
+        "title": "Analytique et intelligence",
+        "items": {
+          "reportsAnalytics": "Rapports et analytique",
+          "financialDashboard": "Tableau financier",
+          "aiInsights": "Insights IA"
+        }
+      },
+      "technicalIntegrations": {
+        "title": "Intégrations techniques",
+        "items": {
+          "technicalIntegrations": "Intégrations techniques",
+          "erpIntegration": "Intégration ERP"
+        }
+      },
+      "medicalCare": {
+        "title": "Espace médical",
+        "items": {
+          "myPatients": "Mes patients",
+          "medicalSchedule": "Agenda médical",
+          "labResults": "Examens et résultats",
+          "medicalProtocols": "Protocoles médicaux",
+          "telemedicine": "Télémédecine"
+        }
+      },
+      "imagingAI": {
+        "title": "Imagerie & IA",
+        "items": {
+          "imagingWorkspace": "Workspace d'imagerie",
+          "examAnalytics": "Analytique des examens"
+        }
+      },
+      "mapsLocation": {
+        "title": "Cartes et localisation",
+        "items": {
+          "epidemiologyMap": "Carte épidémiologique",
+          "epidemicAlerts": "Alertes épidémiques"
+        }
+      },
+      "myHealth": {
+        "title": "Ma santé",
+        "items": {
+          "myProfile": "Mon profil",
+          "medicalRecords": "Dossiers médicaux",
+          "medications": "Médicaments",
+          "myAppointments": "Mes rendez-vous",
+          "healthMetrics": "Indicateurs de santé",
+          "myExams": "Mes examens"
+        }
+      },
+      "seniorCare": {
+        "title": "Soins aux aînés",
+        "items": {
+          "diabetesCare": "Suivi du diabète",
+          "osteoporosisCare": "Soins de l'ostéoporose",
+          "mentalHealth": "Santé mentale intégrale",
+          "glucoseMonitoring": "Surveillance glycémique",
+          "neurologyCare": "Soins neurologiques",
+          "visionCare": "Soins visuels",
+          "hearingCare": "Soins auditifs"
+        }
+      },
+      "connectedData": {
+        "title": "Données métaboliques et connectées",
+        "items": {
+          "metabolicPanel": "Tableau métabolique",
+          "healthConnectors": "Connecteurs de santé"
+        }
+      },
+      "emergencyAccess": {
+        "title": "Urgence et accès",
+        "items": {
+          "emergencyQr": "QR d'urgence",
+          "manageAccess": "Gérer l'accès"
+        }
+      },
+      "system": {
+        "title": "Système",
+        "items": {
+          "settings": "Paramètres",
+          "technicalDetails": "Détails techniques"
+        }
+      }
+    },
+    "footer": {
+      "copyright": "© {{year}} Vida Segura.",
+      "rights": "Tous droits réservés."
+    }
+  },
+  "landing": {
+    "publicHealth": {
+      "images": {
+        "heroAlt": "Écosystème de santé connecté",
+        "placeholderAlt": "Visuel illustratif de données de santé"
+      },
+      "hero": {
+        "badge": "HUB VIDA SEGURA · SANTÉ PUBLIQUE AUGMENTÉE",
+        "title": "Une plateforme unique pour connecter gouvernements, cliniques et citoyens tout au long du parcours de santé.",
+        "description": "Automatisation RNDS, analytique en temps réel, portefeuille numérique patient et intégrations privées. Conformité LGPD, prêt pour hôpitaux, laboratoires, centres d'imagerie et autorités sanitaires.",
+        "ctaPrimary": "Explorer la démo guidée",
+        "ctaSecondary": "Télécharger le one-pager technique",
+        "stats": [
+          {
+            "label": "Intégrations publiques + privées",
+            "value": "24 connecteurs homologués"
+          },
+          {
+            "label": "SLA RNDS",
+            "value": "Latence moyenne 1,9s"
+          },
+          {
+            "label": "Gouvernance des données",
+            "value": "LGPD · ISO 27701 · ICP-Brésil"
+          }
+        ],
+        "impact": {
+          "title": "Impact mesuré",
+          "badge": "Résultats 2024",
+          "metrics": [
+            {
+              "label": "Réduction moyenne du TAT en laboratoires",
+              "value": "-34%"
+            },
+            {
+              "label": "Engagement des professionnels dans le dossier vivant",
+              "value": "+47%"
+            },
+            {
+              "label": "Économie quotidienne sur les conciliations RNDS",
+              "value": "8h"
+            },
+            {
+              "label": "Disponibilité des intégrations critiques",
+              "value": "99,5%"
+            }
+          ],
+          "note": "Portefeuille numérique patient – données portables avec consentement granulaire",
+          "footerBadge": "",
+          "footerDescription": ""
+        }
+      },
+      "gallery": {
+      "badge": "Galerie d'Images",
+      "title": "Fonds dynamiques pour présentations et campagnes numériques.",
+      "description": "Associez ces visuels aux cartes ci-dessus pour créer des démos immersives. Mettez à jour les images dans",
+        "lockNote": "Images internes protégées — optimisées pour les environnements publics et les présentations privées.",
+        "cards": [
+          {
+            "id": "dataIntelligence",
+            "title": "Intelligence des données",
+            "description": "Professionnels interagissant avec un BI temps réel mettant en avant gouvernance et insights automatisés.",
+            "accent": "Intelligence"
+          },
+          {
+            "id": "operationalAnalytics",
+            "title": "Analytics opérationnel",
+            "description": "Visualisation des parcours de données et prévision épidémiologique au travers de tableaux de bord parallèles.",
+            "accent": "Analytics"
+          },
+          {
+            "id": "globalNetwork",
+            "title": "Réseau de santé mondial",
+            "description": "Écosystème connecté montrant hôpitaux, patients et IA collaborant en temps réel.",
+            "accent": "Futur"
+          }
+        ],
+        "repositoryBadge": "Référentiel synchronisé"
+      },
+      "personas": {
+        "badge": "Chaque maillon du réseau de santé",
+        "title": "Nous connectons gouvernements, cliniques, laboratoires, professionnels et patients.",
+        "description": "Personnalisez le parcours en quelques secondes. Accédez à des environnements simulés ou connectez-vous via la RNDS, des partenaires privés et des intégrations hospitalières.",
+        "cards": [
+          {
+            "id": "governments",
+            "title": "Gouvernements et municipalités",
+            "subtitle": "Planification populationnelle connectée",
+            "description": "Tableaux de bord en temps réel pour piloter indicateurs, budgets et accords régionaux avec gouvernance RNDS.",
+            "metrics": [
+              "Couverture RNDS 98%",
+              "SLO 99,5% intégrations",
+              "Alertes épidémiques automatiques"
+            ],
+            "buttonLabel": "Activer la vue gestionnaire",
+            "tag": "Politique publique"
+          },
+          {
+            "id": "secretaries",
+            "title": "Directions de santé",
+            "subtitle": "Réseau SUS totalement conforme",
+            "description": "Audit LGPD, gouvernance RNDS et gestion contractuelle dans un espace unique. Éliminez les feuilles de calcul et centralisez les preuves.",
+            "metrics": [
+              "Bundles validés automatiquement",
+              "Runbooks CAPA",
+              "Suivi des certificats"
+            ],
+            "buttonLabel": "Voir le tableau des directions",
+            "tag": "Conformité"
+          },
+          {
+            "id": "imaging",
+            "title": "Cliniques d'imagerie",
+            "subtitle": "PACS, DICOM et RNDS dans un même flux",
+            "description": "Intégration avec liens sécurisés, gestion des comptes rendus et publication automatisée vers les portails et la RNDS.",
+            "metrics": [
+              "Viewer 4K",
+              "Automatisation des comptes rendus en 2 clics",
+              "KPIs de disponibilité"
+            ],
+            "buttonLabel": "Explorer le parcours imagerie",
+            "tag": "Cliniques"
+          },
+          {
+            "id": "laboratories",
+            "title": "Laboratoires & génomique",
+            "subtitle": "Opérations, VCF et hub génomique",
+            "description": "Suivi de la chaîne de custody, TAT par type d'examen et ingestion VCF avec contrôle des consentements.",
+            "metrics": [
+              "Runbooks RNDS",
+              "KPIs STAT / SLA",
+              "Intégrations Fleury · Pardini · Dasa"
+            ],
+            "buttonLabel": "Entrer dans le hub laboratoire",
+            "tag": "Interopérabilité"
+          },
+          {
+            "id": "professionals",
+            "title": "Professionnels de santé",
+            "subtitle": "Dossier vivant et IA clinique",
+            "description": "Contexte complet du patient, alertes intelligentes, protocoles et prescription connectés au territoire.",
+            "metrics": [
+              "Assistant IA avec garde-fous",
+              "Checklist qualité",
+              "Parcours patient omnicanal"
+            ],
+            "buttonLabel": "Accéder à l'espace clinique",
+            "tag": "Soins"
+          },
+          {
+            "id": "citizens",
+            "title": "Citoyens et patients",
+            "subtitle": "Portefeuille de santé publique",
+            "description": "Carte SUS intelligente, alertes préventives et portabilité des données avec confidentialité et consentement granulaire.",
+            "metrics": [
+              "Historique longitudinal",
+              "Plans de soins personnalisés",
+              "QR d'urgence"
+            ],
+            "buttonLabel": "Tester l'expérience patient",
+            "tag": "Engagement"
+          }
+        ]
+      },
+      "immersion": {
+        "badge": "Immersion visuelle",
+        "title": "Des tableaux connectés au MCP avec un storytelling haute fidélité.",
+        "description": "Chaque vitrine utilise des images distribuées par le serveur MCP (21st.dev), représentant des flux réels de laboratoire, radiologie et gouvernance financière pour démos et présentations.",
+        "cards": [
+          {
+            "id": "executive360",
+            "title": "Vue exécutive 360°",
+            "description": "KPIs de gestion publique, accords régionaux et audit RNDS dans un tableau unifié.",
+            "badge": "Financier",
+            "alt": "Tableau exécutif avec croissance trimestrielle"
+          },
+          {
+            "id": "aiOrchestration",
+            "title": "Orchestration clinique avec IA",
+            "description": "Assistant de soins, protocoles contextuels et télémédecine intégrée.",
+            "badge": "Diagnostic",
+            "alt": "Tableau radiologique avec intelligence artificielle"
+          },
+          {
+            "id": "labGreen",
+            "title": "Laboratoire dans le vert",
+            "description": "Contrôle de la chaîne du froid, VCF et intégrations privées avec runbooks de conformité.",
+            "badge": "Opérations",
+            "alt": "Hub opérationnel de laboratoire connecté à la RNDS"
+          }
+        ],
+        "repositoryNote": "Source MCP : assets/21st.dev. Mettez à jour les fichiers dans le répertoire d'images et la landing reflètera automatiquement les nouveaux panneaux.",
+        "liveDemo": "Démo en temps réel"
+      },
+      "access": {
+        "badge": "Accès instantané",
+        "title": "Testez immédiatement avec des utilisateurs de démonstration.",
+        "description": "Connectez-vous avec des profils préconfigurés pour mettre en avant les KPIs en quelques minutes. Sans installation, sans contrat.",
+        "cards": [
+          {
+            "id": "publicManagers",
+            "label": "Gestionnaires publics",
+            "description": "Tableaux exécutifs, accords régionaux et gouvernance RNDS.",
+            "button": "Entrer en gestionnaire"
+          },
+          {
+            "id": "hospitalManagement",
+            "label": "Gestion hospitalière",
+            "description": "Tableaux HIS/HMIS complets, facturation SUS/TISS et interopérabilité RNDS.",
+            "button": "Entrer en hôpital"
+          },
+          {
+            "id": "laboratories",
+            "label": "Laboratoires",
+            "description": "Opérations intégrées avec chaîne de custody, KPIs STAT et conformité RNDS.",
+            "button": "Entrer en laboratoire"
+          },
+          {
+            "id": "professionals",
+            "label": "Professionnels de santé",
+            "description": "Workspace clinique avec dossier vivant, protocoles contextuels et télémédecine.",
+            "button": "Entrer en professionnel"
+          },
+          {
+            "id": "patients",
+            "label": "Patients",
+            "description": "Portefeuille numérique, alertes préventives et QR d'urgence avec IA assistive.",
+            "button": "Entrer en patient"
+          }
+        ]
+      },
+      "features": {
+        "badge": "Fonctionnalités premium",
+        "title": "Du territoire au génome : un écosystème complet.",
+        "description": "Connectez données administratives, cliniques et de laboratoire avec garde-fous de sécurité, IA fiable et automatisation opérationnelle.",
+        "cards": [
+          {
+            "id": "analytics",
+            "title": "Analytique augmentée",
+            "description": "Tableaux exécutifs, suivi du TAT, accords régionaux et simulations financières."
+          },
+          {
+            "id": "interoperability",
+            "title": "Interopérabilité sans friction",
+            "description": "RNDS, GAL/LACEN, Fleury, Pardini, Dasa, hôpitaux de référence et APIs propriétaires."
+          },
+          {
+            "id": "governance",
+            "title": "Gouvernance LGPD + ICP-Brésil",
+            "description": "Consentement granulaire, AuditEvent, coffre des identifiants, rotation et preuves CAPA."
+          },
+          {
+            "id": "assistiveAI",
+            "title": "IA assistive sécurisée",
+            "description": "Assistants cliniques avec explicabilité, validation humaine et traçabilité des décisions."
+          },
+          {
+            "id": "patientWallet",
+            "title": "Portefeuille patient",
+            "description": "Historique longitudinal, QR d'urgence, prescriptions et notifications intelligentes."
+          },
+          {
+            "id": "runbooks",
+            "title": "Runbooks automatisés",
+            "description": "Playbooks pour RNDS, intégrations privées, chaîne du froid et contingence de données."
+          }
+        ]
+      },
+      "contact": {
+        "badge": "Parler à des spécialistes",
+        "title": "Prêt à faire progresser votre réseau de santé ?",
+        "description": "Envoyez vos informations ou planifiez une démonstration personnalisée. Notre équipe configure des prototypes avec données synthétiques de votre région en 72 heures.",
+        "bullets": [
+          "Onboarding avec RNDS et partenaires privés",
+          "Proofs of concept avec tableaux dédiés",
+          "Support intégré pour équipes techniques et cliniques"
+        ],
+        "form": {
+          "fields": {
+            "municipality": {
+              "label": "Municipalité / Institution",
+              "placeholder": "Direction municipale de la santé"
+            },
+            "contact": {
+              "label": "Nom du contact",
+              "placeholder": "Nom complet"
+            },
+            "email": {
+              "label": "E-mail professionnel",
+              "placeholder": "contact@institution.fr"
+            },
+            "phone": {
+              "label": "Téléphone",
+              "placeholder": "(01) 23 45 67 89"
+            },
+            "population": {
+              "label": "Population desservie",
+              "placeholder": "Ex : 320 000 habitants"
+            },
+            "currentSystems": {
+              "label": "Systèmes actuels",
+              "placeholder": "Ex. : e-SUS, MV Soul, Tasy, LIS propriétaire..."
+            },
+            "mainChallenges": {
+              "label": "Défis principaux",
+              "placeholder": "Décrivez besoins, objectifs et échéances."
+            }
+          },
+          "select": {
+            "label": "Priorité principale",
+            "placeholder": "Sélectionner",
+            "options": {
+              "rnns": "Intégration RNDS",
+              "analytics": "Analytics & KPIs",
+              "telehealth": "Télémédecine & Soins",
+              "lab": "Laboratoires & Génomique",
+              "patient": "Expérience patient"
+            }
+          },
+          "submit": "Envoyer le briefing et planifier un échange"
+        }
+      }
+    }
+  },
+  "pages": {
+    "hospitalsAccess": {
+      "header": {
+        "title": "🏥 Système HIS/HMIS - Santa Casa",
+        "subtitle": "Plateforme unifiée de gestion hospitalière avec intégration SUS, RNDS/DATASUS, TISS/TUSS et conformité LGPD"
+      },
+      "kpis": {
+        "title": "📊 Tableau exécutif - KPIs principaux",
+        "general": {
+          "activeAdmissions": "Admissions actives",
+          "occupancyRate": "Taux d'occupation",
+          "monthlyRevenue": "Chiffre d'affaires mensuel",
+          "averageStay": "Durée moyenne de séjour"
+        },
+        "sus": {
+          "production": "Production SUS (AIH)",
+          "denialRate": "Taux de rejet SUS",
+          "apacOncology": "APAC Oncologie",
+          "rndsCompliance": "Conformité RNDS"
+        },
+        "supplementary": {
+          "billing": "Facturation TISS",
+          "authorizationRate": "Taux d'autorisation",
+          "responseTime": "Temps de réponse opérationnel",
+          "denials": "Gloses des assureurs"
+        }
+      },
+      "charts": {
+        "title": "📈 Analyses graphiques",
+        "production": {
+          "title": "Production mensuelle SUS vs assureurs",
+          "seriesTitle": "Occupation (%)"
+        },
+        "occupancy": {
+          "title": "Évolution du taux d'occupation",
+          "series": {
+            "infection": "Infection (%)",
+            "readmission": "Réadmission (%)"
+          }
+        },
+        "revenue": {
+          "title": "Chiffre d'affaires par source",
+          "labels": {
+            "sus": "SUS",
+            "supplementary": "TISS"
+          }
+        },
+        "quality": {
+          "title": "Indicateurs de qualité",
+          "series": {
+            "infection": "Infection (%)"
+          }
+        },
+        "specialty": {
+          "title": "Répartition par spécialité",
+          "series": {
+            "occupancy": "Occupation (%)"
+          },
+          "labels": {
+            "clinic": "Médecine",
+            "surgical": "Chirurgie",
+            "icu": "USI",
+            "pediatrics": "Pédiatrie"
+          }
+        },
+        "months": {
+          "jan": "Jan",
+          "feb": "Fév",
+          "mar": "Mar"
+        }
+      },
+      "clinical": {
+        "title": "🩺 Gestion clinique",
+        "cards": {
+          "activePatients": "Patients actifs",
+          "dailyAppointments": "Consultations moyennes/jour",
+          "protocolAdherence": "Respect des protocoles"
+        }
+      },
+      "laboratory": {
+        "title": "🔬 Analyses de laboratoire (agrégées)",
+        "cards": {
+          "monthlyExams": "Examens réalisés (mois)",
+          "turnaround": "Délai moyen de résultat",
+          "averageCost": "Coût moyen par examen"
+        }
+      },
+      "pharmacy": {
+        "title": "💊 Gestion pharmaceutique (agrégée)",
+        "cards": {
+          "dispensations": "Dispensations de médicaments (mois)",
+          "stockValue": "Valeur du stock",
+          "expiredRate": "Taux de médicaments périmés"
+        }
+      },
+      "modules": {
+        "title": "🔧 Modules du système",
+        "rnds": {
+          "title": "RNDS/DATASUS",
+          "items": [
+            "Intégration FHIR v4.0.1 avec la RNDS",
+            "Synchronisation CNES (établissements/professionnels)",
+            "Mise à jour mensuelle SIGTAP (actes/médicaments)",
+            "Conformité SUS numérique",
+            "Auditabilité et contrôle d'accès"
+          ]
+        },
+        "billingSus": {
+          "title": "Facturation SUS",
+          "items": [
+            "BPA/APAC ambulatoire (SIA)",
+            "AIH hospitalier (SIH)",
+            "Contrôle VERSIA",
+            "Gestion des gloses/rejets",
+            "ETL TABWIN/TABNET"
+          ]
+        },
+        "supplementary": {
+          "title": "Santé complémentaire",
+          "items": [
+            "Standard TISS (5 composantes)",
+            "Terminologie TUSS mise à jour",
+            "Autorisations/feuilles XML",
+            "Facturation électronique",
+            "Suivi des délais ANS"
+          ]
+        },
+        "oncology": {
+          "title": "Centre oncologique",
+          "items": [
+            "APAC-Oncologie (chimio/radiothérapie)",
+            "Directives INCA/SIA-SUS",
+            "Schémas thérapeutiques",
+            "Audit haute complexité",
+            "Rapports spécifiques oncologie"
+          ]
+        }
+      },
+      "compliance": {
+        "title": "🔒 Conformité et sécurité",
+        "lgpd": {
+          "title": "LGPD",
+          "items": [
+            "Loi 13.709/2018",
+            "Gouvernance des données",
+            "Pistes d'audit",
+            "Politiques de conservation"
+          ]
+        },
+        "digitalRecord": {
+          "title": "Dossier médical numérique",
+          "items": [
+            "Loi 13.787/2018",
+            "Certificat ICP-Brésil",
+            "Signature numérique",
+            "Certification SBIS-CFM"
+          ]
+        },
+        "interoperability": {
+          "title": "Interopérabilité",
+          "items": [
+            "APIs FHIR REST",
+            "Connecteurs ETL",
+            "Bus RNDS",
+            "Standards HL7"
+          ]
+        }
+      },
+      "references": {
+        "title": "📚 Références officielles",
+        "rnds": {
+          "title": "RNDS/FHIR"
+        },
+        "sus": {
+          "title": "SUS/DATASUS"
+        },
+        "tiss": {
+          "title": "TISS/ANS"
+        },
+        "oncology": {
+          "title": "Oncologie"
+        },
+        "compliance": {
+          "title": "Conformité",
+          "prontuario": "Loi sur le dossier médical"
+        },
+        "analytics": {
+          "title": "Analytique"
+        }
+      },
+      "footer": {
+        "developed": "Système HIS/HMIS développé pour hôpitaux philanthropiques type Santa Casa",
+        "compliance": "Conformité totale avec les réglementations SUS, ANS, LGPD et certifications SBIS-CFM"
+      }
+    },
+    "prontuarioDigital": {
+      "header": {
+        "title": "Dossier médical électronique",
+        "subtitle": "Système de dossier médical électronique – Certification SBIS-CFM et conformité à la loi 13.787/2018",
+        "highlightTitle": "Pour le gestionnaire :",
+        "highlightBody": "Gestion du Système de Dossier Médical Électronique (S-RES) certifié SBIS-CFM. Surveillez prescription électronique, signature numérique ICP-Brésil, évolutions cliniques, rapports, examens et interopérabilité FHIR. Garantit la conformité à la loi 13.787/2018, à la résolution CFM 1821/2007 et aux directives de sécurité. Essentiel pour éliminer le papier, réduire les erreurs médicales, améliorer la qualité des soins et faciliter les audits cliniques et administratifs."
+      },
+      "kpis": {
+        "changeSuffix": "vs mois précédent",
+        "cards": {
+          "activeRecords": {
+            "title": "Dossiers actifs"
+          },
+          "activeUsers": {
+            "title": "Utilisateurs actifs"
+          },
+          "certification": {
+            "title": "Certification SBIS",
+            "value": "Niveau 2",
+            "change": "Actif"
+          },
+          "averageAccess": {
+            "title": "Temps moyen d'accès"
+          }
+        }
+      },
+      "charts": {
+        "utilization": {
+          "title": "Évolution d'utilisation du dossier",
+          "series": {
+            "records": "Dossiers créés",
+            "appointments": "Consultations enregistrées",
+            "prescriptions": "Prescriptions électroniques"
+          },
+          "months": {
+            "jan": "Jan",
+            "feb": "Fév",
+            "mar": "Mar",
+            "apr": "Avr",
+            "may": "Mai",
+            "jun": "Juin"
+          }
+        },
+        "modules": {
+          "title": "Usage par module",
+          "names": {
+            "electronicPrescription": "Prescription électronique",
+            "medicalNotes": "Évolution médicale",
+            "labExams": "Analyses de laboratoire",
+            "medicalImaging": "Imagerie médicale"
+          },
+          "label": "{{name}} : {{value}} % ({{users}})",
+          "tooltipLabel": "Part"
+        },
+        "certification": {
+          "title": "Conformité aux certifications",
+          "categories": {
+            "sbisLevel1": "SBIS-CFM Niveau 1",
+            "sbisLevel2": "SBIS-CFM Niveau 2",
+            "icpBrasil": "ICP-Brésil",
+            "law13787": "Loi 13.787/2018",
+            "cfm1821": "Résolution CFM 1821"
+          },
+          "tooltip": "{{value}} % de conformité",
+          "axisLabel": "Conformité"
+        }
+      },
+      "features": {
+        "title": "Fonctionnalités principales",
+        "items": {
+          "electronicPrescription": {
+            "title": "Prescription électronique",
+            "description": "12 300 prescriptions"
+          },
+          "digitalSignature": {
+            "title": "Signature numérique",
+            "description": "ICP-Brésil"
+          },
+          "fullAudit": {
+            "title": "Audit complet",
+            "description": "Traçabilité à 100 %"
+          },
+          "interoperability": {
+            "title": "Interopérabilité",
+            "description": "FHIR R4"
+          }
+        }
+      },
+      "performance": {
+        "title": "Performance du système",
+        "metrics": {
+          "availability": "Disponibilité",
+          "responseTime": "Temps de réponse",
+          "userSatisfaction": "Satisfaction des utilisateurs",
+          "automaticBackup": "Sauvegarde automatique"
+        }
+      },
+      "status": {
+        "title": "Statut et alertes",
+        "items": {
+          "certValid": {
+            "title": "Certification valide",
+            "description": "SBIS-CFM jusqu'en 2025"
+          },
+          "backup": {
+            "title": "Sauvegarde effectuée",
+            "description": "Aujourd'hui à 02:00"
+          },
+          "updateAvailable": {
+            "title": "Mise à jour disponible",
+            "description": "Version 3.2.1"
+          },
+          "maintenance": {
+            "title": "Maintenance programmée",
+            "description": "Dimanche 02:00-04:00"
+          }
+        }
+      }
+    }
+  },
+  "data": {
+    "guestProfiles": {
+      "gestor": {
+        "role": "Directeur de la santé",
+        "description": "Gestionnaire public avec 15 ans d'expérience dans l'administration sanitaire municipale"
+      },
+      "medico": {
+        "role": "Cardiologue",
+        "description": "Cardiologue avec 10 ans d'expérience, spécialiste en médecine préventive"
+      },
+      "hospital": {
+        "role": "Administrateur hospitalier",
+        "description": "Gestion hospitalière intégrée au SUS et à la santé complémentaire"
+      },
+      "laboratorio": {
+        "role": "Responsable des opérations de laboratoire",
+        "description": "Gestion d'un laboratoire multiservices (analytique, imagerie, génomique) axée sur la conformité RNDS"
+      },
+      "paciente": {
+        "role": "Patient",
+        "description": "Patient avec antécédents de diabète de type 2 et d'hypertension"
+      }
+    }
+  },
+  "components": {
+    "dataSync": {
+      "title": "Monitoring de synchronisation des données",
+      "filters": {
+        "all": "Tous les statuts",
+        "running": "En cours",
+        "completed": "Terminés",
+        "failed": "En erreur",
+        "scheduled": "Planifiés",
+        "paused": "En pause",
+        "syncTypes": {
+          "all": "Tous les types",
+          "incremental": "Incrémental",
+          "full": "Complète",
+          "real-time": "Temps réel"
+        }
+      },
+      "autoRefresh": {
+        "label": "Actualisation auto",
+        "enabled": "Activée",
+        "disabled": "Désactivée"
+      },
+      "metrics": {
+        "totalJobs": {
+          "title": "Jobs totaux"
+        },
+        "activeJobs": {
+          "title": "Jobs actifs"
+        },
+        "successRate": {
+          "title": "Taux de succès"
+        },
+        "recordsToday": {
+          "title": "Enregistrements du jour"
+        },
+        "statistics": {
+          "title": "Statistiques du jour",
+          "completed": "Jobs terminés",
+          "failed": "Jobs en erreur",
+          "avgDuration": "Durée moyenne",
+          "minutes": "min"
+        },
+        "volume": {
+          "title": "Volume de données",
+          "subtitle": "Enregistrements synchronisés aujourd'hui",
+          "rate": "Taux : ~{{rate}} enregistrements/heure"
+        },
+        "quality": {
+          "title": "Qualité de la sync",
+          "subtitle": "Taux de succès global"
+        }
+      },
+      "tabs": {
+        "overview": "Vue d'ensemble",
+        "jobs": "Jobs",
+        "history": "Historique"
+      },
+      "table": {
+        "columns": {
+          "name": "Job",
+          "status": "Statut",
+          "progress": "Progression",
+          "source": "Source",
+          "destination": "Destination",
+          "syncType": "Type",
+          "processed": "Traités",
+          "duration": "Durée",
+          "errors": "Erreurs",
+          "nextRun": "Prochaine ex."
+        },
+        "actions": {
+          "pause": "Mettre en pause",
+          "resume": "Reprendre",
+          "restart": "Relancer",
+          "settings": "Configurer"
+        },
+        "syncTypeLabels": {
+          "incremental": "Incrémental",
+          "full": "Complète",
+          "real-time": "Temps réel"
+        },
+        "statusLabels": {
+          "running": "En cours",
+          "completed": "Terminé",
+          "failed": "Erreur",
+          "scheduled": "Planifié",
+          "paused": "En pause"
+        }
+      },
+      "details": {
+        "title": "Types de données :",
+        "noData": "Aucune donnée"
+      },
+      "history": {
+        "title": "Activité des dernières 24 heures",
+        "synced": "Enregistrements synchronisés",
+        "errors": "Erreurs"
+      }
+    }
+  },
+  "codeSplit": {
+    "loading": {
+      "message": "Chargement…"
+    }
   }
 }

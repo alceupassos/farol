@@ -2,47 +2,52 @@ export const guestProfiles = {
   gestor: {
     name: "Dr. Carlos Mendes",
     role: "Secretário de Saúde",
+    roleKey: "data.guestProfiles.gestor.role",
     municipality: "Pindamonhangaba - SP",
     email: "demo@sistema.local",
     avatar: "👨‍💼",
-    description: "Gestor público com 15 anos de experiência em administração de saúde municipal"
+    descriptionKey: "data.guestProfiles.gestor.description"
   },
   medico: {
     name: "Dra. Ana Silva",
-    role: "Médica Cardiologista", 
+    role: "Médica Cardiologista",
+    roleKey: "data.guestProfiles.medico.role",
     crm: "CRM/SP 123.456",
     specialty: "Cardiologia",
     email: "demo@sistema.local",
     avatar: "👩‍⚕️",
-    description: "Cardiologista com 10 anos de experiência, especialista em medicina preventiva"
+    descriptionKey: "data.guestProfiles.medico.description"
   },
   hospital: {
     name: "Santa Casa de Misericórdia",
     role: "Administrador Hospitalar",
+    roleKey: "data.guestProfiles.hospital.role",
     institution: "Hospital Filantrópico",
     cnpj: "12.345.678/0001-90",
     email: "demo@sistema.local",
     avatar: "🏥",
-    description: "Gestão hospitalar integrada com SUS e saúde suplementar"
+    descriptionKey: "data.guestProfiles.hospital.description"
   },
   laboratorio: {
     name: "Dra. Marina Torres",
     role: "Gestora de Operações Laboratoriais",
+    roleKey: "data.guestProfiles.laboratorio.role",
     institution: "Hub Integrado AngraLab",
     cnpj: "98.765.432/0001-10",
     email: "demo@sistema.local",
     avatar: "🧪",
-    description: "Gestão de laboratório multiespecializado (analíticas, imagem e genômica) focada em compliance RNDS"
+    descriptionKey: "data.guestProfiles.laboratorio.description"
   },
   paciente: {
     name: "João Silva",
     role: "Paciente",
+    roleKey: "data.guestProfiles.paciente.role",
     age: "43 anos",
     gender: "Masculino",
     bloodType: "O+",
     email: "demo@sistema.local",
     avatar: "👨",
-    description: "Paciente com histórico de diabetes tipo 2 e hipertensão arterial"
+    descriptionKey: "data.guestProfiles.paciente.description"
   }
 };
 

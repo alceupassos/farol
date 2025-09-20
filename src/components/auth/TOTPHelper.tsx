@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as OTPAuth from 'otplib';
+import { SimpleTOTP } from '@/utils/simpleTOTP';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Shield, Copy } from 'lucide-react';
@@ -12,18 +12,12 @@ export const TOTPHelper: React.FC = () => {
   const secret = 'JBSWY3DPEHPK3PXP';
 
   useEffect(() => {
-    const updateToken = () => {
+    const updateToken = async () => {
       try {
         console.log('Generating Google Authenticator token');
         
-        // Configure otplib for Google Authenticator
-        OTPAuth.authenticator.options = {
-          step: 30,
-          digits: 6
-        };
-        
         // Generate the current token
-        const token = OTPAuth.authenticator.generate(secret);
+        const token = await SimpleTOTP.generate(secret);
         
         console.log('Generated Google Auth token:', token);
         console.log('Current time:', new Date().toISOString());

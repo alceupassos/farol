@@ -1,19 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  User, 
-  FileText, 
-  Pill, 
-  Calendar, 
-  BarChart2, 
-  Microscope, 
-  Smile, 
-  Dna, 
-  KeyRound, 
-  ShieldAlert, 
-  Settings, 
-  Info, 
-  QrCode, 
+import {
+  LayoutDashboard,
+  User,
+  FileText,
+  Pill,
+  Calendar,
+  BarChart2,
+  Microscope,
+  KeyRound,
+  ShieldAlert,
+  Settings,
+  Info,
   Video,
   Users,
   Building,
@@ -30,8 +27,6 @@ import {
   Brain,
   Shield,
   Database,
-  Pin,
-  PinOff,
   Target,
   Calculator,
   Scale,
@@ -47,12 +42,16 @@ import {
   Eye,
   Ear,
   Thermometer,
+  Watch,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Images,
+  UploadCloud
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarItemProps {
   to: string;
@@ -83,9 +82,9 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
         <Button
           variant={'ghost'}
           className={cn(
-            "w-full h-auto",
-            isCollapsed ? "justify-center px-0" : "flex items-center",
-            isCollapsed ? '' : isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
+            'w-full h-auto',
+            isCollapsed ? 'justify-center px-0' : 'flex items-center',
+            isCollapsed ? '' : isChild ? 'justify-start text-sm py-2 pl-10' : 'justify-start text-base py-3'
           )}
         >
           {icon}
@@ -100,9 +99,9 @@ const SidebarItemCollapsible = ({ to, icon, label, currentPath, onClick, isColla
       <Button
         variant={currentPath === to ? 'secondary' : 'ghost'}
         className={cn(
-          "w-full h-auto",
-          isCollapsed ? "justify-center px-0" : "flex items-center",
-          isCollapsed ? '' : isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
+          'w-full h-auto',
+          isCollapsed ? 'justify-center px-0' : 'flex items-center',
+          isCollapsed ? '' : isChild ? 'justify-start text-sm py-2 pl-10' : 'justify-start text-base py-3'
         )}
         title={isCollapsed ? label : undefined}
       >
@@ -127,10 +126,7 @@ const SidebarItem = ({ to, icon, label, currentPath, onClick, isChild = false }:
       >
         <Button
           variant={'ghost'}
-          className={cn(
-            "w-full h-auto",
-            isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
-          )}
+          className={cn('w-full h-auto', isChild ? 'justify-start text-sm py-2 pl-10' : 'justify-start text-base py-3')}
         >
           {icon}
           {label}
@@ -139,15 +135,11 @@ const SidebarItem = ({ to, icon, label, currentPath, onClick, isChild = false }:
     );
   }
 
-  // Link interno
   return (
     <Link to={to} onClick={onClick}>
       <Button
         variant={currentPath === to ? 'secondary' : 'ghost'}
-        className={cn(
-          "w-full h-auto",
-          isChild ? "justify-start text-sm py-2 pl-10" : "justify-start text-base py-3"
-        )}
+        className={cn('w-full h-auto', isChild ? 'justify-start text-sm py-2 pl-10' : 'justify-start text-base py-3')}
       >
         {icon}
         {label}
@@ -163,262 +155,332 @@ interface SidebarProps {
   toggleCollapsed: () => void;
 }
 
+type SectionItemConfig = {
+  to: string;
+  icon: React.ReactNode;
+  labelKey: string;
+  isChild?: boolean;
+};
+
+type SectionConfig = {
+  titleKey: string;
+  items: SectionItemConfig[];
+};
+
 const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: SidebarProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const { userRole } = useAuth();
+  const { t } = useTranslation();
+
+  const buildSections = (configs: SectionConfig[]) =>
+    configs.map((section) => ({
+      title: t(section.titleKey),
+      items: section.items.map((item) => ({
+        to: item.to,
+        icon: item.icon,
+        label: t(item.labelKey),
+        isChild: item.isChild,
+      })),
+    }));
 
   const getMenuItemsByRole = () => {
-    const menuSections = [];
+    if (!userRole) {
+      return [] as Array<{ title: string; items: SidebarItemProps[] }>;
+    }
 
-    // Dashboard diferenciado por tipo de usuário
-    if (userRole === 'gestor') {
-      menuSections.push({
-        title: "Dashboard",
+    const sections: SectionConfig[] = [];
+
+    const dashboardSections: Record<string, SectionConfig[]> = {
+      gestor: [
+        {
+          titleKey: 'sidebar.sections.dashboard.title',
+          items: [
+            {
+              to: '/prefeitura-dashboard',
+              icon: <LayoutDashboard className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.prefeituraOverview',
+            },
+          ],
+        },
+      ],
+      hospital: [
+        {
+          titleKey: 'sidebar.sections.dashboard.title',
+          items: [
+            {
+              to: '/dashboard',
+              icon: <LayoutDashboard className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.hospitalOverview',
+            },
+          ],
+        },
+      ],
+    };
+
+    const laboratorySections: SectionConfig[] = [
+      {
+        titleKey: 'sidebar.sections.laboratoryHub.title',
         items: [
-          { to: "/prefeitura-dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral Prefeitura" }
-        ]
-      });
-    } else if (userRole === 'hospital') {
-      menuSections.push({
-        title: "Dashboard",
+          { to: '/laboratorios/visao-geral', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.overview' },
+          { to: '/laboratorios/operacao', icon: <ClipboardList className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.operations' },
+          { to: '/laboratorios/operacao#coleta-logistica', icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.collectionLogistics', isChild: true },
+          { to: '/laboratorios/operacao#amostras-lotes', icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.samplesBatches', isChild: true },
+          { to: '/laboratorios/operacao#triagem-prioridades', icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.triagePriorities', isChild: true },
+          { to: '/laboratorios/resultados-laudos', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.resultsReports' },
+          { to: '/laboratorios/integracoes', icon: <Handshake className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.integrations' },
+          { to: '/laboratorios/qualidade-compliance', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.qualityCompliance' },
+          { to: '/laboratorios/analytics-kpis', icon: <BarChart3 className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.analytics' },
+          { to: '/laboratorios/administracao', icon: <Settings className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.laboratoryHub.items.administration' },
+        ],
+      },
+    ];
+
+    const managerSections: SectionConfig[] = [
+      {
+        titleKey: 'sidebar.sections.publicManagement.title',
         items: [
-          { to: "/dashboard", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral Hospital" }
-        ]
-      });
+          { to: '/executive-dashboard', icon: <TrendingUp className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.publicManagement.items.executiveDashboard' },
+          { to: '/operational-dashboard', icon: <Zap className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.publicManagement.items.operationalDashboard' },
+          { to: '/population', icon: <Users className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.publicManagement.items.populationAnalysis' },
+          { to: '/epidemiology', icon: <MapPin className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.publicManagement.items.epidemiologyMap' },
+          { to: '/epidemic-alerts', icon: <ShieldAlert className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.publicManagement.items.epidemicAlerts' },
+          { to: '/resources', icon: <ClipboardList className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.publicManagement.items.resourceManagement' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.financeBudget.title',
+        items: [
+          { to: '/monitoramento-aps', icon: <BarChart3 className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.financeBudget.items.apsMonitoring' },
+          { to: '/gestao-orcamentaria', icon: <DollarSign className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.financeBudget.items.budgetManagement' },
+          { to: '/simulador-ied', icon: <Calculator className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.financeBudget.items.investmentSimulator' },
+          { to: '/controle-judicializacao', icon: <Scale className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.financeBudget.items.legalControl' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.trainingManagement.title',
+        items: [
+          { to: '/capacitacao-gestores', icon: <GraduationCap className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.trainingManagement.items.susManagersProgram' },
+          { to: '/transicao-gestao', icon: <RefreshCw className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.trainingManagement.items.managementTransition' },
+          { to: '/indicadores-desempenho', icon: <Target className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.trainingManagement.items.apsIndicators' },
+          { to: '/governanca-dados', icon: <Database className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.trainingManagement.items.dataGovernance' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.regionalization.title',
+        items: [
+          { to: '/comissoes-cir', icon: <Globe className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.regionalization.items.cirCommittees' },
+          { to: '/pactuacao-regional', icon: <Handshake className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.regionalization.items.regionalAgreement' },
+          { to: '/territorializacao', icon: <Map className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.regionalization.items.territorialization' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.hospitalManagement.title',
+        items: [
+          { to: '/hospitals-access', icon: <Building className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.hospitalManagement.items.hospitalAccess' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.analytics.title',
+        items: [
+          { to: '/ai-analytics', icon: <Brain className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analytics.items.aiAnalytics' },
+          { to: '/security-dashboard', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analytics.items.security' },
+          { to: '/integrations-dashboard', icon: <Database className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analytics.items.integrations' },
+        ],
+      },
+    ];
+
+    const hospitalSections: SectionConfig[] = [
+      {
+        titleKey: 'sidebar.sections.hospitalDashboard.title',
+        items: [
+          { to: '/hospitals-access', icon: <Building className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.hospitalDashboard.items.hisHmisSystem' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.billingFinance.title',
+        items: [
+          { to: '/faturamento-sus', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.billingFinance.items.susBilling' },
+          { to: '/tiss-tuss', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.billingFinance.items.tissTuss' },
+          { to: '/apac-oncologia', icon: <Heart className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.billingFinance.items.apacOncology' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.interoperability.title',
+        items: [
+          { to: '/rnds-datasus', icon: <Database className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.interoperability.items.rndsDatasus' },
+          { to: '/conformidade-lgpd', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.interoperability.items.lgpdCompliance' },
+          { to: '/prontuario-digital', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.interoperability.items.digitalRecord' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.clinicalManagement.title',
+        items: [
+          { to: '/gestao-clinica', icon: <Stethoscope className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.clinicalManagement.items.clinicalManagement' },
+          { to: '/centro-cirurgico', icon: <Scissors className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.clinicalManagement.items.surgeryCenter' },
+          { to: '/uti-terapia-intensiva', icon: <Heart className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.clinicalManagement.items.icu' },
+          { to: '/indicadores-qualidade', icon: <CheckCircle className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.clinicalManagement.items.qualityIndicators' },
+          { to: '/analises-laboratoriais', icon: <TestTube className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.clinicalManagement.items.labAnalysis' },
+          { to: '/gestao-farmaceutica', icon: <Pill className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.clinicalManagement.items.pharmacyManagement' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.analyticsIntelligence.title',
+        items: [
+          { to: '/relatorios-analytics', icon: <BarChart3 className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analyticsIntelligence.items.reportsAnalytics' },
+          { to: '/dashboard-financeiro', icon: <DollarSign className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analyticsIntelligence.items.financialDashboard' },
+          { to: '/ai-insights', icon: <BrainCircuit className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analyticsIntelligence.items.aiInsights' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.technicalIntegrations.title',
+        items: [
+          { to: '/integracoes-tecnicas', icon: <Zap className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.technicalIntegrations.items.technicalIntegrations' },
+          { to: '/integracao-erp', icon: <Database className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.technicalIntegrations.items.erpIntegration' },
+        ],
+      },
+    ];
+
+    const doctorSections: SectionConfig[] = [
+      {
+        titleKey: 'sidebar.sections.medicalCare.title',
+        items: [
+          { to: '/patients', icon: <Users className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.medicalCare.items.myPatients' },
+          { to: '/appointments', icon: <Calendar className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.medicalCare.items.medicalSchedule' },
+          { to: '/lab-exams', icon: <TestTube className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.medicalCare.items.labResults' },
+          { to: '/protocols', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.medicalCare.items.medicalProtocols' },
+          { to: 'https://www.angrasaude.com.br', icon: <Video className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.medicalCare.items.telemedicine' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.imagingAI.title',
+        items: [
+          { to: '/laboratorios/visao-geral', icon: <Images className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.imagingAI.items.imagingWorkspace' },
+          { to: '/laboratorios/analytics-kpis', icon: <UploadCloud className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.imagingAI.items.examAnalytics' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.hospitalManagement.title',
+        items: [
+          { to: '/hospitals-access', icon: <Building className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.hospitalManagement.items.hospitalAccess' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.mapsLocation.title',
+        items: [
+          { to: '/epidemiology', icon: <MapPin className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.mapsLocation.items.epidemiologyMap' },
+          { to: '/epidemic-alerts', icon: <ShieldAlert className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.mapsLocation.items.epidemicAlerts' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.analytics.title',
+        items: [
+          { to: '/ai-analytics', icon: <Brain className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analytics.items.aiAnalytics' },
+          { to: '/security-dashboard', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.analytics.items.security' },
+        ],
+      },
+    ];
+
+    const patientSections: SectionConfig[] = [
+      {
+        titleKey: 'sidebar.sections.myHealth.title',
+        items: [
+          { to: '/profile', icon: <User className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.myHealth.items.myProfile' },
+          { to: '/records', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.myHealth.items.medicalRecords' },
+          { to: '/medications', icon: <Pill className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.myHealth.items.medications' },
+          { to: '/appointments', icon: <Calendar className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.myHealth.items.myAppointments' },
+          { to: '/metrics', icon: <BarChart2 className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.myHealth.items.healthMetrics' },
+          { to: '/labexams', icon: <Microscope className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.myHealth.items.myExams' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.seniorCare.title',
+        items: [
+          { to: '/diabetes-care', icon: <Heart className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.diabetesCare' },
+          { to: '/osteoporosis-care', icon: <Bone className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.osteoporosisCare' },
+          { to: '/saude-mental-integral', icon: <Brain className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.mentalHealth' },
+          { to: '/glucose-monitoring', icon: <Thermometer className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.glucoseMonitoring' },
+          { to: '/neurology-care', icon: <Brain className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.neurologyCare' },
+          { to: '/vision-care', icon: <Eye className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.visionCare' },
+          { to: '/hearing-care', icon: <Ear className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.seniorCare.items.hearingCare' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.connectedData.title',
+        items: [
+          { to: '/painel-metabolico', icon: <Activity className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.connectedData.items.metabolicPanel' },
+          { to: '/conectores-saude', icon: <Watch className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.connectedData.items.healthConnectors' },
+        ],
+      },
+      {
+        titleKey: 'sidebar.sections.emergencyAccess.title',
+        items: [
+          { to: '/emergency', icon: <ShieldAlert className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.emergencyAccess.items.emergencyQr' },
+          { to: '/manage-access', icon: <KeyRound className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.emergencyAccess.items.manageAccess' },
+        ],
+      },
+    ];
+
+    const systemSections: SectionConfig[] = [
+      {
+        titleKey: 'sidebar.sections.system.title',
+        items: [
+          { to: '/settings', icon: <Settings className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.system.items.settings' },
+          { to: '/technical-details', icon: <Info className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.system.items.technicalDetails' },
+        ],
+      },
+    ];
+
+    if (dashboardSections[userRole]) {
+      sections.push(...dashboardSections[userRole]);
     }
 
     if (userRole === 'laboratorio') {
-      menuSections.push({
-        title: "Laboratórios",
-        items: [
-          { to: "/laboratorios/visao-geral", icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: "Visão Geral" },
-          { to: "/laboratorios/operacao", icon: <ClipboardList className="h-5 w-5 mr-3" />, label: "Operação" },
-          { to: "/laboratorios/operacao#coleta-logistica", icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, label: "Coleta & Logística", isChild: true },
-          { to: "/laboratorios/operacao#amostras-lotes", icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, label: "Amostras & Lotes", isChild: true },
-          { to: "/laboratorios/operacao#triagem-prioridades", icon: <div className="w-2 h-2 rounded-full bg-emerald-400 mr-3" />, label: "Triagem & Prioridades", isChild: true },
-          { to: "/laboratorios/resultados-laudos", icon: <FileText className="h-5 w-5 mr-3" />, label: "Resultados & Laudos" },
-          { to: "/laboratorios/integracoes", icon: <Handshake className="h-5 w-5 mr-3" />, label: "Integrações" },
-          { to: "/laboratorios/qualidade-compliance", icon: <Shield className="h-5 w-5 mr-3" />, label: "Qualidade & Compliance" },
-          { to: "/laboratorios/analytics-kpis", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "Analytics & KPIs" },
-          { to: "/laboratorios/administracao", icon: <Settings className="h-5 w-5 mr-3" />, label: "Administração" }
-        ]
-      });
+      sections.push(...laboratorySections);
     }
 
     if (userRole === 'gestor') {
-      menuSections.push({
-        title: "Gestão Pública",
-        items: [
-          { to: "/executive-dashboard", icon: <TrendingUp className="h-5 w-5 mr-3" />, label: "Dashboard Executivo" },
-          { to: "/operational-dashboard", icon: <Zap className="h-5 w-5 mr-3" />, label: "Dashboard Operacional" },
-          { to: "/population", icon: <Users className="h-5 w-5 mr-3" />, label: "Análise Populacional" },
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" },
-          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas Epidemiológicos" },
-          { to: "/resources", icon: <ClipboardList className="h-5 w-5 mr-3" />, label: "Gestão de Recursos" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Financiamento e Orçamento",
-        items: [
-          { to: "/monitoramento-aps", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "Monitoramento APS" },
-          { to: "/gestao-orcamentaria", icon: <DollarSign className="h-5 w-5 mr-3" />, label: "Gestão Orçamentária" },
-          { to: "/simulador-ied", icon: <Calculator className="h-5 w-5 mr-3" />, label: "Simulador IED" },
-          { to: "/controle-judicializacao", icon: <Scale className="h-5 w-5 mr-3" />, label: "Controle Judicialização" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Capacitação e Gestão",
-        items: [
-          { to: "/capacitacao-gestores", icon: <GraduationCap className="h-5 w-5 mr-3" />, label: "Programa Gestores SUS" },
-          { to: "/transicao-gestao", icon: <RefreshCw className="h-5 w-5 mr-3" />, label: "Transição de Gestão" },
-          { to: "/indicadores-desempenho", icon: <Target className="h-5 w-5 mr-3" />, label: "Indicadores APS" },
-          { to: "/governanca-dados", icon: <Database className="h-5 w-5 mr-3" />, label: "Governança de Dados" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Regionalização",
-        items: [
-          { to: "/comissoes-cir", icon: <Globe className="h-5 w-5 mr-3" />, label: "Comissões CIR" },
-          { to: "/pactuacao-regional", icon: <Handshake className="h-5 w-5 mr-3" />, label: "Pactuação Regional" },
-          { to: "/territorializacao", icon: <Map className="h-5 w-5 mr-3" />, label: "Territorialização" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Gestão Hospitalar",
-        items: [
-          { to: "/hospitals-access", icon: <Building className="h-5 w-5 mr-3" />, label: "Acesso Hospitais" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Analytics",
-        items: [
-          { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" },
-          { to: "/security-dashboard", icon: <Shield className="h-5 w-5 mr-3" />, label: "Segurança" },
-          { to: "/integrations-dashboard", icon: <Database className="h-5 w-5 mr-3" />, label: "Integrações" }
-        ]
-      });
+      sections.push(...managerSections);
     }
 
     if (userRole === 'hospital') {
-      menuSections.push({
-        title: "Dashboard Hospitalar",
-        items: [
-          { to: "/hospitals-access", icon: <Building className="h-5 w-5 mr-3" />, label: "Sistema HIS/HMIS" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Faturamento e Financeiro",
-        items: [
-          { to: "/faturamento-sus", icon: <FileText className="h-5 w-5 mr-3" />, label: "Faturamento SUS" },
-          { to: "/tiss-tuss", icon: <Shield className="h-5 w-5 mr-3" />, label: "TISS/TUSS" },
-          { to: "/apac-oncologia", icon: <Heart className="h-5 w-5 mr-3" />, label: "APAC Oncologia" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Interoperabilidade",
-        items: [
-          { to: "/rnds-datasus", icon: <Database className="h-5 w-5 mr-3" />, label: "RNDS/DATASUS" },
-          { to: "/conformidade-lgpd", icon: <Shield className="h-5 w-5 mr-3" />, label: "Conformidade LGPD" },
-          { to: "/prontuario-digital", icon: <FileText className="h-5 w-5 mr-3" />, label: "Prontuário Digital" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Gestão Clínica",
-        items: [
-          { to: "/gestao-clinica", icon: <Stethoscope className="h-5 w-5 mr-3" />, label: "Gestão Clínica" },
-          { to: "/centro-cirurgico", icon: <Scissors className="h-5 w-5 mr-3" />, label: "Centro Cirúrgico" },
-          { to: "/uti-terapia-intensiva", icon: <Heart className="h-5 w-5 mr-3" />, label: "UTI e Terapia Intensiva" },
-          { to: "/indicadores-qualidade", icon: <CheckCircle className="h-5 w-5 mr-3" />, label: "Indicadores de Qualidade" },
-          { to: "/analises-laboratoriais", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Análises Laboratoriais" },
-          { to: "/gestao-farmaceutica", icon: <Pill className="h-5 w-5 mr-3" />, label: "Gestão Farmacêutica" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Analytics e Inteligência",
-        items: [
-          { to: "/relatorios-analytics", icon: <BarChart3 className="h-5 w-5 mr-3" />, label: "Relatórios e Analytics" },
-          { to: "/dashboard-financeiro", icon: <DollarSign className="h-5 w-5 mr-3" />, label: "Dashboard Financeiro" },
-          { to: "/ai-insights", icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: "Insights de IA" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Integrações Técnicas",
-        items: [
-          { to: "/integracoes-tecnicas", icon: <Zap className="h-5 w-5 mr-3" />, label: "Integrações Técnicas" },
-          { to: "/integracao-erp", icon: <Database className="h-5 w-5 mr-3" />, label: "Integração ERP" }
-        ]
-      });
+      sections.push(...hospitalSections);
     }
 
     if (userRole === 'medico') {
-      menuSections.push({
-        title: "Assistência Médica",
-        items: [
-          { to: "/patients", icon: <Users className="h-5 w-5 mr-3" />, label: "Meus Pacientes" },
-          { to: "/appointments", icon: <Calendar className="h-5 w-5 mr-3" />, label: "Agenda Médica" },
-          { to: "/lab-exams", icon: <TestTube className="h-5 w-5 mr-3" />, label: "Exames e Resultados" },
-          { to: "/protocols", icon: <FileText className="h-5 w-5 mr-3" />, label: "Protocolos Médicos" },
-          { to: "https://www.angrasaude.com.br", icon: <Video className="h-5 w-5 mr-3" />, label: "Telemedicina" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Gestão Hospitalar",
-        items: [
-          { to: "/hospitals-access", icon: <Building className="h-5 w-5 mr-3" />, label: "Acesso Hospitais" }
-        ]
-      });
-      menuSections.push({
-        title: "Mapas e Localização",
-        items: [
-          { to: "/epidemiology", icon: <MapPin className="h-5 w-5 mr-3" />, label: "Mapa Epidemiológico" },
-          { to: "/epidemic-alerts", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "Alertas Epidemiológicos" }
-        ]
-      });
-      menuSections.push({
-        title: "Analytics",
-        items: [
-          { to: "/ai-analytics", icon: <Brain className="h-5 w-5 mr-3" />, label: "AI Analytics" },
-          { to: "/security-dashboard", icon: <Shield className="h-5 w-5 mr-3" />, label: "Segurança" }
-        ]
-      });
+      sections.push(...doctorSections);
     }
 
     if (userRole === 'paciente') {
-      menuSections.push({
-        title: "Minha Saúde",
-        items: [
-          { to: "/profile", icon: <User className="h-5 w-5 mr-3" />, label: "Meu Perfil" },
-          { to: "/records", icon: <FileText className="h-5 w-5 mr-3" />, label: "Registros Médicos" },
-          { to: "/medications", icon: <Pill className="h-5 w-5 mr-3" />, label: "Medicamentos" },
-          { to: "/appointments", icon: <Calendar className="h-5 w-5 mr-3" />, label: "Minhas Consultas" },
-          { to: "/metrics", icon: <BarChart2 className="h-5 w-5 mr-3" />, label: "Métricas de Saúde" },
-          { to: "/labexams", icon: <Microscope className="h-5 w-5 mr-3" />, label: "Meus Exames" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Cuidados para Idosos",
-        items: [
-          { to: "/diabetes-care", icon: <Heart className="h-5 w-5 mr-3" />, label: "Controle Diabetes" },
-          { to: "/osteoporosis-care", icon: <Bone className="h-5 w-5 mr-3" />, label: "Cuidados Osteoporose" },
-          { to: "/erectile-dysfunction", icon: <Activity className="h-5 w-5 mr-3" />, label: "Função Erétil" },
-          { to: "/glucose-monitoring", icon: <Thermometer className="h-5 w-5 mr-3" />, label: "Monitoramento Glicêmico" },
-          { to: "/neurology-care", icon: <Brain className="h-5 w-5 mr-3" />, label: "Cuidados Neurológicos" },
-          { to: "/vision-care", icon: <Eye className="h-5 w-5 mr-3" />, label: "Cuidados Visuais" },
-          { to: "/hearing-care", icon: <Ear className="h-5 w-5 mr-3" />, label: "Cuidados Auditivos" }
-        ]
-      });
-      
-      menuSections.push({
-        title: "Emergência e Acesso",
-        items: [
-          { to: "/emergency", icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: "QR Emergência" },
-          { to: "/manage-access", icon: <KeyRound className="h-5 w-5 mr-3" />, label: "Gerenciar Acesso" }
-        ]
-      });
+      sections.push(...patientSections);
     }
 
-    // Sistema para todos
-    menuSections.push({
-      title: "Sistema",
-      items: [
-        { to: "/settings", icon: <Settings className="h-5 w-5 mr-3" />, label: "Configurações" },
-        { to: "/technical-details", icon: <Info className="h-5 w-5 mr-3" />, label: "Detalhes Técnicos" }
-      ]
-    });
+    sections.push(...systemSections);
 
-    return menuSections;
+    return buildSections(sections);
   };
 
   const menuSections = getMenuItemsByRole();
 
+  const roleLabelMap: Record<string, string> = {
+    gestor: 'navbar.roles.manager',
+    hospital: 'navbar.roles.hospital',
+    laboratorio: 'navbar.roles.laboratory',
+    medico: 'navbar.roles.doctor',
+    paciente: 'navbar.roles.patient',
+  };
+
   return (
     <>
-      {/* Overlay for mobile */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/50 md:hidden"
-          onClick={toggleSidebar}
-        />
+        <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={toggleSidebar} />
       )}
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex transform flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-all duration-300 ease-in-out md:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full",
-          isCollapsed ? "w-16" : "w-64"
+          'fixed inset-y-0 left-0 z-40 flex transform flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-all duration-300 ease-in-out md:translate-x-0',
+          isOpen ? 'translate-x-0' : '-translate-x-full',
+          isCollapsed ? 'w-16' : 'w-64'
         )}
       >
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-3">
@@ -426,45 +488,40 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
+              className="hidden md:flex h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
+              onClick={toggleCollapsed}
+              title={isCollapsed ? t('sidebar.controls.expand') : t('sidebar.controls.collapse')}
+            >
+              {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
               onClick={toggleSidebar}
-              title={isOpen ? 'Recolher menu' : 'Abrir menu'}
+              title={isOpen ? t('sidebar.controls.close') : t('sidebar.controls.open')}
             >
               {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
             </Button>
             {!isCollapsed ? (
               <Link to="/dashboard" className="flex items-center gap-2">
-                <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
-                <span className="text-lg font-semibold text-sidebar-foreground">Vida Segura</span>
+                <img src="/favicon.ico" alt={t('sidebar.brand')} className="h-8 w-8" />
+                <span className="text-lg font-semibold text-sidebar-foreground">{t('sidebar.brand')}</span>
               </Link>
             ) : (
               <Link to="/dashboard" className="flex items-center justify-center w-full">
-                <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
+                <img src="/favicon.ico" alt={t('sidebar.brand')} className="h-8 w-8" />
               </Link>
             )}
           </div>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleCollapsed}
-            className="h-8 w-8 text-sidebar-accent-foreground hover:bg-sidebar-accent/20"
-            title={isCollapsed ? 'Expandir' : 'Compactar'}
-          >
-            {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-          </Button>
         </div>
 
-        {/* Indicador de role atual */}
         {userRole && !isCollapsed && (
           <div className="px-6 py-3 border-b border-sidebar-border bg-sidebar-accent/10">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-primary rounded-full"></div>
+              <div className="w-2 h-2 bg-primary rounded-full" />
               <span className="text-sm font-medium text-sidebar-accent-foreground">
-                {userRole === 'gestor' && 'Gestor Municipal'}  
-                {userRole === 'medico' && 'Profissional de Saúde'}  
-                {userRole === 'paciente' && 'Paciente'}
-                {userRole === 'laboratorio' && 'Gestor de Laboratórios'}
+                {t(roleLabelMap[userRole] ?? 'navbar.roles.visitor')}
               </span>
             </div>
           </div>
@@ -472,19 +529,30 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
 
         <nav className="flex-1 space-y-1 overflow-y-auto p-2">
           {menuSections.map((section, index) => (
-            <div key={section.title}>
+            <div key={`${section.title}-${index}`}>
               {!isCollapsed && (
-                <h3 className={`px-3 text-xs font-semibold uppercase text-sidebar-accent-foreground tracking-wider mb-2 ${index > 0 ? 'pt-4' : ''}`}>
+                <h3
+                  className={cn(
+                    'px-3 text-xs font-semibold uppercase text-sidebar-accent-foreground tracking-wider mb-2',
+                    index > 0 ? 'pt-4' : ''
+                  )}
+                >
                   {section.title}
                 </h3>
               )}
-              {section.items.map(item => (
+              {section.items.map((item) => (
                 <SidebarItemCollapsible
-                  key={item.label} 
-                  {...item} 
+                  key={`${section.title}-${item.label}-${item.to}`}
+                  {...item}
                   currentPath={currentPath}
                   isCollapsed={isCollapsed}
-                  onClick={isOpen && !item.to.startsWith('http') ? toggleSidebar : (item.to.startsWith('http') && isOpen ? toggleSidebar : undefined)} 
+                  onClick={
+                    isOpen && !item.to.startsWith('http')
+                      ? toggleSidebar
+                      : item.to.startsWith('http') && isOpen
+                        ? toggleSidebar
+                        : undefined
+                  }
                 />
               ))}
             </div>
@@ -494,9 +562,9 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
         {!isCollapsed && (
           <div className="mt-auto border-t border-sidebar-border p-4">
             <p className="text-center text-xs text-sidebar-accent-foreground">
-              © {new Date().getFullYear()} Vida Segura.
+              {t('sidebar.footer.copyright', { year: new Date().getFullYear() })}
               <br />
-              Todos os direitos reservados.
+              {t('sidebar.footer.rights')}
             </p>
           </div>
         )}

@@ -49,7 +49,7 @@ Para garantir a consistência e a qualidade do código, siga as seguintes diretr
     *   Utilize `mapbox-gl` para implementar funcionalidades de mapa.
 *   **Autenticação e Segurança**:
     *   A autenticação de usuários é gerenciada pelo Supabase.
-    *   Para funcionalidades de 2FA e geração de QR codes, utilize `otplib` e `crypto-js` conforme demonstrado em `src/utils/siteCrypto.ts` e nas Edge Functions do Supabase.
+*   Para funcionalidades de 2FA e geração de QR codes, utilize `otplib` e `crypto-js` conforme demonstrado nas Edge Functions (`supabase/functions/secure-totp`, `supabase/functions/site-access-admin`).
 *   **Estrutura de Arquivos**:
     *   `src/pages/`: Para as views/páginas de nível superior.
     *   `src/components/`: Para componentes de UI reutilizáveis.

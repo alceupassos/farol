@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { useAccessLogger } from '@/hooks/useAccessLogger';
-import { authenticator } from 'otplib';
-
-// Configure once globally (RFC 6238 defaults)
-authenticator.options = { step: 30, digits: 6 };
+import { SimpleTOTP } from '@/utils/simpleTOTP';
 
 interface AuthContextType {
   user: User | null;
@@ -35,21 +31,39 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [userRole, setUserRole] = useState<string | null>(localStorage.getItem('demo_user_role') || null);
+  const [userRole, setUserRole] = useState<string | null>(() => {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    try {
+      return localStorage.getItem('demo_user_role');
+    } catch (error) {
+      console.warn('Failed to read demo_user_role from localStorage:', error);
+      return null;
+    }
+  });
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const TOTP_FLAG_KEY = 'totp_authenticated';
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const totpAuth = localStorage.getItem(TOTP_FLAG_KEY);
+    setIsAuthenticated(totpAuth === 'true');
+  }, []);
 
   useEffect(() => {
     let mounted = true;
     
     const initializeAuth = async () => {
       try {
-        // Check TOTP authentication status
-        const totpAuth = localStorage.getItem('totp_authenticated');
-        if (totpAuth === 'true') {
-          setIsAuthenticated(true);
-        }
-        
+        const totpAuth = localStorage.getItem(TOTP_FLAG_KEY) === 'true';
+        setIsAuthenticated(totpAuth);
+
         // Verificar se é a primeira carga da sessão e fazer logout automático
         const isFirstLoad = !sessionStorage.getItem('auth_initialized');
         
@@ -58,14 +72,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           try {
             await supabase.auth.signOut();
             // Limpar localStorage mas manter TOTP se válido
-            const totpAuth = localStorage.getItem('totp_authenticated');
             localStorage.removeItem('demo_user_role');
             localStorage.removeItem('profileAccessEnabled');
             
-            // Se não há autenticação TOTP válida, limpar tudo
-            if (totpAuth !== 'true') {
-              localStorage.removeItem('totp_authenticated');
+            if (!totpAuth) {
+              localStorage.removeItem(TOTP_FLAG_KEY);
               setIsAuthenticated(false);
+            } else {
+              setIsAuthenticated(true);
             }
             
             // Marcar como inicializado para esta sessão
@@ -243,7 +257,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(null);
       setSession(null);
       setIsAuthenticated(false);
-      localStorage.removeItem('totp_authenticated');
+      localStorage.removeItem(TOTP_FLAG_KEY);
       localStorage.removeItem('demo_user_role');
       localStorage.removeItem('profileAccessEnabled');
       
@@ -277,16 +291,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Use the same secret that Google Authenticator uses
       const secret = 'JBSWY3DPEHPK3PXP';
       
-      // Generate current token for comparison
-      const currentToken = authenticator.generate(secret);
-      console.log('Authenticator config:', authenticator.options);
+      // Generate current token for comparison (async to leverage Web Crypto)
+      const currentToken = await SimpleTOTP.generate(secret);
       console.log('Current expected token:', currentToken);
       console.log('User provided token:', token);
       
-      // Verify the token (±2 steps manually)
-      const now = Date.now();
-      const offsets = [-60_000, -30_000, 0, 30_000, 60_000];
-      const isValid = offsets.some(off => token === authenticator.generate(secret, { epoch: now + off }));
+      // Verify the token within a ±2 step window
+      const isValid = await SimpleTOTP.verify(token, secret, 2);
       
       console.log('TOTP verification result:', isValid);
       
@@ -302,7 +313,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('Received token:', token);
         
         // Check if it's a timing issue
-        const prevToken = authenticator.generate(secret, { epoch: Date.now() - 30_000 });
+        const prevToken = await SimpleTOTP.generate(secret, timeStep - 1);
         console.log('Previous token (one window back):', prevToken);
       }
 
@@ -332,10 +343,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch (logError) {
         console.error('Error logging TOTP attempt:', logError);
       }
-      
+
       if (isValid) {
+        localStorage.setItem(TOTP_FLAG_KEY, 'true');
         setIsAuthenticated(true);
-        localStorage.setItem('totp_authenticated', 'true');
         return { success: true };
       }
 

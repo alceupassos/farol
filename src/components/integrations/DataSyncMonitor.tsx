@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,7 @@ interface SyncMetrics {
 }
 
 export const DataSyncMonitor = () => {
+  const { t } = useTranslation();
   const [jobs, setJobs] = useState<SyncJob[]>([]);
   const [metrics, setMetrics] = useState<SyncMetrics | null>(null);
   const [selectedType, setSelectedType] = useState<string>('all');

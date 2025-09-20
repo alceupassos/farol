@@ -32,7 +32,7 @@ verify_jwt = false
 [functions.site-auth]
 verify_jwt = false
 
-[functions.get-encryption-key]
+[functions.site-access-admin]
 verify_jwt = false
 
 [functions.secure-totp]

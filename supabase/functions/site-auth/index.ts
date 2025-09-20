@@ -1,9 +1,33 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import CryptoJS from 'https://esm.sh/crypto-js@4.2.0'
+import { authenticator } from 'https://esm.sh/otplib@12.0.1'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+authenticator.options = {
+  step: 30,
+  window: 1,
+}
+
+const getEncryptionKey = (): string => {
+  const key = Deno.env.get('SITE_ENCRYPTION_KEY');
+  if (!key) {
+    throw new Error('Encryption key not configured on the server.');
+  }
+  return key;
+}
+
+const decryptSiteSecret = (encryptedSecret: string, salt: string): string => {
+  const key = CryptoJS.PBKDF2(getEncryptionKey(), salt, {
+    keySize: 256/32,
+    iterations: 100000
+  });
+  const bytes = CryptoJS.AES.decrypt(encryptedSecret, key.toString());
+  return bytes.toString(CryptoJS.enc.Utf8);
 }
 
 serve(async (req) => {
@@ -19,8 +43,14 @@ serve(async (req) => {
 
     const { code, ip_address, user_agent } = await req.json()
 
-    if (!code) {
-      throw new Error('Missing code')
+    if (typeof code !== 'string' || code.trim().length === 0) {
+      return new Response(
+        JSON.stringify({ valid: false, error: 'Access code is required' }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400
+        }
+      )
     }
 
     console.log(`🔐 Site access attempt with code: ${code.substring(0, 2)}****`);
@@ -51,31 +81,16 @@ serve(async (req) => {
       )
     }
 
-    // Get encryption key from environment
-    const ENCRYPTION_KEY = Deno.env.get('SITE_ENCRYPTION_KEY');
-    if (!ENCRYPTION_KEY) {
-      console.error('SITE_ENCRYPTION_KEY not found in environment');
-      throw new Error('Encryption key not configured on the server.');
-    }
-
     // Try to verify against any active code using real TOTP verification
     for (const accessCode of accessCodes) {
       try {
-        // Import crypto functions (we need to recreate them here since we can't import from src)
-        const CryptoJS = await import('https://esm.sh/crypto-js@4.2.0');
-        
-        // Derive key using PBKDF2
-        const key = CryptoJS.PBKDF2(ENCRYPTION_KEY, accessCode.salt, {
-          keySize: 256/32,
-          iterations: 100000
-        });
-        
-        const bytes = CryptoJS.AES.decrypt(accessCode.encrypted_secret, key.toString());
-        const secret = bytes.toString(CryptoJS.enc.Utf8);
-        
-        // Verify TOTP code
-        const otplib = await import('https://esm.sh/otplib@12.0.1');
-        const isValid = otplib.authenticator.verify({ token: code, secret });
+        const secret = decryptSiteSecret(accessCode.encrypted_secret, accessCode.salt);
+        if (!secret) {
+          console.warn(`Empty secret for access code ${accessCode.id}`)
+          continue;
+        }
+
+        const isValid = authenticator.verify({ token: code, secret });
         
         if (isValid) {
           console.log(`✅ Site access granted for code: ${accessCode.code_name}`);

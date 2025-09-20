@@ -8,11 +8,17 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-// Secret for encryption (should match frontend)
-const ENCRYPTION_KEY = 'SaudeMunicipalSecretKey2024!';
+const getEncryptionKey = (): string => {
+  const key = Deno.env.get('TOTP_ENCRYPTION_KEY') ?? Deno.env.get('SITE_ENCRYPTION_KEY');
+  if (!key) {
+    throw new Error('TOTP encryption key not configured');
+  }
+  return key;
+};
 
 const decryptSecret = (encryptedSecret: string): string => {
-  const bytes = CryptoJS.AES.decrypt(encryptedSecret, ENCRYPTION_KEY);
+  const key = getEncryptionKey();
+  const bytes = CryptoJS.AES.decrypt(encryptedSecret, key);
   return bytes.toString(CryptoJS.enc.Utf8);
 };
 
@@ -30,8 +36,14 @@ serve(async (req) => {
 
     const { code, user_id } = await req.json()
 
-    if (!code || !user_id) {
-      throw new Error('Missing code or user_id')
+    if (typeof code !== 'string' || typeof user_id !== 'string' || !code.trim() || !user_id.trim()) {
+      return new Response(
+        JSON.stringify({ valid: false, error: 'code and user_id are required' }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400
+        }
+      )
     }
 
     // REMOVED: Development bypass code for security

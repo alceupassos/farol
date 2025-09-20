@@ -81,7 +81,7 @@ import IntegrationsDashboardPage from './pages/IntegrationsDashboardPage';
 import IntegracoesTecnicasPage from "./pages/IntegracoesTecnicasPage";
 import DiabetesCarePage from "./pages/DiabetesCarePage";
 import OsteoporosisCarePage from "./pages/OsteoporosisCarePage";
-import ErectileDysfunctionPage from "./pages/ErectileDysfunctionPage";
+// import ErectileDysfunctionPage from "./pages/ErectileDysfunctionPage"; // File not found
 import GlucoseMonitoringPage from "./pages/GlucoseMonitoringPage";
 import NeurologyCarePage from "./pages/NeurologyCarePage";
 import VisionCarePage from "./pages/VisionCarePage";
@@ -196,7 +196,7 @@ const App = () => (
                     <Route path="/esus-integration" element={<ProtectedRoute><ESUSIntegrationPage /></ProtectedRoute>} />
                     <Route path="/diabetes-care" element={<ProtectedRoute><DiabetesCarePage /></ProtectedRoute>} />
                     <Route path="/osteoporosis-care" element={<ProtectedRoute><OsteoporosisCarePage /></ProtectedRoute>} />
-                    <Route path="/erectile-dysfunction" element={<ProtectedRoute><ErectileDysfunctionPage /></ProtectedRoute>} />
+                    {/* <Route path="/erectile-dysfunction" element={<ProtectedRoute><ErectileDysfunctionPage /></ProtectedRoute>} /> */}
                     <Route path="/glucose-monitoring" element={<ProtectedRoute><GlucoseMonitoringPage /></ProtectedRoute>} />
                     <Route path="/neurology-care" element={<ProtectedRoute><NeurologyCarePage /></ProtectedRoute>} />
                     <Route path="/vision-care" element={<ProtectedRoute><VisionCarePage /></ProtectedRoute>} />

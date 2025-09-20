@@ -25,9 +25,18 @@ export default defineConfig(({ mode }) => ({
     host: true,
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: undefined,
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tabs'],
+          charts: ['recharts'],
+          utils: ['date-fns', 'clsx', 'tailwind-merge'],
+          supabase: ['@supabase/supabase-js'],
+          auth: ['otplib', 'qrcode', 'crypto-js'],
+          i18n: ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+        },
       },
     },
   },
