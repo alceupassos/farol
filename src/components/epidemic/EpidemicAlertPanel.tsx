@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { pindamonhangabaNeighborhoods, getRiskColor } from '@/data/pindamonhangabaNeighborhoods';
+import { getRiskColor } from '@/data/piracicabaNeighborhoods';
 import { 
   Bell, 
   AlertTriangle, 
@@ -38,46 +38,46 @@ const mockAlerts: Alert[] = [
   {
     id: 'alert_001',
     type: 'EMERGÊNCIA',
-    neighborhood: 'Bosque da Princesa',
-    message: 'Surto de dengue confirmado - 125 casos ativos. Índice de infestação crítico.',
-    timestamp: '2024-01-15T08:30:00Z',
+    neighborhood: 'Monte Líbano',
+    message: 'Surto de dengue confirmado - 132 casos ativos. Índice de infestação crítico.',
+    timestamp: '2024-09-15T08:30:00Z',
     severity: 'crítica',
     status: 'ativo',
-    recipients: ['gestor.saude@pinda.sp.gov.br', '+55119999-9999'],
+    recipients: ['gestor.saude@piracicaba.sp.gov.br', '+55199999-9999'],
     actions: ['Bloqueio epidemiológico', 'Busca ativa', 'Comunicação à população']
   },
   {
     id: 'alert_002',
     type: 'AUMENTO_CASOS',
-    neighborhood: 'Vila Operária',
-    message: 'Aumento de 40% nos casos de COVID-19 nas últimas 72h. Monitoramento intensificado.',
-    timestamp: '2024-01-15T06:15:00Z',
+    neighborhood: 'Piracicamirim',
+    message: 'Aumento de 32% nos casos de COVID-19 nas últimas 72h. Monitoramento intensificado.',
+    timestamp: '2024-09-15T06:15:00Z',
     severity: 'alta',
     status: 'em_andamento',
-    recipients: ['vigilancia@pinda.sp.gov.br'],
+    recipients: ['vigilancia@piracicaba.sp.gov.br'],
     actions: ['Investigação epidemiológica', 'Testagem em massa']
   },
   {
     id: 'alert_003',
     type: 'SURTO',
-    neighborhood: 'Jardim Regina',
-    message: 'Cluster de casos de influenza detectado em escola local. 15 casos confirmados.',
-    timestamp: '2024-01-14T14:20:00Z',
+    neighborhood: 'Paulista',
+    message: 'Cluster de influenza detectado em CMEI local. 18 casos confirmados.',
+    timestamp: '2024-09-14T14:20:00Z',
     severity: 'média',
     status: 'resolvido',
-    recipients: ['educacao@pinda.sp.gov.br', 'vigilancia@pinda.sp.gov.br'],
-    actions: ['Isolamento', 'Desinfecção da escola', 'Vacinação']
+    recipients: ['educacao@piracicaba.sp.gov.br', 'vigilancia@piracicaba.sp.gov.br'],
+    actions: ['Isolamento', 'Desinfecção da unidade', 'Vacinação emergencial']
   },
   {
     id: 'alert_004',
     type: 'SISTEMA',
     neighborhood: 'Centro',
-    message: 'Falha na notificação automática do SINAN. Verificação manual necessária.',
-    timestamp: '2024-01-14T09:45:00Z',
+    message: 'Falha na integração automática do SINAN. Verificação manual necessária.',
+    timestamp: '2024-09-14T09:45:00Z',
     severity: 'baixa',
     status: 'resolvido',
-    recipients: ['ti@pinda.sp.gov.br'],
-    actions: ['Correção do sistema', 'Backup manual']
+    recipients: ['ti@piracicaba.sp.gov.br'],
+    actions: ['Correção do conector', 'Backup manual']
   }
 ];
 

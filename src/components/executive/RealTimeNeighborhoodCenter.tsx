@@ -16,7 +16,7 @@ import {
   Heart
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods } from '@/data/piracicabaNeighborhoods';
 
 interface RealTimeData {
   timestamp: string;
@@ -44,7 +44,7 @@ const RealTimeNeighborhoodCenter = () => {
 
   // Gerar dados em tempo real para cada bairro
   const generateRealTimeData = (): NeighborhoodRealTimeData[] => {
-    return pindamonhangabaNeighborhoods.map(neighborhood => {
+    return piracicabaNeighborhoods.map(neighborhood => {
       // Gerar dados da última hora (12 pontos, 5 min cada)
       const lastHourData: RealTimeData[] = [];
       const baseValue = neighborhood.activeCases;
@@ -146,7 +146,7 @@ const RealTimeNeighborhoodCenter = () => {
                 Central de Monitoramento em Tempo Real
               </CardTitle>
               <CardDescription>
-                Acompanhamento simultâneo dos 10 bairros de Pindamonhangaba
+                Acompanhamento simultâneo dos 10 bairros monitorados de Piracicaba
               </CardDescription>
             </div>
             <div className="flex items-center gap-4">

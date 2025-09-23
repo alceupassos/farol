@@ -15,7 +15,7 @@ import {
   Zap
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area } from 'recharts';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods } from '@/data/piracicabaNeighborhoods';
 
 interface NeighborhoodComparisonDashboardProps {
   compact?: boolean;
@@ -64,7 +64,7 @@ const NeighborhoodComparisonDashboard: React.FC<NeighborhoodComparisonDashboardP
   };
 
   // Preparar dados para gráficos
-  const chartData = pindamonhangabaNeighborhoods
+  const chartData = piracicabaNeighborhoods
     .map(neighborhood => ({
       name: neighborhood.name.length > 10 ? neighborhood.name.substring(0, 10) + '...' : neighborhood.name,
       fullName: neighborhood.name,
@@ -82,7 +82,7 @@ const NeighborhoodComparisonDashboard: React.FC<NeighborhoodComparisonDashboardP
     });
 
   // Rankings
-  const riskRanking = pindamonhangabaNeighborhoods
+  const riskRanking = piracicabaNeighborhoods
     .sort((a, b) => {
       const riskOrder = { 'EMERGÊNCIA': 5, 'CRÍTICO': 4, 'ALTO': 3, 'MODERADO': 2, 'BAIXO': 1 };
       return riskOrder[b.riskLevel as keyof typeof riskOrder] - riskOrder[a.riskLevel as keyof typeof riskOrder];
@@ -138,7 +138,7 @@ const NeighborhoodComparisonDashboard: React.FC<NeighborhoodComparisonDashboardP
                 Dashboard Comparativo por Bairros
               </CardTitle>
               <CardDescription>
-                Análise detalhada e comparativa dos 10 bairros de Pindamonhangaba
+                Análise detalhada e comparativa dos 10 principais bairros de Piracicaba
               </CardDescription>
             </div>
             <Button onClick={handleRefresh} variant="outline" size="sm">
@@ -288,7 +288,7 @@ const NeighborhoodComparisonDashboard: React.FC<NeighborhoodComparisonDashboardP
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {pindamonhangabaNeighborhoods
+              {piracicabaNeighborhoods
                 .filter(n => n.riskLevel === 'CRÍTICO' || n.riskLevel === 'EMERGÊNCIA')
                 .map((neighborhood) => (
                 <div key={neighborhood.id} className="p-3 border border-destructive/20 bg-destructive/5 rounded-lg">

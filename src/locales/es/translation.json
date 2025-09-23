@@ -385,7 +385,7 @@
     }
   },
   "sidebar": {
-    "brand": "Vida Segura",
+    "brand": "FAROL Angra Saúde Pública",
     "controls": {
       "expand": "Expandir menú",
       "collapse": "Contraer menú",
@@ -397,7 +397,9 @@
         "title": "Panel",
         "items": {
           "prefeituraOverview": "Visión General Municipal",
-          "hospitalOverview": "Visión General Hospital"
+          "hospitalOverview": "Visión General Hospital",
+          "aiOracle": "Oráculo de IA de Gestión",
+          "healthNews": "Noticias de Salud"
         }
       },
       "laboratoryHub": {
@@ -913,9 +915,239 @@
     }
   },
   "pages": {
+    "aiOracle": {
+      "title": "Oráculo de IA FAROL Angra",
+      "description": "Integra datos municipales, hospitalarios y predictivos para responder las prioridades del alcalde y del gestor de salud en segundos.",
+      "snapshot": {
+        "title": "Actualización integrada hace 12 minutos",
+        "subtitle": "Fuentes: RNDS • SI-PNI • FNS • Producción hospitalaria"
+      },
+      "input": {
+        "title": "Formule su pregunta",
+        "label": "¿Qué decisión necesita tomar ahora?",
+        "placeholder": "Ej.: ¿Cómo está la cobertura vacunal por barrio y qué acciones priorizar esta semana?",
+        "processing": "Consultando fuentes de datos...",
+        "cta": "Consultar Oráculo",
+        "clear": "Limpiar"
+      },
+      "tabs": {
+        "municipal": "Gestión municipal",
+        "hospital": "Red hospitalaria",
+        "integrated": "Red integrada"
+      },
+      "suggestionTitle": "Preguntas guiadas",
+      "context": {
+        "title": "Contexto vivo de la red"
+      },
+      "panels": {
+        "municipal": {
+          "coverage": {
+            "title": "Cobertura de APS",
+            "subtitle": "Meta 90% • Última variación +3 p.p."
+          },
+          "vaccination": {
+            "title": "Cobertura vacunal",
+            "subtitle": "Meta por grupo etario con datos SI-PNI"
+          },
+          "risk": {
+            "title": "Pacientes de alto riesgo",
+            "subtitle": "Modelos Vigia Angra • Ventana 30 días"
+          }
+        },
+        "hospital": {
+          "occupancy": {
+            "title": "Ocupación total",
+            "subtitle": "ADT + UPA • Últimas 24h"
+          },
+          "revenue": {
+            "title": "Facturación mensual",
+            "subtitle": "SUS + convenios homologados"
+          },
+          "infection": {
+            "title": "Infección hospitalaria",
+            "subtitle": "Monitoreo SCIH en tiempo real"
+          }
+        },
+        "integrated": {
+          "queue": {
+            "title": "Fila de regulación",
+            "subtitle": "Regulación municipal • Prioridad clínica"
+          },
+          "followUp": {
+            "title": "Contrarreferencia APS",
+            "subtitle": "Consultas finalizadas con retorno agendado"
+          },
+          "supply": {
+            "title": "Riesgo de desabastecimiento",
+            "subtitle": "Farmacia central + unidades centinela"
+          }
+        }
+      },
+      "history": {
+        "title": "Consultas recientes",
+        "empty": "Las preguntas aparecerán aquí apenas sean enviadas."
+      },
+      "response": {
+        "title": "Recomendaciones del Oráculo",
+        "actionsTitle": "Próximos pasos sugeridos",
+        "sourcesTitle": "Fuentes consultadas",
+        "focusTitle": "Focos estratégicos",
+        "confidenceTitle": "Confianza del modelo",
+        "confidenceValue": "Confianza calculada: {{value}}%"
+      },
+      "responses": {
+        "vaccination": "La cobertura vacunal consolidada es {{coverage}}%, sostenida por {{aps}}% de cobertura APS. El modelo predictivo señala riesgo de brote en {{outbreak}}% de los barrios monitorizados si no se refuerzan las acciones esta semana.",
+        "budget": "Las transferencias del FNS suman R$ {{transfers}}M en el mes y están alineadas al plan. Sin embargo, {{aps}}% de cobertura APS exige reforzar la atención domiciliaria para mantener la producción.",
+        "occupancy": "La ocupación hospitalaria está en {{occupancy}}% con estancia promedio de {{stay}} días. La fila de regulación tiene {{queue}} casos y debe redistribuirse para evitar cuellos de botella clínicos en las próximas 48 horas.",
+        "surveillance": "Identificamos {{riskAreas}} territorios con riesgo elevado y probabilidad de brote del {{outbreak}}%. Es esencial activar el plan integrado APS + Vigilancia ahora.",
+        "telemedicine": "La telemedicina alcanza {{coverage}}% de la población prioritaria con 11,8 mil atenciones digitales/día y puede reducir un {{reduction}}% la presión en las UPA.",
+        "supply": "El modelo de abastecimiento alerta un riesgo de {{risk}}% de ruptura de {{medication}} en dos semanas si no se activa redistribución y compras.",
+        "news": "Los titulares recientes destacan {{first}} ({{firstSource}}) y {{second}} ({{secondSource}}). Comunicación y respuesta se mantienen sincronizadas.",
+        "default": "El escenario integrado muestra {{aps}}% de cobertura APS, {{occupancy}}% de ocupación hospitalaria y riesgo de {{supplyRisk}}% de desabastecimiento. Coordine acciones conjuntas en 24 horas."
+      },
+      "actions": {
+        "vaccination": [
+          "Movilizar equipos itinerantes de vacunación en los barrios de mayor riesgo",
+          "Enviar campañas segmentadas por Minha Saúde Angra para familias con niños menores de 5 años",
+          "Actualizar el panel del alcalde con mapa de calor y metas por barrio"
+        ],
+        "budget": [
+          "Reasignar 3% del presupuesto para vigilancia activa en territorios críticos",
+          "Liberar un lote adicional de telemonitoreo para hipertensos de alto riesgo",
+          "Validar los informes financieros con foco en los indicadores pactados"
+        ],
+        "occupancy": [
+          "Activar el protocolo de alta segura con apoyo de la APS",
+          "Priorizar la regulación de cirugías electivas hacia hospitales asociados",
+          "Reservar camas de retaguardia para aumentar la rotación clínica"
+        ],
+        "surveillance": [
+          "Movilizar agentes de campo para visitas en 24h",
+          "Enviar alertas educativos a los barrios críticos",
+          "Coordinar operativo comunitario de limpieza con apoyo de Defensa Civil"
+        ],
+        "telemedicine": [
+          "Ampliar teleorientación nocturna en Monte Líbano y Piracicamirim",
+          "Impulsar recordatorios por Minha Saúde Angra y radio comunitaria",
+          "Integrar los resúmenes de telemonitorización al prontuario de las UPA"
+        ],
+        "supply": [
+          "Activar compras centralizadas para reponer stock en 10 días",
+          "Redistribuir excedentes de las farmacias Paulicéia y Centro",
+          "Configurar alertas diarias de consumo crítico en la consola de IA"
+        ],
+        "news": [
+          "Preparar nota técnica con datos oficiales para reforzar transparencia",
+          "Alinear portavoces y mensajes con la oficina de comunicación",
+          "Publicar resumen en el portal municipal en menos de dos horas"
+        ],
+        "default": [
+          "Realizar reunión táctica APS + hospital para alinear flujos",
+          "Emitir informe único al alcalde destacando prioridades",
+          "Configurar monitoreo horario de los indicadores críticos"
+        ]
+      },
+      "kpis": {
+        "vaccination": "Cobertura vacunal",
+        "apsCoverage": "Cobertura APS",
+        "outbreakRisk": "Riesgo de brote",
+        "fnsTransfers": "Transferencias FNS",
+        "telehealthUsage": "Uso de telemedicina",
+        "predictiveRisk": "Pacientes de alto riesgo",
+        "predictiveAdmissions": "Internaciones previstas",
+        "queueReduction": "Reducción de filas",
+        "medicationCoverage": "Cobertura de medicamentos",
+        "occupancy": "Tasa de ocupación",
+        "averageStay": "Estancia media",
+        "regulationQueue": "Fila de regulación",
+        "highRiskAreas": "Territorios críticos",
+        "primaryCareFollowUp": "Contrarreferencia APS",
+        "supplyRisk": "Riesgo de desabastecimiento",
+        "newsSentiment": "Termómetro mediático",
+        "mediaReach": "Medios monitoreados"
+      },
+      "suggestions": {
+        "vaccination": "Cobertura vacunal y riesgos",
+        "bedManagement": "Gestión de camas y filas",
+        "financial": "Salud financiera del mes",
+        "outbreak": "Riesgo de brotes por barrio",
+        "telemedicine": "Impacto de la telemedicina",
+        "news": "Seguimiento de prensa"
+      },
+      "prompts": {
+        "vaccination": "¿Cuál es la cobertura vacunal por barrio y qué acciones debemos priorizar esta semana?",
+        "bedManagement": "¿Cómo está la ocupación por servicio y qué camas liberar para la regulación?",
+        "financial": "¿Las transferencias del FNS y la facturación SUS cubren los costos operativos del mes?",
+        "outbreak": "¿Qué barrios tienen mayor riesgo de brote de arbovirosis y qué plan debemos activar?",
+        "telemedicine": "¿Cómo está reduciendo la telemedicina las filas y cómo podemos aumentar la adhesión?",
+        "news": "¿Cuáles son las últimas noticias de salud en Piracicaba y qué acción debe tomar la alcaldía?"
+      },
+      "spotlight": {
+        "campaignAlignment": {
+          "title": "Campañas alineadas",
+          "description": "Segmentación por barrio y edad lista para envío omnicanal.",
+          "impact": "Impacto: Reducir riesgo de brote en 48h"
+        },
+        "priorityAreas": {
+          "title": "Barrios prioritarios",
+          "description": "Ranking de territorios críticos basado en incidencia y cobertura APS.",
+          "impact": "Impacto: Concentrar equipos en 3 regiones"
+        },
+        "financialBalance": {
+          "title": "Equilibrio financiero",
+          "description": "Combinación de transferencias, costos y producción SUS mantiene el margen positivo.",
+          "impact": "Impacto: Cumplir meta fiscal trimestral"
+        },
+        "telehealthScaling": {
+          "title": "Escala de telemedicina",
+          "description": "Ampliación del telemonitoreo para crónicos reduce la presión asistencial presencial.",
+          "impact": "Impacto: Reducir internaciones evitables"
+        },
+        "bedCoordination": {
+          "title": "Coordinación de camas",
+          "description": "Panel predictivo indica qué unidades liberan camas con mayor agilidad.",
+          "impact": "Impacto: Liberar 12 camas objetivo"
+        },
+        "regulationFlow": {
+          "title": "Flujo de regulación",
+          "description": "Redistribución automática entre red propia y pactada.",
+          "impact": "Impacto: Reducir fila en 20%"
+        },
+        "fieldTeams": {
+          "title": "Equipos en campo",
+          "description": "Agentes escalados según riesgo con apoyo de mapas de calor.",
+          "impact": "Impacto: Cubrir 100% de las áreas críticas"
+        },
+        "communityEngagement": {
+          "title": "Movilización comunitaria",
+          "description": "Plan de comunicación segmentado por canal y perfil de riesgo.",
+          "impact": "Impacto: Involucrar 8 mil familias"
+        },
+        "integration": {
+          "title": "Integración de la red",
+          "description": "APS, hospital y logística alineados en un plan táctico diario.",
+          "impact": "Impacto: Respuesta coordinada en 24h"
+        },
+        "quickWins": {
+          "title": "Quick wins",
+          "description": "Lista de acciones de alto impacto y baja complejidad para ejecutar de inmediato.",
+          "impact": "Impacto: Entregas garantizadas hoy"
+        },
+        "pharmacyCoordination": {
+          "title": "Coordinación farmacéutica",
+          "description": "Visión unificada de consumo, stock y compras por unidad.",
+          "impact": "Impacto: Evitar ruptura crítica en 14 días"
+        },
+        "mediaPulse": {
+          "title": "Pulso mediático",
+          "description": "La IA clasifica el sentimiento de las notas y sugiere respuestas oficiales.",
+          "impact": "Impacto: Reacción coordinada en 120 minutos"
+        }
+      }
+    },
     "hospitalsAccess": {
       "header": {
-        "title": "🏥 Sistema HIS/HMIS - Santa Casa",
+        "title": "🏥 Red Hospitalaria — Piracicaba",
         "subtitle": "Plataforma unificada de gestión hospitalaria con integración SUS, RNDS/DATASUS, TISS/TUSS y conformidad con la LGPD"
       },
       "kpis": {
@@ -937,6 +1169,77 @@
           "authorizationRate": "Tasa de autorización",
           "responseTime": "Tiempo de respuesta operativa",
           "denials": "Glosa convenios"
+        }
+      },
+      "integrated": {
+        "title": "Panel de visión integrada",
+        "badge": "APS + Hospital + Regulación",
+        "description": "Indicadores conectados para decisiones en el mismo día, enfocando flujo asistencial, presión hospitalaria y abastecimiento.",
+        "metrics": {
+          "carePressure": {
+            "label": "Presión asistencial",
+            "detail": "Estancia media de {{averageStay}} días"
+          },
+          "flow": {
+            "label": "Flujo APS → Regulación",
+            "indicatorSuffix": "casos",
+            "detail": "Integración equipo APS + Central de Regulación"
+          },
+          "financial": {
+            "label": "Pulso financiero consolidado",
+            "detail": "Ejecución presupuestaria en {{execution}}%"
+          }
+        },
+        "highlights": {
+          "careFlow": {
+            "title": "Coordinación de la línea de cuidado",
+            "description": "{{aps}}% de cobertura APS sostiene {{queue}} casos en la fila de regulación",
+            "action": "Agendar reunión conjunta APS + hospital en 24h",
+            "indicator": "Alta segura en {{averageStay}} días"
+          },
+          "hospitalPressure": {
+            "title": "Presión hospitalaria",
+            "description": "Ocupación en {{occupancy}}% con infecciones estabilizadas en {{infection}}%",
+            "action": "Activar plan de giro y asegurar camas de retaguardia",
+            "indicator": "{{predictiveAdmissions}} internaciones previstas"
+          },
+          "pharmacy": {
+            "title": "Farmacia y soporte clínico",
+            "description": "Riesgo de ruptura en {{risk}}% de los ítems críticos",
+            "action": "Sincronizar inventario APS + hospital + compras",
+            "indicator": "{{telemedicine}}% de crónicos en telemonitoreo"
+          }
+        },
+        "matrix": {
+          "title": "Matriz de decisión integrada",
+          "horizon": "Próximas 48h",
+          "subtitle": "Prioridades compartidas entre municipio, regulación y hospital",
+          "headers": {
+            "axis": "Eje",
+            "current": "Situación actual",
+            "trend": "Tendencia",
+            "action": "Próxima acción"
+          },
+          "rows": {
+            "careFlow": {
+              "axis": "APS → Regulación",
+              "current": "{{aps}}% cobertura • {{queue}} casos activos",
+              "trend": "+18 casos en las últimas 24h",
+              "action": "Refuerzo de visitas domiciliarias y teletriaje"
+            },
+            "bedManagement": {
+              "axis": "Gestión de camas",
+              "current": "Ocupación {{occupancy}}% • estancia {{averageStay}} días",
+              "trend": "-0,8 día tras protocolo de alta segura",
+              "action": "Liberar 12 camas clínicas y pactar retaguardia"
+            },
+            "pharmacy": {
+              "axis": "Farmacia y logística",
+              "current": "{{risk}}% ítems con riesgo de ruptura",
+              "trend": "-6 p.p. tras ajuste de compras",
+              "action": "Alinear reservas con centros quirúrgicos y UPA"
+            }
+          }
         }
       },
       "charts": {
@@ -1103,7 +1406,7 @@
         }
       },
       "footer": {
-        "developed": "Sistema HIS/HMIS desarrollado para hospitales filantrópicos tipo Santa Casa",
+        "developed": "Sistema HIS/HMIS desarrollado para hospitales filantrópicos como la Santa Casa de Piracicaba",
         "compliance": "Conformidad total con regulaciones SUS, ANS, LGPD y certificaciones SBIS-CFM"
       }
     },

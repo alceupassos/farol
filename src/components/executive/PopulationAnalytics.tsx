@@ -23,34 +23,34 @@ export const PopulationAnalytics: React.FC<PopulationAnalyticsProps> = ({ compac
   const [loading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState('12m');
 
-  // Dados de Pindamonhangaba (164.138 habitantes)
+  // Dados de Piracicaba (407.252 habitantes)
   const mockData: PopulationData = {
     ageGroups: [
-      { name: '0-17 anos', value: 42200, percentage: 25.7 },
-      { name: '18-39 anos', value: 64150, percentage: 39.1 },
-      { name: '40-59 anos', value: 38080, percentage: 23.2 },
-      { name: '60+ anos', value: 19708, percentage: 12.0 }
+      { name: '0-17 anos', value: 103200, percentage: 25.4 },
+      { name: '18-39 anos', value: 158900, percentage: 39.0 },
+      { name: '40-59 anos', value: 96800, percentage: 23.8 },
+      { name: '60+ anos', value: 48500, percentage: 11.8 }
     ],
     healthConditions: [
-      { condition: 'Hipertensão', count: 30400, percentage: 18.5 },
-      { condition: 'Diabetes', count: 19200, percentage: 11.7 },
-      { condition: 'Obesidade', count: 14600, percentage: 8.9 },
-      { condition: 'Depressão', count: 11650, percentage: 7.1 },
-      { condition: 'Asma', count: 9850, percentage: 6.0 }
+      { condition: 'Hipertensão', count: 73200, percentage: 18.0 },
+      { condition: 'Diabetes', count: 46800, percentage: 11.5 },
+      { condition: 'Obesidade', count: 38600, percentage: 9.5 },
+      { condition: 'Depressão', count: 29800, percentage: 7.3 },
+      { condition: 'Asma', count: 24400, percentage: 6.0 }
     ],
     monthlyTrends: [
-      { month: 'Jan', registrations: 1850, documents: 5100, alerts: 18 },
-      { month: 'Fev', registrations: 2040, documents: 5800, alerts: 15 },
-      { month: 'Mar', registrations: 2250, documents: 6200, alerts: 21 },
-      { month: 'Abr', registrations: 2100, documents: 5850, alerts: 17 },
-      { month: 'Mai', registrations: 2480, documents: 6780, alerts: 19 },
-      { month: 'Jun', registrations: 2590, documents: 6980, alerts: 14 }
+      { month: 'Jan', registrations: 4050, documents: 11280, alerts: 32 },
+      { month: 'Fev', registrations: 4380, documents: 12450, alerts: 29 },
+      { month: 'Mar', registrations: 4620, documents: 13280, alerts: 34 },
+      { month: 'Abr', registrations: 4510, documents: 12940, alerts: 27 },
+      { month: 'Mai', registrations: 4980, documents: 14060, alerts: 31 },
+      { month: 'Jun', registrations: 5120, documents: 14420, alerts: 25 }
     ],
     demographics: [
-      { category: 'Crianças (0-17)', male: 21640, female: 20560, total: 42200 },
-      { category: 'Jovens (18-39)', male: 32420, female: 31730, total: 64150 },
-      { category: 'Adultos (40-59)', male: 19040, female: 19040, total: 38080 },
-      { category: 'Idosos (60+)', male: 9120, female: 10588, total: 19708 }
+      { category: 'Crianças (0-17)', male: 52640, female: 50560, total: 103200 },
+      { category: 'Jovens (18-39)', male: 80120, female: 78800, total: 158900 },
+      { category: 'Adultos (40-59)', male: 48240, female: 48560, total: 96800 },
+      { category: 'Idosos (60+)', male: 22240, female: 26260, total: 48500 }
     ]
   };
 

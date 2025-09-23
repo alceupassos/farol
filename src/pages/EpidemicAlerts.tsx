@@ -9,7 +9,7 @@ import { NeighborhoodHeatMap } from '@/components/epidemic/NeighborhoodHeatMap';
 import { RiskLevelIndicator } from '@/components/epidemic/RiskLevelIndicator';
 import { NeighborhoodMetrics } from '@/components/epidemic/NeighborhoodMetrics';
 import { EpidemicAlertPanel } from '@/components/epidemic/EpidemicAlertPanel';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods } from '@/data/piracicabaNeighborhoods';
 import { 
   AlertTriangle, 
   MapPin, 
@@ -26,20 +26,20 @@ const EpidemicAlerts = () => {
   const [activeDisease, setActiveDisease] = useState<string>('all');
 
   // Calcular estatísticas gerais
-  const totalCases = pindamonhangabaNeighborhoods.reduce((sum, n) => sum + n.activeCases, 0);
-  const emergencyAreas = pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'EMERGÊNCIA').length;
-  const criticalAreas = pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'CRÍTICO').length;
-  const averageRisk = pindamonhangabaNeighborhoods.reduce((sum, n) => {
+  const totalCases = piracicabaNeighborhoods.reduce((sum, n) => sum + n.activeCases, 0);
+  const emergencyAreas = piracicabaNeighborhoods.filter(n => n.riskLevel === 'EMERGÊNCIA').length;
+  const criticalAreas = piracicabaNeighborhoods.filter(n => n.riskLevel === 'CRÍTICO').length;
+  const averageRisk = piracicabaNeighborhoods.reduce((sum, n) => {
     const riskValue = { 'BAIXO': 1, 'MODERADO': 2, 'ALTO': 3, 'CRÍTICO': 4, 'EMERGÊNCIA': 5 }[n.riskLevel];
     return sum + riskValue;
-  }, 0) / pindamonhangabaNeighborhoods.length;
+  }, 0) / piracicabaNeighborhoods.length;
 
   const riskLevels = [
-    { level: 'BAIXO', color: 'bg-green-500', description: '0-10 casos/1000 hab', count: pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'BAIXO').length },
-    { level: 'MODERADO', color: 'bg-yellow-500', description: '11-30 casos/1000 hab', count: pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'MODERADO').length },
-    { level: 'ALTO', color: 'bg-orange-500', description: '31-60 casos/1000 hab', count: pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'ALTO').length },
-    { level: 'CRÍTICO', color: 'bg-red-500', description: '61-100 casos/1000 hab', count: pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'CRÍTICO').length },
-    { level: 'EMERGÊNCIA', color: 'bg-purple-500', description: '100+ casos/1000 hab', count: pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'EMERGÊNCIA').length }
+    { level: 'BAIXO', color: 'bg-green-500', description: '0-10 casos/1000 hab', count: piracicabaNeighborhoods.filter(n => n.riskLevel === 'BAIXO').length },
+    { level: 'MODERADO', color: 'bg-yellow-500', description: '11-30 casos/1000 hab', count: piracicabaNeighborhoods.filter(n => n.riskLevel === 'MODERADO').length },
+    { level: 'ALTO', color: 'bg-orange-500', description: '31-60 casos/1000 hab', count: piracicabaNeighborhoods.filter(n => n.riskLevel === 'ALTO').length },
+    { level: 'CRÍTICO', color: 'bg-red-500', description: '61-100 casos/1000 hab', count: piracicabaNeighborhoods.filter(n => n.riskLevel === 'CRÍTICO').length },
+    { level: 'EMERGÊNCIA', color: 'bg-purple-500', description: '100+ casos/1000 hab', count: piracicabaNeighborhoods.filter(n => n.riskLevel === 'EMERGÊNCIA').length }
   ];
 
   return (
@@ -53,7 +53,7 @@ const EpidemicAlerts = () => {
               Alertas Epidemiológicos
             </h1>
             <p className="text-muted-foreground mt-2">
-              Monitoramento em tempo real dos níveis de risco por bairro em Pindamonhangaba
+              Monitoramento em tempo real dos níveis de risco por bairro em Piracicaba
             </p>
           </div>
           
@@ -137,7 +137,7 @@ const EpidemicAlerts = () => {
             <CardContent>
               <div className="text-2xl font-bold text-blue-600">108.9k</div>
               <p className="text-xs text-muted-foreground">
-                {pindamonhangabaNeighborhoods.length} bairros monitorados
+                {piracicabaNeighborhoods.length} bairros monitorados
               </p>
             </CardContent>
           </Card>

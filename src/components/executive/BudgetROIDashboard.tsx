@@ -26,33 +26,33 @@ export const BudgetROIDashboard: React.FC<BudgetROIDashboardProps> = ({ compact 
   const [budgetData, setBudgetData] = useState<BudgetData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Dados de orçamento de Pindamonhangaba (164.138 habitantes)
+  // Dados de orçamento de Piracicaba (407.252 habitantes)
   const mockData: BudgetData = {
-    totalBudget: 45000000,
-    spent: 32000000,
-    saved: 13000000,
-    roi: 3.2,
-    costPerResident: 274.30,
+    totalBudget: 62500000,
+    spent: 44800000,
+    saved: 17700000,
+    roi: 3.6,
+    costPerResident: 308.45,
     monthlyExpenses: [
-      { month: 'Jan', planned: 3800000, actual: 3400000, savings: 400000 },
-      { month: 'Fev', planned: 3800000, actual: 3700000, savings: 100000 },
-      { month: 'Mar', planned: 4200000, actual: 4000000, savings: 200000 },
-      { month: 'Abr', planned: 4000000, actual: 3600000, savings: 400000 },
-      { month: 'Mai', planned: 4400000, actual: 4300000, savings: 100000 },
-      { month: 'Jun', planned: 4600000, actual: 4200000, savings: 400000 }
+      { month: 'Jan', planned: 5200000, actual: 4800000, savings: 400000 },
+      { month: 'Fev', planned: 5100000, actual: 4920000, savings: 180000 },
+      { month: 'Mar', planned: 5400000, actual: 5180000, savings: 220000 },
+      { month: 'Abr', planned: 5300000, actual: 4860000, savings: 440000 },
+      { month: 'Mai', planned: 5600000, actual: 5450000, savings: 150000 },
+      { month: 'Jun', planned: 5800000, actual: 5120000, savings: 680000 }
     ],
     categoryBreakdown: [
-      { category: 'Tecnologia', amount: 12800000, percentage: 40 },
-      { category: 'Pessoal', amount: 9600000, percentage: 30 },
-      { category: 'Infraestrutura', amount: 4800000, percentage: 15 },
-      { category: 'Treinamento', amount: 3200000, percentage: 10 },
-      { category: 'Outros', amount: 1600000, percentage: 5 }
+      { category: 'Tecnologia e Dados', amount: 19200000, percentage: 42 },
+      { category: 'Pessoal', amount: 13800000, percentage: 31 },
+      { category: 'Infraestrutura', amount: 6200000, percentage: 14 },
+      { category: 'Telemedicina', amount: 4300000, percentage: 9 },
+      { category: 'Outros', amount: 3000000, percentage: 4 }
     ],
     roiMetrics: [
-      { metric: 'Redução de Custos Operacionais', value: 8500000, change: 15.2 },
-      { metric: 'Economia em Papel/Arquivo', value: 1200000, change: 22.5 },
-      { metric: 'Eficiência de Processos', value: 3400000, change: 18.7 },
-      { metric: 'Prevenção de Doenças', value: 6800000, change: 12.3 }
+      { metric: 'Redução de Custos Operacionais', value: 12600000, change: 18.9 },
+      { metric: 'Economia em Papel/Arquivo', value: 2100000, change: 26.4 },
+      { metric: 'Eficiência de Processos', value: 5200000, change: 21.1 },
+      { metric: 'Programas Preventivos', value: 8400000, change: 15.7 }
     ]
   };
 

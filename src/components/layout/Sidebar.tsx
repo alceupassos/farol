@@ -46,7 +46,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Images,
-  UploadCloud
+  UploadCloud,
+  Newspaper
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -201,6 +202,16 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
               icon: <LayoutDashboard className="h-5 w-5 mr-3" />,
               labelKey: 'sidebar.sections.dashboard.items.prefeituraOverview',
             },
+            {
+              to: '/oraculo-ia',
+              icon: <BrainCircuit className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.aiOracle',
+            },
+            {
+              to: '/noticias-saude-piracicaba',
+              icon: <Newspaper className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.healthNews',
+            },
           ],
         },
       ],
@@ -212,6 +223,11 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
               to: '/dashboard',
               icon: <LayoutDashboard className="h-5 w-5 mr-3" />,
               labelKey: 'sidebar.sections.dashboard.items.hospitalOverview',
+            },
+            {
+              to: '/oraculo-ia',
+              icon: <BrainCircuit className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.aiOracle',
             },
           ],
         },

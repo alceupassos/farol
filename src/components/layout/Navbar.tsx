@@ -6,6 +6,7 @@ import AccessDropdown from './AccessDropdown';
 import UserSpecificAlerts from '@/components/epidemic/UserSpecificAlerts';
 import TelemedicineModal from '@/components/telemedicine/TelemedicineModal';
 import saudePublicaLogo from '@/assets/saude-publica-logo.png';
+import piracicabaLogo from '@/assets/piracicaba-logo.svg';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -63,6 +64,8 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
 
   const roleLabel = userRole ? t(`navbar.roles.${userRole}` as const) : t('navbar.roles.visitor');
 
+  const showPrefeituraBranding = userRole === 'gestor';
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -76,9 +79,13 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
             <Menu className="h-5 w-5" />
           </button>
           <Link to="/" className="flex items-center gap-2 text-slate-100">
-            <img src={saudePublicaLogo} alt="Saúde Pública" className="h-9 w-auto" />
+            <img
+              src={showPrefeituraBranding ? piracicabaLogo : saudePublicaLogo}
+              alt={showPrefeituraBranding ? 'Prefeitura de Piracicaba' : 'FAROL Angra Saúde Pública'}
+              className="h-9 w-auto"
+            />
             <span className="hidden text-sm font-semibold uppercase tracking-[0.2em] sm:block">
-              Saúde Pública
+              {showPrefeituraBranding ? 'Prefeitura de Piracicaba' : 'FAROL Angra Saúde Pública'}
             </span>
           </Link>
         </div>

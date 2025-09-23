@@ -17,7 +17,7 @@ import {
   Activity,
   Shield
 } from 'lucide-react';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods } from '@/data/piracicabaNeighborhoods';
 
 interface AlertData {
   id: string;
@@ -42,7 +42,7 @@ const NeighborhoodAlertSystem = () => {
     const generateAlerts = (): AlertData[] => {
       const generatedAlerts: AlertData[] = [];
 
-      pindamonhangabaNeighborhoods.forEach(neighborhood => {
+      piracicabaNeighborhoods.forEach(neighborhood => {
         // Alerta para bairros de emergência
         if (neighborhood.riskLevel === 'EMERGÊNCIA') {
           generatedAlerts.push({

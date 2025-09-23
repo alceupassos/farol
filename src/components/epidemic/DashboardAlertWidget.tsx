@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods } from '@/data/piracicabaNeighborhoods';
 
 interface DashboardAlertWidgetProps {
   className?: string;
@@ -15,15 +15,15 @@ const DashboardAlertWidget = ({ className = "" }: DashboardAlertWidgetProps) => 
   const { userRole } = useAuth();
 
   // Simular dados de bairro do usuário (Centro para demo)
-  const userNeighborhood = pindamonhangabaNeighborhoods.find(n => n.name === 'Centro') || pindamonhangabaNeighborhoods[0];
+  const userNeighborhood = piracicabaNeighborhoods.find(n => n.name === 'Centro') || piracicabaNeighborhoods[0];
   
   // Dados críticos para gestores
-  const criticalNeighborhoods = pindamonhangabaNeighborhoods
+  const criticalNeighborhoods = piracicabaNeighborhoods
     .filter(n => n.riskLevel === 'CRÍTICO' || n.riskLevel === 'EMERGÊNCIA')
     .slice(0, 3);
 
   // Pacientes em risco para médicos
-  const patientsInRisk = pindamonhangabaNeighborhoods
+  const patientsInRisk = piracicabaNeighborhoods
     .filter(n => n.riskLevel === 'ALTO' || n.riskLevel === 'CRÍTICO')
     .reduce((acc, n) => acc + Math.floor(n.activeCases * 0.15), 0); // 15% são pacientes
 

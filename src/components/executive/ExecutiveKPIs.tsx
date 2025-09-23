@@ -47,32 +47,32 @@ export const ExecutiveKPIs = () => {
 
       if (error) {
         console.error('Error fetching KPI data:', error);
-        // Dados de Pindamonhangaba (164.138 habitantes)
+        // Dados de Piracicaba (407.252 habitantes)
         setKpiData({
-          totalResidences: 52684, // Total de famílias de Pindamonhangaba
-          totalFamilyMembers: 164138, // População total
-          documentsProcessed: 8567,
-          healthAlerts: 23,
-          budgetEfficiency: 87.5,
-          populationCoverage: 89.4, // Taxa de vacinação
-          avgHealthScore: 78.9,
-          monthlyTrend: 12.3
+          totalResidences: 142580, // Domicílios estimados em Piracicaba
+          totalFamilyMembers: 407252, // População total
+          documentsProcessed: 12480,
+          healthAlerts: 31,
+          budgetEfficiency: 91.2,
+          populationCoverage: 93.5, // Cobertura vacinal combinada
+          avgHealthScore: 82.1,
+          monthlyTrend: 9.4
         });
       } else {
         setKpiData(data.kpis);
       }
     } catch (error) {
       console.error('Error in fetchKPIData:', error);
-      // Dados de Pindamonhangaba
+      // Dados de Piracicaba
       setKpiData({
-        totalResidences: 52684,
-        totalFamilyMembers: 164138,
-        documentsProcessed: 8567,
-        healthAlerts: 23,
-        budgetEfficiency: 87.5,
-        populationCoverage: 89.4,
-        avgHealthScore: 78.9,
-        monthlyTrend: 12.3
+        totalResidences: 142580,
+        totalFamilyMembers: 407252,
+        documentsProcessed: 12480,
+        healthAlerts: 31,
+        budgetEfficiency: 91.2,
+        populationCoverage: 93.5,
+        avgHealthScore: 82.1,
+        monthlyTrend: 9.4
       });
     } finally {
       setLoading(false);

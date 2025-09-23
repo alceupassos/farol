@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { pindamonhangabaNeighborhoods, getRiskColor, getRiskIntensity, getRiskRadius } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods, getRiskColor, getRiskIntensity, getRiskRadius } from '@/data/piracicabaNeighborhoods';
 import { Badge } from '@/components/ui/badge';
 import { Loader2 } from 'lucide-react';
 
@@ -57,7 +57,7 @@ export const NeighborhoodHeatMap: React.FC<NeighborhoodHeatMapProps> = ({
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/dark-v11',
-      center: [-45.4612, -22.9236], // Centro de Pindamonhangaba
+      center: [-47.6487, -22.7254], // Centro de Piracicaba
       zoom: 12,
       pitch: 0,
       bearing: 0
@@ -90,7 +90,7 @@ export const NeighborhoodHeatMap: React.FC<NeighborhoodHeatMapProps> = ({
     // Create GeoJSON data for heat map
     const heatMapData = {
       type: 'FeatureCollection' as const,
-      features: pindamonhangabaNeighborhoods.map(neighborhood => ({
+      features: piracicabaNeighborhoods.map(neighborhood => ({
         type: 'Feature' as const,
         geometry: {
           type: 'Point' as const,
@@ -172,7 +172,7 @@ export const NeighborhoodHeatMap: React.FC<NeighborhoodHeatMapProps> = ({
 
     clearMarkers();
 
-    pindamonhangabaNeighborhoods.forEach(neighborhood => {
+    piracicabaNeighborhoods.forEach(neighborhood => {
       const el = document.createElement('div');
       el.className = 'epidemic-marker';
       

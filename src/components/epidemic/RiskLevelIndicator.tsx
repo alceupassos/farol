@@ -148,7 +148,7 @@ export const RiskLevelIndicator: React.FC = () => {
                   </div>
                   
                   <div>
-                    <h5 className="text-xs font-semibold mb-1">Exemplos em Pindamonhangaba:</h5>
+                    <h5 className="text-xs font-semibold mb-1">Exemplos em Piracicaba:</h5>
                     <ul className="text-xs space-y-1">
                       {risk.examples.map((example, index) => (
                         <li key={index} className="flex items-start gap-1">

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { pindamonhangabaNeighborhoods } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods } from '@/data/piracicabaNeighborhoods';
 
 interface Alert {
   id: string;
@@ -34,7 +34,7 @@ const UserSpecificAlerts = () => {
             id: '1',
             type: 'epidemic',
             title: 'Alerta de Risco no Seu Bairro',
-            message: 'Centro está em nível ALTO. Evite aglomerações e use máscara.',
+            message: 'Centro está em nível ALTO nesta semana. Evite aglomerações e mantenha máscara em locais fechados.',
             neighborhood: 'Centro',
             riskLevel: 'ALTO',
             timestamp: '5 min atrás',
@@ -81,9 +81,9 @@ const UserSpecificAlerts = () => {
           {
             id: '5',
             type: 'epidemic',
-            title: 'Situação Crítica - Jardim Regina',
-            message: 'Bairro atingiu nível CRÍTICO. Mobilização de equipes necessária.',
-            neighborhood: 'Jardim Regina',
+            title: 'Situação Crítica - Monte Líbano',
+            message: 'Monte Líbano atingiu nível CRÍTICO. Mobilização das equipes de campo necessária.',
+            neighborhood: 'Monte Líbano',
             riskLevel: 'CRÍTICO',
             timestamp: '2 min atrás',
             isRead: false,
@@ -93,7 +93,7 @@ const UserSpecificAlerts = () => {
             id: '6',
             type: 'system',
             title: 'Relatório Semanal Disponível',
-            message: 'Dados epidemiológicos da semana 03/2024 prontos',
+            message: 'Dados epidemiológicos da semana 38/2024 consolidados',
             timestamp: '1 hora atrás',
             isRead: false,
             priority: 'low'

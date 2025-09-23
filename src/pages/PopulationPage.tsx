@@ -7,37 +7,38 @@ import { Progress } from '@/components/ui/progress';
 
 const PopulationPage = () => {
   const populationData = {
-    total: 187234,
+    total: 407252,
     ageGroups: [
-      { range: '0-14 anos', count: 32145, percentage: 17.2 },
-      { range: '15-64 anos', count: 134567, percentage: 71.9 },
-      { range: '65+ anos', count: 20522, percentage: 10.9 }
+      { range: '0-14 anos', count: 75680, percentage: 18.6 },
+      { range: '15-64 anos', count: 262870, percentage: 64.5 },
+      { range: '65+ anos', count: 68702, percentage: 16.9 }
     ],
     genderDistribution: {
-      male: 91234,
-      female: 96000
+      male: 196400,
+      female: 210852
     },
     healthIndicators: {
-      vaccinationRate: 89.5,
-      prenatalCoverage: 94.2,
-      chronicDiseasePrevalence: 23.8,
-      infantMortality: 12.4
+      vaccinationRate: 93.5,
+      prenatalCoverage: 92.8,
+      chronicDiseasePrevalence: 26.4,
+      infantMortality: 9.8
     },
     socioeconomic: {
-      lowIncome: 45.2,
-      middleIncome: 42.1,
-      highIncome: 12.7
+      lowIncome: 38.1,
+      middleIncome: 46.7,
+      highIncome: 15.2
     },
     riskAreas: [
-      { area: 'Zona Norte', population: 45678, riskLevel: 'Alto', issues: ['Dengue', 'Saneamento'] },
-      { area: 'Centro', population: 32145, riskLevel: 'Médio', issues: ['Poluição do Ar'] },
-      { area: 'Zona Sul', population: 56789, riskLevel: 'Baixo', issues: [] },
-      { area: 'Zona Leste', population: 52622, riskLevel: 'Médio', issues: ['Acesso à Saúde'] }
+      { area: 'Monte Líbano', population: 16200, riskLevel: 'Alto', issues: ['Dengue', 'Saneamento'] },
+      { area: 'Piracicamirim', population: 45600, riskLevel: 'Crítico', issues: ['COVID-19', 'Dengue'] },
+      { area: 'Centro', population: 23500, riskLevel: 'Médio', issues: ['Mobilidade Urbana'] },
+      { area: 'Algodoal', population: 21400, riskLevel: 'Alto', issues: ['Acesso à Saúde', 'Risco Social'] }
     ]
   };
 
   const getRiskColor = (level: string) => {
     switch (level) {
+      case 'Crítico': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
       case 'Alto': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
       case 'Médio': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
       case 'Baixo': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
@@ -51,10 +52,10 @@ const PopulationPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <h1 className="text-2xl md:text-3xl font-display font-semibold mb-2">
-              Análise Populacional
+              Análise Populacional — Piracicaba
             </h1>
             <p className="text-muted-foreground">
-              Dados demográficos e indicadores de saúde da população municipal
+              Dados demográficos e indicadores de saúde da população piracicabana
             </p>
           </div>
 

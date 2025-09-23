@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@21st-extension/react':
+        specifier: ^0.5.14
+        version: 0.5.14(@21st-extension/toolbar@0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      '@21st-extension/toolbar-react':
+        specifier: ^0.5.14
+        version: 0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.62.0(react@18.3.1))
@@ -272,6 +278,20 @@ importers:
         version: 5.4.20(@types/node@22.18.3)
 
 packages:
+
+  '@21st-extension/react@0.5.14':
+    resolution: {integrity: sha512-PskpUB6F/VXIwRm6+hPmm4S5uAUj9O5D956tZCf5ecMDvKhfpjRQbBtxYvSw+En/bal6XFHLjT8gDWJ3GQm2oQ==}
+    peerDependencies:
+      '@21st-extension/toolbar': 0.5.14
+
+  '@21st-extension/toolbar-react@0.5.14':
+    resolution: {integrity: sha512-MIjE6AwLsPKNIEiaPBpmvLmFgmWozRrD2Cp9E68X2vGN5D7eMBupKBwXhLjpZGS3HuSbiwwf2p/wjPgYV9z6Xg==}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      react: '>=18.0.0'
+
+  '@21st-extension/toolbar@0.5.14':
+    resolution: {integrity: sha512-1ou6TQGrhPtdS8YtsmBTSzfx7aOhqGccbFaHFNHhwpqf5vIfXJm3qCsnzJ7VRGIT5D596QEEsRTEqj4DEmWMXA==}
 
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
@@ -3337,6 +3357,10 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  qss@3.0.0:
+    resolution: {integrity: sha512-ZHoCB3M/3Voev64zhLLUOKDtaEdJ/lymsJJ7R3KBusVZ2ovNiIB7XOq3Xh6V1a8O+Vho+g2B5YElq9zW7D8aQw==}
+    engines: {node: '>=4'}
+
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
@@ -3946,6 +3970,38 @@ packages:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
 snapshots:
+
+  '@21st-extension/react@0.5.14(@21st-extension/toolbar@0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+    dependencies:
+      '@21st-extension/toolbar': 0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  '@21st-extension/toolbar-react@0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@21st-extension/toolbar': 0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/react': 18.3.24
+      react: 18.3.1
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react-dom'
+      - bufferutil
+      - react-dom
+      - utf-8-validate
+
+  '@21st-extension/toolbar@0.5.14(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@radix-ui/react-hover-card': 1.1.15(@types/react-dom@18.3.7(@types/react@18.3.24))(@types/react@18.3.24)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@supabase/supabase-js': 2.57.4
+      '@tanstack/react-query': 5.87.4(react@18.3.1)
+      framer-motion: 12.23.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      qss: 3.0.0
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
+      - '@types/react-dom'
+      - bufferutil
+      - react
+      - react-dom
+      - utf-8-validate
 
   '@adobe/css-tools@4.4.4': {}
 
@@ -6980,6 +7036,8 @@ snapshots:
       dijkstrajs: 1.0.3
       pngjs: 5.0.0
       yargs: 15.4.1
+
+  qss@3.0.0: {}
 
   queue-microtask@1.2.3: {}
 

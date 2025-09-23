@@ -1,0 +1,19 @@
+<svg width="320" height="88" viewBox="0 0 320 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="piracicaba-gradient" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1BB65E"/>
+      <stop offset="1" stop-color="#1B7BC6"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="50" width="312" height="6" rx="3" fill="#1BB65E" opacity="0.15"/>
+  <path d="M16 52.5C16 50.8431 17.3431 49.5 19 49.5H301C302.657 49.5 304 50.8431 304 52.5C304 54.1569 302.657 55.5 301 55.5H19C17.3431 55.5 16 54.1569 16 52.5Z" fill="url(#piracicaba-gradient)"/>
+  <text x="20" y="28" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="18" letter-spacing="8" fill="#0F172A">
+    PREFEITURA
+  </text>
+  <text x="20" y="60" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="46" font-weight="700" fill="url(#piracicaba-gradient)">
+    PIRACICABA
+  </text>
+  <text x="20" y="80" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="16" letter-spacing="6" fill="#0F172A" opacity="0.85">
+    INOVAÇÃO • SAÚDE • CUIDADO
+  </text>
+</svg>

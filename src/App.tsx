@@ -76,6 +76,8 @@ import RelatoriosAnalyticsPage from './pages/RelatoriosAnalyticsPage';
 import AnalisesLaboratoriaisPage from './pages/AnalisesLaboratoriaisPage';
 import GestaoFarmaceuticaPage from './pages/GestaoFarmaceuticaPage';
 import AIAnalyticsPage from './pages/AIAnalyticsPage';
+import AIOraclePage from './pages/AIOraclePage';
+import PiracicabaHealthNews from './pages/PiracicabaHealthNews';
 import SecurityDashboardPage from './pages/SecurityDashboardPage';
 import IntegrationsDashboardPage from './pages/IntegrationsDashboardPage';
 import IntegracoesTecnicasPage from "./pages/IntegracoesTecnicasPage";
@@ -173,6 +175,8 @@ const App = () => (
                     <Route path="/pactuacao-regional" element={<ProtectedRoute><PactuacaoRegionalPage /></ProtectedRoute>} />
                     <Route path="/territorializacao" element={<ProtectedRoute><TerritorializacaoPage /></ProtectedRoute>} />
                     <Route path="/ai-insights" element={<ProtectedRoute><AIInsightsPage /></ProtectedRoute>} />
+                    <Route path="/oraculo-ia" element={<ProtectedRoute><AIOraclePage /></ProtectedRoute>} />
+                    <Route path="/noticias-saude-piracicaba" element={<ProtectedRoute><PiracicabaHealthNews /></ProtectedRoute>} />
                     <Route path="/faturamento-sus" element={<ProtectedRoute><FaturamentoSUSPage /></ProtectedRoute>} />
                     <Route path="/tiss-tuss" element={<ProtectedRoute><TISSTUSSPage /></ProtectedRoute>} />
                     <Route path="/apac-oncologia" element={<ProtectedRoute><APACOncologiaPage /></ProtectedRoute>} />

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { pindamonhangabaNeighborhoods, getRiskColor } from '@/data/pindamonhangabaNeighborhoods';
+import { piracicabaNeighborhoods, getRiskColor } from '@/data/piracicabaNeighborhoods';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -24,7 +24,7 @@ export const NeighborhoodMetrics: React.FC<NeighborhoodMetricsProps> = ({
   selectedNeighborhood
 }) => {
   // Sort neighborhoods by risk level for ranking
-  const sortedNeighborhoods = [...pindamonhangabaNeighborhoods].sort((a, b) => {
+  const sortedNeighborhoods = [...piracicabaNeighborhoods].sort((a, b) => {
     const riskValues = { 'BAIXO': 1, 'MODERADO': 2, 'ALTO': 3, 'CRÍTICO': 4, 'EMERGÊNCIA': 5 };
     return riskValues[b.riskLevel] - riskValues[a.riskLevel];
   });
@@ -38,7 +38,7 @@ export const NeighborhoodMetrics: React.FC<NeighborhoodMetricsProps> = ({
   };
 
   const selectedData = selectedNeighborhood 
-    ? pindamonhangabaNeighborhoods.find(n => n.id === selectedNeighborhood)
+    ? piracicabaNeighborhoods.find(n => n.id === selectedNeighborhood)
     : null;
 
   return (
@@ -214,25 +214,25 @@ export const NeighborhoodMetrics: React.FC<NeighborhoodMetricsProps> = ({
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-3 bg-muted/30 rounded-lg">
                 <div className="text-xl font-bold text-foreground">
-                  {pindamonhangabaNeighborhoods.reduce((sum, n) => sum + n.activeCases, 0)}
+                  {piracicabaNeighborhoods.reduce((sum, n) => sum + n.activeCases, 0)}
                 </div>
                 <div className="text-sm text-muted-foreground">Total de Casos</div>
               </div>
               <div className="text-center p-3 bg-muted/30 rounded-lg">
                 <div className="text-xl font-bold text-foreground">
-                  {pindamonhangabaNeighborhoods.reduce((sum, n) => sum + n.population, 0).toLocaleString()}
+                  {piracicabaNeighborhoods.reduce((sum, n) => sum + n.population, 0).toLocaleString()}
                 </div>
                 <div className="text-sm text-muted-foreground">População Total</div>
               </div>
               <div className="text-center p-3 bg-muted/30 rounded-lg">
                 <div className="text-xl font-bold text-red-600">
-                  {pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'EMERGÊNCIA' || n.riskLevel === 'CRÍTICO').length}
+                  {piracicabaNeighborhoods.filter(n => n.riskLevel === 'EMERGÊNCIA' || n.riskLevel === 'CRÍTICO').length}
                 </div>
                 <div className="text-sm text-muted-foreground">Áreas Críticas</div>
               </div>
               <div className="text-center p-3 bg-muted/30 rounded-lg">
                 <div className="text-xl font-bold text-green-600">
-                  {pindamonhangabaNeighborhoods.filter(n => n.riskLevel === 'BAIXO').length}
+                  {piracicabaNeighborhoods.filter(n => n.riskLevel === 'BAIXO').length}
                 </div>
                 <div className="text-sm text-muted-foreground">Áreas Seguras</div>
               </div>
@@ -241,8 +241,8 @@ export const NeighborhoodMetrics: React.FC<NeighborhoodMetricsProps> = ({
             <div className="space-y-3">
               <h4 className="font-semibold">Distribuição por Nível de Risco</h4>
               {['EMERGÊNCIA', 'CRÍTICO', 'ALTO', 'MODERADO', 'BAIXO'].map(level => {
-                const count = pindamonhangabaNeighborhoods.filter(n => n.riskLevel === level).length;
-                const percentage = (count / pindamonhangabaNeighborhoods.length) * 100;
+                const count = piracicabaNeighborhoods.filter(n => n.riskLevel === level).length;
+                const percentage = (count / piracicabaNeighborhoods.length) * 100;
                 return (
                   <div key={level} className="space-y-2">
                     <div className="flex justify-between text-sm">

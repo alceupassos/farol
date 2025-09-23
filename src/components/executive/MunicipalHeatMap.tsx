@@ -53,87 +53,87 @@ export const MunicipalHeatMap = () => {
     }
   };
 
-  // Dados de Pindamonhangaba com coordenadas corretas
+  // Dados de Piracicaba com coordenadas principais de bairros
   const mockHeatMapData: HeatMapData[] = [
     {
       neighborhood: "Centro",
-      coordinates: [-45.4616, -22.9249],
-      healthScore: 85,
-      totalResidences: 1250,
-      riskLevel: 'low',
-      alertCount: 2
-    },
-    {
-      neighborhood: "Jardim das Palmeiras",
-      coordinates: [-45.4450, -22.9180],
-      healthScore: 82,
-      totalResidences: 890,
-      riskLevel: 'low',
-      alertCount: 1
-    },
-    {
-      neighborhood: "Vila São Benedito",
-      coordinates: [-45.4750, -22.9320],
-      healthScore: 65,
-      totalResidences: 980,
-      riskLevel: 'high',
-      alertCount: 15
-    },
-    {
-      neighborhood: "Cidade Nova",
-      coordinates: [-45.4380, -22.9150],
-      healthScore: 88,
-      totalResidences: 720,
-      riskLevel: 'low',
-      alertCount: 0
-    },
-    {
-      neighborhood: "Jardim América",
-      coordinates: [-45.4520, -22.9280],
-      healthScore: 72,
-      totalResidences: 750,
+      coordinates: [-47.6487, -22.7254],
+      healthScore: 84,
+      totalResidences: 18420,
       riskLevel: 'medium',
-      alertCount: 4
+      alertCount: 6
     },
     {
-      neighborhood: "Bela Vista",
-      coordinates: [-45.4680, -22.9200],
-      healthScore: 85,
-      totalResidences: 650,
-      riskLevel: 'low',
-      alertCount: 2
-    },
-    {
-      neighborhood: "Vila Davi",
-      coordinates: [-45.4580, -22.9350],
-      healthScore: 69,
-      totalResidences: 820,
+      neighborhood: "Paulista",
+      coordinates: [-47.6519, -22.7142],
+      healthScore: 78,
+      totalResidences: 21250,
       riskLevel: 'medium',
       alertCount: 5
     },
     {
-      neighborhood: "Crispim",
-      coordinates: [-45.4420, -22.9100],
-      healthScore: 91,
-      totalResidences: 1100,
-      riskLevel: 'low',
-      alertCount: 0
+      neighborhood: "Piracicamirim",
+      coordinates: [-47.6209, -22.7053],
+      healthScore: 62,
+      totalResidences: 26840,
+      riskLevel: 'high',
+      alertCount: 18
     },
     {
-      neighborhood: "Araretama",
-      coordinates: [-45.4800, -22.9400],
+      neighborhood: "Vila Rezende",
+      coordinates: [-47.6548, -22.7088],
+      healthScore: 74,
+      totalResidences: 24110,
+      riskLevel: 'medium',
+      alertCount: 9
+    },
+    {
+      neighborhood: "Santa Teresinha",
+      coordinates: [-47.6324, -22.7125],
+      healthScore: 81,
+      totalResidences: 19870,
+      riskLevel: 'low',
+      alertCount: 3
+    },
+    {
+      neighborhood: "Algodoal",
+      coordinates: [-47.6405, -22.7321],
       healthScore: 58,
-      totalResidences: 920,
+      totalResidences: 14680,
+      riskLevel: 'high',
+      alertCount: 16
+    },
+    {
+      neighborhood: "Nova América",
+      coordinates: [-47.6480, -22.7398],
+      healthScore: 77,
+      totalResidences: 12430,
+      riskLevel: 'medium',
+      alertCount: 7
+    },
+    {
+      neighborhood: "Vila Fátima",
+      coordinates: [-47.6622, -22.7441],
+      healthScore: 63,
+      totalResidences: 13870,
       riskLevel: 'high',
       alertCount: 12
     },
     {
-      neighborhood: "Mombaça",
-      coordinates: [-45.4350, -22.9050],
-      healthScore: 76,
-      totalResidences: 1050,
-      riskLevel: 'medium',
-      alertCount: 6
+      neighborhood: "Monte Líbano",
+      coordinates: [-47.6671, -22.7198],
+      healthScore: 49,
+      totalResidences: 11240,
+      riskLevel: 'high',
+      alertCount: 21
+    },
+    {
+      neighborhood: "Jardim São Paulo",
+      coordinates: [-47.6164, -22.7285],
+      healthScore: 88,
+      totalResidences: 15420,
+      riskLevel: 'low',
+      alertCount: 2
     }
   ];
 
@@ -156,8 +156,8 @@ export const MunicipalHeatMap = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [-45.4616, -22.9249], // Centro de Pindamonhangaba
-      zoom: 12,
+      center: [-47.6487, -22.7254], // Centro de Piracicaba
+      zoom: 12.2,
       pitch: 0,
       bearing: 0
     });
@@ -328,7 +328,7 @@ export const MunicipalHeatMap = () => {
       const { data, error } = await supabase.functions.invoke('municipal-analytics', {
         body: { 
           type: 'heat-map-data',
-          municipality: 'Pindamonhangaba',
+          municipality: 'Piracicaba',
           layer: selectedLayer
         }
       });

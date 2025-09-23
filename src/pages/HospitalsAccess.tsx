@@ -2,6 +2,7 @@ import React from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   Activity,
   Users,
@@ -75,32 +76,32 @@ const HospitalsAccess = () => {
   const generalKpis = [
     {
       title: t('pages.hospitalsAccess.kpis.general.activeAdmissions'),
-      value: '247',
-      change: '+12%',
+      value: '312',
+      change: '+9%',
       trend: 'up' as const,
       icon: <Users size={24} />,
       color: 'blue',
     },
     {
       title: t('pages.hospitalsAccess.kpis.general.occupancyRate'),
-      value: '87.3%',
-      change: '+5.2%',
+      value: '88.2%',
+      change: '+3.8%',
       trend: 'up' as const,
       icon: <Building2 size={24} />,
       color: 'green',
     },
     {
       title: t('pages.hospitalsAccess.kpis.general.monthlyRevenue'),
-      value: 'R$ 2.8M',
-      change: '+18%',
+      value: 'R$ 3.4M',
+      change: '+15%',
       trend: 'up' as const,
       icon: <DollarSign size={24} />,
       color: 'emerald',
     },
     {
       title: t('pages.hospitalsAccess.kpis.general.averageStay'),
-      value: '4.2 dias',
-      change: '-0.8',
+      value: '4.1 dias',
+      change: '-0.6',
       trend: 'down' as const,
       icon: <Clock size={24} />,
       color: 'orange',
@@ -110,32 +111,32 @@ const HospitalsAccess = () => {
   const susKpis = [
     {
       title: t('pages.hospitalsAccess.kpis.sus.production'),
-      value: '1.847',
-      change: '+23%',
+      value: '2.364',
+      change: '+19%',
       trend: 'up' as const,
       icon: <FileText size={24} />,
       color: 'blue',
     },
     {
       title: t('pages.hospitalsAccess.kpis.sus.denialRate'),
-      value: '3.2%',
-      change: '-1.1%',
+      value: '2.4%',
+      change: '-0.9%',
       trend: 'down' as const,
       icon: <AlertTriangle size={24} />,
       color: 'red',
     },
     {
       title: t('pages.hospitalsAccess.kpis.sus.apacOncology'),
-      value: '156',
-      change: '+8%',
+      value: '212',
+      change: '+12%',
       trend: 'up' as const,
       icon: <Heart size={24} />,
       color: 'pink',
     },
     {
       title: t('pages.hospitalsAccess.kpis.sus.rndsCompliance'),
-      value: '98.7%',
-      change: '+2.1%',
+      value: '99.1%',
+      change: '+1.4%',
       trend: 'up' as const,
       icon: <Shield size={24} />,
       color: 'green',
@@ -145,35 +146,134 @@ const HospitalsAccess = () => {
   const supplementalKpis = [
     {
       title: t('pages.hospitalsAccess.kpis.supplementary.billing'),
-      value: 'R$ 1.2M',
-      change: '+15%',
+      value: 'R$ 1.8M',
+      change: '+11%',
       trend: 'up' as const,
       icon: <DollarSign size={24} />,
       color: 'purple',
     },
     {
       title: t('pages.hospitalsAccess.kpis.supplementary.authorizationRate'),
-      value: '94.8%',
-      change: '+3.2%',
+      value: '95.6%',
+      change: '+2.4%',
       trend: 'up' as const,
       icon: <CheckCircle size={24} />,
       color: 'green',
     },
     {
       title: t('pages.hospitalsAccess.kpis.supplementary.responseTime'),
-      value: '2.3h',
-      change: '-0.5h',
+      value: '2.1h',
+      change: '-0.4h',
       trend: 'down' as const,
       icon: <Clock size={24} />,
       color: 'blue',
     },
     {
       title: t('pages.hospitalsAccess.kpis.supplementary.denials'),
-      value: '5.7%',
-      change: '-2.1%',
+      value: '4.9%',
+      change: '-1.6%',
       trend: 'down' as const,
       icon: <TrendingDown size={24} />,
       color: 'red',
+    },
+  ];
+
+  const integratedSnapshot = {
+    apsCoverage: 91,
+    regulationQueue: 207,
+    occupancyRate: 88.2,
+    averageStay: 4.1,
+    telemedicineUsage: 41,
+    infectionRate: 2.1,
+    budgetExecution: 19.4,
+    predictiveAdmissions: 63,
+    medicationRisk: 24,
+    financialVolume: 5.2,
+  };
+
+  const integratedKPIs = [
+    {
+      label: t('pages.hospitalsAccess.integrated.metrics.carePressure.label'),
+      value: `${integratedSnapshot.occupancyRate.toFixed(1)}%`,
+      detail: t('pages.hospitalsAccess.integrated.metrics.carePressure.detail', {
+        averageStay: integratedSnapshot.averageStay.toFixed(1),
+      }),
+    },
+    {
+      label: t('pages.hospitalsAccess.integrated.metrics.flow.label'),
+      value: `${integratedSnapshot.apsCoverage}% • ${integratedSnapshot.regulationQueue} ${t('pages.hospitalsAccess.integrated.metrics.flow.indicatorSuffix')}`,
+      detail: t('pages.hospitalsAccess.integrated.metrics.flow.detail'),
+    },
+    {
+      label: t('pages.hospitalsAccess.integrated.metrics.financial.label'),
+      value: `R$ ${integratedSnapshot.financialVolume.toFixed(1)}M`,
+      detail: t('pages.hospitalsAccess.integrated.metrics.financial.detail', {
+        execution: integratedSnapshot.budgetExecution.toFixed(1),
+      }),
+    },
+  ];
+
+  const integratedHighlights = [
+    {
+      title: t('pages.hospitalsAccess.integrated.highlights.careFlow.title'),
+      description: t('pages.hospitalsAccess.integrated.highlights.careFlow.description', {
+        aps: integratedSnapshot.apsCoverage,
+        queue: integratedSnapshot.regulationQueue,
+      }),
+      action: t('pages.hospitalsAccess.integrated.highlights.careFlow.action'),
+      indicator: t('pages.hospitalsAccess.integrated.highlights.careFlow.indicator', {
+        averageStay: integratedSnapshot.averageStay.toFixed(1),
+      }),
+    },
+    {
+      title: t('pages.hospitalsAccess.integrated.highlights.hospitalPressure.title'),
+      description: t('pages.hospitalsAccess.integrated.highlights.hospitalPressure.description', {
+        occupancy: integratedSnapshot.occupancyRate.toFixed(1),
+        infection: integratedSnapshot.infectionRate.toFixed(1),
+      }),
+      action: t('pages.hospitalsAccess.integrated.highlights.hospitalPressure.action'),
+      indicator: t('pages.hospitalsAccess.integrated.highlights.hospitalPressure.indicator', {
+        predictiveAdmissions: integratedSnapshot.predictiveAdmissions,
+      }),
+    },
+    {
+      title: t('pages.hospitalsAccess.integrated.highlights.pharmacy.title'),
+      description: t('pages.hospitalsAccess.integrated.highlights.pharmacy.description', {
+        risk: integratedSnapshot.medicationRisk,
+      }),
+      action: t('pages.hospitalsAccess.integrated.highlights.pharmacy.action'),
+      indicator: t('pages.hospitalsAccess.integrated.highlights.pharmacy.indicator', {
+        telemedicine: integratedSnapshot.telemedicineUsage,
+      }),
+    },
+  ];
+
+  const decisionMatrix = [
+    {
+      axis: t('pages.hospitalsAccess.integrated.matrix.rows.careFlow.axis'),
+      current: t('pages.hospitalsAccess.integrated.matrix.rows.careFlow.current', {
+        aps: integratedSnapshot.apsCoverage,
+        queue: integratedSnapshot.regulationQueue,
+      }),
+      trend: t('pages.hospitalsAccess.integrated.matrix.rows.careFlow.trend'),
+      action: t('pages.hospitalsAccess.integrated.matrix.rows.careFlow.action'),
+    },
+    {
+      axis: t('pages.hospitalsAccess.integrated.matrix.rows.bedManagement.axis'),
+      current: t('pages.hospitalsAccess.integrated.matrix.rows.bedManagement.current', {
+        occupancy: integratedSnapshot.occupancyRate.toFixed(1),
+        averageStay: integratedSnapshot.averageStay.toFixed(1),
+      }),
+      trend: t('pages.hospitalsAccess.integrated.matrix.rows.bedManagement.trend'),
+      action: t('pages.hospitalsAccess.integrated.matrix.rows.bedManagement.action'),
+    },
+    {
+      axis: t('pages.hospitalsAccess.integrated.matrix.rows.pharmacy.axis'),
+      current: t('pages.hospitalsAccess.integrated.matrix.rows.pharmacy.current', {
+        risk: integratedSnapshot.medicationRisk,
+      }),
+      trend: t('pages.hospitalsAccess.integrated.matrix.rows.pharmacy.trend'),
+      action: t('pages.hospitalsAccess.integrated.matrix.rows.pharmacy.action'),
     },
   ];
 
@@ -404,6 +504,92 @@ const HospitalsAccess = () => {
             {supplementalKpis.map((kpi) => (
               <KpiCard key={kpi.title} {...kpi} />
             ))}
+          </div>
+        </div>
+
+        <div className="mb-10">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <Card className="bg-gray-900/80 border border-emerald-700/30 shadow-lg shadow-emerald-500/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center justify-between">
+                  <span>{t('pages.hospitalsAccess.integrated.title')}</span>
+                  <Badge variant="outline" className="border-emerald-500/40 text-emerald-200">
+                    {t('pages.hospitalsAccess.integrated.badge')}
+                  </Badge>
+                </CardTitle>
+                <p className="text-sm text-emerald-100/80">
+                  {t('pages.hospitalsAccess.integrated.description')}
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {integratedKPIs.map((item) => (
+                    <div key={item.label} className="rounded-xl border border-emerald-700/40 bg-emerald-500/5 p-4">
+                      <p className="text-sm font-medium text-emerald-200">{item.label}</p>
+                      <p className="mt-2 text-2xl font-bold text-white">{item.value}</p>
+                      <p className="mt-1 text-xs text-emerald-100/70">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="space-y-4">
+                  {integratedHighlights.map((highlight) => (
+                    <div key={highlight.title} className="rounded-xl border border-emerald-700/30 bg-slate-950/70 p-4">
+                      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                        <div>
+                          <h4 className="text-sm font-semibold uppercase tracking-wide text-emerald-200">
+                            {highlight.title}
+                          </h4>
+                          <p className="mt-2 text-sm text-slate-200">{highlight.description}</p>
+                          <p className="mt-3 text-xs font-semibold text-emerald-300">
+                            {highlight.action}
+                          </p>
+                        </div>
+                        <Badge variant="secondary" className="self-start bg-emerald-500/10 text-emerald-200">
+                          {highlight.indicator}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gray-900/80 border border-gray-700/60">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center justify-between">
+                  <span>{t('pages.hospitalsAccess.integrated.matrix.title')}</span>
+                  <Badge variant="outline" className="border-slate-600 text-slate-200">
+                    {t('pages.hospitalsAccess.integrated.matrix.horizon')}
+                  </Badge>
+                </CardTitle>
+                <p className="text-sm text-slate-300">
+                  {t('pages.hospitalsAccess.integrated.matrix.subtitle')}
+                </p>
+              </CardHeader>
+              <CardContent className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-800 text-sm text-slate-200">
+                  <thead className="text-xs uppercase tracking-wide text-slate-400">
+                    <tr>
+                      <th className="px-4 py-2 text-left">{t('pages.hospitalsAccess.integrated.matrix.headers.axis')}</th>
+                      <th className="px-4 py-2 text-left">{t('pages.hospitalsAccess.integrated.matrix.headers.current')}</th>
+                      <th className="px-4 py-2 text-left">{t('pages.hospitalsAccess.integrated.matrix.headers.trend')}</th>
+                      <th className="px-4 py-2 text-left">{t('pages.hospitalsAccess.integrated.matrix.headers.action')}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-800">
+                    {decisionMatrix.map((row) => (
+                      <tr key={row.axis}>
+                        <td className="px-4 py-3 font-semibold text-slate-100">{row.axis}</td>
+                        <td className="px-4 py-3 text-slate-300">{row.current}</td>
+                        <td className="px-4 py-3 text-emerald-300">{row.trend}</td>
+                        <td className="px-4 py-3 text-slate-200">{row.action}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
