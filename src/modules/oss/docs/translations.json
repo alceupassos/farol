@@ -1,0 +1,85 @@
+{
+  "pt": {
+    "accessDropdown": {
+      "options": {
+        "oss": {
+          "label": "Gestão Contratual/OSS",
+          "description": "OSS Cesário Lange - BHCL"
+        }
+      }
+    },
+    "navbar": {
+      "roles": {
+        "oss": "OSS"
+      }
+    },
+    "ossDashboard": {
+      "title": "Gestão Contratual/OSS - BHCL",
+      "subtitle": "Beneficência Hospitalar de Cesário Lange",
+      "cockpit": {
+        "title": "Cockpit C-Level",
+        "kpis": {
+          "metasContratuais": "Metas Contratuais",
+          "indiceGlosa": "Índice de Glosa",
+          "rejeicaoAIH": "Rejeição AIH/APAC",
+          "tempestividadeAudesp": "Tempestividade Audesp",
+          "agingRepasses": "Aging de Repasses",
+          "conciliacao": "Conciliação",
+          "transparencia": "Transparência Ativa",
+          "lgpd": "LGPD Compliance",
+          "nps": "NPS Governamental",
+          "renovacao": "Probabilidade Renovação",
+          "completudeBPA": "Completude BPA/APAC",
+          "indicadoresClinicos": "Indicadores Clínicos",
+          "heatmapRisco": "Mapa de Riscos",
+          "pipeline": "Pipeline Contratos"
+        }
+      }
+    }
+  },
+  "en": {
+    "accessDropdown": {
+      "options": {
+        "oss": {
+          "label": "Contract Management/OSS",
+          "description": "OSS Cesário Lange - BHCL"
+        }
+      }
+    },
+    "navbar": {
+      "roles": {
+        "oss": "OSS"
+      }
+    }
+  },
+  "es": {
+    "accessDropdown": {
+      "options": {
+        "oss": {
+          "label": "Gestión Contractual/OSS",
+          "description": "OSS Cesário Lange - BHCL"
+        }
+      }
+    },
+    "navbar": {
+      "roles": {
+        "oss": "OSS"
+      }
+    }
+  },
+  "fr": {
+    "accessDropdown": {
+      "options": {
+        "oss": {
+          "label": "Gestion Contractuelle/OSS",
+          "description": "OSS Cesário Lange - BHCL"
+        }
+      }
+    },
+    "navbar": {
+      "roles": {
+        "oss": "OSS"
+      }
+    }
+  }
+}

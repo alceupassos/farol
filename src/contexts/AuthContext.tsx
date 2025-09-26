@@ -271,6 +271,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const switchGuestRole = (newRole: string) => {
+    console.log('AuthContext: Alterando papel para:', newRole, 'no contexto de autenticação');
     console.log('Switching to role:', newRole);
     setUserRole(newRole);
     localStorage.setItem('demo_user_role', newRole);

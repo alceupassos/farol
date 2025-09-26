@@ -89,6 +89,11 @@ import NeurologyCarePage from "./pages/NeurologyCarePage";
 import VisionCarePage from "./pages/VisionCarePage";
 import HearingCarePage from "./pages/HearingCarePage";
 import PrefeituraDashboard from "./pages/PrefeituraDashboard";
+import OSSDashboard from "./pages/OSSDashboard";
+import OSSReceitasGlosas from "./pages/OSSReceitasGlosas";
+import OSSComplianceRisco from "./pages/OSSComplianceRisco";
+import OSSMetasDesempenho from "./pages/OSSMetasDesempenho";
+import OSSOracleAI from "./pages/OSSOracleAI";
 import DashboardRedirect from "./components/DashboardRedirect";
 import IntegracaoERPPage from "./pages/IntegracaoERPPage";
 import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
@@ -136,6 +141,11 @@ const App = () => (
                     <Route path="/dashboard-redirect" element={<TOTPProtectedRoute><ProtectedRoute><DashboardRedirect /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/dashboard" element={<TOTPProtectedRoute><ProtectedRoute><Dashboard /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/prefeitura-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><PrefeituraDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><OSSDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-receitas-glosas" element={<TOTPProtectedRoute><ProtectedRoute><OSSReceitasGlosas /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-compliance-risco" element={<TOTPProtectedRoute><ProtectedRoute><OSSComplianceRisco /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-metas-desempenho" element={<TOTPProtectedRoute><ProtectedRoute><OSSMetasDesempenho /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-oracle-ai" element={<TOTPProtectedRoute><ProtectedRoute><OSSOracleAI /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
                     <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />

@@ -1,0 +1,126 @@
+{
+  "pt": {
+    "sidebar": {
+      "sections": {
+        "ossOverview": {
+          "title": "VISÃO GERAL",
+          "items": {
+            "overview": "Dashboard Principal",
+            "executive": "Dashboard Executivo"
+          }
+        },
+        "ossFinancial": {
+          "title": "OPERACIONAL FINANCEIRO",
+          "items": {
+            "revenue": "Receitas e Faturamento",
+            "glosas": "Gestão de Glosas",
+            "roi": "Simulador de ROI"
+          }
+        },
+        "ossCompliance": {
+          "title": "COMPLIANCE E RISCO",
+          "items": {
+            "compliance": "Matriz de Risco",
+            "audesp": "Audesp",
+            "transparency": "Transparência Ativa",
+            "lgpd": "LGPD Compliance"
+          }
+        },
+        "ossPerformance": {
+          "title": "METAS E DESEMPENHO",
+          "items": {
+            "goals": "Metas Contratuais",
+            "performance": "Indicadores de Desempenho",
+            "actionPlans": "Planos de Ação",
+            "benchmark": "Benchmark Regional"
+          }
+        },
+        "ossIntegrations": {
+          "title": "INTEGRAÇÕES",
+          "items": {
+            "datasus": "DATASUS/SUS",
+            "tiss": "TISS/TUSS",
+            "esus": "e-SUS"
+          }
+        },
+        "ossAI": {
+          "title": "INTELIGÊNCIA ARTIFICIAL",
+          "items": {
+            "oracle": "Oráculo IA",
+            "simulator": "Simulador What-If",
+            "predictions": "Análises Preditivas"
+          }
+        },
+        "ossManagement": {
+          "title": "GESTÃO CONTRATUAL",
+          "items": {
+            "contracts": "Contratos",
+            "nps": "NPS Governamental"
+          }
+        }
+      }
+    }
+  },
+  "en": {
+    "sidebar": {
+      "sections": {
+        "ossOverview": {
+          "title": "OVERVIEW",
+          "items": {
+            "overview": "Main Dashboard",
+            "executive": "Executive Dashboard"
+          }
+        },
+        "ossFinancial": {
+          "title": "FINANCIAL OPERATIONS",
+          "items": {
+            "revenue": "Revenue and Billing",
+            "glosas": "Disallowance Management",
+            "roi": "ROI Simulator"
+          }
+        },
+        "ossCompliance": {
+          "title": "COMPLIANCE & RISK",
+          "items": {
+            "compliance": "Risk Matrix",
+            "audesp": "Audesp",
+            "transparency": "Active Transparency",
+            "lgpd": "LGPD Compliance"
+          }
+        },
+        "ossPerformance": {
+          "title": "GOALS & PERFORMANCE",
+          "items": {
+            "goals": "Contract Goals",
+            "performance": "Performance Indicators",
+            "actionPlans": "Action Plans",
+            "benchmark": "Regional Benchmark"
+          }
+        },
+        "ossIntegrations": {
+          "title": "INTEGRATIONS",
+          "items": {
+            "datasus": "DATASUS/SUS",
+            "tiss": "TISS/TUSS",
+            "esus": "e-SUS"
+          }
+        },
+        "ossAI": {
+          "title": "ARTIFICIAL INTELLIGENCE",
+          "items": {
+            "oracle": "AI Oracle",
+            "simulator": "What-If Simulator",
+            "predictions": "Predictive Analytics"
+          }
+        },
+        "ossManagement": {
+          "title": "CONTRACT MANAGEMENT",
+          "items": {
+            "contracts": "Contracts",
+            "nps": "Government NPS"
+          }
+        }
+      }
+    }
+  }
+}

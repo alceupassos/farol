@@ -53,6 +53,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { ossSections } from './SidebarOSS';
 
 interface SidebarItemProps {
   to: string;
@@ -226,6 +227,23 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
             },
             {
               to: '/oraculo-ia',
+              icon: <BrainCircuit className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.aiOracle',
+            },
+          ],
+        },
+      ],
+      oss: [
+        {
+          titleKey: 'sidebar.sections.dashboard.title',
+          items: [
+            {
+              to: '/oss-dashboard',
+              icon: <LayoutDashboard className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossOverview',
+            },
+            {
+              to: '/oss-oracle-ai',
               icon: <BrainCircuit className="h-5 w-5 mr-3" />,
               labelKey: 'sidebar.sections.dashboard.items.aiOracle',
             },
@@ -471,6 +489,10 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
       sections.push(...patientSections);
     }
 
+    if (userRole === 'oss') {
+      sections.push(...ossSections);
+    }
+
     sections.push(...systemSections);
 
     return buildSections(sections);
@@ -484,6 +506,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
     laboratorio: 'navbar.roles.laboratory',
     medico: 'navbar.roles.doctor',
     paciente: 'navbar.roles.patient',
+    oss: 'navbar.roles.oss',
   };
 
   return (

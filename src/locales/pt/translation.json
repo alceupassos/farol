@@ -40,13 +40,15 @@
   "navbar": {
     "openMenu": "Abrir menu",
     "telemedicineButton": "Telemedicina",
-    "logoutSuccess": "Logout realizado com sucesso!",
     "roles": {
       "manager": "Gestor Municipal",
       "hospital": "Gestor Hospitalar",
       "doctor": "Profissional de Saúde",
       "patient": "Paciente",
-      "laboratory": "Gestor de Laboratórios",
+      "gestor": "Gestor Municipal",
+      "oss": "OSS",
+      "medico": "Médico",
+      "paciente": "Paciente",
       "visitor": "Visitante"
     }
   },
@@ -72,6 +74,10 @@
       "hospital": {
         "label": "Hospital",
         "description": "Acesso para gestão hospitalar"
+      },
+      "oss": {
+        "label": "Gestão Contratual/OSS",
+        "description": "OSS Cesário Lange - BHCL"
       },
       "laboratory": {
         "label": "Laboratórios",
@@ -101,6 +107,7 @@
         "items": {
           "prefeituraOverview": "Visão Geral Prefeitura",
           "hospitalOverview": "Visão Geral Hospital",
+          "ossOverview": "Visão Geral OSS",
           "aiOracle": "Oráculo de IA Gestão",
           "healthNews": "Últimas Notícias Saúde"
         }
@@ -285,6 +292,62 @@
         "items": {
           "settings": "Configurações",
           "technicalDetails": "Detalhes Técnicos"
+        }
+      },
+      "ossOverview": {
+        "title": "Visão Geral OSS",
+        "items": {
+          "overview": "Dashboard OSS",
+          "executive": "Visão Executiva"
+        }
+      },
+      "ossFinancial": {
+        "title": "Gestão Financeira",
+        "items": {
+          "revenue": "Receitas",
+          "glosas": "Glosas",
+          "roi": "ROI & Rentabilidade"
+        }
+      },
+      "ossCompliance": {
+        "title": "Compliance & Risco",
+        "items": {
+          "compliance": "Compliance",
+          "audesp": "AUDESP",
+          "transparency": "Transparência",
+          "lgpd": "LGPD"
+        }
+      },
+      "ossPerformance": {
+        "title": "Metas & Desempenho",
+        "items": {
+          "goals": "Metas",
+          "performance": "Desempenho",
+          "actionPlans": "Planos de Ação",
+          "benchmark": "Benchmark"
+        }
+      },
+      "ossIntegrations": {
+        "title": "Integrações",
+        "items": {
+          "datasus": "DATASUS",
+          "tiss": "TISS/TUSS",
+          "esus": "e-SUS"
+        }
+      },
+      "ossAI": {
+        "title": "IA & Simulações",
+        "items": {
+          "oracle": "Oráculo IA",
+          "simulator": "Simulador",
+          "predictions": "Predições"
+        }
+      },
+      "ossManagement": {
+        "title": "Gestão Contratual",
+        "items": {
+          "contracts": "Contratos",
+          "nps": "NPS & Satisfação"
         }
       }
     },

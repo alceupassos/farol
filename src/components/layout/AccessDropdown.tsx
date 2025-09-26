@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube } from 'lucide-react';
+import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -48,6 +48,13 @@ const AccessDropdown = () => {
         color: 'text-blue-500'
       },
       {
+        id: 'oss',
+        label: t('accessDropdown.options.oss.label'),
+        icon: FileText,
+        description: t('accessDropdown.options.oss.description'),
+        color: 'text-purple-500'
+      },
+      {
         id: 'laboratorio',
         label: t('accessDropdown.options.laboratory.label'),
         icon: TestTube,
@@ -73,6 +80,7 @@ const AccessDropdown = () => {
   );
 
   const handleAccessSelect = (role: string) => {
+    console.log('AccessDropdown: Iniciando seleção de acesso para papel:', role);
     console.log('AccessDropdown: initiating TOTP verification for role:', role);
     setSelectedRole(role);
     setTotpCode('');
@@ -93,12 +101,18 @@ const AccessDropdown = () => {
   };
 
   const redirectAfterRole = (role: string) => {
+    console.log('AccessDropdown: Iniciando redirecionamento para papel:', role);
+    
     if (role === 'gestor') {
       console.log('AccessDropdown: Redirecting to prefeitura dashboard');
       navigate('/prefeitura-dashboard');
     } else if (role === 'hospital') {
       console.log('AccessDropdown: Redirecting to hospital dashboard');
       navigate('/dashboard');
+    } else if (role === 'oss') {
+      console.log('AccessDropdown: Redirecting to OSS dashboard');
+      console.log('AccessDropdown: Tentando navegar para /oss-dashboard');
+      navigate('/oss-dashboard');
     } else if (role === 'laboratorio') {
       console.log('AccessDropdown: Redirecting to laboratory hub');
       navigate('/laboratorios/visao-geral');
@@ -112,6 +126,8 @@ const AccessDropdown = () => {
       console.log('AccessDropdown: Redirecting to default dashboard');
       navigate('/dashboard');
     }
+    
+    console.log('AccessDropdown: Redirecionamento concluído para papel:', role);
   };
 
   const handleVerifyTotp = async () => {
