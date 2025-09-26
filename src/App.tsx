@@ -94,6 +94,13 @@ import OSSReceitasGlosas from "./pages/OSSReceitasGlosas";
 import OSSComplianceRisco from "./pages/OSSComplianceRisco";
 import OSSMetasDesempenho from "./pages/OSSMetasDesempenho";
 import OSSOracleAI from "./pages/OSSOracleAI";
+import OSSGlosasDashboard from "./pages/OSSGlosasDashboard";
+import OSSROIRentabilidade from "./pages/OSSROIRentabilidade";
+import OSSCompliancePage from "./pages/OSSCompliancePage";
+import OSSAudespPage from "./pages/OSSAudespPage";
+import OSSPredicaoPage from "./pages/OSSPredicaoPage";
+import OSSSimuladorDono from "./pages/OSSSimuladorDono";
+import OSSControleGlosaOPME from "./pages/OSSControleGlosaOPME";
 import DashboardRedirect from "./components/DashboardRedirect";
 import IntegracaoERPPage from "./pages/IntegracaoERPPage";
 import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
@@ -106,6 +113,9 @@ import LaboratoriosQualidadePage from "./pages/LaboratoriosQualidadePage";
 import LaboratoriosAnalyticsPage from "./pages/LaboratoriosAnalyticsPage";
 import LaboratoriosAdministracaoPage from "./pages/LaboratoriosAdministracaoPage";
 import LaboratorioIntegrationDetailPage from "./pages/LaboratorioIntegrationDetailPage";
+import OSSNoticiasNacionais from "./pages/OSSNoticiasNacionais";
+import OSSNoticiasClientes from "./pages/OSSNoticiasClientes";
+import OSSManualDescritivo from "./pages/OSSManualDescritivo";
 
 const queryClient = new QueryClient();
 
@@ -142,10 +152,17 @@ const App = () => (
                     <Route path="/dashboard" element={<TOTPProtectedRoute><ProtectedRoute><Dashboard /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/prefeitura-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><PrefeituraDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/oss-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><OSSDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-receitas-glosas" element={<TOTPProtectedRoute><ProtectedRoute><OSSReceitasGlosas /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-compliance-risco" element={<TOTPProtectedRoute><ProtectedRoute><OSSComplianceRisco /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-metas-desempenho" element={<TOTPProtectedRoute><ProtectedRoute><OSSMetasDesempenho /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/oss-oracle-ai" element={<TOTPProtectedRoute><ProtectedRoute><OSSOracleAI /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-glosas" element={<TOTPProtectedRoute><ProtectedRoute><OSSGlosasDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-roi-rentabilidade" element={<TOTPProtectedRoute><ProtectedRoute><OSSROIRentabilidade /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-compliance" element={<TOTPProtectedRoute><ProtectedRoute><OSSCompliancePage /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-audesp" element={<TOTPProtectedRoute><ProtectedRoute><OSSAudespPage /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-predicao" element={<TOTPProtectedRoute><ProtectedRoute><OSSPredicaoPage /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-simulador" element={<TOTPProtectedRoute><ProtectedRoute><OSSSimuladorDono /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-controle-glosa-opme" element={<TOTPProtectedRoute><ProtectedRoute><OSSControleGlosaOPME /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-noticias" element={<TOTPProtectedRoute><ProtectedRoute><OSSNoticiasNacionais /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-noticias-clientes" element={<TOTPProtectedRoute><ProtectedRoute><OSSNoticiasClientes /></ProtectedRoute></TOTPProtectedRoute>} />
+                    <Route path="/oss-manual-descritivo" element={<TOTPProtectedRoute><ProtectedRoute><OSSManualDescritivo /></ProtectedRoute></TOTPProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
                     <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />

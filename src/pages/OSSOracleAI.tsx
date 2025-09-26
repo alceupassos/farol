@@ -37,6 +37,7 @@ const OSSOracleAI = () => {
       timestamp: '25/01/2025 10:15'
     }
   ]);
+  const [investimento, setInvestimento] = useState(50000);
 
   const perguntasSugeridas = [
     'Onde ganho R$ em recuperação de glosa nos próximos 30 dias?',
@@ -96,65 +97,82 @@ const OSSOracleAI = () => {
     }
   };
 
+  const rangeClass =
+    'w-full mt-1 h-2 rounded-full bg-gradient-to-r from-blue-900/40 via-slate-800 to-blue-900/40 accent-blue-400 outline-none transition focus:ring-2 focus:ring-blue-400';
+  const inputClass =
+    'w-full mt-1 rounded-2xl border border-blue-500/40 bg-slate-950/70 px-4 py-3 text-slate-100 shadow-[0_0_18px_rgba(37,99,235,0.25)] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400';
+  const cardDarkSurface = 'bg-slate-950/80 border border-white/10 text-slate-100 backdrop-blur-md';
+  const panelDarkSurface = 'bg-slate-900/70 border border-white/10 text-slate-200';
+  const formatCurrency = (valor: number) =>
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(valor);
+  const resultadoSimulacao = {
+    roiPercent: 342,
+    paybackMeses: 4.2,
+    economiaAnual: 171000,
+    breakeven: 'Mês 5'
+  };
+
   return (
     <MainLayout>
       <div className="space-y-6 p-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-              <Brain className="h-8 w-8 mr-3 text-purple-500" />
+            <h1 className="flex items-center text-3xl font-bold text-white">
+              <Brain className="mr-3 h-8 w-8 text-purple-400" />
               Oráculo IA - Google Gemini
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
+            <p className="mt-1 text-slate-400">
               Análises preditivas e recomendações inteligentes para gestão OSS
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
-              <History className="h-4 w-4 mr-2" />
+            <Button variant="outline" size="sm" className="border-white/20 bg-slate-900/70 text-slate-100">
+              <History className="mr-2 h-4 w-4" />
               Histórico
             </Button>
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-2" />
+            <Button variant="outline" size="sm" className="border-white/20 bg-slate-900/70 text-slate-100">
+              <Download className="mr-2 h-4 w-4" />
               Exportar
             </Button>
           </div>
         </div>
 
         {/* Interface de Pergunta */}
-        <Card className="border-purple-200 dark:border-purple-800">
+        <Card className={cardDarkSurface}>
           <CardHeader>
-            <CardTitle className="flex items-center">
-              <MessageSquare className="h-5 w-5 mr-2" />
+            <CardTitle className="flex items-center text-white">
+              <MessageSquare className="mr-2 h-5 w-5 text-fuchsia-300" />
               Faça sua pergunta em linguagem natural
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-3 lg:flex-row">
                 <input
                   type="text"
                   value={pergunta}
                   onChange={(e) => setPergunta(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handlePergunta()}
-                  placeholder="Ex: Onde posso economizar mais nos próximos 30 dias?"
-                  className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  onKeyDown={(e) => e.key === 'Enter' && handlePergunta()}
+                  placeholder="Pergunte sobre glosas, metas, ROI ou riscos..."
+                  className={inputClass}
                 />
-                <Button 
+                <Button
                   onClick={handlePergunta}
                   disabled={carregando}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                  className="rounded-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 px-6 py-3 text-white shadow-[0_10px_30px_rgba(37,99,235,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_15px_35px_rgba(37,99,235,0.4)] disabled:opacity-60"
                 >
                   {carregando ? (
                     <RefreshCw className="h-4 w-4 animate-spin" />
                   ) : (
-                    <Send className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-sm font-semibold">
+                      <Send className="h-4 w-4" />
+                      Consultar IA
+                    </div>
                   )}
                 </Button>
               </div>
 
-              {/* Perguntas Sugeridas */}
               <div className="flex flex-wrap gap-2">
                 {perguntasSugeridas.map((p, index) => (
                   <Button
@@ -162,9 +180,9 @@ const OSSOracleAI = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => setPergunta(p)}
-                    className="text-xs"
+                    className="rounded-full border border-white/10 bg-slate-900/70 text-xs text-slate-100 transition hover:border-blue-400/60 hover:bg-slate-900/90"
                   >
-                    <Sparkles className="h-3 w-3 mr-1" />
+                    <Sparkles className="mr-1 h-3 w-3 text-fuchsia-300" />
                     {p}
                   </Button>
                 ))}
@@ -175,7 +193,7 @@ const OSSOracleAI = () => {
 
         {/* Resposta da IA */}
         {respostaIA && (
-          <Card className="border-green-200 dark:border-green-800">
+          <Card className="border border-emerald-500/30 bg-slate-950/80 text-slate-100">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center">
@@ -195,28 +213,28 @@ const OSSOracleAI = () => {
                 </div>
 
                 {/* Métricas */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded">
-                    <p className="text-sm text-gray-500">Impacto Financeiro</p>
-                    <p className="text-xl font-bold text-purple-600">
-                      R$ {(respostaIA.metricas.impactoFinanceiro / 1000).toFixed(1)}k
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+                  <div className="rounded-2xl border border-purple-500/30 bg-slate-900/70 p-4 shadow-[0_12px_30px_rgba(147,51,234,0.18)]">
+                    <p className="text-sm text-purple-200">Impacto Financeiro</p>
+                    <p className="text-2xl font-semibold text-purple-300">
+                      {formatCurrency(respostaIA.metricas.impactoFinanceiro)}
                     </p>
                   </div>
-                  <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded">
-                    <p className="text-sm text-gray-500">Tempo Implementação</p>
-                    <p className="text-xl font-bold text-blue-600">
+                  <div className="rounded-2xl border border-blue-500/30 bg-slate-900/70 p-4 shadow-[0_12px_30px_rgba(59,130,246,0.18)]">
+                    <p className="text-sm text-blue-200">Tempo Implementação</p>
+                    <p className="text-2xl font-semibold text-blue-300">
                       {respostaIA.metricas.tempoImplementacao} dias
                     </p>
                   </div>
-                  <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded">
-                    <p className="text-sm text-gray-500">Confiança</p>
-                    <p className="text-xl font-bold text-green-600">
+                  <div className="rounded-2xl border border-emerald-500/30 bg-slate-900/70 p-4 shadow-[0_12px_30px_rgba(16,185,129,0.18)]">
+                    <p className="text-sm text-emerald-200">Confiança</p>
+                    <p className="text-2xl font-semibold text-emerald-300">
                       {respostaIA.metricas.confianca}%
                     </p>
                   </div>
-                  <div className="text-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded">
-                    <p className="text-sm text-gray-500">Complexidade</p>
-                    <p className="text-xl font-bold text-orange-600 capitalize">
+                  <div className="rounded-2xl border border-amber-500/30 bg-slate-900/70 p-4 shadow-[0_12px_30px_rgba(245,158,11,0.18)]">
+                    <p className="text-sm text-amber-200">Complexidade</p>
+                    <p className="text-2xl font-semibold text-amber-300 capitalize">
                       {respostaIA.metricas.complexidade}
                     </p>
                   </div>
@@ -230,16 +248,19 @@ const OSSOracleAI = () => {
                   </h4>
                   <div className="space-y-2">
                     {respostaIA.evidencias.map((ev, index) => (
-                      <div key={index} className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                        <span className="text-sm">{ev.fonte}</span>
+                      <div
+                        key={index}
+                        className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/70 p-3 shadow-sm"
+                      >
+                        <span className="text-sm text-slate-200">{ev.fonte}</span>
                         <div className="flex items-center">
-                          <div className="w-20 bg-gray-200 rounded-full h-2 mr-2">
-                            <div 
-                              className="bg-blue-500 h-2 rounded-full"
+                          <div className="mr-2 h-2 w-28 rounded-full bg-slate-800">
+                            <div
+                              className="h-2 rounded-full bg-gradient-to-r from-blue-400 to-sky-400"
                               style={{ width: `${ev.confianca}%` }}
-                            ></div>
+                            />
                           </div>
-                          <span className="text-xs text-gray-500">{ev.confianca}%</span>
+                          <span className="text-xs text-slate-400">{ev.confianca}%</span>
                         </div>
                       </div>
                     ))}
@@ -254,12 +275,15 @@ const OSSOracleAI = () => {
                   </h4>
                   <div className="space-y-2">
                     {respostaIA.acoes.map((acao, index) => (
-                      <div key={index} className="flex items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded">
-                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                      <div
+                        key={index}
+                        className="flex items-center rounded-2xl border border-white/10 bg-slate-900/70 p-3 shadow-sm"
+                      >
+                        <div className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-sm font-bold text-white">
                           {index + 1}
                         </div>
-                        <span className="flex-1">{acao}</span>
-                        <Button size="sm" variant="outline">
+                        <span className="flex-1 text-slate-200">{acao}</span>
+                        <Button size="sm" variant="outline" className="rounded-full border-white/20 bg-slate-900/70 text-slate-100">
                           Implementar
                         </Button>
                       </div>
@@ -272,7 +296,7 @@ const OSSOracleAI = () => {
         )}
 
         <Tabs defaultValue="simulador" className="space-y-4">
-          <TabsList>
+          <TabsList className="bg-slate-900/70 text-slate-200 border border-white/10">
             <TabsTrigger value="simulador">Simulador What-If</TabsTrigger>
             <TabsTrigger value="preditivo">Análise Preditiva</TabsTrigger>
             <TabsTrigger value="otimizacao">Otimização</TabsTrigger>
@@ -281,22 +305,24 @@ const OSSOracleAI = () => {
 
           {/* Simulador What-If */}
           <TabsContent value="simulador">
-            <Card>
+            <Card className={cardDarkSurface}>
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="flex items-center text-white">
                   <Calculator className="h-5 w-5 mr-2" />
                   Simulador de Cenários
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="font-semibold">Parâmetros de Simulação</h4>
-                    
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div className="space-y-5">
+                    <h4 className="text-lg font-semibold text-white">Parâmetros de Simulação</h4>
+
                     <div>
-                      <label className="text-sm font-medium">Redução de Taxa de Glosa (%)</label>
-                      <input type="range" min="0" max="5" step="0.1" className="w-full mt-1" />
-                      <div className="flex justify-between text-xs text-gray-500">
+                      <label className="text-sm font-medium text-slate-200">
+                        Redução de Taxa de Glosa (%)
+                      </label>
+                      <input type="range" min="0" max="5" step="0.1" className={`${rangeClass} slider-range`} />
+                      <div className="flex justify-between text-xs text-slate-400">
                         <span>0%</span>
                         <span>2.5%</span>
                         <span>5%</span>
@@ -304,56 +330,69 @@ const OSSOracleAI = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium">Aumento de Produtividade (%)</label>
-                      <input type="range" min="0" max="30" step="1" className="w-full mt-1" />
-                      <div className="flex justify-between text-xs text-gray-500">
+                      <label className="text-sm font-medium text-slate-200">
+                        Aumento de Produtividade (%)
+                      </label>
+                      <input type="range" min="0" max="30" step="1" className={`${rangeClass} slider-range`} />
+                      <div className="flex justify-between text-xs text-slate-400">
                         <span>0%</span>
                         <span>15%</span>
                         <span>30%</span>
                       </div>
                     </div>
 
-                    <div>
-                      <label className="text-sm font-medium">Investimento (R$)</label>
-                      <input type="number" placeholder="50000" className="w-full mt-1 px-3 py-2 border rounded" />
+                    <div className="space-y-1 text-slate-200">
+                      <label className="text-sm font-medium text-slate-200">
+                        Investimento (R$)
+                      </label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={investimento}
+                        onChange={(e) => setInvestimento(Number(e.target.value) || 0)}
+                        className={inputClass}
+                      />
+                      <p className="text-xs text-slate-500">
+                        Valor planejado em automações, capacitação e revisão de processos.
+                      </p>
                     </div>
 
-                    <Button className="w-full">
-                      <Zap className="h-4 w-4 mr-2" />
+                    <Button className="w-full rounded-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white shadow-[0_14px_30px_rgba(56,189,248,0.25)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(79,70,229,0.3)]">
+                      <Zap className="mr-2 h-4 w-4" />
                       Simular Cenário
                     </Button>
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="font-semibold">Resultado da Simulação</h4>
-                    
-                    <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded">
-                      <div className="space-y-3">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500">ROI Esperado:</span>
-                          <span className="font-bold text-green-600">342%</span>
+                    <h4 className="text-lg font-semibold text-white">Resultado da Simulação</h4>
+
+                    <div className="rounded-3xl border border-emerald-500/40 bg-slate-900/80 p-6 shadow-[0_20px_45px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/20">
+                      <div className="space-y-4 text-slate-100">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-400">ROI Esperado</span>
+                          <span className="text-2xl font-bold text-emerald-300">{resultadoSimulacao.roiPercent}%</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500">Payback:</span>
-                          <span className="font-bold">4.2 meses</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-400">Payback estimado</span>
+                          <span className="text-lg font-semibold text-slate-100">{resultadoSimulacao.paybackMeses} meses</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500">Economia Anual:</span>
-                          <span className="font-bold">R$ 171k</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-400">Economia Anual</span>
+                          <span className="text-lg font-semibold text-slate-100">{formatCurrency(resultadoSimulacao.economiaAnual)}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-500">Break-even:</span>
-                          <span className="font-bold">Mês 5</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-400">Ponto de equilíbrio</span>
+                          <span className="text-lg font-semibold text-slate-100">{resultadoSimulacao.breakeven}</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded">
-                      <p className="text-sm flex items-start">
-                        <AlertTriangle className="h-4 w-4 text-yellow-500 mr-2 mt-0.5" />
+                    <div className="rounded-3xl border border-amber-400/40 bg-slate-900/80 p-4 text-slate-100 shadow-[0_20px_40px_rgba(250,204,21,0.15)]">
+                      <p className="flex items-start gap-3 text-sm text-slate-200">
+                        <AlertTriangle className="h-5 w-5 text-amber-300" />
                         <span>
-                          <strong>Riscos:</strong> Resistência da equipe, curva de aprendizado inicial, 
-                          necessidade de ajustes no processo.
+                          <strong>Riscos monitorados:</strong> Resistência inicial das equipes, curva de aprendizagem de novos fluxos,
+                          necessidade de ajustes finos no checklist digital e validações em tempo real.
                         </span>
                       </p>
                     </div>
@@ -365,82 +404,82 @@ const OSSOracleAI = () => {
 
           {/* Análise Preditiva */}
           <TabsContent value="preditivo">
-            <Card>
+            <Card className={cardDarkSurface}>
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <TrendingUp className="h-5 w-5 mr-2" />
+                <CardTitle className="flex items-center text-white">
+                  <TrendingUp className="h-5 w-5 mr-2 text-blue-300" />
                   Previsões e Tendências
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Card>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  <Card className="rounded-2xl border border-emerald-500/30 bg-slate-900/70 text-slate-200">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-sm">Renovação de Contratos</CardTitle>
+                      <CardTitle className="text-sm text-white">Renovação de Contratos</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-green-500">78%</div>
-                      <p className="text-xs text-gray-500 mt-1">Probabilidade média</p>
-                      <div className="mt-3 space-y-1">
-                        <div className="text-xs">
-                          <span className="text-gray-500">Contrato A:</span>
-                          <span className="font-bold ml-1">92%</span>
+                      <div className="text-2xl font-bold text-emerald-300">78%</div>
+                      <p className="mt-1 text-xs text-slate-400">Probabilidade média</p>
+                      <div className="mt-3 space-y-1 text-xs">
+                        <div>
+                          <span className="text-slate-400">Contrato A:</span>
+                          <span className="ml-1 font-bold text-white">92%</span>
                         </div>
-                        <div className="text-xs">
-                          <span className="text-gray-500">Contrato B:</span>
-                          <span className="font-bold ml-1">71%</span>
+                        <div>
+                          <span className="text-slate-400">Contrato B:</span>
+                          <span className="ml-1 font-bold text-white">71%</span>
                         </div>
-                        <div className="text-xs">
-                          <span className="text-gray-500">Contrato C:</span>
-                          <span className="font-bold ml-1">69%</span>
+                        <div>
+                          <span className="text-slate-400">Contrato C:</span>
+                          <span className="ml-1 font-bold text-white">69%</span>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card>
+                  <Card className="rounded-2xl border border-amber-500/30 bg-slate-900/70 text-slate-200">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-sm">Risco de Glosa (30 dias)</CardTitle>
+                      <CardTitle className="text-sm text-white">Risco de Glosa (30 dias)</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-yellow-500">Médio</div>
-                      <p className="text-xs text-gray-500 mt-1">R$ 156k em risco</p>
-                      <div className="mt-3 space-y-1">
-                        <div className="text-xs">
-                          <span className="text-gray-500">TUSS:</span>
-                          <span className="font-bold ml-1 text-red-500">Alto</span>
+                      <div className="text-2xl font-bold text-amber-300">Médio</div>
+                      <p className="mt-1 text-xs text-slate-400">R$ 156k em risco</p>
+                      <div className="mt-3 space-y-1 text-xs">
+                        <div>
+                          <span className="text-slate-400">TUSS:</span>
+                          <span className="ml-1 font-bold text-rose-300">Alto</span>
                         </div>
-                        <div className="text-xs">
-                          <span className="text-gray-500">Documentação:</span>
-                          <span className="font-bold ml-1 text-yellow-500">Médio</span>
+                        <div>
+                          <span className="text-slate-400">Documentação:</span>
+                          <span className="ml-1 font-bold text-amber-300">Médio</span>
                         </div>
-                        <div className="text-xs">
-                          <span className="text-gray-500">Prazo:</span>
-                          <span className="font-bold ml-1 text-green-500">Baixo</span>
+                        <div>
+                          <span className="text-slate-400">Prazo:</span>
+                          <span className="ml-1 font-bold text-emerald-300">Baixo</span>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card>
+                  <Card className="rounded-2xl border border-blue-500/30 bg-slate-900/70 text-slate-200">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-sm">Tempestividade Audesp</CardTitle>
+                      <CardTitle className="text-sm text-white">Tempestividade Audesp</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold text-green-500">95%</div>
-                      <p className="text-xs text-gray-500 mt-1">Chance de cumprir prazo</p>
-                      <div className="mt-3 space-y-1">
-                        <div className="text-xs">
-                          <span className="text-gray-500">Próximo envio:</span>
-                          <span className="font-bold ml-1">10/02</span>
+                      <div className="text-2xl font-bold text-emerald-300">95%</div>
+                      <p className="mt-1 text-xs text-slate-400">Chance de cumprir prazo</p>
+                      <div className="mt-3 space-y-1 text-xs">
+                        <div>
+                          <span className="text-slate-400">Próximo envio:</span>
+                          <span className="ml-1 font-bold text-white">10/02</span>
                         </div>
-                        <div className="text-xs">
-                          <span className="text-gray-500">Campos OK:</span>
-                          <span className="font-bold ml-1">38/40</span>
+                        <div>
+                          <span className="text-slate-400">Campos OK:</span>
+                          <span className="ml-1 font-bold text-white">38/40</span>
                         </div>
-                        <div className="text-xs">
-                          <span className="text-gray-500">Tempo médio:</span>
-                          <span className="font-bold ml-1">3 dias</span>
+                        <div>
+                          <span className="text-slate-400">Tempo médio:</span>
+                          <span className="ml-1 font-bold text-white">3 dias</span>
                         </div>
                       </div>
                     </CardContent>
@@ -452,61 +491,70 @@ const OSSOracleAI = () => {
 
           {/* Otimização */}
           <TabsContent value="otimizacao">
-            <Card>
+            <Card className={cardDarkSurface}>
               <CardHeader>
-                <CardTitle>Otimização de Recursos e Metas</CardTitle>
+                <CardTitle className="text-white">Otimização de Recursos e Metas</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded">
-                    <h4 className="font-semibold mb-2">Realocação Sugerida de Metas</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                      Baseado no desempenho histórico e capacidade instalada
-                    </p>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Unidade A: Cirurgias</span>
-                        <div className="flex items-center">
-                          <span className="text-sm text-gray-500 mr-2">150 → </span>
-                          <span className="text-sm font-bold text-green-600">165</span>
-                          <Badge className="ml-2 bg-green-100 text-green-800">+10%</Badge>
+                <div className="space-y-4 text-slate-200">
+                  <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+                    <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold">
+                      <Sparkles className="h-4 w-4 text-fuchsia-300" />Top 3 Ações Recomendadas
+                    </h4>
+                    <div className="space-y-2 text-sm">
+                      {[
+                        {
+                          titulo: 'Automatizar validação TUSS',
+                          impacto: 'Reduz 55% das glosas técnicas',
+                          roi: 'ROI estimado 340%'
+                        },
+                        {
+                          titulo: 'Checklist digital de documentação',
+                          impacto: 'Diminui reenvio em 42%',
+                          roi: 'Economia R$ 280k'
+                        },
+                        {
+                          titulo: 'Alertas de prazo proativo',
+                          impacto: 'Evita multa e atrasos Audesp',
+                          roi: 'Payback em 3 meses'
+                        }
+                      ].map((acao, index) => (
+                        <div
+                          key={acao.titulo}
+                          className="flex items-start gap-3 rounded-2xl bg-slate-950/80 p-3 shadow-sm"
+                        >
+                          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-sm font-semibold text-white">
+                            {index + 1}
+                          </span>
+                          <div className="flex-1">
+                            <p className="font-medium text-white">{acao.titulo}</p>
+                            <p className="text-xs text-slate-400">{acao.impacto} • {acao.roi}</p>
+                          </div>
+                          <Badge className="bg-white/10 text-slate-100">Alta</Badge>
                         </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Unidade B: Consultas</span>
-                        <div className="flex items-center">
-                          <span className="text-sm text-gray-500 mr-2">3000 → </span>
-                          <span className="text-sm font-bold text-blue-600">2850</span>
-                          <Badge className="ml-2 bg-blue-100 text-blue-800">-5%</Badge>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Unidade C: Exames</span>
-                        <div className="flex items-center">
-                          <span className="text-sm text-gray-500 mr-2">5000 → </span>
-                          <span className="text-sm font-bold text-green-600">5250</span>
-                          <Badge className="ml-2 bg-green-100 text-green-800">+5%</Badge>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-3 text-center bg-green-50 dark:bg-green-900/20 rounded">
-                      <p className="text-sm text-gray-500">Melhoria Esperada</p>
-                      <p className="text-2xl font-bold text-green-600">+8.5%</p>
-                      <p className="text-xs text-gray-500">no atingimento geral</p>
-                    </div>
-                    <div className="p-3 text-center bg-blue-50 dark:bg-blue-900/20 rounded">
-                      <p className="text-sm text-gray-500">Economia Projetada</p>
-                      <p className="text-2xl font-bold text-blue-600">R$ 45k</p>
-                      <p className="text-xs text-gray-500">por mês</p>
+                  <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+                    <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold">
+                      <BarChart3 className="h-4 w-4 text-sky-300" />Principais causas (Pareto)
+                    </h4>
+                    <div className="grid gap-2 text-xs text-slate-300">
+                      <div className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-2">
+                        <span>Código TUSS incorreto</span>
+                        <span className="text-emerald-300">35%</span>
+                      </div>
+                      <div className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-2">
+                        <span>Documentação incompleta</span>
+                        <span className="text-emerald-300">28%</span>
+                      </div>
+                      <div className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-2">
+                        <span>Prazos expirados</span>
+                        <span className="text-emerald-300">15%</span>
+                      </div>
                     </div>
                   </div>
-
-                  <Button className="w-full">
-                    Aplicar Otimização Sugerida
-                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -514,20 +562,20 @@ const OSSOracleAI = () => {
 
           {/* Histórico */}
           <TabsContent value="historico">
-            <Card>
+            <Card className={cardDarkSurface}>
               <CardHeader>
-                <CardTitle>Histórico de Consultas</CardTitle>
+                <CardTitle className="text-white">Histórico de Consultas</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {historico.map((item, index) => (
-                    <div key={index} className="p-3 border rounded hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+                <div className="space-y-4 text-slate-200">
+                  {historico.map((log, idx) => (
+                    <div key={idx} className="rounded-xl border border-white/10 bg-slate-900/80 p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="font-medium text-sm">{item.pergunta}</p>
-                          <p className="text-xs text-gray-500 mt-1">{item.resposta}</p>
+                          <p className="font-medium text-sm">{log.pergunta}</p>
+                          <p className="text-xs text-slate-400">{log.resposta}</p>
                         </div>
-                        <span className="text-xs text-gray-400 ml-4">{item.timestamp}</span>
+                        <span className="text-xs text-slate-400 ml-4">{log.timestamp}</span>
                       </div>
                     </div>
                   ))}

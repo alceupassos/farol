@@ -47,7 +47,9 @@ import {
   ChevronRight,
   Images,
   UploadCloud,
-  Newspaper
+  Newspaper,
+  Layers,
+  AlertTriangle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -246,6 +248,61 @@ const Sidebar = ({ isOpen, toggleSidebar, isCollapsed, toggleCollapsed }: Sideba
               to: '/oss-oracle-ai',
               icon: <BrainCircuit className="h-5 w-5 mr-3" />,
               labelKey: 'sidebar.sections.dashboard.items.aiOracle',
+            },
+            {
+              to: '/oss-glosas',
+              icon: <AlertTriangle className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossGlosas',
+            },
+            {
+              to: '/oss-roi-rentabilidade',
+              icon: <TrendingUp className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossRoi',
+            },
+            {
+              to: '/oss-compliance',
+              icon: <Shield className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossCompliance',
+            },
+            {
+              to: '/oss-audesp',
+              icon: <FileText className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossAudesp',
+            },
+            {
+              to: '/oss-metas-desempenho',
+              icon: <Target className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossMetas',
+            },
+            {
+              to: '/oss-predicao',
+              icon: <Activity className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossPredicao',
+            },
+            {
+              to: '/oss-simulador',
+              icon: <Calculator className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossSimulador',
+            },
+            {
+              to: '/oss-controle-glosa-opme',
+              icon: <Layers className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossControleGlosa',
+            },
+            {
+              to: '/oss-noticias',
+              icon: <Newspaper className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossNoticias',
+            },
+            {
+              to: '/oss-noticias-clientes',
+              icon: <Users className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossNoticiasClientes',
+            },
+            {
+              to: '/oss-manual-descritivo',
+              icon: <Info className="h-5 w-5 mr-3" />,
+              labelKey: 'sidebar.sections.dashboard.items.ossManual',
             },
           ],
         },
