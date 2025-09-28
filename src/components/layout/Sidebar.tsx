@@ -97,7 +97,50 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           title: 'Dashboard',
           items: [
             { to: '/dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: 'Visão Geral Hospital' },
+            { to: '/hospital-dashboard-detalhado', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Dashboard Hospitalar' },
+            { to: '/sistema-his-hmis', icon: <Database className="h-5 w-5 mr-3" />, label: 'Sistema HIS/HMIS' },
             { to: '/oraculo-ia', icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: 'Oráculo IA' },
+          ],
+        },
+        {
+          title: 'Faturamento e Financeiro',
+          items: [
+            { to: '/faturamento-sustiss-tuss', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Faturamento SUSTISS/TUSS' },
+            { to: '/apac-oncologia', icon: <FileText className="h-5 w-5 mr-3" />, label: 'APAC Oncologia' },
+          ],
+        },
+        {
+          title: 'Interoperabilidade',
+          items: [
+            { to: '/rnds-datasus', icon: <Globe className="h-5 w-5 mr-3" />, label: 'RNDS/DATASUS' },
+            { to: '/conformidade-lgpd', icon: <Shield className="h-5 w-5 mr-3" />, label: 'Conformidade LGPD' },
+            { to: '/prontuario-digital', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Prontuário Digital' },
+          ],
+        },
+        {
+          title: 'Gestão Clínica',
+          items: [
+            { to: '/gestao-clinica', icon: <Stethoscope className="h-5 w-5 mr-3" />, label: 'Gestão Clínica' },
+            { to: '/centro-cirurgico', icon: <Scissors className="h-5 w-5 mr-3" />, label: 'Centro Cirúrgico' },
+            { to: '/uti-terapia-intensiva', icon: <Heart className="h-5 w-5 mr-3" />, label: 'UTI e Terapia Intensiva' },
+            { to: '/indicadores-qualidade', icon: <CheckCircle className="h-5 w-5 mr-3" />, label: 'Indicadores de Qualidade' },
+            { to: '/analises-laboratoriais', icon: <TestTube className="h-5 w-5 mr-3" />, label: 'Análises Laboratoriais' },
+            { to: '/gestao-farmaceutica', icon: <Pill className="h-5 w-5 mr-3" />, label: 'Gestão Farmacêutica' },
+          ],
+        },
+        {
+          title: 'Analytics e Inteligência',
+          items: [
+            { to: '/relatorios-analytics', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Relatórios e Analytics' },
+            { to: '/dashboard-financeiro', icon: <TrendingUp className="h-5 w-5 mr-3" />, label: 'Dashboard Financeiro' },
+            { to: '/insights-ia', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Insights de IA' },
+          ],
+        },
+        {
+          title: 'Integrações Técnicas',
+          items: [
+            { to: '/integracoes-tecnicas', icon: <Handshake className="h-5 w-5 mr-3" />, label: 'Integrações Técnicas' },
+            { to: '/integracao-erp', icon: <Building className="h-5 w-5 mr-3" />, label: 'Integração ERP' },
           ],
         },
       ],

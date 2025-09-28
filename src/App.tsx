@@ -26,17 +26,18 @@ import TechnicalDetailsPage from "./pages/TechnicalDetails";
 import GeneticDataPage from "./pages/GeneticData";
 import SettingsPage from "./pages/SettingsPage";
 import ManageAccessPage from "./pages/ManageAccessPage";
-import QualityOfLifePage from "./pages/QualityOfLifePage";
 import PatientsPage from "./pages/PatientsPage";
 import ProtocolsPage from "./pages/ProtocolsPage";
 import PopulationPage from "./pages/PopulationPage";
 import EpidemiologyPage from "./pages/EpidemiologyPage";
 import ResourcesPage from "./pages/ResourcesPage";
-import QrAnaAtivoPage from "./pages/QrAnaAtivoPage";
 import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
 import MonitoramentoAPSPage from "./pages/MonitoramentoAPSPage";
+import OSSManualDescritivo from "./pages/OSSManualDescritivo";
+import QualityOfLifePage from "./pages/QualityOfLifePage";
+import QrAnaAtivoPage from "./pages/QrAnaAtivoPage";
 import ControleJudicializacaoPage from "./pages/ControleJudicializacaoPage";
 import CapacitacaoGestoresPage from "./pages/CapacitacaoGestoresPage";
 import TransicaoGestaoPage from "./pages/TransicaoGestaoPage";
@@ -104,7 +105,6 @@ import OSSSimuladorDono from "./pages/OSSSimuladorDono";
 import OSSControleGlosaOPME from "./pages/OSSControleGlosaOPME";
 import OSSNoticiasNacionais from "./pages/OSSNoticiasNacionais";
 import OSSNoticiasClientes from "./pages/OSSNoticiasClientes";
-import OSSManualDescritivo from "./pages/OSSManualDescritivo";
 import OSSContratosAditivosPage from "./pages/OSSContratosAditivosPage";
 import IntegracaoERPPage from "./pages/IntegracaoERPPage";
 import PrefeituraDashboard from "./pages/PrefeituraDashboard";
@@ -271,6 +271,10 @@ const App = () => (
                       <Route
                         path="/oss-contratos-aditivos"
                         element={<OSSContratosAditivosPage />}
+                      />
+                      <Route
+                        path="/oss-medidas-desempenho"
+                        element={<OSSMedidasDesempenhoPage />}
                       />
                       <Route
                         path="/oss-satisfacao-usuario"
