@@ -42,11 +42,13 @@
     "telemedicineButton": "Telemedicine",
     "logoutSuccess": "Logout successful!",
     "roles": {
-      "manager": "Municipal Manager",
+      "manager": "Public Management",
       "hospital": "Hospital Manager",
       "doctor": "Healthcare Professional",
       "patient": "Patient",
-      "gestor": "Municipal Manager",
+      "laboratory": "Laboratory Management",
+      "laboratorio": "Laboratory Management",
+      "gestor": "Public Management",
       "oss": "OSS",
       "medico": "Doctor",
       "paciente": "Patient",
@@ -69,7 +71,7 @@
     },
     "options": {
       "gestor": {
-        "label": "Municipal Management",
+        "label": "Public Management",
         "description": "Access for public managers"
       },
       "hospital": {

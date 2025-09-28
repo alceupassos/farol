@@ -101,3 +101,12 @@ Adicionar APÓS:
 - **ossSections**: Adicionar após linha 350 (depois de hospitalSections)
 - **Condição OSS**: Adicionar na linha ~460 (na função getMenuItemsByRole)
 - **roleLabelMap**: Adicionar na linha ~485
+
+## Complementos para Gestor Hospitalar
+- Seção `Dashboard` atualizada com:
+  - `/dashboard` Visão Geral Hospital
+  - `/hospital-dashboard-detalhado` Dashboard Hospitalar (novo)
+  - `/sistema-his-hmis` Sistema HIS/HMIS (novo)
+- Seção `Faturamento e Financeiro` ampliada com `/faturamento-sustiss-tuss` e `/apac-oncologia`
+- Seção `Analytics e Inteligência` passa a apontar para `/relatorios-analytics`, `/dashboard-financeiro` e `/insights-ia`
+- Demais seções revisadas para garantir alinhamento com as 7 subseções solicitadas pelo gestor

@@ -62,6 +62,7 @@ export const ossSections = [
       { to: '/oss-contratos-aditivos', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.contracts' },
       { to: '/oss-satisfacao-usuario', icon: <TrendingUp className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.nps' },
       { to: '/oss-metas-desempenho', icon: <Target className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.performanceGoals' },
+      { to: '/oss-medidas-desempenho', icon: <Activity className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.performanceMeasures' },
     ],
   },
 ];

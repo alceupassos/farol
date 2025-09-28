@@ -87,8 +87,59 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           title: 'Dashboard',
           items: [
             { to: '/prefeitura-dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: 'Visão Geral Prefeitura' },
-            { to: '/oraculo-ia', icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: 'Oráculo IA' },
+            { to: '/executive-dashboard', icon: <TrendingUp className="h-5 w-5 mr-3" />, label: 'Dashboard Executivo' },
+            { to: '/operational-dashboard', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Dashboard Operacional' },
+            { to: '/oraculo-ia', icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: 'Oráculo IA Gestão' },
             { to: '/noticias-saude-piracicaba', icon: <Newspaper className="h-5 w-5 mr-3" />, label: 'Notícias Saúde' },
+          ],
+        },
+        {
+          title: 'Gestão Pública',
+          items: [
+            { to: '/population', icon: <Users className="h-5 w-5 mr-3" />, label: 'Análise Populacional' },
+            { to: '/epidemiology', icon: <Map className="h-5 w-5 mr-3" />, label: 'Mapa Epidemiológico' },
+            { to: '/epidemic-alerts', icon: <AlertTriangle className="h-5 w-5 mr-3" />, label: 'Alertas Epidemiológicos' },
+            { to: '/resources', icon: <ClipboardList className="h-5 w-5 mr-3" />, label: 'Gestão de Recursos' },
+          ],
+        },
+        {
+          title: 'Financiamento e Orçamento',
+          items: [
+            { to: '/monitoramento-aps', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Monitoramento APS' },
+            { to: '/gestao-orcamentaria', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Gestão Orçamentária' },
+            { to: '/simulador-ied', icon: <Calculator className="h-5 w-5 mr-3" />, label: 'Simulador IED' },
+            { to: '/controle-judicializacao', icon: <Scale className="h-5 w-5 mr-3" />, label: 'Controle Judicialização' },
+          ],
+        },
+        {
+          title: 'Capacitação e Gestão',
+          items: [
+            { to: '/capacitacao-gestores', icon: <GraduationCap className="h-5 w-5 mr-3" />, label: 'Programa Gestores SUS' },
+            { to: '/transicao-gestao', icon: <RefreshCw className="h-5 w-5 mr-3" />, label: 'Transição de Gestão' },
+            { to: '/indicadores-desempenho', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Indicadores APS' },
+            { to: '/governanca-dados', icon: <Shield className="h-5 w-5 mr-3" />, label: 'Governança de Dados' },
+          ],
+        },
+        {
+          title: 'Regionalização',
+          items: [
+            { to: '/comissoes-cir', icon: <Users className="h-5 w-5 mr-3" />, label: 'Comissões CIR' },
+            { to: '/pactuacao-regional', icon: <Handshake className="h-5 w-5 mr-3" />, label: 'Pactuação Regional' },
+            { to: '/territorializacao', icon: <MapPin className="h-5 w-5 mr-3" />, label: 'Territorialização' },
+          ],
+        },
+        {
+          title: 'Gestão Hospitalar',
+          items: [
+            { to: '/hospitals-access', icon: <Building className="h-5 w-5 mr-3" />, label: 'Acesso Hospitais' },
+          ],
+        },
+        {
+          title: 'Analytics',
+          items: [
+            { to: '/ai-analytics', icon: <Brain className="h-5 w-5 mr-3" />, label: 'AI Analytics' },
+            { to: '/security-dashboard', icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: 'Segurança' },
+            { to: '/integrations-dashboard', icon: <Globe className="h-5 w-5 mr-3" />, label: 'Integrações' },
           ],
         },
       ],
@@ -99,7 +150,6 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
             { to: '/dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: 'Visão Geral Hospital' },
             { to: '/hospital-dashboard-detalhado', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Dashboard Hospitalar' },
             { to: '/sistema-his-hmis', icon: <Database className="h-5 w-5 mr-3" />, label: 'Sistema HIS/HMIS' },
-            { to: '/oraculo-ia', icon: <BrainCircuit className="h-5 w-5 mr-3" />, label: 'Oráculo IA' },
           ],
         },
         {

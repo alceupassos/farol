@@ -78,6 +78,9 @@ import RelatoriosAnalyticsPage from "./pages/RelatoriosAnalyticsPage";
 import AnalisesLaboratoriaisPage from "./pages/AnalisesLaboratoriaisPage";
 import GestaoFarmaceuticaPage from "./pages/GestaoFarmaceuticaPage";
 import AIAnalyticsPage from "./pages/AIAnalyticsPage";
+import HospitalDashboardDetalhadoPage from "./pages/HospitalDashboardDetalhadoPage";
+import SistemaHISHMISPage from "./pages/SistemaHISHMISPage";
+import FaturamentoSUSTISSTUSSPage from "./pages/FaturamentoSUSTISSTUSSPage";
 import AIOraclePage from "./pages/AIOraclePage";
 import PiracicabaHealthNews from "./pages/PiracicabaHealthNews";
 import SecurityDashboardPage from "./pages/SecurityDashboardPage";
@@ -97,6 +100,7 @@ import OSSAudespPage from "./pages/OSSAudespPage";
 import OSSTransparenciaPage from "./pages/OSSTransparenciaPage";
 import OSSLgpdPage from "./pages/OSSLgpdPage";
 import OSSMetasDesempenho from "./pages/OSSMetasDesempenho";
+import OSSMedidasDesempenhoPage from "./pages/OSSMedidasDesempenhoPage";
 import OSSCompliancePage from "./pages/OSSCompliancePage";
 import OSSOracleAI from "./pages/OSSOracleAI";
 import OSSGlosasDashboard from "./pages/OSSGlosasDashboard";
@@ -200,6 +204,14 @@ const App = () => (
                         element={<DashboardRedirect />}
                       />
                       <Route path="/dashboard" element={<Dashboard />} />
+                      <Route
+                        path="/hospital-dashboard-detalhado"
+                        element={<HospitalDashboardDetalhadoPage />}
+                      />
+                      <Route
+                        path="/sistema-his-hmis"
+                        element={<SistemaHISHMISPage />}
+                      />
                       <Route
                         path="/prefeitura-dashboard"
                         element={<PrefeituraDashboard />}
@@ -401,6 +413,10 @@ const App = () => (
                         element={<APACOncologiaPage />}
                       />
                       <Route
+                        path="/faturamento-sustiss-tuss"
+                        element={<FaturamentoSUSTISSTUSSPage />}
+                      />
+                      <Route
                         path="/rnds-datasus"
                         element={<RNDSDATASUSPage />}
                       />
@@ -444,6 +460,7 @@ const App = () => (
                         path="/gestao-farmaceutica"
                         element={<GestaoFarmaceuticaPage />}
                       />
+                      <Route path="/insights-ia" element={<AIInsightsPage />} />
                       <Route
                         path="/ai-analytics"
                         element={<AIAnalyticsPage />}

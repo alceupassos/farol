@@ -42,11 +42,16 @@
     "telemedicineButton": "Telemedicina",
     "logoutSuccess": "¡Sesión cerrada con éxito!",
     "roles": {
-      "manager": "Administrador Municipal",
+      "manager": "Gestión pública",
       "hospital": "Administrador Hospitalario",
       "doctor": "Profesional de la salud",
       "patient": "Paciente",
-      "laboratory": "Gestor de Laboratorios",
+      "laboratory": "Gestión de laboratorios",
+      "laboratorio": "Gestión de laboratorios",
+      "gestor": "Gestión pública",
+      "oss": "OSS",
+      "medico": "Profesional de la salud",
+      "paciente": "Paciente",
       "visitor": "Visitante"
     }
   },
@@ -66,12 +71,16 @@
     },
     "options": {
       "gestor": {
-        "label": "Gestión municipal",
+        "label": "Gestión pública",
         "description": "Acceso para gestores públicos"
       },
       "hospital": {
         "label": "Hospital",
         "description": "Acceso para gestión hospitalaria"
+      },
+      "oss": {
+        "label": "Gestión contractual/OSS",
+        "description": "OSS Cesário Lange - BHCL"
       },
       "laboratory": {
         "label": "Laboratorios",

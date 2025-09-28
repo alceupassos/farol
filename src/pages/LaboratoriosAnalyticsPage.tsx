@@ -1,4 +1,3 @@
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -50,8 +49,7 @@ const volumeBundles = [
 
 const LaboratoriosAnalyticsPage = () => {
   return (
-    <MainLayout>
-      <div className="min-h-screen bg-slate-950 text-slate-100 px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="min-h-screen bg-slate-950 text-slate-100 px-4 sm:px-6 lg:px-8 py-10 space-y-8">
         <header className="space-y-3">
           <Badge variant="outline" className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Analytics &amp; KPIs</Badge>
           <h1 className="text-3xl font-bold">Indicadores operacionais e estratégicos</h1>
@@ -254,7 +252,6 @@ const LaboratoriosAnalyticsPage = () => {
           </div>
         </footer>
       </div>
-    </MainLayout>
   );
 };
 

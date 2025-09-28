@@ -41,11 +41,13 @@
     "openMenu": "Abrir menu",
     "telemedicineButton": "Telemedicina",
     "roles": {
-      "manager": "Gestor Municipal",
+      "manager": "Gestão Pública",
       "hospital": "Gestor Hospitalar",
       "doctor": "Profissional de Saúde",
       "patient": "Paciente",
-      "gestor": "Gestor Municipal",
+      "laboratory": "Gestão Laboratorial",
+      "gestor": "Gestão Pública",
+      "laboratorio": "Gestão Laboratorial",
       "oss": "OSS",
       "medico": "Médico",
       "aph": "Atendimento Pré-Hospitalar",
@@ -69,7 +71,7 @@
     },
     "options": {
       "gestor": {
-        "label": "Gestão Municipal",
+        "label": "Gestão Pública",
         "description": "Acesso para gestores públicos"
       },
       "hospital": {
@@ -359,6 +361,7 @@
         "title": "GESTÃO CONTRATUAL/OSS",
         "items": {
           "contracts": "Contratos e Aditivos",
+          "performanceMeasures": "Medidas de Desempenho",
           "nps": "Satisfação do Usuário",
           "performanceGoals": "Metas de Desempenho"
         }

@@ -1,4 +1,3 @@
-import MainLayout from '@/components/layout/MainLayout';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -116,8 +115,7 @@ const quickActions = [
 const LaboratoriosOverviewPage = () => {
   const navigate = useNavigate();
   return (
-    <MainLayout>
-      <div className="min-h-screen bg-slate-950 text-slate-100 px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="min-h-screen bg-slate-950 text-slate-100 px-4 sm:px-6 lg:px-8 py-10 space-y-8">
         <header className="space-y-3">
           <Badge variant="outline" className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30">Laboratórios</Badge>
           <h1 className="text-3xl font-bold">Hub de Laboratórios</h1>
@@ -420,8 +418,7 @@ const LaboratoriosOverviewPage = () => {
             <span>Alertas de risco operam com priorização automática e runbooks integrados.</span>
           </div>
         </footer>
-      </div>
-    </MainLayout>
+    </div>
   );
 };
 

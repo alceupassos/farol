@@ -26,3 +26,9 @@ import OSSDashboard from "./pages/OSSDashboard";
 <Route path="/prefeitura-dashboard" element={<PrefeituraDashboard />} />
 <Route path="/oss-dashboard" element={<OSSDashboard />} />
 ```
+
+## Rotas adicionadas para Gestor Hospitalar
+- `/hospital-dashboard-detalhado` → `HospitalDashboardDetalhadoPage`
+- `/sistema-his-hmis` → `SistemaHISHMISPage`
+- `/faturamento-sustiss-tuss` → `FaturamentoSUSTISSTUSSPage`
+- `/insights-ia` → `AIInsightsPage`
