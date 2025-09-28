@@ -9,7 +9,7 @@ import {
   Stethoscope, Scissors, Heart, TestTube, Pill,
   Settings, User, KeyRound, Microscope, Calendar,
   Video, Images, UploadCloud, Watch, ShieldAlert,
-  MapPin, Eye, Ear, Thermometer, Bone
+  MapPin, Eye, Ear, Thermometer, Bone, Ambulance
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -194,6 +194,64 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           ],
         },
       ],
+      aph: [
+        {
+          title: 'Dashboard Tempo Real',
+          items: [
+            { to: '/aph-dashboard', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Dashboard Tempo Real' },
+            { to: '/aph-insights-ia', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Insights de IA' },
+            { to: '/aph-oraculo', icon: <Zap className="h-5 w-5 mr-3" />, label: 'Oráculo APH' },
+          ],
+        },
+        {
+          title: 'Despacho & Regulação',
+          items: [
+            { to: '/aph-despacho-regulacao', icon: <Target className="h-5 w-5 mr-3" />, label: 'Despacho & Regulação' },
+            { to: '/aph-heatmap-cobertura', icon: <Map className="h-5 w-5 mr-3" />, label: 'Heatmap & Cobertura' },
+            { to: '/aph-playbooks-operacionais', icon: <ClipboardList className="h-5 w-5 mr-3" />, label: 'Playbooks Operacionais' },
+          ],
+        },
+        {
+          title: 'Frota & Telemetria',
+          items: [
+            { to: '/aph-frota-telemetria', icon: <Ambulance className="h-5 w-5 mr-3" />, label: 'Frota & Telemetria' },
+            { to: '/aph-manutencao-preditiva', icon: <RefreshCw className="h-5 w-5 mr-3" />, label: 'Manutenção Preditiva' },
+            { to: '/aph-monitoramento-cameras', icon: <Video className="h-5 w-5 mr-3" />, label: 'Monitoramento de Câmeras' },
+          ],
+        },
+        {
+          title: 'Clínica & Qualidade',
+          items: [
+            { to: '/aph-clinica-qualidade', icon: <Stethoscope className="h-5 w-5 mr-3" />, label: 'Clínica & Qualidade' },
+            { to: '/aph-protocolos', icon: <CheckCircle className="h-5 w-5 mr-3" />, label: 'Protocolos e Auditoria' },
+            { to: '/aph-educacao-continuada', icon: <GraduationCap className="h-5 w-5 mr-3" />, label: 'Educação Continuada' },
+          ],
+        },
+        {
+          title: 'Financeiro & Antiglosas',
+          items: [
+            { to: '/aph-financeiro', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Performance Financeira' },
+            { to: '/aph-antiglosas', icon: <Shield className="h-5 w-5 mr-3" />, label: 'Antiglosas & Pré-Auditoria' },
+            { to: '/aph-pre-auditoria', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Pacotes de Evidências' },
+          ],
+        },
+        {
+          title: 'Portal do Contratante',
+          items: [
+            { to: '/aph-portal-contratante', icon: <Users className="h-5 w-5 mr-3" />, label: 'Portal do Contratante' },
+            { to: '/aph-storytelling', icon: <Newspaper className="h-5 w-5 mr-3" />, label: 'Storytelling & NPS' },
+            { to: '/aph-relatorios', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Relatórios Executivos' },
+          ],
+        },
+        {
+          title: 'Governança & LGPD',
+          items: [
+            { to: '/aph-governanca-lgpd', icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: 'Governança & LGPD' },
+            { to: '/aph-integracoes', icon: <Globe className="h-5 w-5 mr-3" />, label: 'Integrações & MCP' },
+            { to: '/aph-compliance', icon: <Scale className="h-5 w-5 mr-3" />, label: 'Compliance & Auditoria' },
+          ],
+        },
+      ],
       oss: [
         {
           title: 'Visão Geral OSS',
@@ -278,6 +336,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     hospital: 'navbar.roles.hospital',
     laboratorio: 'navbar.roles.laboratory',
     medico: 'navbar.roles.doctor',
+    aph: 'navbar.roles.aph',
     paciente: 'navbar.roles.patient',
     oss: 'navbar.roles.oss',
   };

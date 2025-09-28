@@ -78,6 +78,10 @@
         "label": "Hospital",
         "description": "Acesso para gestão hospitalar"
       },
+      "aph": {
+        "label": "Atendimento Pré-Hospitalar",
+        "description": "Central de comando APH, frota e IA oracular"
+      },
       "oss": {
         "label": "Gestão Contratual/OSS",
         "description": "OSS Cesário Lange - BHCL"
@@ -190,6 +194,18 @@
           "aiAnalytics": "AI Analytics",
           "security": "Segurança",
           "integrations": "Integrações"
+        }
+      },
+      "aph": {
+        "title": "ATENDIMENTO PRÉ-HOSPITALAR",
+        "items": {
+          "dashboard": "Dashboard Tempo Real",
+          "dispatch": "Despacho & Regulação",
+          "fleet": "Frota & Telemetria",
+          "clinical": "Clínica & Qualidade",
+          "finance": "Financeiro & Antiglosas",
+          "client": "Portal do Contratante",
+          "governance": "Governança & LGPD"
         }
       },
       "hospitalDashboard": {

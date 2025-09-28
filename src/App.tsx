@@ -127,6 +127,29 @@ import LaboratoriosAdministracaoPage from "./pages/LaboratoriosAdministracaoPage
 import LaboratoriosAnalyticsPage from "./pages/LaboratoriosAnalyticsPage";
 import LaboratorioIntegrationDetailPage from "./pages/LaboratorioIntegrationDetailPage";
 import TestPage from "./pages/TestPage";
+import {
+  AphAntiglosasPage,
+  AphClinicaQualidadePage,
+  AphCompliancePage,
+  AphDashboardPage,
+  AphDespachoRegulacaoPage,
+  AphEducacaoContinuadaPage,
+  AphFinanceiroPage,
+  AphFrotaTelemetriaPage,
+  AphGovernancaLgpdPage,
+  AphHeatmapCoberturaPage,
+  AphInsightsIAPage,
+  AphIntegracoesPage,
+  AphManutencaoPreditivaPage,
+  AphMonitoramentoCamerasPage,
+  AphOraculoPage,
+  AphPlaybooksOperacionaisPage,
+  AphPortalContratantePage,
+  AphPreAuditoriaPage,
+  AphProtocolosPage,
+  AphRelatoriosPage,
+  AphStorytellingPage
+} from "./pages/APH";
 
 import { CustomizationProvider } from "@/contexts/CustomizationContext";
 
@@ -204,6 +227,9 @@ const App = () => (
                         element={<DashboardRedirect />}
                       />
                       <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/aph-dashboard" element={<AphDashboardPage />} />
+                      <Route path="/aph-insights-ia" element={<AphInsightsIAPage />} />
+                      <Route path="/aph-oraculo" element={<AphOraculoPage />} />
                       <Route
                         path="/hospital-dashboard-detalhado"
                         element={<HospitalDashboardDetalhadoPage />}
@@ -480,6 +506,78 @@ const App = () => (
                       <Route
                         path="/integracao-erp"
                         element={<IntegracaoERPPage />}
+                      />
+                      <Route
+                        path="/aph-despacho-regulacao"
+                        element={<AphDespachoRegulacaoPage />}
+                      />
+                      <Route
+                        path="/aph-heatmap-cobertura"
+                        element={<AphHeatmapCoberturaPage />}
+                      />
+                      <Route
+                        path="/aph-playbooks-operacionais"
+                        element={<AphPlaybooksOperacionaisPage />}
+                      />
+                      <Route
+                        path="/aph-frota-telemetria"
+                        element={<AphFrotaTelemetriaPage />}
+                      />
+                      <Route
+                        path="/aph-manutencao-preditiva"
+                        element={<AphManutencaoPreditivaPage />}
+                      />
+                      <Route
+                        path="/aph-monitoramento-cameras"
+                        element={<AphMonitoramentoCamerasPage />}
+                      />
+                      <Route
+                        path="/aph-clinica-qualidade"
+                        element={<AphClinicaQualidadePage />}
+                      />
+                      <Route
+                        path="/aph-protocolos"
+                        element={<AphProtocolosPage />}
+                      />
+                      <Route
+                        path="/aph-educacao-continuada"
+                        element={<AphEducacaoContinuadaPage />}
+                      />
+                      <Route
+                        path="/aph-financeiro"
+                        element={<AphFinanceiroPage />}
+                      />
+                      <Route
+                        path="/aph-antiglosas"
+                        element={<AphAntiglosasPage />}
+                      />
+                      <Route
+                        path="/aph-pre-auditoria"
+                        element={<AphPreAuditoriaPage />}
+                      />
+                      <Route
+                        path="/aph-portal-contratante"
+                        element={<AphPortalContratantePage />}
+                      />
+                      <Route
+                        path="/aph-storytelling"
+                        element={<AphStorytellingPage />}
+                      />
+                      <Route
+                        path="/aph-relatorios"
+                        element={<AphRelatoriosPage />}
+                      />
+                      <Route
+                        path="/aph-governanca-lgpd"
+                        element={<AphGovernancaLgpdPage />}
+                      />
+                      <Route
+                        path="/aph-integracoes"
+                        element={<AphIntegracoesPage />}
+                      />
+                      <Route
+                        path="/aph-compliance"
+                        element={<AphCompliancePage />}
                       />
                       <Route
                         path="/philips-tasy-integration"

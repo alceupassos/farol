@@ -51,6 +51,7 @@
       "gestor": "Gestion publique",
       "oss": "OSS",
       "medico": "Professionnel de santé",
+      "aph": "Soins préhospitaliers",
       "paciente": "Patient",
       "visitor": "Visiteur"
     }
@@ -77,6 +78,10 @@
       "hospital": {
         "label": "Hôpital",
         "description": "Accès pour la gestion hospitalière"
+      },
+      "aph": {
+        "label": "Soins préhospitaliers",
+        "description": "Centre de commande APH avec flotte, IA et Oráculo"
       },
       "oss": {
         "label": "Gestion contractuelle/OSS",
@@ -217,6 +222,18 @@
           "aiAnalytics": "Analytique IA",
           "security": "Sécurité",
           "integrations": "Intégrations"
+        }
+      },
+      "aph": {
+        "title": "SOINS PRÉHOSPITALIERS",
+        "items": {
+          "dashboard": "Tableau de bord temps réel",
+          "dispatch": "Dispatch & régulation",
+          "fleet": "Flotte & télémétrie",
+          "clinical": "Clinique & qualité",
+          "finance": "Finance & anti-gloses",
+          "client": "Portail client",
+          "governance": "Gouvernance & RGPD"
         }
       },
       "hospitalDashboard": {

@@ -51,6 +51,7 @@
       "gestor": "Public Management",
       "oss": "OSS",
       "medico": "Doctor",
+      "aph": "Prehospital Care",
       "paciente": "Patient",
       "visitor": "Visitor"
     }
@@ -77,6 +78,10 @@
       "hospital": {
         "label": "Hospital",
         "description": "Access for hospital management"
+      },
+      "aph": {
+        "label": "Prehospital Care",
+        "description": "APH command center with fleet, insights and Oracle AI"
       },
       "oss": {
         "label": "Contract Management/OSS",
@@ -178,6 +183,18 @@
           "aiAnalytics": "AI Analytics",
           "security": "Security",
           "integrations": "Integrations"
+        }
+      },
+      "aph": {
+        "title": "PREHOSPITAL CARE",
+        "items": {
+          "dashboard": "Realtime Dashboard",
+          "dispatch": "Dispatch & Regulation",
+          "fleet": "Fleet & Telemetry",
+          "clinical": "Clinical & Quality",
+          "finance": "Finance & Anti-Denials",
+          "client": "Client Portal",
+          "governance": "Governance & LGPD"
         }
       },
       "hospitalDashboard": {

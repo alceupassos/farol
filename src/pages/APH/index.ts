@@ -1,0 +1,23 @@
+import { createAphPage } from '@/components/aph/createAphPage';
+
+export const AphDashboardPage = createAphPage('dashboard');
+export const AphInsightsIAPage = createAphPage('insightsIa');
+export const AphOraculoPage = createAphPage('oraculo');
+export const AphDespachoRegulacaoPage = createAphPage('despachoRegulacao');
+export const AphHeatmapCoberturaPage = createAphPage('heatmapCobertura');
+export const AphPlaybooksOperacionaisPage = createAphPage('playbooksOperacionais');
+export const AphFrotaTelemetriaPage = createAphPage('frotaTelemetria');
+export const AphManutencaoPreditivaPage = createAphPage('manutencaoPreditiva');
+export const AphMonitoramentoCamerasPage = createAphPage('monitoramentoCameras');
+export const AphClinicaQualidadePage = createAphPage('clinicaQualidade');
+export const AphProtocolosPage = createAphPage('protocolos');
+export const AphEducacaoContinuadaPage = createAphPage('educacaoContinuada');
+export const AphFinanceiroPage = createAphPage('financeiro');
+export const AphAntiglosasPage = createAphPage('antiglosas');
+export const AphPreAuditoriaPage = createAphPage('preAuditoria');
+export const AphPortalContratantePage = createAphPage('portalContratante');
+export const AphStorytellingPage = createAphPage('storytelling');
+export const AphRelatoriosPage = createAphPage('relatorios');
+export const AphGovernancaLgpdPage = createAphPage('governancaLgpd');
+export const AphIntegracoesPage = createAphPage('integracoes');
+export const AphCompliancePage = createAphPage('compliance');

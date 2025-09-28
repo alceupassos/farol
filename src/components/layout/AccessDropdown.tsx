@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText } from 'lucide-react';
+import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText, Ambulance } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -46,6 +46,13 @@ const AccessDropdown = () => {
         icon: Hospital,
         description: t('accessDropdown.options.hospital.description'),
         color: 'text-blue-500'
+      },
+      {
+        id: 'aph',
+        label: t('accessDropdown.options.aph.label'),
+        icon: Ambulance,
+        description: t('accessDropdown.options.aph.description'),
+        color: 'text-red-500'
       },
       {
         id: 'oss',
@@ -109,6 +116,9 @@ const AccessDropdown = () => {
     } else if (role === 'hospital') {
       console.log('AccessDropdown: Redirecting to hospital dashboard');
       navigate('/dashboard');
+    } else if (role === 'aph') {
+      console.log('AccessDropdown: Redirecting to APH dashboard');
+      navigate('/aph-dashboard');
     } else if (role === 'oss') {
       console.log('AccessDropdown: OSS role selected');
       console.log('AccessDropdown: Redirecting to /oss-dashboard');

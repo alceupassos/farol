@@ -10,7 +10,8 @@
     },
     "navbar": {
       "roles": {
-        "oss": "OSS"
+        "oss": "OSS",
+        "aph": "Atendimento Pré-Hospitalar"
       }
     },
     "ossDashboard": {
@@ -48,7 +49,8 @@
     },
     "navbar": {
       "roles": {
-        "oss": "OSS"
+        "oss": "OSS",
+        "aph": "Prehospital Care"
       }
     }
   },
@@ -63,7 +65,8 @@
     },
     "navbar": {
       "roles": {
-        "oss": "OSS"
+        "oss": "OSS",
+        "aph": "Atención prehospitalaria"
       }
     }
   },
@@ -78,7 +81,8 @@
     },
     "navbar": {
       "roles": {
-        "oss": "OSS"
+        "oss": "OSS",
+        "aph": "Soins préhospitaliers"
       }
     }
   }
