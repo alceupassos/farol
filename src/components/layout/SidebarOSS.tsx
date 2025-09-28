@@ -11,24 +11,24 @@ export const ossSections = [
     titleKey: 'sidebar.sections.ossOverview.title',
     items: [
       { to: '/oss-dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossOverview.items.overview' },
-      { to: '/oss-dashboard', icon: <TrendingUp className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossOverview.items.executive' },
+      { to: '/oss-visao-executiva', icon: <TrendingUp className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossOverview.items.executive' },
     ],
   },
   {
     titleKey: 'sidebar.sections.ossFinancial.title',
     items: [
       { to: '/oss-receitas-glosas', icon: <DollarSign className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossFinancial.items.revenue' },
-      { to: '/oss-receitas-glosas', icon: <AlertTriangle className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossFinancial.items.glosas' },
-      { to: '/oss-receitas-glosas', icon: <Calculator className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossFinancial.items.roi' },
+      { to: '/oss-glosas', icon: <AlertTriangle className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossFinancial.items.glosas' },
+      { to: '/oss-roi-rentabilidade', icon: <Calculator className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossFinancial.items.roi' },
     ],
   },
   {
     titleKey: 'sidebar.sections.ossCompliance.title',
     items: [
-      { to: '/oss-compliance-risco', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.compliance' },
-      { to: '/oss-compliance-risco', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.audesp' },
-      { to: '/oss-compliance-risco', icon: <CheckCircle className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.transparency' },
-      { to: '/oss-compliance-risco', icon: <Database className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.lgpd' },
+      { to: '/oss-compliance', icon: <Shield className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.compliance' },
+      { to: '/oss-audesp', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.audesp' },
+      { to: '/oss-transparencia', icon: <CheckCircle className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.transparency' },
+      { to: '/oss-lgpd', icon: <Database className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossCompliance.items.lgpd' },
     ],
   },
   {
@@ -59,8 +59,9 @@ export const ossSections = [
   {
     titleKey: 'sidebar.sections.ossManagement.title',
     items: [
-      { to: '/hospitals-access', icon: <Users className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.contracts' },
-      { to: '/ai-insights', icon: <TrendingUp className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.nps' },
+      { to: '/oss-contratos-aditivos', icon: <FileText className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.contracts' },
+      { to: '/oss-satisfacao-usuario', icon: <TrendingUp className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.nps' },
+      { to: '/oss-metas-desempenho', icon: <Target className="h-5 w-5 mr-3" />, labelKey: 'sidebar.sections.ossManagement.items.performanceGoals' },
     ],
   },
 ];

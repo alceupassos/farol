@@ -1,5 +1,4 @@
 import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -131,8 +130,7 @@ const seções = [
 ];
 
 const OSSManualDescritivo = () => (
-  <MainLayout>
-    <div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
+  <div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
       <header className="space-y-2">
         <Badge className="bg-indigo-500/20 text-indigo-200">Guia</Badge>
         <h1 className="text-3xl font-bold text-white">Manual Descritivo — Donos da OSS</h1>
@@ -170,7 +168,6 @@ const OSSManualDescritivo = () => (
         ))}
       </div>
     </div>
-  </MainLayout>
 );
 
 export default OSSManualDescritivo;

@@ -1,5 +1,4 @@
-import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
+import { FakeOracle } from '@/components/oracle/FakeOracle';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -193,8 +192,7 @@ const chipClass = 'flex items-center gap-2 rounded-full border border-white/10 b
 
 const OSSDashboard = () => {
   return (
-    <MainLayout>
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-10 text-white">
           {/* Visão Geral */}
           <section className="grid gap-6 lg:grid-cols-[3fr,2fr]">
@@ -943,8 +941,8 @@ const OSSDashboard = () => {
             </div>
           </section>
         </div>
+        <FakeOracle module="oss" context="dashboard" />
       </div>
-    </MainLayout>
   );
 };
 

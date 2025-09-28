@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
@@ -28,7 +27,6 @@ const OSSSimuladorDono = () => {
   const formatCurrency = (valor: number) => `R$ ${(valor).toFixed(2)}M`;
 
   return (
-    <MainLayout>
       <div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
         <header className="space-y-2">
           <Badge className="bg-emerald-500/20 text-emerald-200">Simulações</Badge>
@@ -152,7 +150,6 @@ const OSSSimuladorDono = () => {
           </CardContent>
         </Card>
       </div>
-    </MainLayout>
   );
 };
 

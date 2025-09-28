@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -113,8 +112,7 @@ const OSSOracleAI = () => {
   };
 
   return (
-    <MainLayout>
-      <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -585,7 +583,6 @@ const OSSOracleAI = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </MainLayout>
   );
 };
 

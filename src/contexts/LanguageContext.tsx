@@ -306,12 +306,16 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     return key;
   };
   
-  // Load language from localStorage on mount
+  // Load language from localStorage on mount, default to Portuguese
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedLanguage = localStorage.getItem('language') as Language;
       if (savedLanguage && ['pt', 'en', 'es', 'fr'].includes(savedLanguage)) {
         setLanguage(savedLanguage);
+      } else {
+        // Se não há idioma salvo, força português brasileiro e salva no localStorage
+        setLanguage('pt');
+        localStorage.setItem('language', 'pt');
       }
     }
   }, []);

@@ -8,7 +8,7 @@ interface MetricsSummaryProps {
   // Empty for now, could add props for dynamic data later
 }
 
-const MetricsSummary = ({}: MetricsSummaryProps) => {
+const MetricsSummary = () => {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

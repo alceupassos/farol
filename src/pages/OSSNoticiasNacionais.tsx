@@ -1,5 +1,4 @@
 import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -61,14 +60,12 @@ const NoticiasCard = ({ noticia }: { noticia: typeof noticiasUltimos30[number] }
 );
 
 const OSSNoticiasNacionais = () => (
-	<MainLayout>
-		<div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
-			<header className="space-y-2">
-				<Badge className="bg-blue-500/20 text-blue-200">Radar OSS</Badge>
-				<h1 className="text-3xl font-bold text-white">Notícias & Novidades OSS no Brasil</h1>
-				<p className="text-sm text-slate-300">Curadoria das principais matérias de 2025 — monitoramento contínuo para apoiar decisões estratégicas.</p>
-			</header>
-
+	<div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
+		<header className="space-y-2">
+			<Badge className="bg-blue-500/20 text-blue-200">Radar OSS</Badge>
+			<h1 className="text-3xl font-bold text-white">Notícias & Novidades OSS no Brasil</h1>
+			<p className="text-sm text-slate-300">Curadoria das principais matérias de 2025 — monitoramento contínuo para apoiar decisões estratégicas.</p>
+		</header>
 			<section className="grid gap-6 lg:grid-cols-2">
 				<div className="space-y-3">
 					<h2 className="text-xl font-semibold text-white">Últimos 30 dias</h2>
@@ -82,9 +79,8 @@ const OSSNoticiasNacionais = () => (
 						<NoticiasCard key={noticia.titulo} noticia={noticia} />
 					))}
 				</div>
-			</section>
-		</div>
-	</MainLayout>
+		</section>
+	</div>
 );
 
 export default OSSNoticiasNacionais;

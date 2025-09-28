@@ -1,5 +1,4 @@
 import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, BarChart, Bar } from 'recharts';
@@ -30,7 +29,6 @@ const percentualGlosa = [
 ];
 
 const OSSControleGlosaOPME = () => (
-  <MainLayout>
     <div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
       <header className="space-y-2">
         <Badge className="bg-rose-500/20 text-rose-200">Financeiro & OPME</Badge>
@@ -154,7 +152,6 @@ const OSSControleGlosaOPME = () => (
         </CardContent>
       </Card>
     </div>
-  </MainLayout>
 );
 
 export default OSSControleGlosaOPME;

@@ -1,3 +1,6 @@
+import { Brain, Globe } from 'lucide-react';
+
+export const imageRepository = [
   {
     id: 'radiology-ai-dashboard',
     filename: 'radiology-ai-dashboard.png',
@@ -43,3 +46,4 @@
     icon: <Brain className="h-5 w-5" />,
     usage: ['Educação médica', 'Apresentações de radiologia', 'Sistemas PACS', 'Treinamento em imagem médica', 'Interfaces de modalidades']
   }
+];

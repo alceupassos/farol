@@ -64,28 +64,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const totpAuth = localStorage.getItem(TOTP_FLAG_KEY) === 'true';
         setIsAuthenticated(totpAuth);
 
-        // Verificar se é a primeira carga da sessão e fazer logout automático
+        // Verificar se é a primeira carga da sessão
         const isFirstLoad = !sessionStorage.getItem('auth_initialized');
         
         if (isFirstLoad) {
-          console.log('Primeira carga detectada - fazendo logout automático');
+          console.debug('Primeira carga detectada - inicializando autenticação');
           try {
-            await supabase.auth.signOut();
-            // Limpar localStorage mas manter TOTP se válido
-            localStorage.removeItem('demo_user_role');
+            // Apenas limpar dados obsoletos, sem forçar logout
             localStorage.removeItem('profileAccessEnabled');
-            
-            if (!totpAuth) {
-              localStorage.removeItem(TOTP_FLAG_KEY);
-              setIsAuthenticated(false);
-            } else {
-              setIsAuthenticated(true);
-            }
             
             // Marcar como inicializado para esta sessão
             sessionStorage.setItem('auth_initialized', 'true');
           } catch (error) {
-            console.warn('Erro no logout automático inicial:', error);
+            console.warn('Erro na inicialização automática:', error);
           }
         }
 
@@ -94,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           (event, session) => {
             if (!mounted) return;
             
-            console.log('Auth state changed:', event, session);
+            console.debug('Auth state changed:', event, session);
             setSession(session);
             setUser(session?.user ?? null);
             

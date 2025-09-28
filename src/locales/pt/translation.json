@@ -48,6 +48,7 @@
       "gestor": "Gestor Municipal",
       "oss": "OSS",
       "medico": "Médico",
+      "aph": "Atendimento Pré-Hospitalar",
       "paciente": "Paciente",
       "visitor": "Visitante"
     }
@@ -109,7 +110,18 @@
           "hospitalOverview": "Visão Geral Hospital",
           "ossOverview": "Visão Geral OSS",
           "aiOracle": "Oráculo de IA Gestão",
-          "healthNews": "Últimas Notícias Saúde"
+          "healthNews": "Últimas Notícias Saúde",
+          "ossGlosas": "Glosas",
+          "ossRoi": "ROI & Rentabilidade",
+          "ossCompliance": "Compliance",
+          "ossAudesp": "AUDESP",
+          "ossMetas": "Metas de Desempenho",
+          "ossPredicao": "Predições",
+          "ossSimulador": "Simulador",
+          "ossControleGlosa": "Controle de Glosas",
+          "ossNoticias": "Notícias",
+          "ossNoticiasClientes": "Notícias para Clientes",
+          "ossManual": "Manual do Usuário"
         }
       },
       "laboratoryHub": {
@@ -295,14 +307,14 @@
         }
       },
       "ossOverview": {
-        "title": "Visão Geral OSS",
+        "title": "VISÃO GERAL OSS",
         "items": {
           "overview": "Dashboard OSS",
           "executive": "Visão Executiva"
         }
       },
       "ossFinancial": {
-        "title": "Gestão Financeira",
+        "title": "GESTÃO FINANCEIRA",
         "items": {
           "revenue": "Receitas",
           "glosas": "Glosas",
@@ -310,7 +322,7 @@
         }
       },
       "ossCompliance": {
-        "title": "Compliance & Risco",
+        "title": "COMPLIANCE & RISCO",
         "items": {
           "compliance": "Compliance",
           "audesp": "AUDESP",
@@ -319,16 +331,16 @@
         }
       },
       "ossPerformance": {
-        "title": "Metas & Desempenho",
+        "title": "METAS DE DESEMPENHO",
         "items": {
-          "goals": "Metas",
-          "performance": "Desempenho",
+          "goals": "Metas Contratuais",
+          "performance": "Indicadores",
           "actionPlans": "Planos de Ação",
-          "benchmark": "Benchmark"
+          "benchmark": "Benchmark Setorial"
         }
       },
       "ossIntegrations": {
-        "title": "Integrações",
+        "title": "INTEGRAÇÕES",
         "items": {
           "datasus": "DATASUS",
           "tiss": "TISS/TUSS",
@@ -336,7 +348,7 @@
         }
       },
       "ossAI": {
-        "title": "IA & Simulações",
+        "title": "IA & SIMULAÇÕES",
         "items": {
           "oracle": "Oráculo IA",
           "simulator": "Simulador",
@@ -344,10 +356,11 @@
         }
       },
       "ossManagement": {
-        "title": "Gestão Contratual",
+        "title": "GESTÃO CONTRATUAL/OSS",
         "items": {
-          "contracts": "Contratos",
-          "nps": "NPS & Satisfação"
+          "contracts": "Contratos e Aditivos",
+          "nps": "Satisfação do Usuário",
+          "performanceGoals": "Metas de Desempenho"
         }
       }
     },

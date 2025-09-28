@@ -110,8 +110,8 @@ const AccessDropdown = () => {
       console.log('AccessDropdown: Redirecting to hospital dashboard');
       navigate('/dashboard');
     } else if (role === 'oss') {
-      console.log('AccessDropdown: Redirecting to OSS dashboard');
-      console.log('AccessDropdown: Tentando navegar para /oss-dashboard');
+      console.log('AccessDropdown: OSS role selected');
+      console.log('AccessDropdown: Redirecting to /oss-dashboard');
       navigate('/oss-dashboard');
     } else if (role === 'laboratorio') {
       console.log('AccessDropdown: Redirecting to laboratory hub');

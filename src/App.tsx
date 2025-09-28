@@ -3,9 +3,9 @@ import "./i18n";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import MainLayout from "./components/layout/MainLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// Removed custom translation providers in favor of react-i18next global init
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProfileAccessProvider } from "@/contexts/ProfileAccessContext";
 import { PWAInstallPrompt } from "./components/pwa/PWAInstallPrompt";
@@ -36,10 +36,10 @@ import QrAnaAtivoPage from "./pages/QrAnaAtivoPage";
 import IntelligentReading from "./pages/IntelligentReading";
 import ExecutiveDashboard from "./pages/ExecutiveDashboard";
 import OperationalDashboard from "./pages/OperationalDashboard";
-import MonitoramentoAPSPage from './pages/MonitoramentoAPSPage';
-import ControleJudicializacaoPage from './pages/ControleJudicializacaoPage';
-import CapacitacaoGestoresPage from './pages/CapacitacaoGestoresPage';
-import TransicaoGestaoPage from './pages/TransicaoGestaoPage';
+import MonitoramentoAPSPage from "./pages/MonitoramentoAPSPage";
+import ControleJudicializacaoPage from "./pages/ControleJudicializacaoPage";
+import CapacitacaoGestoresPage from "./pages/CapacitacaoGestoresPage";
+import TransicaoGestaoPage from "./pages/TransicaoGestaoPage";
 import DemoPage from "./pages/DemoPage";
 import HelpPage from "./pages/HelpPage";
 import SupportPage from "./pages/SupportPage";
@@ -49,6 +49,7 @@ import AuthGuard from "./components/auth/AuthGuard";
 import AdminPanel from "./pages/AdminPanel";
 import Login from "./pages/Login";
 import { ProtectedRoute as TOTPProtectedRoute } from "./components/auth/ProtectedRoute";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { QRCodeGenerator } from "./components/auth/QRCodeGenerator";
 import AccessLogsPage from "./pages/AccessLogsPage";
 import GestaoOrcamentariaPage from "./pages/GestaoOrcamentariaPage";
@@ -60,195 +61,476 @@ import TelemedicinePatient from "./pages/TelemedicinePatient";
 import HospitalsAccess from "./pages/HospitalsAccess";
 import PactuacaoRegionalPage from "./pages/PactuacaoRegionalPage";
 import TerritorializacaoPage from "./pages/TerritorializacaoPage";
-import AIInsightsPage from './pages/AIInsightsPage';
-import FaturamentoSUSPage from './pages/FaturamentoSUSPage';
-import TISSTUSSPage from './pages/TISSTUSSPage';
-import APACOncologiaPage from './pages/APACOncologiaPage';
-import RNDSDATASUSPage from './pages/RNDSDATASUSPage';
-import ConformidadeLGPDPage from './pages/ConformidadeLGPDPage';
-import ProntuarioDigitalPage from './pages/ProntuarioDigitalPage';
-import GestaoClinicaPage from './pages/GestaoClinicaPage';
-import CentroCircurgicoPage from './pages/CentroCircurgicoPage';
-import UTITerapiaIntensivaPage from './pages/UTITerapiaIntensivaPage';
-import IndicadoresQualidadePage from './pages/IndicadoresQualidadePage';
-import DashboardFinanceiroPage from './pages/DashboardFinanceiroPage';
-import RelatoriosAnalyticsPage from './pages/RelatoriosAnalyticsPage';
-import AnalisesLaboratoriaisPage from './pages/AnalisesLaboratoriaisPage';
-import GestaoFarmaceuticaPage from './pages/GestaoFarmaceuticaPage';
-import AIAnalyticsPage from './pages/AIAnalyticsPage';
-import AIOraclePage from './pages/AIOraclePage';
-import PiracicabaHealthNews from './pages/PiracicabaHealthNews';
-import SecurityDashboardPage from './pages/SecurityDashboardPage';
-import IntegrationsDashboardPage from './pages/IntegrationsDashboardPage';
+import AIInsightsPage from "./pages/AIInsightsPage";
+import FaturamentoSUSPage from "./pages/FaturamentoSUSPage";
+import TISSTUSSPage from "./pages/TISSTUSSPage";
+import APACOncologiaPage from "./pages/APACOncologiaPage";
+import RNDSDATASUSPage from "./pages/RNDSDATASUSPage";
+import ConformidadeLGPDPage from "./pages/ConformidadeLGPDPage";
+import ProntuarioDigitalPage from "./pages/ProntuarioDigitalPage";
+import GestaoClinicaPage from "./pages/GestaoClinicaPage";
+import CentroCircurgicoPage from "./pages/CentroCircurgicoPage";
+import UTITerapiaIntensivaPage from "./pages/UTITerapiaIntensivaPage";
+import IndicadoresQualidadePage from "./pages/IndicadoresQualidadePage";
+import DashboardFinanceiroPage from "./pages/DashboardFinanceiroPage";
+import RelatoriosAnalyticsPage from "./pages/RelatoriosAnalyticsPage";
+import AnalisesLaboratoriaisPage from "./pages/AnalisesLaboratoriaisPage";
+import GestaoFarmaceuticaPage from "./pages/GestaoFarmaceuticaPage";
+import AIAnalyticsPage from "./pages/AIAnalyticsPage";
+import AIOraclePage from "./pages/AIOraclePage";
+import PiracicabaHealthNews from "./pages/PiracicabaHealthNews";
+import SecurityDashboardPage from "./pages/SecurityDashboardPage";
+import IntegrationsDashboardPage from "./pages/IntegrationsDashboardPage";
 import IntegracoesTecnicasPage from "./pages/IntegracoesTecnicasPage";
 import DiabetesCarePage from "./pages/DiabetesCarePage";
 import OsteoporosisCarePage from "./pages/OsteoporosisCarePage";
-// import ErectileDysfunctionPage from "./pages/ErectileDysfunctionPage"; // File not found
+import OSSSatisfacaoUsuarioPage from "./pages/OSSSatisfacaoUsuarioPage";
+import OSSDashboard from "./pages/OSSDashboard";
+import OSSVisionExecutivePage from "./pages/OSSVisionExecutivePage";
+import OSSReceitasPage from "./pages/OSSReceitasPage";
+import OSSReceitasGlosas from "./pages/OSSReceitasGlosas";
+import DashboardRedirect from "./components/DashboardRedirect";
+import OSSROIRentabilidade from "./pages/OSSROIRentabilidade";
+import OSSComplianceRisco from "./pages/OSSComplianceRisco";
+import OSSAudespPage from "./pages/OSSAudespPage";
+import OSSTransparenciaPage from "./pages/OSSTransparenciaPage";
+import OSSLgpdPage from "./pages/OSSLgpdPage";
+import OSSMetasDesempenho from "./pages/OSSMetasDesempenho";
+import OSSCompliancePage from "./pages/OSSCompliancePage";
+import OSSOracleAI from "./pages/OSSOracleAI";
+import OSSGlosasDashboard from "./pages/OSSGlosasDashboard";
+import OSSPredicaoPage from "./pages/OSSPredicaoPage";
+import OSSSimuladorDono from "./pages/OSSSimuladorDono";
+import OSSControleGlosaOPME from "./pages/OSSControleGlosaOPME";
+import OSSNoticiasNacionais from "./pages/OSSNoticiasNacionais";
+import OSSNoticiasClientes from "./pages/OSSNoticiasClientes";
+import OSSManualDescritivo from "./pages/OSSManualDescritivo";
+import OSSContratosAditivosPage from "./pages/OSSContratosAditivosPage";
+import IntegracaoERPPage from "./pages/IntegracaoERPPage";
+import PrefeituraDashboard from "./pages/PrefeituraDashboard";
+import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
+import ESUSIntegrationPage from "./pages/ESUSIntegrationPage";
 import GlucoseMonitoringPage from "./pages/GlucoseMonitoringPage";
 import NeurologyCarePage from "./pages/NeurologyCarePage";
 import VisionCarePage from "./pages/VisionCarePage";
 import HearingCarePage from "./pages/HearingCarePage";
-import PrefeituraDashboard from "./pages/PrefeituraDashboard";
-import OSSDashboard from "./pages/OSSDashboard";
-import OSSReceitasGlosas from "./pages/OSSReceitasGlosas";
-import OSSComplianceRisco from "./pages/OSSComplianceRisco";
-import OSSMetasDesempenho from "./pages/OSSMetasDesempenho";
-import OSSOracleAI from "./pages/OSSOracleAI";
-import OSSGlosasDashboard from "./pages/OSSGlosasDashboard";
-import OSSROIRentabilidade from "./pages/OSSROIRentabilidade";
-import OSSCompliancePage from "./pages/OSSCompliancePage";
-import OSSAudespPage from "./pages/OSSAudespPage";
-import OSSPredicaoPage from "./pages/OSSPredicaoPage";
-import OSSSimuladorDono from "./pages/OSSSimuladorDono";
-import OSSControleGlosaOPME from "./pages/OSSControleGlosaOPME";
-import DashboardRedirect from "./components/DashboardRedirect";
-import IntegracaoERPPage from "./pages/IntegracaoERPPage";
-import PhilipsTasyIntegrationPage from "./pages/PhilipsTasyIntegrationPage";
-import ESUSIntegrationPage from "./pages/ESUSIntegrationPage";
 import LaboratoriosOverviewPage from "./pages/LaboratoriosOverviewPage";
 import LaboratoriosOperacaoPage from "./pages/LaboratoriosOperacaoPage";
 import LaboratoriosResultadosPage from "./pages/LaboratoriosResultadosPage";
 import LaboratoriosIntegracoesPage from "./pages/LaboratoriosIntegracoesPage";
 import LaboratoriosQualidadePage from "./pages/LaboratoriosQualidadePage";
-import LaboratoriosAnalyticsPage from "./pages/LaboratoriosAnalyticsPage";
 import LaboratoriosAdministracaoPage from "./pages/LaboratoriosAdministracaoPage";
+import LaboratoriosAnalyticsPage from "./pages/LaboratoriosAnalyticsPage";
 import LaboratorioIntegrationDetailPage from "./pages/LaboratorioIntegrationDetailPage";
-import OSSNoticiasNacionais from "./pages/OSSNoticiasNacionais";
-import OSSNoticiasClientes from "./pages/OSSNoticiasClientes";
-import OSSManualDescritivo from "./pages/OSSManualDescritivo";
+import TestPage from "./pages/TestPage";
 
-const queryClient = new QueryClient();
+import { CustomizationProvider } from "@/contexts/CustomizationContext";
 
-// No authentication required - direct access to all routes
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  return <AuthGuard>{children}</AuthGuard>;
-};
-
 const App = () => (
   <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={new QueryClient()}>
       <TooltipProvider>
-        <Suspense fallback={<div>Loading...</div>}>
-          <AuthProvider>
-            <ProfileAccessProvider>
-              <BrowserRouter>
+        <Suspense fallback={null}>
+          <CustomizationProvider>
+            <AuthProvider>
+              <ProfileAccessProvider>
+              <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <div>
-                  <Toaster />
-                  <Sonner />
-                  <PWAInstallPrompt />
-                  <ServiceWorkerManager />
                   <Routes>
-                    <Route path="/" element={<TOTPProtectedRoute><Index /></TOTPProtectedRoute>} />
-                    <Route path="/public-health-landing" element={<TOTPProtectedRoute><Index /></TOTPProtectedRoute>} />
-                    <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                    <Route path="/qrcodenovo" element={<PublicRoute><QRCodeGenerator /></PublicRoute>} />
-                    <Route path="/access-logs" element={<PublicRoute><AccessLogsPage /></PublicRoute>} />
-                    <Route path="/admin" element={<PublicRoute><AdminPanel /></PublicRoute>} />
-                    <Route path="/dashboard-redirect" element={<TOTPProtectedRoute><ProtectedRoute><DashboardRedirect /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/dashboard" element={<TOTPProtectedRoute><ProtectedRoute><Dashboard /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/prefeitura-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><PrefeituraDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-dashboard" element={<TOTPProtectedRoute><ProtectedRoute><OSSDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-oracle-ai" element={<TOTPProtectedRoute><ProtectedRoute><OSSOracleAI /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-glosas" element={<TOTPProtectedRoute><ProtectedRoute><OSSGlosasDashboard /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-roi-rentabilidade" element={<TOTPProtectedRoute><ProtectedRoute><OSSROIRentabilidade /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-compliance" element={<TOTPProtectedRoute><ProtectedRoute><OSSCompliancePage /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-audesp" element={<TOTPProtectedRoute><ProtectedRoute><OSSAudespPage /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-predicao" element={<TOTPProtectedRoute><ProtectedRoute><OSSPredicaoPage /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-simulador" element={<TOTPProtectedRoute><ProtectedRoute><OSSSimuladorDono /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-controle-glosa-opme" element={<TOTPProtectedRoute><ProtectedRoute><OSSControleGlosaOPME /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-noticias" element={<TOTPProtectedRoute><ProtectedRoute><OSSNoticiasNacionais /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-noticias-clientes" element={<TOTPProtectedRoute><ProtectedRoute><OSSNoticiasClientes /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/oss-manual-descritivo" element={<TOTPProtectedRoute><ProtectedRoute><OSSManualDescritivo /></ProtectedRoute></TOTPProtectedRoute>} />
-                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                    <Route path="/records" element={<ProtectedRoute><Records /></ProtectedRoute>} />
-                    <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />
-                    <Route path="/appointments" element={<ProtectedRoute><Appointments /></ProtectedRoute>} />
-                    <Route path="/metrics" element={<ProtectedRoute><Metrics /></ProtectedRoute>} />
-                    <Route path="/access" element={<ProtectedRoute><Access /></ProtectedRoute>} />
-                    <Route path="/emergency" element={<ProtectedRoute><Emergency /></ProtectedRoute>} />
-                    <Route path="/labexams" element={<ProtectedRoute><LabExams /></ProtectedRoute>} />
-                    <Route path="/lab-exams" element={<ProtectedRoute><LabExams /></ProtectedRoute>} />
-                    <Route path="/genetic-data" element={<ProtectedRoute><GeneticDataPage /></ProtectedRoute>} />
-                    <Route path="/quality-of-life" element={<ProtectedRoute><QualityOfLifePage /></ProtectedRoute>} />
-                    <Route path="/help" element={<ProtectedRoute><HelpPage /></ProtectedRoute>} />
-                    <Route path="/support" element={<ProtectedRoute><SupportPage /></ProtectedRoute>} />
-                    <Route path="/manage-access" element={<ProtectedRoute><ManageAccessPage /></ProtectedRoute>} />
-                    <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-                    <Route path="/technical-details" element={<ProtectedRoute><TechnicalDetailsPage /></ProtectedRoute>} />
-                    <Route path="/qr-ana-ativo" element={<ProtectedRoute><QrAnaAtivoPage /></ProtectedRoute>} />
-                    <Route path="/intelligent-reading" element={<ProtectedRoute><IntelligentReading /></ProtectedRoute>} />
-                    <Route path="/executive-dashboard" element={<ProtectedRoute><ExecutiveDashboard /></ProtectedRoute>} />
-                    <Route path="/operational-dashboard" element={<ProtectedRoute><OperationalDashboard /></ProtectedRoute>} />
-                    <Route path="/patients" element={<ProtectedRoute><PatientsPage /></ProtectedRoute>} />
-                    <Route path="/protocols" element={<ProtectedRoute><ProtocolsPage /></ProtectedRoute>} />
-                    <Route path="/population" element={<ProtectedRoute><PopulationPage /></ProtectedRoute>} />
-                    <Route path="/epidemiology" element={<ProtectedRoute><EpidemiologyPage /></ProtectedRoute>} />
-                    <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
-                    <Route path="/epidemic-alerts" element={<ProtectedRoute><EpidemicAlerts /></ProtectedRoute>} />
-                    <Route path="/monitoramento-aps" element={<ProtectedRoute><MonitoramentoAPSPage /></ProtectedRoute>} />
-                    <Route path="/controle-judicializacao" element={<ProtectedRoute><ControleJudicializacaoPage /></ProtectedRoute>} />
-                    <Route path="/capacitacao-gestores" element={<ProtectedRoute><CapacitacaoGestoresPage /></ProtectedRoute>} />
-                    <Route path="/transicao-gestao" element={<ProtectedRoute><TransicaoGestaoPage /></ProtectedRoute>} />
-                    <Route path="/gestao-orcamentaria" element={<ProtectedRoute><GestaoOrcamentariaPage /></ProtectedRoute>} />
-                    <Route path="/simulador-ied" element={<ProtectedRoute><SimuladorIEDPage /></ProtectedRoute>} />
-                    <Route path="/indicadores-desempenho" element={<ProtectedRoute><IndicadoresDesempenhoPage /></ProtectedRoute>} />
-                    <Route path="/governanca-dados" element={<ProtectedRoute><GovernancaDadosPage /></ProtectedRoute>} />
-                    <Route path="/comissoes-cir" element={<ProtectedRoute><ComissoesCIRPage /></ProtectedRoute>} />
-                    <Route path="/hospitals-access" element={<ProtectedRoute><HospitalsAccess /></ProtectedRoute>} />
-                    <Route path="/pactuacao-regional" element={<ProtectedRoute><PactuacaoRegionalPage /></ProtectedRoute>} />
-                    <Route path="/territorializacao" element={<ProtectedRoute><TerritorializacaoPage /></ProtectedRoute>} />
-                    <Route path="/ai-insights" element={<ProtectedRoute><AIInsightsPage /></ProtectedRoute>} />
-                    <Route path="/oraculo-ia" element={<ProtectedRoute><AIOraclePage /></ProtectedRoute>} />
-                    <Route path="/noticias-saude-piracicaba" element={<ProtectedRoute><PiracicabaHealthNews /></ProtectedRoute>} />
-                    <Route path="/faturamento-sus" element={<ProtectedRoute><FaturamentoSUSPage /></ProtectedRoute>} />
-                    <Route path="/tiss-tuss" element={<ProtectedRoute><TISSTUSSPage /></ProtectedRoute>} />
-                    <Route path="/apac-oncologia" element={<ProtectedRoute><APACOncologiaPage /></ProtectedRoute>} />
-                    <Route path="/rnds-datasus" element={<ProtectedRoute><RNDSDATASUSPage /></ProtectedRoute>} />
-                    <Route path="/conformidade-lgpd" element={<ProtectedRoute><ConformidadeLGPDPage /></ProtectedRoute>} />
-                    <Route path="/prontuario-digital" element={<ProtectedRoute><ProntuarioDigitalPage /></ProtectedRoute>} />
-                    <Route path="/gestao-clinica" element={<ProtectedRoute><GestaoClinicaPage /></ProtectedRoute>} />
-                    <Route path="/centro-cirurgico" element={<ProtectedRoute><CentroCircurgicoPage /></ProtectedRoute>} />
-                    <Route path="/uti-terapia-intensiva" element={<ProtectedRoute><UTITerapiaIntensivaPage /></ProtectedRoute>} />
-                    <Route path="/indicadores-qualidade" element={<ProtectedRoute><IndicadoresQualidadePage /></ProtectedRoute>} />
-                    <Route path="/dashboard-financeiro" element={<ProtectedRoute><DashboardFinanceiroPage /></ProtectedRoute>} />
-                    <Route path="/relatorios-analytics" element={<ProtectedRoute><RelatoriosAnalyticsPage /></ProtectedRoute>} />
-                    <Route path="/analises-laboratoriais" element={<ProtectedRoute><AnalisesLaboratoriaisPage /></ProtectedRoute>} />
-                    <Route path="/gestao-farmaceutica" element={<ProtectedRoute><GestaoFarmaceuticaPage /></ProtectedRoute>} />
-                    <Route path="/ai-analytics" element={<ProtectedRoute><AIAnalyticsPage /></ProtectedRoute>} />
-                    <Route path="/security-dashboard" element={<ProtectedRoute><SecurityDashboardPage /></ProtectedRoute>} />
-                    <Route path="/integrations-dashboard" element={<ProtectedRoute><IntegrationsDashboardPage /></ProtectedRoute>} />
-                    <Route path="/integracoes-tecnicas" element={<ProtectedRoute><IntegracoesTecnicasPage /></ProtectedRoute>} />
-                    <Route path="/integracao-erp" element={<ProtectedRoute><IntegracaoERPPage /></ProtectedRoute>} />
-                    <Route path="/philips-tasy-integration" element={<ProtectedRoute><PhilipsTasyIntegrationPage /></ProtectedRoute>} />
-                    <Route path="/esus-integration" element={<ProtectedRoute><ESUSIntegrationPage /></ProtectedRoute>} />
-                    <Route path="/diabetes-care" element={<ProtectedRoute><DiabetesCarePage /></ProtectedRoute>} />
-                    <Route path="/osteoporosis-care" element={<ProtectedRoute><OsteoporosisCarePage /></ProtectedRoute>} />
-                    {/* <Route path="/erectile-dysfunction" element={<ProtectedRoute><ErectileDysfunctionPage /></ProtectedRoute>} /> */}
-                    <Route path="/glucose-monitoring" element={<ProtectedRoute><GlucoseMonitoringPage /></ProtectedRoute>} />
-                    <Route path="/neurology-care" element={<ProtectedRoute><NeurologyCarePage /></ProtectedRoute>} />
-                    <Route path="/vision-care" element={<ProtectedRoute><VisionCarePage /></ProtectedRoute>} />
-                    <Route path="/hearing-care" element={<ProtectedRoute><HearingCarePage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/visao-geral" element={<ProtectedRoute><LaboratoriosOverviewPage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/operacao" element={<ProtectedRoute><LaboratoriosOperacaoPage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/resultados-laudos" element={<ProtectedRoute><LaboratoriosResultadosPage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/integracoes" element={<ProtectedRoute><LaboratoriosIntegracoesPage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/integracoes/:integrationId" element={<ProtectedRoute><LaboratorioIntegrationDetailPage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/qualidade-compliance" element={<ProtectedRoute><LaboratoriosQualidadePage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/analytics-kpis" element={<ProtectedRoute><LaboratoriosAnalyticsPage /></ProtectedRoute>} />
-                    <Route path="/laboratorios/administracao" element={<ProtectedRoute><LaboratoriosAdministracaoPage /></ProtectedRoute>} />
-                    <Route path="/telemedicine/patient/:sessionId" element={<PublicRoute><TelemedicinePatient /></PublicRoute>} />
-                    <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
-                    <Route path="/documentation" element={<ProtectedRoute><DocumentationPage /></ProtectedRoute>} />
+                    <Route
+                      path="/login"
+                      element={
+                        <PublicRoute>
+                          <Login />
+                        </PublicRoute>
+                      }
+                    />
+                    <Route
+                      path="/qrcodenovo"
+                      element={
+                        <PublicRoute>
+                          <QRCodeGenerator />
+                        </PublicRoute>
+                      }
+                    />
+                    <Route
+                      path="/access-logs"
+                      element={
+                        <PublicRoute>
+                          <AccessLogsPage />
+                        </PublicRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin"
+                      element={
+                        <PublicRoute>
+                          <AdminPanel />
+                        </PublicRoute>
+                      }
+                    />
+                    <Route
+                      path="/telemedicine/patient/:sessionId"
+                      element={
+                        <PublicRoute>
+                          <TelemedicinePatient />
+                        </PublicRoute>
+                      }
+                    />
+
+                    {/* Landing page pública */}
+                    <Route index element={<Index />} />
+                    <Route path="public-health-landing" element={<Index />} />
+
+                    <Route
+                      element={
+                        <TOTPProtectedRoute>
+                          <ProtectedRoute>
+                            <MainLayout />
+                          </ProtectedRoute>
+                        </TOTPProtectedRoute>
+                      }
+                    >
+                      <Route
+                        path="/dashboard-redirect"
+                        element={<DashboardRedirect />}
+                      />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route
+                        path="/prefeitura-dashboard"
+                        element={<PrefeituraDashboard />}
+                      />
+                      <Route path="/oss-dashboard" element={<OSSDashboard />} />
+                      <Route
+                        path="/oss-visao-executiva"
+                        element={<OSSVisionExecutivePage />}
+                      />
+                      <Route
+                        path="/oss-receitas"
+                        element={<OSSReceitasPage />}
+                      />
+                      <Route
+                        path="/oss-receitas-glosas"
+                        element={<OSSReceitasGlosas />}
+                      />
+                      <Route
+                        path="/oss-roi-rentabilidade"
+                        element={<OSSROIRentabilidade />}
+                      />
+                      <Route
+                        path="/oss-compliance-risco"
+                        element={<OSSComplianceRisco />}
+                      />
+                      <Route path="/oss-audesp" element={<OSSAudespPage />} />
+                      <Route
+                        path="/oss-transparencia"
+                        element={<OSSTransparenciaPage />}
+                      />
+                      <Route path="/oss-lgpd" element={<OSSLgpdPage />} />
+                      <Route
+                        path="/oss-metas-desempenho"
+                        element={<OSSMetasDesempenho />}
+                      />
+                      <Route
+                        path="/oss-compliance"
+                        element={<OSSCompliancePage />}
+                      />
+                      <Route path="/oss-oracle-ai" element={<OSSOracleAI />} />
+                      <Route
+                        path="/oss-glosas"
+                        element={<OSSGlosasDashboard />}
+                      />
+                      <Route
+                        path="/oss-predicao"
+                        element={<OSSPredicaoPage />}
+                      />
+                      <Route
+                        path="/oss-simulador"
+                        element={<OSSSimuladorDono />}
+                      />
+                      <Route
+                        path="/oss-controle-glosa-opme"
+                        element={<OSSControleGlosaOPME />}
+                      />
+                      <Route
+                        path="/oss-noticias"
+                        element={<OSSNoticiasNacionais />}
+                      />
+                      <Route
+                        path="/oss-noticias-clientes"
+                        element={<OSSNoticiasClientes />}
+                      />
+                      <Route
+                        path="/oss-manual-descritivo"
+                        element={<OSSManualDescritivo />}
+                      />
+                      <Route
+                        path="/oss-contratos-aditivos"
+                        element={<OSSContratosAditivosPage />}
+                      />
+                      <Route
+                        path="/oss-satisfacao-usuario"
+                        element={<OSSSatisfacaoUsuarioPage />}
+                      />
+
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/records" element={<Records />} />
+                      <Route path="/medications" element={<Medications />} />
+                      <Route path="/appointments" element={<Appointments />} />
+                      <Route path="/metrics" element={<Metrics />} />
+                      <Route path="/access" element={<Access />} />
+                      <Route path="/emergency" element={<Emergency />} />
+                      <Route path="/labexams" element={<LabExams />} />
+                      <Route path="/lab-exams" element={<LabExams />} />
+                      <Route
+                        path="/genetic-data"
+                        element={<GeneticDataPage />}
+                      />
+                      <Route
+                        path="/quality-of-life"
+                        element={<QualityOfLifePage />}
+                      />
+                      <Route path="/help" element={<HelpPage />} />
+                      <Route path="/support" element={<SupportPage />} />
+                      <Route
+                        path="/manage-access"
+                        element={<ManageAccessPage />}
+                      />
+                      <Route path="/settings" element={<SettingsPage />} />
+                      <Route
+                        path="/technical-details"
+                        element={<TechnicalDetailsPage />}
+                      />
+                      <Route
+                        path="/qr-ana-ativo"
+                        element={<QrAnaAtivoPage />}
+                      />
+                      <Route
+                        path="/intelligent-reading"
+                        element={<IntelligentReading />}
+                      />
+                      <Route
+                        path="/executive-dashboard"
+                        element={<ExecutiveDashboard />}
+                      />
+                      <Route
+                        path="/operational-dashboard"
+                        element={<OperationalDashboard />}
+                      />
+                      <Route path="/patients" element={<PatientsPage />} />
+                      <Route path="/protocols" element={<ProtocolsPage />} />
+                      <Route path="/population" element={<PopulationPage />} />
+                      <Route
+                        path="/epidemiology"
+                        element={<EpidemiologyPage />}
+                      />
+                      <Route path="/resources" element={<ResourcesPage />} />
+                      <Route
+                        path="/epidemic-alerts"
+                        element={<EpidemicAlerts />}
+                      />
+                      <Route
+                        path="/monitoramento-aps"
+                        element={<MonitoramentoAPSPage />}
+                      />
+                      <Route
+                        path="/controle-judicializacao"
+                        element={<ControleJudicializacaoPage />}
+                      />
+                      <Route
+                        path="/capacitacao-gestores"
+                        element={<CapacitacaoGestoresPage />}
+                      />
+                      <Route
+                        path="/transicao-gestao"
+                        element={<TransicaoGestaoPage />}
+                      />
+                      <Route
+                        path="/gestao-orcamentaria"
+                        element={<GestaoOrcamentariaPage />}
+                      />
+                      <Route
+                        path="/simulador-ied"
+                        element={<SimuladorIEDPage />}
+                      />
+                      <Route
+                        path="/indicadores-desempenho"
+                        element={<IndicadoresDesempenhoPage />}
+                      />
+                      <Route
+                        path="/governanca-dados"
+                        element={<GovernancaDadosPage />}
+                      />
+                      <Route
+                        path="/comissoes-cir"
+                        element={<ComissoesCIRPage />}
+                      />
+                      <Route
+                        path="/hospitals-access"
+                        element={<HospitalsAccess />}
+                      />
+                      <Route
+                        path="/pactuacao-regional"
+                        element={<PactuacaoRegionalPage />}
+                      />
+                      <Route
+                        path="/territorializacao"
+                        element={<TerritorializacaoPage />}
+                      />
+                      <Route path="/ai-insights" element={<AIInsightsPage />} />
+                      <Route path="/oraculo-ia" element={<AIOraclePage />} />
+                      <Route
+                        path="/noticias-saude-piracicaba"
+                        element={<PiracicabaHealthNews />}
+                      />
+                      <Route
+                        path="/faturamento-sus"
+                        element={<FaturamentoSUSPage />}
+                      />
+                      <Route path="/tiss-tuss" element={<TISSTUSSPage />} />
+                      <Route
+                        path="/apac-oncologia"
+                        element={<APACOncologiaPage />}
+                      />
+                      <Route
+                        path="/rnds-datasus"
+                        element={<RNDSDATASUSPage />}
+                      />
+                      <Route
+                        path="/conformidade-lgpd"
+                        element={<ConformidadeLGPDPage />}
+                      />
+                      <Route
+                        path="/prontuario-digital"
+                        element={<ProntuarioDigitalPage />}
+                      />
+                      <Route
+                        path="/gestao-clinica"
+                        element={<GestaoClinicaPage />}
+                      />
+                      <Route
+                        path="/centro-cirurgico"
+                        element={<CentroCircurgicoPage />}
+                      />
+                      <Route
+                        path="/uti-terapia-intensiva"
+                        element={<UTITerapiaIntensivaPage />}
+                      />
+                      <Route
+                        path="/indicadores-qualidade"
+                        element={<IndicadoresQualidadePage />}
+                      />
+                      <Route
+                        path="/dashboard-financeiro"
+                        element={<DashboardFinanceiroPage />}
+                      />
+                      <Route
+                        path="/relatorios-analytics"
+                        element={<RelatoriosAnalyticsPage />}
+                      />
+                      <Route
+                        path="/analises-laboratoriais"
+                        element={<AnalisesLaboratoriaisPage />}
+                      />
+                      <Route
+                        path="/gestao-farmaceutica"
+                        element={<GestaoFarmaceuticaPage />}
+                      />
+                      <Route
+                        path="/ai-analytics"
+                        element={<AIAnalyticsPage />}
+                      />
+                      <Route
+                        path="/security-dashboard"
+                        element={<SecurityDashboardPage />}
+                      />
+                      <Route
+                        path="/integrations-dashboard"
+                        element={<IntegrationsDashboardPage />}
+                      />
+                      <Route
+                        path="/integracoes-tecnicas"
+                        element={<IntegracoesTecnicasPage />}
+                      />
+                      <Route
+                        path="/integracao-erp"
+                        element={<IntegracaoERPPage />}
+                      />
+                      <Route
+                        path="/philips-tasy-integration"
+                        element={<PhilipsTasyIntegrationPage />}
+                      />
+                      <Route
+                        path="/esus-integration"
+                        element={<ESUSIntegrationPage />}
+                      />
+                      <Route
+                        path="/diabetes-care"
+                        element={<DiabetesCarePage />}
+                      />
+                      <Route
+                        path="/osteoporosis-care"
+                        element={<OsteoporosisCarePage />}
+                      />
+                      <Route
+                        path="/glucose-monitoring"
+                        element={<GlucoseMonitoringPage />}
+                      />
+                      <Route
+                        path="/neurology-care"
+                        element={<NeurologyCarePage />}
+                      />
+                      <Route path="/vision-care" element={<VisionCarePage />} />
+                      <Route
+                        path="/hearing-care"
+                        element={<HearingCarePage />}
+                      />
+                      <Route
+                        path="/laboratorios/visao-geral"
+                        element={<LaboratoriosOverviewPage />}
+                      />
+                      <Route
+                        path="/laboratorios/operacao"
+                        element={<LaboratoriosOperacaoPage />}
+                      />
+                      <Route
+                        path="/laboratorios/resultados-laudos"
+                        element={<LaboratoriosResultadosPage />}
+                      />
+                      <Route
+                        path="/laboratorios/integracoes"
+                        element={<LaboratoriosIntegracoesPage />}
+                      />
+                      <Route
+                        path="/laboratorios/integracoes/:integrationId"
+                        element={<LaboratorioIntegrationDetailPage />}
+                      />
+                      <Route
+                        path="/laboratorios/qualidade-compliance"
+                        element={<LaboratoriosQualidadePage />}
+                      />
+                      <Route
+                        path="/laboratorios/analytics-kpis"
+                        element={<LaboratoriosAnalyticsPage />}
+                      />
+                      <Route
+                        path="/laboratorios/administracao"
+                        element={<LaboratoriosAdministracaoPage />}
+                      />
+                      <Route path="/test" element={<TestPage />} />
+                    </Route>
+
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </div>
               </BrowserRouter>
             </ProfileAccessProvider>
           </AuthProvider>
+          </CustomizationProvider>
         </Suspense>
       </TooltipProvider>
     </QueryClientProvider>

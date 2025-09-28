@@ -1,5 +1,4 @@
 import React from 'react';
-import MainLayout from '@/components/layout/MainLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -77,7 +76,6 @@ const CardNoticia = ({ titulo, resumo, link, positiva, data }: { titulo: string;
 );
 
 const OSSNoticiasClientes = () => (
-  <MainLayout>
     <div className="min-h-screen space-y-8 bg-gradient-to-br from-slate-950 via-slate-900 to-black p-6 text-slate-100">
       <header className="space-y-2">
         <Badge className="bg-blue-500/20 text-blue-200">Radar OSS</Badge>
@@ -100,7 +98,6 @@ const OSSNoticiasClientes = () => (
         ))}
       </Tabs>
     </div>
-  </MainLayout>
 );
 
 export default OSSNoticiasClientes;
