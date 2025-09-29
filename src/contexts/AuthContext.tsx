@@ -263,13 +263,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const switchGuestRole = (newRole: string) => {
-    console.log('AuthContext: Alterando papel para:', newRole, 'no contexto de autenticação');
-    console.log('Switching to role:', newRole);
-    setUserRole(newRole);
-    localStorage.setItem('demo_user_role', newRole);
-    
-    // Remover redirecionamento automático - será feito manualmente no AccessDropdown
-    console.log('Role switched successfully to:', newRole);
+    return new Promise<void>((resolve) => {
+      console.log('AuthContext: Alterando papel para:', newRole, 'no contexto de autenticação');
+      
+      // Atualizar o estado local
+      setUserRole(newRole);
+      
+      // Salvar no localStorage para persistência
+      localStorage.setItem('demo_user_role', newRole);
+      
+      // Forçar atualização dos componentes que dependem do userRole
+      // Isso garante que o menu e outros componentes serão atualizados
+      window.dispatchEvent(new CustomEvent('roleChanged', { detail: { role: newRole } }));
+      
+      // Pequeno atraso para garantir que o estado foi atualizado
+      setTimeout(() => {
+        console.log('AuthContext: Papel alterado com sucesso para:', newRole);
+        resolve();
+      }, 100);
+    });
   };
 
   const verifyTOTP = async (email: string, token: string) => {
