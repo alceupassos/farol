@@ -1,5 +1,10 @@
 # Mudanças Necessárias no Sidebar.tsx para OSS
 
+## Atualização — Inclusão do Controle de OPME
+- Atualizar o item do menu para `/oss-controle-opme` com o rótulo **Controle de OPME**.
+- Preservar `/oss-controle-glosa-opme` como rota compatível apenas para links antigos (não exibir no menu).
+- Garantir tradução do novo rótulo (`sidebar.sections.dashboard.items.ossControleOpme`) em todos os arquivos de localização e na documentação `translations.json`.
+
 ## 1. Adicionar imports no topo do arquivo
 ```typescript
 import { FileText, AlertTriangle, Calculator } from 'lucide-react';

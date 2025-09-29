@@ -1,5 +1,9 @@
 # Mudanças Necessárias no AccessDropdown.tsx
 
+## Atualização — Controle de OPME no fluxo OSS
+- Ao selecionar o papel OSS, garantir que o menu lateral contenha o item **Controle de OPME** (`/oss-controle-opme`).
+- Revisar materiais de onboarding para destacar o acesso ao novo módulo dentro de “Acesso ao Sistema”.
+
 ## 1. Adicionar import do ícone FileText
 ```typescript
 import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText } from 'lucide-react';

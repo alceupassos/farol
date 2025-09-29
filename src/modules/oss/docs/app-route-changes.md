@@ -54,3 +54,5 @@ import OSSDashboard from "./pages/OSSDashboard";
 - `/aph-governanca-lgpd` → `AphGovernancaLgpdPage`
 - `/aph-integracoes` → `AphIntegracoesPage`
 - `/aph-compliance` → `AphCompliancePage`
+- `/oss-controle-opme` → `OSSControleOPME`
+- `/oss-controle-glosa-opme` → `OSSControleOPME` *(alias legado para links existentes)*

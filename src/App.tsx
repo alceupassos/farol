@@ -106,7 +106,7 @@ import OSSOracleAI from "./pages/OSSOracleAI";
 import OSSGlosasDashboard from "./pages/OSSGlosasDashboard";
 import OSSPredicaoPage from "./pages/OSSPredicaoPage";
 import OSSSimuladorDono from "./pages/OSSSimuladorDono";
-import OSSControleGlosaOPME from "./pages/OSSControleGlosaOPME";
+import OSSControleOPME from "./pages/OSSControleOPME";
 import OSSNoticiasNacionais from "./pages/OSSNoticiasNacionais";
 import OSSNoticiasClientes from "./pages/OSSNoticiasClientes";
 import OSSContratosAditivosPage from "./pages/OSSContratosAditivosPage";
@@ -142,6 +142,7 @@ import {
   AphCatalogoPage,
   AphIntegracoesPage,
   AphManutencaoPreditivaPage,
+  AphMapaAmbulanciasPage,
   AphMonitoramentoCamerasPage,
   AphOraculoPage,
   AphPlaybooksOperacionaisPage,
@@ -229,6 +230,7 @@ const App = () => (
                       />
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route path="/aph-dashboard" element={<AphDashboardPage />} />
+                      <Route path="/aph-mapa-ambulancias" element={<AphMapaAmbulanciasPage />} />
                       <Route path="/aph-insights-ia" element={<AphInsightsIAPage />} />
                       <Route path="/aph-oraculo" element={<AphOraculoPage />} />
                       <Route path="/aph-catalogo" element={<AphCatalogoPage />} />
@@ -293,8 +295,12 @@ const App = () => (
                         element={<OSSSimuladorDono />}
                       />
                       <Route
+                        path="/oss-controle-opme"
+                        element={<OSSControleOPME />}
+                      />
+                      <Route
                         path="/oss-controle-glosa-opme"
-                        element={<OSSControleGlosaOPME />}
+                        element={<OSSControleOPME />}
                       />
                       <Route
                         path="/oss-noticias"

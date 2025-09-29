@@ -2,6 +2,7 @@ export type AphSeverity = 'critico' | 'grave' | 'atencao' | 'estavel';
 
 export type AphPageKey =
   | 'dashboard'
+  | 'mapaAmbulancias'
   | 'insightsIa'
   | 'oraculo'
   | 'catalogo'
@@ -270,6 +271,8 @@ export interface AphAmbulance {
   eta?: string;
   lastUpdate: string;
   telemetry: AphAmbulanceTelemetry;
+  image?: string;
+  interiorImage?: string;
 }
 
 export interface AphMapLayer {

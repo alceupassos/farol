@@ -48,6 +48,7 @@
       "laboratory": "Gestão Laboratorial",
       "gestor": "Gestão Pública",
       "laboratorio": "Gestão Laboratorial",
+      "controleOpme": "Controle de OPME",
       "oss": "OSS",
       "medico": "Médico",
       "aph": "Atendimento Pré-Hospitalar",
@@ -62,7 +63,8 @@
     "codeLabel": "Código de 6 dígitos",
     "actions": {
       "validating": "Validando...",
-      "confirm": "Confirmar acesso"
+      "confirm": "Confirmar acesso",
+      "cancel": "Cancelar"
     },
     "errors": {
       "codeLength": "Informe os 6 dígitos do código.",
@@ -85,6 +87,10 @@
       "oss": {
         "label": "Gestão Contratual/OSS",
         "description": "OSS Cesário Lange - BHCL"
+      },
+      "controleOpme": {
+        "label": "Controle de OPME",
+        "description": "Gestão de órteses, próteses e materiais especiais"
       },
       "laboratory": {
         "label": "Laboratórios",
@@ -124,7 +130,7 @@
           "ossMetas": "Metas de Desempenho",
           "ossPredicao": "Predições",
           "ossSimulador": "Simulador",
-          "ossControleGlosa": "Controle de Glosas",
+          "ossControleOpme": "Controle de OPME",
           "ossNoticias": "Notícias",
           "ossNoticiasClientes": "Notícias para Clientes",
           "ossManual": "Manual do Usuário"

@@ -101,6 +101,19 @@ const AphAmbulanceCockpit: React.FC<AphAmbulanceCockpitProps> = ({ ambulance }) 
           </div>
         </div>
         <div className="flex flex-col justify-between gap-4">
+          {ambulance.interiorImage && (
+            <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-4">
+              <p className="text-xs uppercase tracking-wide text-slate-400 mb-3">Interior da Ambulância</p>
+              <img 
+                src={ambulance.interiorImage} 
+                alt={`Interior da ${ambulance.name}`}
+                className="w-full h-32 object-cover rounded-lg border border-slate-700"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
           <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-4 text-sm text-slate-300">
             <p className="text-xs uppercase tracking-wide text-slate-400">Resumo operacional</p>
             <ul className="mt-2 space-y-1">

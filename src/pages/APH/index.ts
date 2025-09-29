@@ -1,6 +1,7 @@
 import { createAphPage } from '@/components/aph/createAphPage';
 
 export const AphDashboardPage = createAphPage('dashboard');
+export const AphMapaAmbulanciasPage = createAphPage('mapaAmbulancias');
 export const AphInsightsIAPage = createAphPage('insightsIa');
 export const AphOraculoPage = createAphPage('oraculo');
 export const AphCatalogoPage = createAphPage('catalogo');

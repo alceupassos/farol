@@ -9,13 +9,14 @@ import {
   Stethoscope, Scissors, Heart, TestTube, Pill,
   Settings, User, KeyRound, Microscope, Calendar,
   Video, Images, UploadCloud, Watch, ShieldAlert,
-  MapPin, Eye, Ear, Thermometer, Bone, Ambulance
+  MapPin, Eye, Ear, Thermometer, Bone, Ambulance,
+  Workflow, Network, BookOpen, SquareStack, ClipboardCheck,
+  ShieldCheck, CheckCircle2, Clock, Gauge
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
-import { ossSections } from './SidebarOSS';
 import { CustomizationPanel } from '@/components/customization/CustomizationPanel';
 
 interface SidebarItemProps {
@@ -70,7 +71,7 @@ const SidebarItem = ({ to, icon, label, currentPath, onClick, isChild = false }:
 
 const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const location = useLocation();
-  const currentPath = location.pathname;
+  const currentPath = `${location.pathname}${location.search}`;
   const { userRole } = useAuth();
   const { t } = useTranslation();
   const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
@@ -196,57 +197,43 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       ],
       aph: [
         {
-          title: 'Dashboard Tempo Real',
+          title: 'Dashboard & Monitoramento',
           items: [
             { to: '/aph-dashboard', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Dashboard Tempo Real' },
+            { to: '/aph-mapa-ambulancias', icon: <MapPin className="h-5 w-5 mr-3" />, label: 'Mapa GPS Ambulâncias' },
             { to: '/aph-insights-ia', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Insights de IA' },
             { to: '/aph-oraculo', icon: <Zap className="h-5 w-5 mr-3" />, label: 'Oráculo APH' },
+          ],
+        },
+        {
+          title: 'Operações & Frota',
+          items: [
+            { to: '/aph-despacho-regulacao', icon: <Target className="h-5 w-5 mr-3" />, label: 'Despacho & Regulação' },
+            { to: '/aph-heatmap-cobertura', icon: <Map className="h-5 w-5 mr-3" />, label: 'Heatmap & Cobertura' },
+            { to: '/aph-frota-telemetria', icon: <Ambulance className="h-5 w-5 mr-3" />, label: 'Frota & Telemetria' },
+            { to: '/aph-manutencao-preditiva', icon: <RefreshCw className="h-5 w-5 mr-3" />, label: 'Manutenção Preditiva' },
             { to: '/aph-catalogo', icon: <ClipboardList className="h-5 w-5 mr-3" />, label: 'Catálogo Operacional' },
           ],
         },
         {
-          title: 'Despacho & Regulação',
-          items: [
-            { to: '/aph-despacho-regulacao', icon: <Target className="h-5 w-5 mr-3" />, label: 'Despacho & Regulação' },
-            { to: '/aph-heatmap-cobertura', icon: <Map className="h-5 w-5 mr-3" />, label: 'Heatmap & Cobertura' },
-            { to: '/aph-playbooks-operacionais', icon: <ClipboardList className="h-5 w-5 mr-3" />, label: 'Playbooks Operacionais' },
-          ],
-        },
-        {
-          title: 'Frota & Telemetria',
-          items: [
-            { to: '/aph-frota-telemetria', icon: <Ambulance className="h-5 w-5 mr-3" />, label: 'Frota & Telemetria' },
-            { to: '/aph-manutencao-preditiva', icon: <RefreshCw className="h-5 w-5 mr-3" />, label: 'Manutenção Preditiva' },
-            { to: '/aph-monitoramento-cameras', icon: <Video className="h-5 w-5 mr-3" />, label: 'Monitoramento de Câmeras' },
-          ],
-        },
-        {
-          title: 'Clínica & Qualidade',
+          title: 'Qualidade & Gestão',
           items: [
             { to: '/aph-clinica-qualidade', icon: <Stethoscope className="h-5 w-5 mr-3" />, label: 'Clínica & Qualidade' },
             { to: '/aph-protocolos', icon: <CheckCircle className="h-5 w-5 mr-3" />, label: 'Protocolos e Auditoria' },
             { to: '/aph-educacao-continuada', icon: <GraduationCap className="h-5 w-5 mr-3" />, label: 'Educação Continuada' },
+            { to: '/aph-monitoramento-cameras', icon: <Video className="h-5 w-5 mr-3" />, label: 'Monitoramento Câmeras' },
+            { to: '/aph-playbooks-operacionais', icon: <ClipboardList className="h-5 w-5 mr-3" />, label: 'Playbooks Operacionais' },
           ],
         },
         {
-          title: 'Financeiro & Antiglosas',
+          title: 'Financeiro & Compliance',
           items: [
             { to: '/aph-financeiro', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Performance Financeira' },
             { to: '/aph-antiglosas', icon: <Shield className="h-5 w-5 mr-3" />, label: 'Antiglosas & Pré-Auditoria' },
             { to: '/aph-pre-auditoria', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Pacotes de Evidências' },
-          ],
-        },
-        {
-          title: 'Portal do Contratante',
-          items: [
             { to: '/aph-portal-contratante', icon: <Users className="h-5 w-5 mr-3" />, label: 'Portal do Contratante' },
             { to: '/aph-storytelling', icon: <Newspaper className="h-5 w-5 mr-3" />, label: 'Storytelling & NPS' },
             { to: '/aph-relatorios', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Relatórios Executivos' },
-          ],
-        },
-        {
-          title: 'Governança & LGPD',
-          items: [
             { to: '/aph-governanca-lgpd', icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: 'Governança & LGPD' },
             { to: '/aph-integracoes', icon: <Globe className="h-5 w-5 mr-3" />, label: 'Integrações & MCP' },
             { to: '/aph-compliance', icon: <Scale className="h-5 w-5 mr-3" />, label: 'Compliance & Auditoria' },
@@ -266,10 +253,49 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
             { to: '/oss-metas-desempenho', icon: <Target className="h-5 w-5 mr-3" />, label: 'Metas de Desempenho' },
             { to: '/oss-predicao', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Predições' },
             { to: '/oss-simulador', icon: <Calculator className="h-5 w-5 mr-3" />, label: 'Simulador' },
-            { to: '/oss-controle-glosa-opme', icon: <Layers className="h-5 w-5 mr-3" />, label: 'Controle Glosa OPME' },
+            { to: '/oss-controle-opme', icon: <Layers className="h-5 w-5 mr-3" />, label: 'Controle de OPME' },
             { to: '/oss-noticias', icon: <Newspaper className="h-5 w-5 mr-3" />, label: 'Notícias Nacionais' },
             { to: '/oss-noticias-clientes', icon: <Users className="h-5 w-5 mr-3" />, label: 'Notícias Clientes' },
             { to: '/oss-manual-descritivo', icon: <Info className="h-5 w-5 mr-3" />, label: 'Manual Descritivo' },
+          ],
+        },
+      ],
+      controleOpme: [
+        {
+          title: 'Cockpit & Infográficos',
+          items: [
+            { to: '/oss-controle-opme?section=overview', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: 'Visão Geral & OKRs' },
+            { to: '/oss-controle-opme?section=cockpit', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Cockpit de KPIs' },
+            { to: '/oss-controle-opme?section=metricas', icon: <Gauge className="h-5 w-5 mr-3" />, label: 'Métricas & Fórmulas' },
+            { to: '/oss-controle-opme?section=dados', icon: <Database className="h-5 w-5 mr-3" />, label: 'Modelo de Dados' },
+          ],
+        },
+        {
+          title: 'Operação & Fluxos',
+          items: [
+            { to: '/oss-controle-opme?section=fluxos', icon: <Workflow className="h-5 w-5 mr-3" />, label: 'Fluxos Críticos' },
+            { to: '/oss-controle-opme?section=integracoes', icon: <Network className="h-5 w-5 mr-3" />, label: 'Integrações & Portais' },
+            { to: '/oss-controle-opme?section=kanban', icon: <SquareStack className="h-5 w-5 mr-3" />, label: 'Kanban Operacional' },
+            { to: '/oss-controle-opme?section=playbooks', icon: <BookOpen className="h-5 w-5 mr-3" />, label: 'Playbooks por Convênio' },
+          ],
+        },
+        {
+          title: 'IA & Compliance',
+          items: [
+            { to: '/oss-controle-opme?section=ia', icon: <Brain className="h-5 w-5 mr-3" />, label: 'IA & What-if' },
+            { to: '/oss-controle-opme?section=governanca', icon: <ShieldCheck className="h-5 w-5 mr-3" />, label: 'Governança & Segurança' },
+            { to: '/oss-controle-opme?section=erros', icon: <AlertTriangle className="h-5 w-5 mr-3" />, label: 'Erros & Glosas' },
+            { to: '/oss-controle-opme?section=relatorios', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Relatórios Essenciais' },
+          ],
+        },
+        {
+          title: 'Execução & Roadmap',
+          items: [
+            { to: '/oss-controle-opme?section=onboarding', icon: <ClipboardCheck className="h-5 w-5 mr-3" />, label: 'Onboarding & Dados' },
+            { to: '/oss-controle-opme?section=apis', icon: <Settings className="h-5 w-5 mr-3" />, label: 'APIs & Checklists' },
+            { to: '/oss-controle-opme?section=raci', icon: <Users className="h-5 w-5 mr-3" />, label: 'RACI & Testes' },
+            { to: '/oss-controle-opme?section=roadmap', icon: <Clock className="h-5 w-5 mr-3" />, label: 'Roadmap 90/180/365' },
+            { to: '/oss-controle-opme?section=principios', icon: <CheckCircle2 className="h-5 w-5 mr-3" />, label: 'Princípios Estratégicos' },
           ],
         },
       ],
@@ -336,6 +362,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     gestor: 'navbar.roles.manager',
     hospital: 'navbar.roles.hospital',
     laboratorio: 'navbar.roles.laboratory',
+    controleOpme: 'navbar.roles.controleOpme',
     medico: 'navbar.roles.doctor',
     aph: 'navbar.roles.aph',
     paciente: 'navbar.roles.patient',

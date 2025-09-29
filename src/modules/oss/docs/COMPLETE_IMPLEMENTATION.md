@@ -163,6 +163,12 @@ npm run dev
 - Análises preditivas (renovação, glosas)
 - Otimização automática de recursos
 
+### **OSSControleOPME**
+- Página `OSSControleOPME.tsx` com plano completo de governança, integrações, faturamento, auditoria e IA para OPME.
+- Cockpit executivo (receita vs meta, glosa técnica/administrativa, autorização, tempo de ciclo, DSO, margem por DRG, heatmap de risco).
+- Fluxos críticos estruturados, Kanban operacional, playbooks por convênio e matriz de integração monitorável.
+- Modelos de dados com DDL, métricas e fórmulas, APIs/Webhooks, checklists, RACI, roadmap, testes e princípios estratégicos.
+
 ## 📈 **MÉTRICAS DE SUCESSO**
 
 ### **Indicadores Implementados**

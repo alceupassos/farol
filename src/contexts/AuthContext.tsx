@@ -16,6 +16,7 @@ interface AuthContextType {
   switchGuestRole: (newRole: string) => void;
   verifyTOTP: (email: string, token: string) => Promise<{ success: boolean; error?: any }>;
   generateTOTPSecret: (email: string) => Promise<{ secret?: string; qrCode?: string; error?: any }>;
+  setRole: (role: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -364,6 +365,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const setRole = (role: string | null) => {
+    setUserRole(role);
+    if (role) {
+      localStorage.setItem('demo_user_role', role);
+    } else {
+      localStorage.removeItem('demo_user_role');
+    }
+  };
+
   const value = {
     user,
     session,
@@ -377,6 +387,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     switchGuestRole,
     verifyTOTP,
     generateTOTPSecret,
+    setRole,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

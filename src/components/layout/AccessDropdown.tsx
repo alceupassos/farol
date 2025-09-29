@@ -1,14 +1,9 @@
-import { useMemo, useState } from 'react';
-import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText, Ambulance } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { useMemo, useState, useEffect } from 'react';
+import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText, Ambulance, Package, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -18,217 +13,228 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { SimpleTOTP } from '@/utils/simpleTOTP';
-import { useTranslation } from 'react-i18next';
 
-const AccessDropdown = () => {
-  const navigate = useNavigate();
-  const { switchGuestRole } = useAuth();
+interface AccessOption {
+  id: string;
+  role: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  description: string;
+  color: string;
+  path: string;
+}
+
+export const AccessDropdown = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { setRole, userRole, verifyTOTP } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<AccessOption | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const [totpCode, setTotpCode] = useState('');
   const [totpError, setTotpError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
 
-  const accessOptions = useMemo(
+  const accessOptions = useMemo<AccessOption[]>(
     () => [
       {
         id: 'gestor',
-        label: t('accessDropdown.options.gestor.label'),
+        role: 'gestor',
+        label: t('accessDropdown.options.gestor.label', 'Gestor'),
         icon: Building2,
-        description: t('accessDropdown.options.gestor.description'),
-        color: 'text-primary'
+        description: t('accessDropdown.options.gestor.description', 'Acesso ao painel de gestão'),
+        color: 'text-primary',
+        path: '/prefeitura-dashboard'
       },
       {
         id: 'hospital',
-        label: t('accessDropdown.options.hospital.label'),
+        role: 'hospital',
+        label: t('accessDropdown.options.hospital.label', 'Hospital'),
         icon: Hospital,
-        description: t('accessDropdown.options.hospital.description'),
-        color: 'text-blue-500'
-      },
-      {
-        id: 'aph',
-        label: t('accessDropdown.options.aph.label'),
-        icon: Ambulance,
-        description: t('accessDropdown.options.aph.description'),
-        color: 'text-red-500'
+        description: t('accessDropdown.options.hospital.description', 'Acesso ao painel do hospital'),
+        color: 'text-blue-500',
+        path: '/dashboard'
       },
       {
         id: 'oss',
-        label: t('accessDropdown.options.oss.label'),
+        role: 'oss',
+        label: t('accessDropdown.options.oss.label', 'OSS'),
         icon: FileText,
-        description: t('accessDropdown.options.oss.description'),
-        color: 'text-purple-500'
+        description: t('accessDropdown.options.oss.description', 'Acesso ao painel OSS'),
+        color: 'text-purple-500',
+        path: '/oss-dashboard'
+      },
+      {
+        id: 'controleOpme',
+        role: 'controleOpme',
+        label: t('accessDropdown.options.controleOpme.label', 'Controle de OPME'),
+        icon: Package,
+        description: t('accessDropdown.options.controleOpme.description', 'Gestão de Ortóteses, Próteses e Materiais Especiais'),
+        color: 'text-amber-500',
+        path: '/oss-controle-opme?section=overview'
+      },
+      {
+        id: 'aph',
+        role: 'aph',
+        label: t('accessDropdown.options.aph.label', 'APH'),
+        icon: Ambulance,
+        description: t('accessDropdown.options.aph.description', 'Atendimento Pré-Hospitalar'),
+        color: 'text-red-500',
+        path: '/aph-dashboard'
       },
       {
         id: 'laboratorio',
-        label: t('accessDropdown.options.laboratory.label'),
+        role: 'laboratorio',
+        label: t('accessDropdown.options.laboratory.label', 'Laboratório'),
         icon: TestTube,
-        description: t('accessDropdown.options.laboratory.description'),
-        color: 'text-emerald-400'
+        description: t('accessDropdown.options.laboratory.description', 'Acesso ao laboratório'),
+        color: 'text-emerald-400',
+        path: '/laboratorios/visao-geral'
       },
       {
         id: 'medico',
-        label: t('accessDropdown.options.doctor.label'),
+        role: 'medico',
+        label: t('accessDropdown.options.doctor.label', 'Médico'),
         icon: UserCheck,
-        description: t('accessDropdown.options.doctor.description'),
-        color: 'text-secondary'
+        description: t('accessDropdown.options.doctor.description', 'Acesso ao painel médico'),
+        color: 'text-secondary',
+        path: '/patients'
       },
       {
         id: 'paciente',
-        label: t('accessDropdown.options.patient.label'),
+        role: 'paciente',
+        label: t('accessDropdown.options.patient.label', 'Paciente'),
         icon: User,
-        description: t('accessDropdown.options.patient.description'),
-        color: 'text-accent'
+        description: t('accessDropdown.options.patient.description', 'Acesso ao painel do paciente'),
+        color: 'text-accent',
+        path: '/profile'
       }
     ],
     [t]
   );
 
-  const handleAccessSelect = (role: string) => {
-    console.log('AccessDropdown: Iniciando seleção de acesso para papel:', role);
-    console.log('AccessDropdown: initiating TOTP verification for role:', role);
-    setSelectedRole(role);
+  const handleSelect = (option: AccessOption) => {
+    setSelectedOption(option);
     setTotpCode('');
     setTotpError('');
+    setIsOpen(false);
     setIsModalOpen(true);
   };
 
-  const handleModalClose = (open: boolean) => {
-    if (!open) {
-      setIsModalOpen(false);
-      setSelectedRole(null);
-      setTotpCode('');
-      setTotpError('');
-      setIsVerifying(false);
-    } else {
-      setIsModalOpen(true);
-    }
-  };
-
-  const redirectAfterRole = (role: string) => {
-    console.log('AccessDropdown: Iniciando redirecionamento para papel:', role);
-    
-    if (role === 'gestor') {
-      console.log('AccessDropdown: Redirecting to prefeitura dashboard');
-      navigate('/prefeitura-dashboard');
-    } else if (role === 'hospital') {
-      console.log('AccessDropdown: Redirecting to hospital dashboard');
-      navigate('/dashboard');
-    } else if (role === 'aph') {
-      console.log('AccessDropdown: Redirecting to APH dashboard');
-      navigate('/aph-dashboard');
-    } else if (role === 'oss') {
-      console.log('AccessDropdown: OSS role selected');
-      console.log('AccessDropdown: Redirecting to /oss-dashboard');
-      navigate('/oss-dashboard');
-    } else if (role === 'laboratorio') {
-      console.log('AccessDropdown: Redirecting to laboratory hub');
-      navigate('/laboratorios/visao-geral');
-    } else if (role === 'medico') {
-      console.log('AccessDropdown: Redirecting to medical profile');
-      navigate('/profile');
-    } else if (role === 'paciente') {
-      console.log('AccessDropdown: Redirecting to patient profile');
-      navigate('/profile');
-    } else {
-      console.log('AccessDropdown: Redirecting to default dashboard');
-      navigate('/dashboard');
-    }
-    
-    console.log('AccessDropdown: Redirecionamento concluído para papel:', role);
-  };
-
   const handleVerifyTotp = async () => {
-    if (!selectedRole) {
-      console.warn('AccessDropdown: No role selected for TOTP verification');
+    if (!selectedOption) {
+      setTotpError(t('accessDropdown.errors.generic', 'Erro ao validar o código. Tente novamente em instantes.'));
       return;
     }
 
-    setIsVerifying(true);
-    setTotpError('');
+    if (totpCode.length !== 6) {
+      setTotpError(t('accessDropdown.errors.codeLength', 'Informe os 6 dígitos do código.'));
+      return;
+    }
 
     try {
-      const sanitizedCode = totpCode.replace(/\D/g, '').slice(0, 6);
-      setTotpCode(sanitizedCode);
+      setIsVerifying(true);
+      const result = await verifyTOTP('admin@saudepublica.com', totpCode);
 
-      if (sanitizedCode.length !== 6) {
-        setTotpError(t('accessDropdown.errors.codeLength'));
+      if (!result.success) {
+        setTotpError(t('accessDropdown.errors.invalid', 'Código inválido. Tente novamente.'));
         return;
       }
 
-      const isValid = await SimpleTOTP.verify(sanitizedCode, 'JBSWY3DPEHPK3PXP', 1);
-
-      if (isValid) {
-        console.log('AccessDropdown: TOTP verification succeeded');
-        const roleToApply = selectedRole;
-        switchGuestRole(roleToApply);
-        handleModalClose(false);
-        setTimeout(() => redirectAfterRole(roleToApply), 100);
-      } else {
-        console.warn('AccessDropdown: Invalid TOTP code provided');
-        setTotpError(t('accessDropdown.errors.invalid'));
-      }
+      setIsModalOpen(false);
+      setIsLoading(true);
+      setRole(selectedOption.role);
+      setSelectedOption(selectedOption);
+      navigate(selectedOption.path);
+      setTimeout(() => {
+        setIsLoading(false);
+        setTotpCode('');
+      }, 350);
     } catch (error) {
-      console.error('AccessDropdown: Error verifying TOTP code', error);
-      setTotpError(t('accessDropdown.errors.generic'));
+      console.error('Erro ao validar TOTP no AccessDropdown:', error);
+      setTotpError(t('accessDropdown.errors.generic', 'Erro ao validar o código. Tente novamente em instantes.'));
     } finally {
       setIsVerifying(false);
     }
   };
 
-  // Sempre mostrar todas as opções
-  const filteredOptions = accessOptions;
+  const handleModalClose = () => {
+    if (isVerifying) return;
+    setIsModalOpen(false);
+    setTotpCode('');
+    setTotpError('');
+  };
+
+  useEffect(() => {
+    if (!userRole) {
+      return;
+    }
+
+    const matchedOption = accessOptions.find((option) => option.role === userRole);
+
+    if (matchedOption && matchedOption.id !== selectedOption?.id) {
+      setSelectedOption(matchedOption);
+    }
+  }, [userRole, accessOptions, selectedOption?.id]);
 
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button 
-            className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            {t('accessDropdown.trigger')}
-            <ChevronDown className="ml-2 h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-72 p-2" align="end">
-          {filteredOptions.map((option) => {
-            const IconComponent = option.icon;
-            return (
-              <DropdownMenuItem
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+      >
+        {isLoading ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          <>
+            {selectedOption?.icon ? (
+              <selectedOption.icon className="w-4 h-4" />
+            ) : (
+              <User className="w-4 h-4" />
+            )}
+            <span>{selectedOption?.label || 'Selecionar Acesso'}</span>
+            <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
+          </>
+        )}
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 z-10 w-64 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+          <div className="py-1">
+            {accessOptions.map((option) => (
+              <button
                 key={option.id}
-                className="p-4 cursor-pointer hover:bg-muted/50 rounded-lg transition-colors"
-                onClick={() => handleAccessSelect(option.id)}
+                onClick={() => handleSelect(option)}
+                className="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
               >
-                <div className="flex items-center space-x-3">
-                  <div className={`p-2 rounded-full bg-muted ${option.color}`}>
-                    <IconComponent className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-medium text-sm">{option.label}</div>
-                    <div className="text-xs text-muted-foreground">{option.description}</div>
-                  </div>
+                <option.icon className={`w-5 h-5 mr-3 ${option.color}`} />
+                <div>
+                  <div className="font-medium">{option.label}</div>
+                  <div className="text-xs text-gray-500">{option.description}</div>
                 </div>
-              </DropdownMenuItem>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <Dialog open={isModalOpen} onOpenChange={handleModalClose}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{t('accessDropdown.modalTitle')}</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              {t('accessDropdown.modalTitle', 'Confirme seu acesso')}
+            </DialogTitle>
             <DialogDescription>
-              {t('accessDropdown.modalDescription')}
+              {t('accessDropdown.modalDescription', 'Insira o código TOTP gerado pelo seu autenticador para continuar.')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-muted-foreground" htmlFor="totp-code">
-                {t('accessDropdown.codeLabel')}
+                {t('accessDropdown.codeLabel', 'Código de 6 dígitos')}
               </label>
               <Input
                 id="totp-code"
@@ -240,28 +246,24 @@ const AccessDropdown = () => {
                 onChange={(event) => {
                   const value = event.target.value.replace(/\D/g, '').slice(0, 6);
                   setTotpCode(value);
-                  if (totpError) {
-                    setTotpError('');
-                  }
+                  if (totpError) setTotpError('');
                 }}
                 autoFocus
                 className="text-center text-2xl tracking-widest"
               />
             </div>
 
-            {totpError && (
-              <p className="text-sm text-destructive">{totpError}</p>
-            )}
+            {totpError && <p className="text-sm text-destructive">{totpError}</p>}
           </div>
 
           <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end sm:gap-2">
             <Button
               type="button"
               variant="outline"
-              onClick={() => handleModalClose(false)}
+              onClick={handleModalClose}
               disabled={isVerifying}
             >
-              {t('common.cancel')}
+              {t('accessDropdown.actions.cancel', 'Cancelar')}
             </Button>
             <Button
               type="button"
@@ -271,16 +273,16 @@ const AccessDropdown = () => {
               {isVerifying ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {t('accessDropdown.actions.validating')}
+                  {t('accessDropdown.actions.validating', 'Validando...')}
                 </>
               ) : (
-                t('accessDropdown.actions.confirm')
+                t('accessDropdown.actions.confirm', 'Confirmar acesso')
               )}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
 

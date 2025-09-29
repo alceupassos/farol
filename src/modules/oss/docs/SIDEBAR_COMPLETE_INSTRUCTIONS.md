@@ -2,6 +2,11 @@
 
 ## ✅ O QUE PRECISA SER FEITO:
 
+### NOVO — Controle de OPME
+- Atualizar o item do menu para apontar para `/oss-controle-opme` (rótulo “Controle de OPME”).
+- Fazer deploy com as traduções correspondentes (`ossControleOpme`).
+- Manter a rota `/oss-controle-glosa-opme` disponível apenas como compatibilidade legada.
+
 ### 1. **ADICIONAR IMPORTS** (se necessário)
 No arquivo `/src/components/layout/Sidebar.tsx`, verifique se tem o import:
 ```typescript

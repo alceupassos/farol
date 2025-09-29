@@ -36,6 +36,15 @@
           "pipeline": "Pipeline Contratos"
         }
       }
+    },
+    "sidebar": {
+      "sections": {
+        "dashboard": {
+          "items": {
+            "ossControleOpme": "Controle de OPME"
+          }
+        }
+      }
     }
   },
   "en": {
@@ -51,6 +60,15 @@
       "roles": {
         "oss": "OSS",
         "aph": "Prehospital Care"
+      }
+    },
+    "sidebar": {
+      "sections": {
+        "dashboard": {
+          "items": {
+            "ossControleOpme": "OPME Control"
+          }
+        }
       }
     }
   },
@@ -68,6 +86,15 @@
         "oss": "OSS",
         "aph": "Atención prehospitalaria"
       }
+    },
+    "sidebar": {
+      "sections": {
+        "dashboard": {
+          "items": {
+            "ossControleOpme": "Control de OPME"
+          }
+        }
+      }
     }
   },
   "fr": {
@@ -83,6 +110,15 @@
       "roles": {
         "oss": "OSS",
         "aph": "Soins préhospitaliers"
+      }
+    },
+    "sidebar": {
+      "sections": {
+        "dashboard": {
+          "items": {
+            "ossControleOpme": "Contrôle OPME"
+          }
+        }
       }
     }
   }

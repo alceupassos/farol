@@ -171,6 +171,49 @@ const AphPageRenderer: React.FC<AphPageRendererProps> = ({ config }) => {
             />
             <AphAmbulanceCockpit ambulance={selectedAmbulance ?? config.ambulances[0] ?? null} />
           </div>
+          
+          {/* Galeria de Ambulâncias */}
+          <Card className="border-slate-800 bg-slate-900/70">
+            <CardHeader>
+              <CardTitle className="text-white">Galeria da Frota</CardTitle>
+              <CardDescription className="text-slate-400">
+                Imagens das ambulâncias em operação
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {config.ambulances
+                  .filter(amb => amb.image || amb.interiorImage)
+                  .map((ambulance) => (
+                    <div key={ambulance.id} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-sm font-semibold text-white">{ambulance.name}</h4>
+                        <Badge className={`text-xs ${
+                          ambulance.status === 'livre' ? 'bg-emerald-500/20 text-emerald-100 border-emerald-500/40' :
+                          ambulance.status === 'deslocamento' ? 'bg-sky-500/20 text-sky-100 border-sky-500/40' :
+                          ambulance.status === 'em_atendimento' ? 'bg-rose-500/20 text-rose-100 border-rose-500/40' :
+                          'bg-slate-500/20 text-slate-100 border-slate-500/40'
+                        }`}>
+                          {ambulance.status.replace('_', ' ')}
+                        </Badge>
+                      </div>
+                      {ambulance.interiorImage && (
+                        <img 
+                          src={ambulance.interiorImage} 
+                          alt={`Interior da ${ambulance.name}`}
+                          className="w-full h-24 object-cover rounded-lg border border-slate-700 cursor-pointer hover:border-slate-600 transition-colors"
+                          onClick={() => setSelectedAmbulanceId(ambulance.id)}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      )}
+                      <p className="text-xs text-slate-400">{ambulance.address}</p>
+                    </div>
+                  ))}
+              </div>
+            </CardContent>
+          </Card>
         </section>
       )}
 

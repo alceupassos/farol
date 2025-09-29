@@ -601,30 +601,30 @@ const aphPagesConfig: AphPagesConfig = {
       }
     ],
     cameraWall: [
-      { id: 'cam-alfa01', title: 'UTI Alfa 01 • Interna', unit: 'ALFA-01', thumbnail: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.6s', updatedAt: 'há 18s', description: 'Paciente sedado, monitor multiparamétrico estável.' },
-      { id: 'cam-alfa02', title: 'UTI Alfa 02 • Externa', unit: 'ALFA-02', thumbnail: 'https://images.unsplash.com/photo-1512061942530-30f60d25804e?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.0s', updatedAt: 'há 27s', description: 'Registro de trânsito denso na SC-401.' },
-      { id: 'cam-alfa03', title: 'UTI Alfa 03 • Cabine', unit: 'ALFA-03', thumbnail: 'https://images.unsplash.com/photo-1526253038957-bce54e05968a?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.2s', updatedAt: 'há 8s', description: 'Equipe aguardando despacho na base.' },
-      { id: 'cam-alfa04', title: 'UTI Alfa 04 • Oficina', unit: 'ALFA-04', thumbnail: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=60', status: 'offline', latency: '—', updatedAt: 'há 2m', description: 'Viatura em manutenção preventiva.' },
-      { id: 'cam-alfa05', title: 'UTI Alfa 05 • Interna', unit: 'ALFA-05', thumbnail: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.8s', updatedAt: 'há 25s', description: 'Paciente com ventilação controlada.' },
-      { id: 'cam-alfa06', title: 'UTI Alfa 06 • Externa', unit: 'ALFA-06', thumbnail: 'https://images.unsplash.com/photo-1509927083222-0ebdee9dc1f3?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.2s', updatedAt: 'há 16s', description: 'Chegada a hospital em Itajaí.' },
-      { id: 'cam-alfa07', title: 'UTI Alfa 07 • Base', unit: 'ALFA-07', thumbnail: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.4s', updatedAt: 'há 11s', description: 'Check-list concluído para plantão noturno.' },
-      { id: 'cam-alfa08', title: 'UTI Alfa 08 • Rodovia', unit: 'ALFA-08', thumbnail: 'https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '3.1s', updatedAt: 'há 33s', description: 'Trecho com chuva e visibilidade reduzida.' },
-      { id: 'cam-alfa09', title: 'UTI Alfa 09 • Interna', unit: 'ALFA-09', thumbnail: 'https://images.unsplash.com/photo-1583752028088-91e3e9527bd4?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.9s', updatedAt: 'há 19s', description: 'Equipe realizando analgesia e monitorização.' },
-      { id: 'cam-alfa10', title: 'UTI Alfa 10 • Externa', unit: 'ALFA-10', thumbnail: 'https://images.unsplash.com/photo-1554215191-940cfd6e1f1c?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.6s', updatedAt: 'há 22s', description: 'Chegada ao Hospital Regional de Chapecó.' },
-      { id: 'cam-bravo01', title: 'USB Bravo 01 • Interna', unit: 'BRAVO-01', thumbnail: 'https://images.unsplash.com/photo-1608889329487-250e1f97d780?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.7s', updatedAt: 'há 14s', description: 'Atendimento em curso em Palhoça.' },
-      { id: 'cam-bravo02', title: 'USB Bravo 02 • Externa', unit: 'BRAVO-02', thumbnail: 'https://images.unsplash.com/photo-1529429617124-aee74df1c119?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.5s', updatedAt: 'há 9s', description: 'Base Biguaçu, equipe pronta.' },
-      { id: 'cam-bravo03', title: 'USB Bravo 03 • Externa', unit: 'BRAVO-03', thumbnail: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.1s', updatedAt: 'há 12s', description: 'Viatura em standby na Base São José.' },
-      { id: 'cam-bravo04', title: 'USB Bravo 04 • Rodovia', unit: 'BRAVO-04', thumbnail: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '2.9s', updatedAt: 'há 31s', description: 'Trecho com obras em Itapema.' },
-      { id: 'cam-bravo05', title: 'USB Bravo 05 • Interna', unit: 'BRAVO-05', thumbnail: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.8s', updatedAt: 'há 20s', description: 'Paciente sendo transportado ao Hospital Regional.' },
-      { id: 'cam-bravo06', title: 'USB Bravo 06 • Externa', unit: 'BRAVO-06', thumbnail: 'https://images.unsplash.com/photo-1465446751832-9f11e5462788?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.0s', updatedAt: 'há 17s', description: 'Deslocamento em Criciúma, pista seca.' },
-      { id: 'cam-bravo07', title: 'USB Bravo 07 • Base Lages', unit: 'BRAVO-07', thumbnail: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.3s', updatedAt: 'há 6s', description: 'Checagem de equipamentos concluída.' },
-      { id: 'cam-bravo08', title: 'USB Bravo 08 • Interna', unit: 'BRAVO-08', thumbnail: 'https://images.unsplash.com/photo-1608679050396-523b9780e99e?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.9s', updatedAt: 'há 24s', description: 'Paciente consciente em Jaraguá do Sul.' },
-      { id: 'cam-resg01', title: 'Resgate 01 • Rodovia', unit: 'RESG-01', thumbnail: 'https://images.unsplash.com/photo-1521033719794-41049d18b8d0?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '3.4s', updatedAt: 'há 38s', description: 'Atendimento em BR-282, chuva moderada.' },
-      { id: 'cam-resg02', title: 'Resgate 02 • Interna', unit: 'RESG-02', thumbnail: 'https://images.unsplash.com/photo-1587502536263-9298c0f6c6d6?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '3.6s', updatedAt: 'há 10s', description: 'Movimentação intensa, alerta de frenagem brusca.' },
-      { id: 'cam-resg03', title: 'Resgate 03 • Base', unit: 'RESG-03', thumbnail: 'https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.5s', updatedAt: 'há 15s', description: 'Equipe de prontidão em Gov. Celso Ramos.' },
-      { id: 'cam-resg04', title: 'Resgate 04 • Oficina', unit: 'RESG-04', thumbnail: 'https://images.unsplash.com/photo-1529429617124-aee74df1c119?auto=format&fit=crop&w=400&q=60', status: 'offline', latency: '—', updatedAt: 'há 3m', description: 'Câmera pause enquanto viatura em revisão.' },
-      { id: 'cam-sup01', title: 'Suporte 01 • Logística', unit: 'SUP-01', thumbnail: 'https://images.unsplash.com/photo-1549928570-786e7c55185b?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.4s', updatedAt: 'há 1m', description: 'Carga de reposição em transporte para Chapecó.' },
-      { id: 'cam-sup02', title: 'Suporte 02 • Armazém', unit: 'SUP-02', thumbnail: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.2s', updatedAt: 'há 40s', description: 'Controle de estoque Itapoá com sensores MCP.' }
+      { id: 'cam-alfa01', title: 'UTI Alfa 01 • Interna', unit: 'ALFA-01', thumbnail: '/images/cameras/interior-ambulancia-1.jpg', status: 'ok', latency: '1.6s', updatedAt: 'há 18s', description: 'Paciente sedado, monitor multiparamétrico estável.' },
+      { id: 'cam-alfa02', title: 'UTI Alfa 02 • Externa', unit: 'ALFA-02', thumbnail: '/images/cameras/interior-ambulancia-2.jpg', status: 'ok', latency: '2.0s', updatedAt: 'há 27s', description: 'Registro de trânsito denso na SC-401.' },
+      { id: 'cam-alfa03', title: 'UTI Alfa 03 • Cabine', unit: 'ALFA-03', thumbnail: '/images/cameras/ambulatorio-1.jpg', status: 'ok', latency: '1.2s', updatedAt: 'há 8s', description: 'Equipe aguardando despacho na base.' },
+      { id: 'cam-alfa04', title: 'UTI Alfa 04 • Oficina', unit: 'ALFA-04', thumbnail: '/images/cameras/ambulatorio-2.jpg', status: 'offline', latency: '—', updatedAt: 'há 2m', description: 'Viatura em manutenção preventiva.' },
+      { id: 'cam-alfa05', title: 'UTI Alfa 05 • Interna', unit: 'ALFA-05', thumbnail: '/images/cameras/interior-ambulancia-1.jpg', status: 'ok', latency: '1.8s', updatedAt: 'há 25s', description: 'Paciente com ventilação controlada.' },
+      { id: 'cam-alfa06', title: 'UTI Alfa 06 • Externa', unit: 'ALFA-06', thumbnail: '/images/cameras/interior-ambulancia-2.jpg', status: 'ok', latency: '2.2s', updatedAt: 'há 16s', description: 'Chegada a hospital em Itajaí.' },
+      { id: 'cam-alfa07', title: 'UTI Alfa 07 • Base', unit: 'ALFA-07', thumbnail: '/images/cameras/ambulatorio-1.jpg', status: 'ok', latency: '1.4s', updatedAt: 'há 11s', description: 'Check-list concluído para plantão noturno.' },
+      { id: 'cam-alfa08', title: 'UTI Alfa 08 • Rodovia', unit: 'ALFA-08', thumbnail: '/images/cameras/interior-ambulancia-2.jpg', status: 'alerta', latency: '3.1s', updatedAt: 'há 33s', description: 'Trecho com chuva e visibilidade reduzida.' },
+      { id: 'cam-alfa09', title: 'UTI Alfa 09 • Interna', unit: 'ALFA-09', thumbnail: '/images/cameras/interior-ambulancia-1.jpg', status: 'ok', latency: '1.9s', updatedAt: 'há 19s', description: 'Equipe realizando analgesia e monitorização.' },
+      { id: 'cam-alfa10', title: 'UTI Alfa 10 • Externa', unit: 'ALFA-10', thumbnail: '/images/cameras/ambulatorio-2.jpg', status: 'ok', latency: '2.6s', updatedAt: 'há 22s', description: 'Chegada ao Hospital Regional de Chapecó.' },
+      { id: 'cam-bravo01', title: 'USB Bravo 01 • Interna', unit: 'BRAVO-01', thumbnail: '/images/cameras/interior-ambulancia-2.jpg', status: 'ok', latency: '1.7s', updatedAt: 'há 14s', description: 'Atendimento em curso em Palhoça.' },
+      { id: 'cam-bravo02', title: 'USB Bravo 02 • Externa', unit: 'BRAVO-02', thumbnail: '/images/cameras/ambulatorio-1.jpg', status: 'ok', latency: '1.5s', updatedAt: 'há 9s', description: 'Base Biguaçu, equipe pronta.' },
+      { id: 'cam-bravo03', title: 'USB Bravo 03 • Externa', unit: 'BRAVO-03', thumbnail: '/images/cameras/ambulatorio-2.jpg', status: 'ok', latency: '2.1s', updatedAt: 'há 12s', description: 'Viatura em standby na Base São José.' },
+      { id: 'cam-bravo04', title: 'USB Bravo 04 • Rodovia', unit: 'BRAVO-04', thumbnail: '/images/cameras/interior-ambulancia-2.jpg', status: 'alerta', latency: '2.9s', updatedAt: 'há 31s', description: 'Trecho com obras em Itapema.' },
+      { id: 'cam-bravo05', title: 'USB Bravo 05 • Interna', unit: 'BRAVO-05', thumbnail: '/images/cameras/interior-ambulancia-1.jpg', status: 'ok', latency: '1.8s', updatedAt: 'há 20s', description: 'Paciente sendo transportado ao Hospital Regional.' },
+      { id: 'cam-bravo06', title: 'USB Bravo 06 • Externa', unit: 'BRAVO-06', thumbnail: '/images/cameras/ambulatorio-2.jpg', status: 'ok', latency: '2.0s', updatedAt: 'há 17s', description: 'Deslocamento em Criciúma, pista seca.' },
+      { id: 'cam-bravo07', title: 'USB Bravo 07 • Base Lages', unit: 'BRAVO-07', thumbnail: '/images/cameras/ambulatorio-1.jpg', status: 'ok', latency: '1.3s', updatedAt: 'há 6s', description: 'Checagem de equipamentos concluída.' },
+      { id: 'cam-bravo08', title: 'USB Bravo 08 • Interna', unit: 'BRAVO-08', thumbnail: '/images/cameras/interior-ambulancia-1.jpg', status: 'ok', latency: '1.9s', updatedAt: 'há 24s', description: 'Paciente consciente em Jaraguá do Sul.' },
+      { id: 'cam-resg01', title: 'Resgate 01 • Rodovia', unit: 'RESG-01', thumbnail: '/images/cameras/interior-ambulancia-2.jpg', status: 'alerta', latency: '3.4s', updatedAt: 'há 38s', description: 'Atendimento em BR-282, chuva moderada.' },
+      { id: 'cam-resg02', title: 'Resgate 02 • Interna', unit: 'RESG-02', thumbnail: '/images/cameras/interior-ambulancia-1.jpg', status: 'alerta', latency: '3.6s', updatedAt: 'há 10s', description: 'Movimentação intensa, alerta de frenagem brusca.' },
+      { id: 'cam-resg03', title: 'Resgate 03 • Base', unit: 'RESG-03', thumbnail: '/images/cameras/ambulatorio-1.jpg', status: 'ok', latency: '1.5s', updatedAt: 'há 15s', description: 'Equipe de prontidão em Gov. Celso Ramos.' },
+      { id: 'cam-resg04', title: 'Resgate 04 • Oficina', unit: 'RESG-04', thumbnail: '/images/cameras/ambulatorio-2.jpg', status: 'offline', latency: '—', updatedAt: 'há 3m', description: 'Câmera pause enquanto viatura em revisão.' },
+      { id: 'cam-sup01', title: 'Suporte 01 • Logística', unit: 'SUP-01', thumbnail: '/images/cameras/ambulatorio-1.jpg', status: 'ok', latency: '2.4s', updatedAt: 'há 1m', description: 'Carga de reposição em transporte para Chapecó.' },
+      { id: 'cam-sup02', title: 'Suporte 02 • Armazém', unit: 'SUP-02', thumbnail: '/images/cameras/ambulatorio-2.jpg', status: 'ok', latency: '2.2s', updatedAt: 'há 40s', description: 'Controle de estoque Itapoá com sensores MCP.' }
     ],
     insights: [
       { id: 'insight-1', title: 'Zona Norte com risco de fila', description: 'Projeção aponta saturação em 110% entre 18h e 21h — recomendar realocar 1 UTI e 1 USB.', severity: 'critico' },
@@ -724,6 +724,175 @@ const aphPagesConfig: AphPagesConfig = {
     notes: [
       'Dados provenientes de MCP Servers (telemetria, clima, GPS) com latência média 2.1s.',
       'Replay disponível por 72h para auditoria operacional e compliance.'
+    ]
+  },
+  mapaAmbulancias: {
+    key: 'mapaAmbulancias',
+    title: 'Mapa GPS Ambulâncias',
+    subtitle: 'Monitoramento em tempo real da frota com dados de atendimento e telemetria.',
+    heroTagline: 'Visão completa da operação APH em tempo real',
+    gradient: { from: 'from-red-500/30', to: 'to-slate-900' },
+    tags: ['Tempo real', 'GPS', 'Telemetria', 'Atendimentos'],
+    metrics: [
+      { id: 'ambulancias-ativas', title: 'Ambulâncias Ativas', value: '18', variation: '+2', trend: 'up', icon: 'ambulance', severity: 'estavel', description: '18 de 22 ambulâncias em operação' },
+      { id: 'atendimentos-curso', title: 'Atendimentos em Curso', value: '7', variation: '+3', trend: 'up', icon: 'activity', severity: 'atencao', description: '5 UTI, 2 USB em atendimento' },
+      { id: 'tempo-resposta', title: 'Tempo Resposta Médio', value: '12m', variation: '-2m', trend: 'up', icon: 'clock', severity: 'estavel', description: 'Meta: 15min | Últimas 2h' },
+      { id: 'cobertura-area', title: 'Cobertura da Área', value: '94%', variation: '+1%', trend: 'up', icon: 'map', severity: 'estavel', description: 'Grande Florianópolis' }
+    ],
+    map: {
+      center: [-48.548, -27.595],
+      zoom: 11,
+      layers: [
+        { id: 'ambulances', type: 'event', color: '#ef4444', description: 'Ambulâncias em tempo real' },
+        { id: 'coverage', type: 'heatmap', color: '#3b82f6', description: 'Área de cobertura' },
+        { id: 'hospitals', type: 'geofence', color: '#10b981', description: 'Hospitais de referência' }
+      ]
+    },
+    ambulances: [
+      {
+        id: 'ALFA-01',
+        name: 'UTI Alfa 01',
+        type: 'UTI',
+        status: 'em_atendimento',
+        coordinates: [-48.558, -27.595],
+        address: 'Av. Beira-Mar Norte, Florianópolis',
+        destination: 'Hospital Celso Ramos',
+        eta: '05 min',
+        lastUpdate: 'há 18s',
+        image: '/images/ambulances/ambulance-exterior-1.jpg',
+        interiorImage: '/images/ambulances/ambulance-interior-1.jpg',
+        telemetry: {
+          speed: 54,
+          rpm: 2900,
+          fuel: 62,
+          temperature: 94,
+          odometer: 172480,
+          lastMaintenanceKm: 171300,
+          crew: ['Dr. Rocha', 'Enf. Azevedo', 'Cond. Lopes'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'ALFA-02',
+        name: 'UTI Alfa 02',
+        type: 'UTI',
+        status: 'deslocamento',
+        coordinates: [-48.521, -27.622],
+        address: 'SC-401, acesso JK, Florianópolis',
+        destination: 'Hospital SOS Cárdio',
+        eta: '09 min',
+        lastUpdate: 'há 27s',
+        image: '/images/ambulances/ambulance-exterior-1.jpg',
+        interiorImage: '/images/ambulances/ambulance-interior-2.jpg',
+        telemetry: {
+          speed: 72,
+          rpm: 3250,
+          fuel: 58,
+          temperature: 91,
+          odometer: 164930,
+          lastMaintenanceKm: 164000,
+          crew: ['Dr. Antunes', 'Enf. Prado', 'Cond. Souza'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'ALFA-03',
+        name: 'UTI Alfa 03',
+        type: 'UTI',
+        status: 'livre',
+        coordinates: [-48.630, -27.608],
+        address: 'Base São José - Bairro Campinas',
+        lastUpdate: 'há 8s',
+        image: '/images/ambulances/ambulance-exterior-1.jpg',
+        interiorImage: '/images/ambulances/ambulance-interior-3.jpg',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 83,
+          temperature: 35,
+          odometer: 149250,
+          lastMaintenanceKm: 148100,
+          crew: ['Dr. Siqueira', 'Enf. Ramos'],
+          incidentCount: 2
+        }
+      },
+      {
+        id: 'BRAVO-01',
+        name: 'USB Bravo 01',
+        type: 'USB',
+        status: 'deslocamento',
+        coordinates: [-48.501, -27.571],
+        address: 'BR-101 km 205 sentido Norte',
+        destination: 'Hospital São Lucas',
+        eta: '07 min',
+        lastUpdate: 'há 25s',
+        image: '/images/ambulances/ambulance-exterior-1.jpg',
+        interiorImage: '/images/ambulances/ambulance-interior-4.jpg',
+        telemetry: {
+          speed: 68,
+          rpm: 3100,
+          fuel: 54,
+          temperature: 92,
+          odometer: 186120,
+          lastMaintenanceKm: 185200,
+          crew: ['Enf. Silva', 'Téc. Costa', 'Cond. Lima'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'CHARLIE-01',
+        name: 'Resgate Charlie 01',
+        type: 'Resgate',
+        status: 'livre',
+        coordinates: [-48.663, -27.640],
+        address: 'Base Palhoça - Centro',
+        lastUpdate: 'há 45s',
+        image: '/images/ambulances/ambulance-exterior-1.jpg',
+        interiorImage: '/images/ambulances/ambulance-interior-1.jpg',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 76,
+          temperature: 32,
+          odometer: 98450,
+          lastMaintenanceKm: 97800,
+          crew: ['Bombeiro Santos', 'Bombeiro Oliveira'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'DELTA-01',
+        name: 'Suporte Delta 01',
+        type: 'Suporte',
+        status: 'em_atendimento',
+        coordinates: [-48.485, -27.605],
+        address: 'Rua das Palmeiras, 450 - Centro',
+        destination: 'UPA Norte',
+        eta: '03 min',
+        lastUpdate: 'há 12s',
+        image: '/images/ambulances/ambulance-exterior-1.jpg',
+        interiorImage: '/images/ambulances/ambulance-interior-2.jpg',
+        telemetry: {
+          speed: 35,
+          rpm: 2200,
+          fuel: 68,
+          temperature: 88,
+          odometer: 125680,
+          lastMaintenanceKm: 124900,
+          crew: ['Téc. Ferreira', 'Cond. Almeida'],
+          incidentCount: 0
+        }
+      }
+    ],
+    insights: [
+      { id: 'insight-1', title: 'Concentração na Zona Norte', description: '4 ambulâncias ativas na região Norte devido a evento esportivo', severity: 'atencao' },
+      { id: 'insight-2', title: 'Tempo de Resposta Otimizado', description: 'Redução de 15% no tempo médio nas últimas 4 horas', severity: 'estavel' },
+      { id: 'insight-3', title: 'Manutenção Preventiva', description: 'ALFA-04 retornará ao serviço em 2 horas após revisão', severity: 'estavel' }
+    ],
+    notes: [
+      'Clique em qualquer ambulância no mapa para ver detalhes completos do atendimento',
+      'Dados atualizados automaticamente a cada 15 segundos via GPS/OBD',
+      'Cores indicam status: Verde (livre), Amarelo (deslocamento), Vermelho (atendimento), Cinza (indisponível)'
     ]
   },
   insightsIa: {

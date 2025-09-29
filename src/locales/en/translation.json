@@ -48,6 +48,7 @@
       "patient": "Patient",
       "laboratory": "Laboratory Management",
       "laboratorio": "Laboratory Management",
+      "controleOpme": "OPME Control",
       "gestor": "Public Management",
       "oss": "OSS",
       "medico": "Doctor",
@@ -63,7 +64,8 @@
     "codeLabel": "6-digit code",
     "actions": {
       "validating": "Validating...",
-      "confirm": "Confirm access"
+      "confirm": "Confirm access",
+      "cancel": "Cancel"
     },
     "errors": {
       "codeLength": "Please enter all 6 digits.",
@@ -86,6 +88,10 @@
       "oss": {
         "label": "Contract Management/OSS",
         "description": "OSS Cesário Lange - BHCL"
+      },
+      "controleOpme": {
+        "label": "OPME Control",
+        "description": "Governance for orthotics, prosthetics and special materials"
       },
       "laboratory": {
         "label": "Laboratory",
@@ -116,7 +122,8 @@
           "prefeituraOverview": "Municipal Overview",
           "hospitalOverview": "Hospital Overview",
           "aiOracle": "AI Governance Oracle",
-          "healthNews": "Latest Health News"
+          "healthNews": "Latest Health News",
+          "ossControleOpme": "OPME Control"
         }
       },
       "laboratoryHub": {
