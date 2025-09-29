@@ -1,0 +1,32 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]  # Altere para 'master' se for o caso
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Passo 1: Baixar o código
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    # Passo 2: Configurar chave SSH
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: 'just-a-placeholder'
+    
+    # Passo 3: Executar comandos no servidor
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no deployer@38.242.195.142 "
+          cd ~/farol &&
+          git fetch origin main &&
+          git reset --hard origin/main &&
+          docker-compose down &&
+          docker-compose up -d --build
+        "

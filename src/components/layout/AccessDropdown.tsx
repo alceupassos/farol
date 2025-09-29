@@ -88,20 +88,37 @@ const AccessDropdown = () => {
 
   const handleAccessSelect = (role: string) => {
     console.log('AccessDropdown: Iniciando seleção de acesso para papel:', role);
-    console.log('AccessDropdown: initiating TOTP verification for role:', role);
+    console.log('AccessDropdown: iniciando verificação TOTP para papel:', role);
+    
+    // Forçar o fechamento do menu dropdown
+    const dropdownTrigger = document.querySelector('[data-radix-collection-item]');
+    if (dropdownTrigger) {
+      (dropdownTrigger as HTMLElement).click();
+    }
+    
+    // Atualizar o estado e abrir o modal
     setSelectedRole(role);
     setTotpCode('');
     setTotpError('');
-    setIsModalOpen(true);
+    
+    // Pequeno atraso para garantir que o dropdown foi fechado
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 100);
   };
 
   const handleModalClose = (open: boolean) => {
     if (!open) {
-      setIsModalOpen(false);
+      // Reset all states first
       setSelectedRole(null);
       setTotpCode('');
       setTotpError('');
       setIsVerifying(false);
+      
+      // Add a small delay before closing to ensure state is reset
+      setTimeout(() => {
+        setIsModalOpen(false);
+      }, 100);
     } else {
       setIsModalOpen(true);
     }
@@ -155,17 +172,27 @@ const AccessDropdown = () => {
 
       if (sanitizedCode.length !== 6) {
         setTotpError(t('accessDropdown.errors.codeLength'));
+        setIsVerifying(false);
         return;
       }
 
+      // Simular validação TOTP (substitua por sua lógica real)
       const isValid = await SimpleTOTP.verify(sanitizedCode, 'JBSWY3DPEHPK3PXP', 1);
 
       if (isValid) {
-        console.log('AccessDropdown: TOTP verification succeeded');
-        const roleToApply = selectedRole;
-        switchGuestRole(roleToApply);
+        console.log('AccessDropdown: TOTP verification succeeded for role:', selectedRole);
+        
+        // Atualizar o papel antes do redirecionamento
+        await switchGuestRole(selectedRole);
+        
+        // Fechar o modal e limpar o estado
         handleModalClose(false);
-        setTimeout(() => redirectAfterRole(roleToApply), 100);
+        
+        // Pequeno atraso para garantir que o estado foi atualizado
+        setTimeout(() => {
+          console.log('AccessDropdown: Redirecionando para papel:', selectedRole);
+          redirectAfterRole(selectedRole);
+        }, 150);
       } else {
         console.warn('AccessDropdown: Invalid TOTP code provided');
         setTotpError(t('accessDropdown.errors.invalid'));

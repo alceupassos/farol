@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, TrendingUp, DollarSign, Shield, Target, Brain,
@@ -74,14 +74,36 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const { userRole } = useAuth();
   const { t } = useTranslation();
   const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(0);
+
+  // Adicionar listener para atualizar o componente quando o papel do usuário mudar
+  useEffect(() => {
+    const handleRoleChange = () => {
+      console.log('Sidebar: Recebido evento de mudança de papel');
+      setForceUpdate(prev => prev + 1);
+    };
+
+    window.addEventListener('roleChanged', handleRoleChange);
+    return () => {
+      window.removeEventListener('roleChanged', handleRoleChange);
+    };
+  }, []);
+
+  // Interface para os itens do menu antes de adicionar as propriedades do SidebarItemProps
+  interface MenuItem {
+    to: string;
+    icon: React.ReactNode;
+    label: string;
+    isChild?: boolean;
+  }
 
   const getMenuItemsByRole = () => {
     if (!userRole) return [];
 
-    const sections: Array<{ title: string; items: SidebarItemProps[] }> = [];
+    const sections: Array<{ title: string; items: MenuItem[] }> = [];
 
     // Seções baseadas no role
-    const roleSections: Record<string, Array<{ title: string; items: Array<{ to: string; icon: React.ReactNode; label: string; isChild?: boolean }> }>> = {
+    const roleSections: Record<string, Array<{ title: string; items: MenuItem[] }>> = {
       gestor: [
         {
           title: 'Dashboard',
@@ -330,7 +352,14 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     return sections;
   };
 
-  const menuSections = getMenuItemsByRole();
+  const menuSections = getMenuItemsByRole().map(section => ({
+    ...section,
+    items: section.items.map(item => ({
+      ...item,
+      currentPath,
+      onClick: isOpen ? toggleSidebar : undefined
+    }))
+  }));
 
   const roleLabelMap: Record<string, string> = {
     gestor: 'navbar.roles.manager',
@@ -384,7 +413,10 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               {section.items.map((item) => (
                 <SidebarItem
                   key={`${section.title}-${item.label}-${item.to}`}
-                  {...item}
+                  to={item.to}
+                  icon={item.icon}
+                  label={item.label}
+                  isChild={item.isChild}
                   currentPath={currentPath}
                   onClick={isOpen ? toggleSidebar : undefined}
                 />
