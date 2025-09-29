@@ -53,6 +53,55 @@ export interface OPMEDataField {
   hint?: string;
 }
 
+export type TrendDirection = 'up' | 'down' | 'flat';
+
+export interface HeroKpi {
+  id: string;
+  label: string;
+  value: string;
+  targetLabel: string;
+  progress: number;
+  status: OPMEKpiStatus;
+  trendDirection: TrendDirection;
+  trendLabel: string;
+  description: string;
+  actionLabel: string;
+  actionHint: string;
+  relatedEndpoint: string;
+  payloadExample?: Record<string, unknown>;
+}
+
+export interface HeroAction {
+  id: string;
+  title: string;
+  description: string;
+  impactValue: string;
+  timeframe: string;
+  owner: string;
+  buttonLabel: string;
+  endpoint: string;
+  payload: Record<string, unknown>;
+}
+
+export interface PrioritizedItem {
+  id: string;
+  title: string;
+  impactValue: string;
+  prazo: string;
+  owner: string;
+  status: 'pending' | 'inProgress' | 'completed';
+  actionLabel: string;
+  endpoint: string;
+  payload: Record<string, unknown>;
+}
+
+export interface PrioritizedList {
+  id: string;
+  title: string;
+  description: string;
+  items: PrioritizedItem[];
+}
+
 export interface OPMEExecutiveMetric {
   titulo: string;
   descricao: string;

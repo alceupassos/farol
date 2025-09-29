@@ -45,14 +45,21 @@ import {
   roadmap,
   strategicPrinciples,
   dataModels,
+  heroKpis,
+  heroActions,
+  prioritizedLists,
 } from '@/modules/oss/data/opme';
 import type {
   AntVSpecCard,
+  HeroAction,
+  HeroKpi,
   MermaidDiagramCard,
   OPMEConvenioStatus,
   OPMEFlow,
   OPMEKpiSnapshot,
+  PrioritizedList,
   QuickChartInsight,
+  TrendDirection,
 } from '@/modules/oss/types/opme';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -75,6 +82,16 @@ import {
   Settings,
   Users,
   CheckCircle2,
+  Rocket,
+  ShieldAlert,
+  CheckCircle,
+  Zap,
+  Target,
+  TimerReset,
+  ClipboardList,
+  ShieldQuestion,
+  Waypoints,
+  Handshake,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -92,7 +109,10 @@ import {
   RadialBarChart,
   RadialBar,
   PolarAngleAxis,
+  ResponsiveContainerProps,
 } from 'recharts';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 const SectionHeader: React.FC<{ icon: React.ReactNode; title: string; description?: string }> = ({ icon, title, description }) => (
   <header className="mb-6 flex flex-col gap-2 text-white">
@@ -203,11 +223,14 @@ const QuickChartCard: React.FC<{ insight: QuickChartInsight }> = ({ insight }) =
               onError={() => setLoadError(true)}
             />
           ) : (
-            <p className="p-4 text-center text-slate-400">
-              {url
-                ? 'Não foi possível carregar o gráfico QuickChart. Verifique o servidor MCP ou a conexão e atualize a página.'
-                : 'Configure VITE_MCP_QUICKCHART_URL para visualizar o infográfico.'}
-            </p>
+            <div className="space-y-2 p-2 text-slate-300">
+              <FallbackLineChart />
+              <p className="text-xs text-slate-400">
+                {url
+                  ? 'Gráfico QuickChart indisponível — exibindo curva resumida para referência. Configure o MCP para visual completo.'
+                  : 'Configure VITE_MCP_QUICKCHART_URL para renderizar este infográfico dinâmico.'}
+              </p>
+            </div>
           )}
         </div>
         <p>{insight.commentary}</p>
@@ -235,11 +258,14 @@ const MermaidCard: React.FC<{ diagram: MermaidDiagramCard }> = ({ diagram }) => 
             onError={() => setLoadError(true)}
           />
         ) : (
-          <p className="text-center text-xs text-slate-400">
-            {url
-              ? 'Fluxograma Mermaid indisponível no momento. Confirme o MCP server e tente novamente.'
-              : 'Configure VITE_MCP_MERMAID_URL para renderizar o fluxograma.'}
-          </p>
+          <div className="space-y-2 text-xs text-slate-300">
+            <FallbackTreemap />
+            <p className="text-center text-slate-400">
+              {url
+                ? 'Fluxograma Mermaid indisponível — exibindo visão simplificada. Configure o MCP para visual completo.'
+                : 'Configure VITE_MCP_MERMAID_URL para renderizar o fluxograma.'}
+            </p>
+          </div>
         )}
       </CardContent>
     </Card>
@@ -264,12 +290,144 @@ const AntVCard: React.FC<{ card: AntVSpecCard }> = ({ card }) => {
             loading="lazy"
           />
         ) : (
-          <p className="p-4 text-center text-xs text-slate-400">Configure VITE_MCP_ANTV_URL para renderizar este gráfico AntV.</p>
+          <div className="space-y-2">
+            <FallbackLineChart />
+            <p className="text-center text-xs text-slate-400">Configure VITE_MCP_ANTV_URL para renderizar este gráfico AntV.</p>
+          </div>
         )}
       </CardContent>
     </Card>
   );
 };
+
+const TrendBadge: React.FC<{ direction: TrendDirection; label: string; status: OPMEKpiStatus }> = ({ direction, label, status }) => {
+  const Icon = direction === 'up' ? ArrowUpRight : direction === 'down' ? ArrowDownRight : Minus;
+  const classes = variationClasses[status];
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs ${classes}`}>
+      <Icon className="h-3.5 w-3.5" />
+      {label}
+    </span>
+  );
+};
+
+const heroStatusAccent: Record<OPMEKpiStatus, string> = {
+  positive: 'text-emerald-300',
+  neutral: 'text-slate-200',
+  negative: 'text-rose-300',
+};
+
+const HeroKpiCard: React.FC<{ kpi: HeroKpi }> = ({ kpi }) => (
+  <Card className="relative overflow-hidden border border-white/10 bg-gradient-to-br from-slate-950 via-slate-900 to-black">
+    <div className="absolute inset-x-0 top-0 h-1 bg-white/10" />
+    <CardHeader className="space-y-3">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <p className="text-xs uppercase tracking-wide text-slate-400">{kpi.label}</p>
+          <p className={`text-3xl font-semibold ${heroStatusAccent[kpi.status]}`}>{kpi.value}</p>
+          <p className="text-xs text-slate-500">{kpi.targetLabel}</p>
+        </div>
+        <TrendBadge direction={kpi.trendDirection} label={kpi.trendLabel} status={kpi.status} />
+      </div>
+      <div className="space-y-2">
+        <Progress value={Math.min(Math.max(kpi.progress * 100, 0), 100)} className="h-2" />
+        <p className="text-xs text-slate-300">{kpi.description}</p>
+      </div>
+    </CardHeader>
+    <CardContent className="flex items-center justify-between text-xs text-slate-300">
+      <span>{kpi.actionHint}</span>
+      <Button variant="outline" size="sm" className="border-white/20 text-slate-100" disabled>
+        {kpi.actionLabel}
+      </Button>
+    </CardContent>
+  </Card>
+);
+
+const OracleActionCard: React.FC<{ action: HeroAction }> = ({ action }) => (
+  <Card className="border border-primary/20 bg-primary/5">
+    <CardHeader className="space-y-2">
+      <CardTitle className="text-sm text-white">{action.title}</CardTitle>
+      <p className="text-xs text-slate-300">{action.description}</p>
+    </CardHeader>
+    <CardContent className="space-y-3 text-xs text-slate-200">
+      <div className="flex items-center justify-between">
+        <span className="font-semibold">Impacto</span>
+        <span>{action.impactValue}</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="font-semibold">Prazo</span>
+        <span>{action.timeframe}</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="font-semibold">Dono sugerido</span>
+        <span>{action.owner}</span>
+      </div>
+      <Button variant="default" size="sm" className="w-full" disabled>
+        {action.buttonLabel}
+      </Button>
+    </CardContent>
+  </Card>
+);
+
+const OraclePanel: React.FC<{ actions: HeroAction[] }> = ({ actions }) => (
+  <Card className="border border-white/10 bg-slate-900/80 backdrop-blur">
+    <CardHeader className="space-y-2">
+      <CardTitle className="text-base text-white">Oráculo OPME</CardTitle>
+      <p className="text-xs text-slate-400">
+        IA destaca as três ações com maior impacto imediato. Execute via MCP e acompanhe o log em tempo real.
+      </p>
+    </CardHeader>
+    <CardContent className="space-y-3">
+      {actions.map((action) => (
+        <OracleActionCard key={action.id} action={action} />
+      ))}
+    </CardContent>
+  </Card>
+);
+
+const listIconMap: Record<string, React.ReactNode> = {
+  'pre-auditoria': <ClipboardCheck className="h-4 w-4" />,
+  outliers: <AlertTriangle className="h-4 w-4" />,
+  docs: <FileText className="h-4 w-4" />,
+  negociacoes: <Handshake className="h-4 w-4" />,
+  estoque: <SquareStack className="h-4 w-4" />,
+};
+
+const onboardingIcons = [Rocket, Settings, Zap, Waypoints];
+const checklistIcons = [ShieldCheck, ClipboardCheck, ShieldAlert, Target];
+
+const PrioritizedListCard: React.FC<{ list: PrioritizedList }> = ({ list }) => (
+  <Card className="border border-white/10 bg-slate-900/60 backdrop-blur">
+    <CardHeader className="space-y-2">
+      <CardTitle className="flex items-center gap-2 text-sm text-white">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-slate-200">
+          {listIconMap[list.id] ?? <ClipboardList className="h-4 w-4" />}
+        </span>
+        {list.title}
+      </CardTitle>
+      <p className="text-xs text-slate-400">{list.description}</p>
+    </CardHeader>
+    <CardContent className="space-y-3 text-xs text-slate-300">
+      {list.items.map((item) => (
+        <div key={item.id} className="rounded-lg border border-white/10 bg-white/5 p-3">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="font-semibold text-slate-100">{item.title}</p>
+              <p className="text-slate-400">{item.impactValue}</p>
+            </div>
+            <Badge className="bg-white/10 text-slate-200">{item.prazo}</Badge>
+          </div>
+          <div className="mt-2 flex items-center justify-between">
+            <span>Dono: {item.owner}</span>
+            <Button variant="outline" size="xs" className="border-white/20 text-slate-100" disabled>
+              {item.actionLabel}
+            </Button>
+          </div>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
+);
 
 const ConvenioCard: React.FC<{ item: OPMEConvenioStatus }> = ({ item }) => {
   const statusStyle = statusTokens[item.health];
@@ -320,6 +478,45 @@ const ConvenioCard: React.FC<{ item: OPMEConvenioStatus }> = ({ item }) => {
     </Card>
   );
 };
+
+const fallbackLineData = [
+  { label: 'Jan', value: 40 },
+  { label: 'Fev', value: 38 },
+  { label: 'Mar', value: 36 },
+  { label: 'Abr', value: 33 },
+  { label: 'Mai', value: 31 },
+  { label: 'Jun', value: 29 },
+];
+
+const FallbackLineChart = () => (
+  <ResponsiveContainer width="100%" height={180}>
+    <LineChart data={fallbackLineData}>
+      <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.15)" />
+      <XAxis dataKey="label" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+      <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} width={40} />
+      <Tooltip contentStyle={{ background: '#0f172a', borderRadius: 8, border: '1px solid rgba(148,163,184,0.2)' }} labelStyle={{ color: '#e2e8f0' }} />
+      <Line type="monotone" dataKey="value" stroke="#38bdf8" strokeWidth={2} dot={{ r: 3 }} />
+    </LineChart>
+  </ResponsiveContainer>
+);
+
+const fallbackTreemapData = [
+  { name: 'Fornecedor A', size: 12 },
+  { name: 'Fornecedor B', size: 9 },
+  { name: 'Fornecedor C', size: 7 },
+  { name: 'Fornecedor D', size: 5 },
+];
+
+const FallbackTreemap = () => (
+  <div className="grid grid-cols-2 gap-2">
+    {fallbackTreemapData.map((item) => (
+      <div key={item.name} className="rounded-lg bg-white/10 p-3 text-xs text-slate-200">
+        <p className="font-semibold">{item.name}</p>
+        <p>{item.size}% do custo</p>
+      </div>
+    ))}
+  </div>
+);
 
 const FlowCard: React.FC<{ flow: OPMEFlow }> = ({ flow }) => (
   <Card className="border border-white/10 bg-slate-900/60 backdrop-blur">
@@ -397,6 +594,15 @@ const OSSControleOPME: React.FC = () => {
         </p>
       </header>
 
+      <div className="grid gap-4 xl:grid-cols-[3fr,1fr]">
+        <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-5">
+          {heroKpis.map((kpi) => (
+            <HeroKpiCard key={kpi.id} kpi={kpi} />
+          ))}
+        </div>
+        <OraclePanel actions={heroActions} />
+      </div>
+
       <section id="overview" className="scroll-mt-24">
         <SectionHeader
           icon={<LayoutDashboard className="h-5 w-5" />}
@@ -425,6 +631,24 @@ const OSSControleOPME: React.FC = () => {
               </Card>
             );
           })}
+        </div>
+      </section>
+
+      <section id="prioridades" className="scroll-mt-24">
+        <SectionHeader
+          icon={<ClipboardCheck className="h-5 w-5" />}
+          title="Prioridades do dia"
+          description="Listas ordenadas por impacto financeiro, prazo e risco para direcionar squads operacionais."
+        />
+        <div className="grid gap-4 lg:grid-cols-3">
+          {prioritizedLists.slice(0, 3).map((list) => (
+            <PrioritizedListCard key={list.id} list={list} />
+          ))}
+        </div>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          {prioritizedLists.slice(3).map((list) => (
+            <PrioritizedListCard key={list.id} list={list} />
+          ))}
         </div>
       </section>
 
