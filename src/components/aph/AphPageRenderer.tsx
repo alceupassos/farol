@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -24,6 +24,9 @@ import {
 } from 'recharts';
 import { AphPageConfig, AphSeverity } from '@/modules/aph/types';
 import { getAphIcon } from './iconMap';
+import AphRealtimeMap from './AphRealtimeMap';
+import AphCameraWall from './AphCameraWall';
+import AphAmbulanceCockpit from './AphAmbulanceCockpit';
 
 const severityStyles: Record<AphSeverity, { badge: string; bg: string; text: string; border: string }> = {
   critico: {
@@ -57,6 +60,12 @@ interface AphPageRendererProps {
 }
 
 const AphPageRenderer: React.FC<AphPageRendererProps> = ({ config }) => {
+  const [selectedAmbulanceId, setSelectedAmbulanceId] = useState<string | null>(null);
+  const selectedAmbulance = useMemo(
+    () => config.ambulances?.find((amb) => amb.id === selectedAmbulanceId) ?? null,
+    [config.ambulances, selectedAmbulanceId]
+  );
+
   return (
     <div className={`min-h-screen space-y-8 bg-slate-950 px-6 py-8 text-slate-100 ${config.gradient.from} ${config.gradient.to} bg-[length:400%_400%]` }>
       <header className="space-y-4">
@@ -119,6 +128,54 @@ const AphPageRenderer: React.FC<AphPageRendererProps> = ({ config }) => {
             );
           })}
         </section>
+      )}
+
+      {config.alerts && config.alerts.length > 0 && (
+        <section className="grid gap-4 md:grid-cols-3">
+          {config.alerts.map((alert) => {
+            const severity = severityStyles[alert.severity];
+            return (
+              <Card key={alert.id} className={`border ${severity.border} bg-slate-900/70`}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className={`text-sm font-semibold ${severity.text}`}>{alert.title}</CardTitle>
+                    <Badge className="bg-black/40 text-[10px] uppercase tracking-wide text-white">
+                      {severity.badge}
+                    </Badge>
+                  </div>
+                  {alert.metric && (
+                    <CardDescription className="text-xs text-slate-300">{alert.metric}</CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-white/80 leading-relaxed">{alert.description}</p>
+                  {alert.action && (
+                    <div className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-xs text-emerald-200">
+                      {alert.action}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
+        </section>
+      )}
+
+      {config.map && config.ambulances && (
+        <section className="space-y-4">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <AphRealtimeMap
+              mapConfig={config.map}
+              ambulances={config.ambulances}
+              onSelect={(amb) => setSelectedAmbulanceId(amb?.id ?? null)}
+            />
+            <AphAmbulanceCockpit ambulance={selectedAmbulance ?? config.ambulances[0] ?? null} />
+          </div>
+        </section>
+      )}
+
+      {config.cameraWall && config.cameraWall.length > 0 && (
+        <AphCameraWall feeds={config.cameraWall} />
       )}
 
       {config.charts && config.charts.length > 0 && (
@@ -329,6 +386,177 @@ const AphPageRenderer: React.FC<AphPageRendererProps> = ({ config }) => {
                     ))}
                   </ul>
                   <p className="text-[11px] uppercase tracking-wide text-slate-400">Owner: {playbook.owner} • Status: {playbook.status}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </section>
+      )}
+
+      {config.catalog && (
+        <section className="grid gap-4 lg:grid-cols-2">
+          {config.catalog.sections.map((section) => (
+            <Card key={section.title} className="border-slate-800 bg-slate-900/70">
+              <CardHeader>
+                <CardTitle className="text-white">{section.title}</CardTitle>
+                {section.description && (
+                  <CardDescription className="text-slate-400">{section.description}</CardDescription>
+                )}
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {section.entries.map((entry) => (
+                  <div key={entry.name} className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="text-sm font-semibold text-white">{entry.name}</p>
+                      <Badge variant="outline" className="border-emerald-400 text-emerald-200">
+                        {entry.sla}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">{entry.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {entry.kpis.map((kpi) => (
+                        <Badge key={kpi} className="bg-slate-800/70 text-[11px] font-normal">
+                          {kpi}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          ))}
+
+          <Card className="border-slate-800 bg-slate-900/70">
+            <CardHeader>
+              <CardTitle className="text-white">Cobertura por cidade</CardTitle>
+              <CardDescription className="text-slate-400">
+                Dados base para planejamento operacional e expansão contratual.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="text-xs uppercase tracking-wide text-slate-400">
+                  <tr className="border-b border-slate-800">
+                    <th className="px-4 pb-2">Cidade</th>
+                    <th className="px-4 pb-2">População</th>
+                    <th className="px-4 pb-2">Perfil de demanda</th>
+                    <th className="px-4 pb-2">Serviços contratados</th>
+                    <th className="px-4 pb-2">Foco SLA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {config.catalog.cities.map((city) => (
+                    <tr key={city.name} className="border-b border-slate-800/60 align-top">
+                      <td className="px-4 py-3 font-medium text-white/90">{city.name}</td>
+                      <td className="px-4 py-3 text-slate-300">{city.population}</td>
+                      <td className="px-4 py-3 text-slate-300">{city.demandProfile}</td>
+                      <td className="px-4 py-3 text-slate-300">
+                        <ul className="space-y-1 text-xs">
+                          {city.contractedServices.map((service) => (
+                            <li key={service}>• {service}</li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td className="px-4 py-3 text-slate-300">{city.slaFocus}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+        </section>
+      )}
+
+      {config.oraculoScenarios && config.oraculoScenarios.length > 0 && (
+        <section className="space-y-4">
+          {config.oraculoScenarios.map((scenario) => {
+            const severity = severityStyles[scenario.severity];
+            return (
+              <Card key={scenario.id} className={`border ${severity.border} bg-slate-900/70`}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className={`text-base font-semibold ${severity.text}`}>{scenario.title}</CardTitle>
+                    <Badge className="bg-black/40 text-[10px] uppercase tracking-wide text-white">
+                      {severity.badge}
+                    </Badge>
+                  </div>
+                  <CardDescription className="text-slate-400">{scenario.question}</CardDescription>
+                </CardHeader>
+                <CardContent className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-3">
+                    <div className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Diagnóstico</p>
+                      <p className="text-sm text-white/80 leading-relaxed">{scenario.diagnosis}</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Impacto</p>
+                      <p className="text-sm text-white/80 leading-relaxed">{scenario.impact}</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Risco</p>
+                      <p className="text-sm text-white/80 leading-relaxed">{scenario.risk}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Evidências</p>
+                      <ul className="mt-2 space-y-1 text-sm text-white/80">
+                        {scenario.evidences.map((evidence) => (
+                          <li key={evidence} className="flex gap-2">
+                            <span className="text-emerald-300">•</span>
+                            <span>{evidence}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Recomendações imediatas</p>
+                      <ul className="mt-2 space-y-1 text-sm text-white/80">
+                        {scenario.recommendations.map((rec) => (
+                          <li key={rec} className="flex gap-2">
+                            <span className="text-emerald-300">•</span>
+                            <span>{rec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="space-y-3 md:col-span-2">
+                    <div className="rounded-lg border border-slate-800/60 bg-slate-900/60 p-4">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Plano de ação sugerido</p>
+                      <div className="mt-2 grid gap-3 md:grid-cols-2">
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-white">Objetivo</p>
+                          <p className="text-sm text-white/80">{scenario.plan.objective}</p>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-white">Responsáveis & Prazo</p>
+                          <p className="text-sm text-white/80">{scenario.plan.responsible} • {scenario.plan.deadline}</p>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-white">Entregáveis</p>
+                          <ul className="text-sm text-white/80 space-y-1">
+                            {scenario.plan.deliverables.map((deliverable) => (
+                              <li key={deliverable}>• {deliverable}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-white">Sucesso & Risco residual</p>
+                          <p className="text-sm text-white/80">KPI: {scenario.plan.successMetric}</p>
+                          <p className="text-sm text-white/80">Risco: {scenario.plan.residualRisk}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-4">
+                      <p className="text-xs uppercase tracking-wide text-emerald-200">Próximos passos automáticos</p>
+                      <ul className="mt-2 space-y-1 text-sm text-emerald-100">
+                        {scenario.nextSteps.map((step) => (
+                          <li key={step}>• {step}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             );

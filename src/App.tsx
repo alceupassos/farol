@@ -139,6 +139,7 @@ import {
   AphGovernancaLgpdPage,
   AphHeatmapCoberturaPage,
   AphInsightsIAPage,
+  AphCatalogoPage,
   AphIntegracoesPage,
   AphManutencaoPreditivaPage,
   AphMonitoramentoCamerasPage,
@@ -230,6 +231,7 @@ const App = () => (
                       <Route path="/aph-dashboard" element={<AphDashboardPage />} />
                       <Route path="/aph-insights-ia" element={<AphInsightsIAPage />} />
                       <Route path="/aph-oraculo" element={<AphOraculoPage />} />
+                      <Route path="/aph-catalogo" element={<AphCatalogoPage />} />
                       <Route
                         path="/hospital-dashboard-detalhado"
                         element={<HospitalDashboardDetalhadoPage />}

@@ -35,6 +35,7 @@ import OSSDashboard from "./pages/OSSDashboard";
 - `/aph-dashboard` → `AphDashboardPage`
 - `/aph-insights-ia` → `AphInsightsIAPage`
 - `/aph-oraculo` → `AphOraculoPage`
+- `/aph-catalogo` → `AphCatalogoPage`
 - `/aph-despacho-regulacao` → `AphDespachoRegulacaoPage`
 - `/aph-heatmap-cobertura` → `AphHeatmapCoberturaPage`
 - `/aph-playbooks-operacionais` → `AphPlaybooksOperacionaisPage`

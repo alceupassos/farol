@@ -3,6 +3,7 @@ import { createAphPage } from '@/components/aph/createAphPage';
 export const AphDashboardPage = createAphPage('dashboard');
 export const AphInsightsIAPage = createAphPage('insightsIa');
 export const AphOraculoPage = createAphPage('oraculo');
+export const AphCatalogoPage = createAphPage('catalogo');
 export const AphDespachoRegulacaoPage = createAphPage('despachoRegulacao');
 export const AphHeatmapCoberturaPage = createAphPage('heatmapCobertura');
 export const AphPlaybooksOperacionaisPage = createAphPage('playbooksOperacionais');

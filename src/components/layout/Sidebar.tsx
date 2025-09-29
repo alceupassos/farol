@@ -201,6 +201,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
             { to: '/aph-dashboard', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Dashboard Tempo Real' },
             { to: '/aph-insights-ia', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Insights de IA' },
             { to: '/aph-oraculo', icon: <Zap className="h-5 w-5 mr-3" />, label: 'Oráculo APH' },
+            { to: '/aph-catalogo', icon: <ClipboardList className="h-5 w-5 mr-3" />, label: 'Catálogo Operacional' },
           ],
         },
         {

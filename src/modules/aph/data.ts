@@ -72,10 +72,559 @@ const aphPagesConfig: AphPagesConfig = {
     gradient: { from: 'from-rose-500/30', to: 'to-slate-900' },
     tags: ['Tempo real', 'Multi-base', 'MCP Servers'],
     metrics: [
-      { id: 'sla-p90', title: 'SLA P90 Despacho→Chegada', value: '17m', variation: '-1.2m', trend: 'up', icon: 'activity', severity: 'grave', description: 'Meta 18m • últimas 2h', },
-      { id: 'frota-disponivel', title: 'Frota Disponível', value: '94%', variation: '+3pp', trend: 'up', icon: 'ambulance', severity: 'estavel', description: '21 de 22 ambulâncias ativas' },
-      { id: 'alertas-criticos', title: 'Alertas Críticos Ativos', value: '6', variation: '-2', trend: 'down', icon: 'shield-alert', severity: 'grave', description: '3 SLA, 2 Frota, 1 LGPD' },
-      { id: 'demanda-prevista', title: 'Demanda Prevista (próx. 3h)', value: '28 chamadas', variation: '+12%', trend: 'up', icon: 'map', severity: 'atencao', description: 'Pico zona Norte às 18h' }
+      { id: 'sla-p90', title: 'SLA P90 Despacho→Chegada', value: '17m', variation: '-1.2m', trend: 'up', icon: 'activity', severity: 'grave', description: 'Meta 18m • últimas 2h' },
+      { id: 'frota-disponivel', title: 'Frota Disponível', value: '91%', variation: '+1pp', trend: 'up', icon: 'ambulance', severity: 'estavel', description: '20 de 22 ambulâncias operacionais' },
+      { id: 'alertas-criticos', title: 'Alertas Críticos Ativos', value: '7', variation: '-1', trend: 'down', icon: 'shield-alert', severity: 'grave', description: '3 SLA, 2 Frota, 1 LGPD, 1 Estoque' },
+      { id: 'demanda-prevista', title: 'Demanda Prevista (próx. 3h)', value: '32 chamadas', variation: '+14%', trend: 'up', icon: 'map', severity: 'atencao', description: 'Pico zona Norte às 18h' }
+    ],
+    alerts: [
+      {
+        id: 'alert-sla-sao-jose',
+        title: 'SLA São José em 88%',
+        description: 'Últimas 12h ficaram abaixo da meta devido a trânsito na BR-101 e falta de reserva.',
+        metric: 'Meta 92% • Real 88%',
+        action: 'Realocar USB-03 e acionar plano de contingência 18h-23h.',
+        severity: 'grave'
+      },
+      {
+        id: 'alert-midazolam',
+        title: 'Ruptura crítica de Midazolam',
+        description: 'Cobertura média 18h (mínimo 36h). Estoque crítico em Florianópolis e Itajaí.',
+        metric: 'Cobertura 18h',
+        action: 'Redistribuir insumo + compra expressa com aprovação CFO.',
+        severity: 'critico'
+      },
+      {
+        id: 'alert-telemetria',
+        title: 'Falhas telemetria 12% da frota',
+        description: 'Modems 4G antigos provocando perda de sinal em rodovias; risco para manutenção preditiva.',
+        metric: '12% sem heartbeat',
+        action: 'Trocar modems UTI-04/05/09 e ativar cache offline.',
+        severity: 'atencao'
+      }
+    ],
+    map: {
+      center: [-48.548, -27.594],
+      zoom: 10,
+      layers: [
+        { id: 'heat-demand', type: 'heatmap', color: '#ef4444', description: 'Heatmap de demanda 24h (MCP Analytics)' },
+        { id: 'geofence-floripa', type: 'geofence', color: '#22c55e', description: 'Perímetro contrato Florianópolis' },
+        { id: 'event-jurerê', type: 'event', color: '#f59e0b', description: 'Cobertura evento Jurerê Music 20h' }
+      ]
+    },
+    ambulances: [
+      {
+        id: 'ALFA-01',
+        name: 'UTI Alfa 01',
+        type: 'UTI',
+        status: 'em_atendimento',
+        coordinates: [-48.558, -27.595],
+        address: 'Av. Beira-Mar Norte, Florianópolis',
+        destination: 'Hospital Celso Ramos',
+        eta: '05 min',
+        lastUpdate: 'há 18s',
+        telemetry: {
+          speed: 54,
+          rpm: 2900,
+          fuel: 62,
+          temperature: 94,
+          odometer: 172480,
+          lastMaintenanceKm: 171300,
+          crew: ['Médico Rocha', 'Enfermeira Azevedo', 'Condutor Lopes'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'ALFA-02',
+        name: 'UTI Alfa 02',
+        type: 'UTI',
+        status: 'deslocamento',
+        coordinates: [-48.521, -27.622],
+        address: 'SC-401, acesso JK, Florianópolis',
+        destination: 'Hospital SOS Cárdio',
+        eta: '09 min',
+        lastUpdate: 'há 27s',
+        telemetry: {
+          speed: 72,
+          rpm: 3250,
+          fuel: 58,
+          temperature: 91,
+          odometer: 164930,
+          lastMaintenanceKm: 164000,
+          crew: ['Médico Antunes', 'Enfermeira Prado', 'Condutor Souza'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'ALFA-03',
+        name: 'UTI Alfa 03',
+        type: 'UTI',
+        status: 'livre',
+        coordinates: [-48.630, -27.608],
+        address: 'Base São José - Bairro Campinas',
+        lastUpdate: 'há 8s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 83,
+          temperature: 35,
+          odometer: 149250,
+          lastMaintenanceKm: 148100,
+          crew: ['Médico Siqueira', 'Enfermeira Ramos'],
+          incidentCount: 2
+        }
+      },
+      {
+        id: 'ALFA-04',
+        name: 'UTI Alfa 04',
+        type: 'UTI',
+        status: 'indisponivel',
+        coordinates: [-48.663, -27.640],
+        address: 'Oficina credenciada, Palhoça',
+        lastUpdate: 'há 2m',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 46,
+          temperature: 28,
+          odometer: 205880,
+          lastMaintenanceKm: 205880,
+          crew: [],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'ALFA-05',
+        name: 'UTI Alfa 05',
+        type: 'UTI',
+        status: 'deslocamento',
+        coordinates: [-48.501, -27.571],
+        address: 'BR-101 km 205 sentido Norte',
+        destination: 'Hospital São Lucas',
+        eta: '07 min',
+        lastUpdate: 'há 25s',
+        telemetry: {
+          speed: 68,
+          rpm: 3100,
+          fuel: 54,
+          temperature: 92,
+          odometer: 186120,
+          lastMaintenanceKm: 185200,
+          crew: ['Médico Silva', 'Enfermeira Costa', 'Condutor Lima'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'ALFA-06',
+        name: 'UTI Alfa 06',
+        type: 'UTI',
+        status: 'em_atendimento',
+        coordinates: [-48.668, -26.909],
+        address: 'Av. Sete de Setembro, Itajaí',
+        destination: 'Hospital Marieta',
+        eta: '04 min',
+        lastUpdate: 'há 16s',
+        telemetry: {
+          speed: 38,
+          rpm: 2500,
+          fuel: 69,
+          temperature: 89,
+          odometer: 192740,
+          lastMaintenanceKm: 191600,
+          crew: ['Médico Becker', 'Enfermeira Neri', 'Condutor Cruz'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'ALFA-07',
+        name: 'UTI Alfa 07',
+        type: 'UTI',
+        status: 'livre',
+        coordinates: [-48.640, -26.995],
+        address: 'Base Balneário Camboriú - Barra Sul',
+        lastUpdate: 'há 11s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 76,
+          temperature: 33,
+          odometer: 138520,
+          lastMaintenanceKm: 137400,
+          crew: ['Médico Torres', 'Enfermeira Meireles'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'ALFA-08',
+        name: 'UTI Alfa 08',
+        type: 'UTI',
+        status: 'deslocamento',
+        coordinates: [-48.850, -26.310],
+        address: 'Rua XV de Novembro, Joinville',
+        destination: 'Hospital Dona Helena',
+        eta: '06 min',
+        lastUpdate: 'há 33s',
+        telemetry: {
+          speed: 63,
+          rpm: 3050,
+          fuel: 47,
+          temperature: 95,
+          odometer: 210410,
+          lastMaintenanceKm: 209200,
+          crew: ['Médico Braga', 'Enfermeira Martins', 'Condutor Silva'],
+          incidentCount: 2
+        }
+      },
+      {
+        id: 'ALFA-09',
+        name: 'UTI Alfa 09',
+        type: 'UTI',
+        status: 'em_atendimento',
+        coordinates: [-49.070, -26.922],
+        address: 'R. Heinrich Hosang, Blumenau',
+        destination: 'Hospital Santa Isabel',
+        eta: '03 min',
+        lastUpdate: 'há 19s',
+        telemetry: {
+          speed: 41,
+          rpm: 2400,
+          fuel: 59,
+          temperature: 90,
+          odometer: 167880,
+          lastMaintenanceKm: 166500,
+          crew: ['Médico Goulart', 'Enfermeira Fogaça', 'Condutor Dias'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'ALFA-10',
+        name: 'UTI Alfa 10',
+        type: 'UTI',
+        status: 'deslocamento',
+        coordinates: [-52.613, -27.104],
+        address: 'Av. Getúlio Vargas, Chapecó',
+        destination: 'Hospital Regional do Oeste',
+        eta: '08 min',
+        lastUpdate: 'há 22s',
+        telemetry: {
+          speed: 58,
+          rpm: 2800,
+          fuel: 44,
+          temperature: 93,
+          odometer: 189430,
+          lastMaintenanceKm: 188100,
+          crew: ['Médico Vieira', 'Enfermeira Luz', 'Condutor Basso'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'BRAVO-01',
+        name: 'USB Bravo 01',
+        type: 'USB',
+        status: 'em_atendimento',
+        coordinates: [-48.664, -27.648],
+        address: 'Rua Pref. Reinoldo Alves, Palhoça',
+        destination: 'UPA Bela Vista',
+        eta: '04 min',
+        lastUpdate: 'há 14s',
+        telemetry: {
+          speed: 36,
+          rpm: 2100,
+          fuel: 71,
+          temperature: 87,
+          odometer: 114580,
+          lastMaintenanceKm: 113600,
+          crew: ['Socorrista A. Souza', 'Condutor Mendes'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'BRAVO-02',
+        name: 'USB Bravo 02',
+        type: 'USB',
+        status: 'livre',
+        coordinates: [-48.658, -27.494],
+        address: 'Base Biguaçu - bairro Universitário',
+        lastUpdate: 'há 9s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 88,
+          temperature: 34,
+          odometer: 106340,
+          lastMaintenanceKm: 105100,
+          crew: ['Socorrista Lima', 'Condutor Xavier'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'BRAVO-03',
+        name: 'USB Bravo 03',
+        type: 'USB',
+        status: 'livre',
+        coordinates: [-48.610, -27.586],
+        address: 'Base São José',
+        lastUpdate: 'há 12s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 78,
+          temperature: 36,
+          odometer: 98560,
+          lastMaintenanceKm: 97500,
+          crew: ['Socorrista Alves', 'Condutora Maia'],
+          incidentCount: 2
+        }
+      },
+      {
+        id: 'BRAVO-04',
+        name: 'USB Bravo 04',
+        type: 'USB',
+        status: 'deslocamento',
+        coordinates: [-48.601, -26.862],
+        address: 'SC-412, Itapema',
+        destination: 'Hospital Santo Antônio',
+        eta: '11 min',
+        lastUpdate: 'há 31s',
+        telemetry: {
+          speed: 64,
+          rpm: 2950,
+          fuel: 52,
+          temperature: 90,
+          odometer: 123210,
+          lastMaintenanceKm: 122000,
+          crew: ['Socorrista Freitas', 'Condutora Mota'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'BRAVO-05',
+        name: 'USB Bravo 05',
+        type: 'USB',
+        status: 'em_atendimento',
+        coordinates: [-48.671, -27.587],
+        address: 'Rua Konder Reis, São José',
+        destination: 'Hospital Regional',
+        eta: '03 min',
+        lastUpdate: 'há 20s',
+        telemetry: {
+          speed: 28,
+          rpm: 1900,
+          fuel: 63,
+          temperature: 86,
+          odometer: 134870,
+          lastMaintenanceKm: 133900,
+          crew: ['Socorrista Prado', 'Condutor Teixeira'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'BRAVO-06',
+        name: 'USB Bravo 06',
+        type: 'USB',
+        status: 'deslocamento',
+        coordinates: [-49.380, -28.675],
+        address: 'Av. Centenário, Criciúma',
+        destination: 'Hospital São José (Criciúma)',
+        eta: '05 min',
+        lastUpdate: 'há 17s',
+        telemetry: {
+          speed: 52,
+          rpm: 2600,
+          fuel: 55,
+          temperature: 88,
+          odometer: 118540,
+          lastMaintenanceKm: 117400,
+          crew: ['Socorrista Bianchini', 'Condutor Dal Bosco'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'BRAVO-07',
+        name: 'USB Bravo 07',
+        type: 'USB',
+        status: 'livre',
+        coordinates: [-50.323, -27.817],
+        address: 'Base Lages',
+        lastUpdate: 'há 6s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 74,
+          temperature: 31,
+          odometer: 101230,
+          lastMaintenanceKm: 100200,
+          crew: ['Socorrista R. Lima', 'Condutor Bastos'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'BRAVO-08',
+        name: 'USB Bravo 08',
+        type: 'USB',
+        status: 'em_atendimento',
+        coordinates: [-49.066, -26.485],
+        address: 'Jaraguá do Sul - Av. Marechal Deodoro',
+        destination: 'Hospital São José Jaraguá',
+        eta: '09 min',
+        lastUpdate: 'há 24s',
+        telemetry: {
+          speed: 46,
+          rpm: 2350,
+          fuel: 61,
+          temperature: 87,
+          odometer: 128320,
+          lastMaintenanceKm: 127100,
+          crew: ['Socorrista Meurer', 'Condutor Fritsch'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'RESG-01',
+        name: 'Resgate 01',
+        type: 'Resgate',
+        status: 'deslocamento',
+        coordinates: [-48.421, -27.673],
+        address: 'BR-282, Rancho Queimado',
+        destination: 'Hospital Regional São José',
+        eta: '18 min',
+        lastUpdate: 'há 38s',
+        telemetry: {
+          speed: 71,
+          rpm: 3150,
+          fuel: 48,
+          temperature: 93,
+          odometer: 236540,
+          lastMaintenanceKm: 235200,
+          crew: ['Paramédico Couto', 'Condutor Rosa'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'RESG-02',
+        name: 'Resgate 02',
+        type: 'Resgate',
+        status: 'em_atendimento',
+        coordinates: [-48.665, -27.497],
+        address: 'Evento IronMan • Balneário Camboriú',
+        destination: 'Ponto de apoio evento',
+        eta: '—',
+        lastUpdate: 'há 5s',
+        telemetry: {
+          speed: 12,
+          rpm: 1800,
+          fuel: 42,
+          temperature: 88,
+          odometer: 214320,
+          lastMaintenanceKm: 213000,
+          crew: ['Paramédico Rocha', 'Condutor Vieira'],
+          incidentCount: 1
+        }
+      },
+      {
+        id: 'RESG-03',
+        name: 'Resgate 03',
+        type: 'Resgate',
+        status: 'livre',
+        coordinates: [-48.915, -27.584],
+        address: 'Base operativo - Gov. Celso Ramos',
+        lastUpdate: 'há 15s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 69,
+          temperature: 32,
+          odometer: 198770,
+          lastMaintenanceKm: 197500,
+          crew: ['Paramédico Tavares', 'Condutor Nicolau'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'RESG-04',
+        name: 'Resgate 04',
+        type: 'Resgate',
+        status: 'indisponivel',
+        coordinates: [-49.287, -25.999],
+        address: 'Pátio de manutenção - Mafra',
+        lastUpdate: 'há 3m',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 35,
+          temperature: 27,
+          odometer: 223115,
+          lastMaintenanceKm: 223115,
+          crew: [],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'SUP-01',
+        name: 'Suporte Logístico 01',
+        type: 'Suporte',
+        status: 'deslocamento',
+        coordinates: [-51.148, -27.181],
+        address: 'SC-135, Videira',
+        destination: 'Base Chapecó',
+        eta: '42 min',
+        lastUpdate: 'há 1m',
+        telemetry: {
+          speed: 82,
+          rpm: 2700,
+          fuel: 57,
+          temperature: 85,
+          odometer: 142330,
+          lastMaintenanceKm: 141200,
+          crew: ['Logista Ferraz'],
+          incidentCount: 0
+        }
+      },
+      {
+        id: 'SUP-02',
+        name: 'Suporte Logístico 02',
+        type: 'Suporte',
+        status: 'livre',
+        coordinates: [-47.791, -26.227],
+        address: 'Base Itapoá',
+        lastUpdate: 'há 40s',
+        telemetry: {
+          speed: 0,
+          rpm: 0,
+          fuel: 81,
+          temperature: 30,
+          odometer: 96540,
+          lastMaintenanceKm: 95700,
+          crew: ['Logista Campos'],
+          incidentCount: 0
+        }
+      }
+    ],
+    cameraWall: [
+      { id: 'cam-alfa01', title: 'UTI Alfa 01 • Interna', unit: 'ALFA-01', thumbnail: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.6s', updatedAt: 'há 18s', description: 'Paciente sedado, monitor multiparamétrico estável.' },
+      { id: 'cam-alfa02', title: 'UTI Alfa 02 • Externa', unit: 'ALFA-02', thumbnail: 'https://images.unsplash.com/photo-1512061942530-30f60d25804e?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.0s', updatedAt: 'há 27s', description: 'Registro de trânsito denso na SC-401.' },
+      { id: 'cam-alfa03', title: 'UTI Alfa 03 • Cabine', unit: 'ALFA-03', thumbnail: 'https://images.unsplash.com/photo-1526253038957-bce54e05968a?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.2s', updatedAt: 'há 8s', description: 'Equipe aguardando despacho na base.' },
+      { id: 'cam-alfa04', title: 'UTI Alfa 04 • Oficina', unit: 'ALFA-04', thumbnail: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=60', status: 'offline', latency: '—', updatedAt: 'há 2m', description: 'Viatura em manutenção preventiva.' },
+      { id: 'cam-alfa05', title: 'UTI Alfa 05 • Interna', unit: 'ALFA-05', thumbnail: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.8s', updatedAt: 'há 25s', description: 'Paciente com ventilação controlada.' },
+      { id: 'cam-alfa06', title: 'UTI Alfa 06 • Externa', unit: 'ALFA-06', thumbnail: 'https://images.unsplash.com/photo-1509927083222-0ebdee9dc1f3?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.2s', updatedAt: 'há 16s', description: 'Chegada a hospital em Itajaí.' },
+      { id: 'cam-alfa07', title: 'UTI Alfa 07 • Base', unit: 'ALFA-07', thumbnail: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.4s', updatedAt: 'há 11s', description: 'Check-list concluído para plantão noturno.' },
+      { id: 'cam-alfa08', title: 'UTI Alfa 08 • Rodovia', unit: 'ALFA-08', thumbnail: 'https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '3.1s', updatedAt: 'há 33s', description: 'Trecho com chuva e visibilidade reduzida.' },
+      { id: 'cam-alfa09', title: 'UTI Alfa 09 • Interna', unit: 'ALFA-09', thumbnail: 'https://images.unsplash.com/photo-1583752028088-91e3e9527bd4?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.9s', updatedAt: 'há 19s', description: 'Equipe realizando analgesia e monitorização.' },
+      { id: 'cam-alfa10', title: 'UTI Alfa 10 • Externa', unit: 'ALFA-10', thumbnail: 'https://images.unsplash.com/photo-1554215191-940cfd6e1f1c?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.6s', updatedAt: 'há 22s', description: 'Chegada ao Hospital Regional de Chapecó.' },
+      { id: 'cam-bravo01', title: 'USB Bravo 01 • Interna', unit: 'BRAVO-01', thumbnail: 'https://images.unsplash.com/photo-1608889329487-250e1f97d780?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.7s', updatedAt: 'há 14s', description: 'Atendimento em curso em Palhoça.' },
+      { id: 'cam-bravo02', title: 'USB Bravo 02 • Externa', unit: 'BRAVO-02', thumbnail: 'https://images.unsplash.com/photo-1529429617124-aee74df1c119?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.5s', updatedAt: 'há 9s', description: 'Base Biguaçu, equipe pronta.' },
+      { id: 'cam-bravo03', title: 'USB Bravo 03 • Externa', unit: 'BRAVO-03', thumbnail: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.1s', updatedAt: 'há 12s', description: 'Viatura em standby na Base São José.' },
+      { id: 'cam-bravo04', title: 'USB Bravo 04 • Rodovia', unit: 'BRAVO-04', thumbnail: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '2.9s', updatedAt: 'há 31s', description: 'Trecho com obras em Itapema.' },
+      { id: 'cam-bravo05', title: 'USB Bravo 05 • Interna', unit: 'BRAVO-05', thumbnail: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.8s', updatedAt: 'há 20s', description: 'Paciente sendo transportado ao Hospital Regional.' },
+      { id: 'cam-bravo06', title: 'USB Bravo 06 • Externa', unit: 'BRAVO-06', thumbnail: 'https://images.unsplash.com/photo-1465446751832-9f11e5462788?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.0s', updatedAt: 'há 17s', description: 'Deslocamento em Criciúma, pista seca.' },
+      { id: 'cam-bravo07', title: 'USB Bravo 07 • Base Lages', unit: 'BRAVO-07', thumbnail: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.3s', updatedAt: 'há 6s', description: 'Checagem de equipamentos concluída.' },
+      { id: 'cam-bravo08', title: 'USB Bravo 08 • Interna', unit: 'BRAVO-08', thumbnail: 'https://images.unsplash.com/photo-1608679050396-523b9780e99e?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.9s', updatedAt: 'há 24s', description: 'Paciente consciente em Jaraguá do Sul.' },
+      { id: 'cam-resg01', title: 'Resgate 01 • Rodovia', unit: 'RESG-01', thumbnail: 'https://images.unsplash.com/photo-1521033719794-41049d18b8d0?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '3.4s', updatedAt: 'há 38s', description: 'Atendimento em BR-282, chuva moderada.' },
+      { id: 'cam-resg02', title: 'Resgate 02 • Interna', unit: 'RESG-02', thumbnail: 'https://images.unsplash.com/photo-1587502536263-9298c0f6c6d6?auto=format&fit=crop&w=400&q=60', status: 'alerta', latency: '3.6s', updatedAt: 'há 10s', description: 'Movimentação intensa, alerta de frenagem brusca.' },
+      { id: 'cam-resg03', title: 'Resgate 03 • Base', unit: 'RESG-03', thumbnail: 'https://images.unsplash.com/photo-1523419409543-0c1df022bdd9?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '1.5s', updatedAt: 'há 15s', description: 'Equipe de prontidão em Gov. Celso Ramos.' },
+      { id: 'cam-resg04', title: 'Resgate 04 • Oficina', unit: 'RESG-04', thumbnail: 'https://images.unsplash.com/photo-1529429617124-aee74df1c119?auto=format&fit=crop&w=400&q=60', status: 'offline', latency: '—', updatedAt: 'há 3m', description: 'Câmera pause enquanto viatura em revisão.' },
+      { id: 'cam-sup01', title: 'Suporte 01 • Logística', unit: 'SUP-01', thumbnail: 'https://images.unsplash.com/photo-1549928570-786e7c55185b?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.4s', updatedAt: 'há 1m', description: 'Carga de reposição em transporte para Chapecó.' },
+      { id: 'cam-sup02', title: 'Suporte 02 • Armazém', unit: 'SUP-02', thumbnail: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=60', status: 'ok', latency: '2.2s', updatedAt: 'há 40s', description: 'Controle de estoque Itapoá com sensores MCP.' }
     ],
     insights: [
       { id: 'insight-1', title: 'Zona Norte com risco de fila', description: 'Projeção aponta saturação em 110% entre 18h e 21h — recomendar realocar 1 UTI e 1 USB.', severity: 'critico' },
@@ -245,6 +794,16 @@ const aphPagesConfig: AphPagesConfig = {
       { id: 'pb-execucao', title: 'Tempo médio de execução', value: '4m32s', variation: '-41s', trend: 'up', icon: 'target', severity: 'estavel', description: 'Da abertura à conclusão com comprovação' },
       { id: 'pb-ROI', title: 'ROI médio projetado', value: '312%', variation: '+38pp', trend: 'up', icon: 'dollar-sign', severity: 'estavel', description: 'Base IA + monitoramento real' }
     ],
+    alerts: [
+      {
+        id: 'oraculo-prioridade',
+        title: 'Fila de solicitações do Oráculo',
+        description: '3 pedidos aguardando aprovação financeira (> R$ 50k).',
+        metric: '3 planos aguardando CFO',
+        action: 'Priorizar plano “SLA São José” e “Ruptura Midazolam”.',
+        severity: 'grave'
+      }
+    ],
     playbooks: [
       {
         id: 'oraculo-1',
@@ -291,9 +850,242 @@ const aphPagesConfig: AphPagesConfig = {
       { id: 'tl-2', timestamp: '09:17', label: 'Aprovação automática', detail: 'Critérios cumpridos, execução automática autorizada.', severity: 'estavel' },
       { id: 'tl-3', timestamp: '09:20', label: 'Reposicionamento concluído', detail: 'Ambulância Alfa 05 em nova base, ETA recalculada.', severity: 'estavel' }
     ],
+    oraculoScenarios: [
+      {
+        id: 'scenario-sla-sao-jose',
+        title: 'Por que o SLA de São José caiu ontem?',
+        question: 'Explique os motivos do SLA em São José ter ficado em 88% e o que posso fazer agora.',
+        diagnosis: 'Acidente na BR-101 + equipe Alfa 07 em manutenção geraram filas > 16 min entre 18h-22h.',
+        impact: 'Risco de multa contratual de R$ 58 mil e reclamação do contratante municipal.',
+        evidences: [
+          'Mapa de calor mostra saturação 120% na zona Norte 18h-22h',
+          'Telemetria indica USB-03 parada 32 minutos em trânsito',
+          'Checklist revela ausência de viatura reserva em São José'
+        ],
+        risk: 'Perda de SLA por 3 noites consecutivas leva a auditoria contratual.',
+        recommendations: [
+          'Redistribuir UTI Alfa 05 para base São José às 17h temporariamente',
+          'Ativar microtreino “Despacho congestionamento BR-101” para equipe de regulação',
+          'Comunicar contratante sobre plano nas próximas 2h'
+        ],
+        plan: {
+          objective: 'Restaurar SLA > 92% em 48h e reduzir risco de multa.',
+          deliverables: [
+            'Viatura reserva posicionada 17h-23h por 5 dias',
+            'Checklist de prontidão atualizado com telemetria em tempo real',
+            'Relatório executivo enviado ao contratante'
+          ],
+          responsible: 'COO + Supervisora de Regulação',
+          deadline: '48 horas',
+          successMetric: 'SLA P90 ≥ 92% nos próximos 3 turnos',
+          residualRisk: 'Baixo — demanda atípica controlada com plano de contingência'
+        },
+        nextSteps: [
+          'Aprovar realocação de frota e horas extras (CFO em 30 min).',
+          'Notificar hospital parceiro para rota preferencial.',
+          'Rever mapa de cobertura e atualizar geofences no Mapbox.'
+        ],
+        severity: 'grave'
+      },
+      {
+        id: 'scenario-midazolam',
+        title: 'Ruptura iminente de Midazolam',
+        question: 'Estamos com estoque crítico de Midazolam nas UTIs móveis. O que fazer?',
+        diagnosis: 'Consumo 25% acima do previsto em Florianópolis + atraso de fornecedor 48h.',
+        impact: 'Risco de não atendimento a protocolos sedativos em 3 bases e glosa clínica.',
+        evidences: [
+          'Cobertura atual 18h (mínimo 36h)',
+          '2 ocorrências sem registro de reposição pós atendimento',
+          'Fornecedor principal informou atraso via API MCP Procurement'
+        ],
+        risk: 'Alta — suspensão de atendimento avançado e penalidade contratual.',
+        recommendations: [
+          'Realocar estoque de Chapecó e Joinville para Florianópolis e Itajaí',
+          'Emitir pedido emergencial com fornecedor backup',
+          'Auditar consumo e reforçar checklist de dispensação'
+        ],
+        plan: {
+          objective: 'Restaurar cobertura ≥ 48h em todas as bases em 24h.',
+          deliverables: [
+            'Pedido emergencial aprovado e enviado',
+            'Logística planejada via MCP em 6h',
+            'Checklist digital atualizado com trava de dupla checagem'
+          ],
+          responsible: 'Farmácia + Logística',
+          deadline: '24 horas',
+          successMetric: 'Cobertura ≥ 48h e zero ruptura registrada',
+          residualRisk: 'Moderado — dependência de transporte aéreo backup'
+        },
+        nextSteps: [
+          'Aprovar orçamento extra (R$ 18 mil).',
+          'Acionar frota reserva para transporte refrigerado.',
+          'Agendar auditoria de consumo em 3 dias.'
+        ],
+        severity: 'critico'
+      },
+      {
+        id: 'scenario-glosa-remocao',
+        title: 'Glosas 15% em remoção eletiva',
+        question: 'Como reduzir a glosa de remoção eletiva que atingiu 15% este mês?',
+        diagnosis: 'Fichas com ausência de assinatura digital e evidência fotográfica insuficiente.',
+        impact: 'Perda financeira mensal estimada em R$ 74 mil e risco de auditoria contratual.',
+        evidences: [
+          '18 contas com ausência de CID/procedimento coerente',
+          '8 ocorrências sem foto de embarque',
+          'Tempo porta-hospital não registrado em 12 casos'
+        ],
+        risk: 'Médio — repetição pode levar a retenção de pagamentos.',
+        recommendations: [
+          'Ativar bloqueio no app para contas sem anexos críticos',
+          'Treinamento relâmpago 15 min com equipes eletivas',
+          'Habilitar upload automático de fotos via MCP Media'
+        ],
+        plan: {
+          objective: 'Reduzir glosa eletiva para < 5% em 30 dias.',
+          deliverables: [
+            'Workflow de pré-auditoria com checklist obrigatório',
+            'Dossiê com evidências disponibilizado ao financeiro',
+            'Dashboard de acompanhamento diário'
+          ],
+          responsible: 'Financeiro + Qualidade + TI',
+          deadline: '30 dias',
+          successMetric: 'Glosa ≤ 5% e recuperação R$ 74 mil',
+          residualRisk: 'Baixo — depende de adesão das equipes ao novo fluxo'
+        },
+        nextSteps: [
+          'Configurar bloqueio no app APH ainda hoje.',
+          'Gerar lista das contas críticas e notificar faturamento.',
+          'Agendar revisão com o contratante em 15 dias.'
+        ],
+        severity: 'atencao'
+      }
+    ],
     notes: [
       'Toda sequência registrada com trilha de auditoria imutável.',
       'Aprovações obrigatórias quando impacto financeiro > R$ 50 mil.'
+    ]
+  },
+  catalogo: {
+    key: 'catalogo',
+    title: 'Catálogo Operacional & Escopo ANJOSDAVIDA',
+    subtitle: 'Serviços contratados, SLAs e cobertura por cidade para planejamento de expansão.',
+    gradient: { from: 'from-slate-500/25', to: 'to-slate-900' },
+    tags: ['Portfólio', 'ESG', 'SLA'],
+    metrics: [
+      { id: 'cidades', title: 'Cidades atendidas', value: '10', variation: '+2 (2024)', trend: 'up', icon: 'map', severity: 'estavel' },
+      { id: 'servicos', title: 'Serviços ativos', value: '10', variation: '+3', trend: 'up', icon: 'clipboard', severity: 'estavel' },
+      { id: 'contratos-sla', title: 'Contratos com SLA ≥ 95%', value: '8/10', variation: '+1', trend: 'up', icon: 'check-circle', severity: 'atencao' }
+    ],
+    catalog: {
+      sections: [
+        {
+          title: 'Portfólio de Serviços APH',
+          description: 'Cada serviço possui tarifário, protocolos clínicos, KPIs e requisitos de equipe/equipamentos.',
+          entries: [
+            {
+              name: 'APH Emergencial 24/7',
+              description: 'Cobertura para chamadas 192/193 e privado com equipes ALS/BLS.',
+              sla: 'SLA P90 12 min (urbano) • 18 min (rodovia)',
+              kpis: ['Tempo chamada→despacho', 'Door-to-door', 'Eventos sentinela']
+            },
+            {
+              name: 'UTI Móvel Adulto/Pediátrica/Neonatal',
+              description: 'Transferências críticas com suporte médico especializado e telemedicina.',
+              sla: 'Ativação ≤ 20 min',
+              kpis: ['Checklist pré-embarque', 'Porta-agulha', 'Completude prontuário']
+            },
+            {
+              name: 'Remoção Inter-Hospitalar',
+              description: 'Eletivas e urgentes com integração hospitalar e evidências antifraude.',
+              sla: 'Janela agendada ±15 min',
+              kpis: ['Glosa evitável', 'NPS contratante', 'Assinatura digital']
+            },
+            {
+              name: 'Atendimento Domiciliar',
+              description: 'Home care curta complexidade com protocolos e estoque dedicado.',
+              sla: 'Visita ≤ 2h após abertura',
+              kpis: ['Aderência plano terapêutico', 'Ruptura insumos', 'Reinternação 72h']
+            },
+            {
+              name: 'Cobertura de Eventos',
+              description: 'Planejamento de risco, rotas e equipes on-site com integração ao War Room.',
+              sla: 'Plano aprovado D-15',
+              kpis: ['Incidentes atendidos no local', 'Tempo resposta', 'Satisfação organizador']
+            },
+            {
+              name: 'Transporte Eletivo Programado',
+              description: 'Hemodiálise, radioterapia e consultas com agendamento inteligente.',
+              sla: 'Pontualidade ≥ 95%',
+              kpis: ['No-show paciente', 'Tempo espera pós atendimento', 'Glosa eletiva']
+            },
+            {
+              name: 'Resgate em Rodovias',
+              description: 'Cobertura para concessionárias e PRF com integração meteorológica.',
+              sla: 'Chegada ≤ 15 min',
+              kpis: ['Tempo cena', 'Incidentes por tipo', 'Coordenação com órgãos']
+            },
+            {
+              name: 'Resgate Aquático/Áreas de Risco',
+              description: 'Operações em litoral e áreas remotas com equipes especializadas.',
+              sla: 'Resposta ≤ 20 min',
+              kpis: ['Equipamentos críticos disponíveis', 'Safety briefing', 'Incidentes']
+            },
+            {
+              name: 'Telemedicina de Regulação',
+              description: 'Suporte clínico síncrono e assíncrono para protocolo e checklist.',
+              sla: 'Tempo triagem ≤ 4 min',
+              kpis: ['Casos resolvidos sem deslocamento', 'Satisfação equipe campo', 'Redução de glosa clínica']
+            },
+            {
+              name: 'Suporte Intermunicipal',
+              description: 'Acordos de contingência e back-up entre municípios.',
+              sla: 'Plano ativado ≤ 30 min',
+              kpis: ['Tempo resposta backup', 'Custos repassados', 'Incidentes logísticos']
+            }
+          ]
+        }
+      ],
+      cities: [
+        {
+          name: 'Florianópolis',
+          population: '516k hab',
+          demandProfile: 'Maior volume de ocorrências vermelhas, eventos e turismo.',
+          contractedServices: ['APH 24/7', 'UTI Móvel', 'Eventos', 'Telemedicina'],
+          slaFocus: 'SLA urbano 12 min, atendimento bilíngue verão.'
+        },
+        {
+          name: 'São José',
+          population: '250k hab',
+          demandProfile: 'Corredor industrial + BR-101, alto trânsito.',
+          contractedServices: ['APH 24/7', 'Remoção', 'Eventos'],
+          slaFocus: 'Reforço pós 18h, integração rodovia.'
+        },
+        {
+          name: 'Palhoça',
+          population: '217k hab',
+          demandProfile: 'Zonas rurais e ilhas; sazonalidade turismo.',
+          contractedServices: ['APH 24/7', 'Resgate aquático'],
+          slaFocus: 'Cobertura costeira e ilhas (geofencing Mapbox).'
+        },
+        {
+          name: 'Balneário Camboriú',
+          population: '149k hab',
+          demandProfile: 'Eventos, turismo, picos noturnos.',
+          contractedServices: ['Eventos', 'UTI móvel', 'Telemedicina'],
+          slaFocus: 'Planos verão, integração com concessionárias.'
+        },
+        {
+          name: 'Joinville',
+          population: '607k hab',
+          demandProfile: 'Maior volume eletivo e industrial.',
+          contractedServices: ['Remoção', 'Transporte eletivo', 'Home care'],
+          slaFocus: 'Pontualidade eletiva, glosa zero.'
+        }
+      ]
+    },
+    notes: [
+      'Cidades adicionais podem ser configuradas via CMS, mantendo KPIs e SLAs parametrizados.',
+      'Contrato mestre contém tarifários, regras de faturamento e indicadores críticos por serviço.'
     ]
   },
   despachoRegulacao: {

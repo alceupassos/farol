@@ -4,6 +4,7 @@ export type AphPageKey =
   | 'dashboard'
   | 'insightsIa'
   | 'oraculo'
+  | 'catalogo'
   | 'despachoRegulacao'
   | 'heatmapCobertura'
   | 'playbooksOperacionais'
@@ -168,6 +169,119 @@ export interface AphPageConfig {
   table?: AphTableSection;
   timeline?: AphTimelineEvent[];
   notes?: string[];
+  alerts?: AphAlert[];
+  catalog?: AphCatalog;
+  oraculoScenarios?: AphOraculoScenario[];
+  map?: AphMapConfig;
+  cameraWall?: AphCameraFeed[];
+  ambulances?: AphAmbulance[];
 }
 
 export type AphPagesConfig = Record<AphPageKey, AphPageConfig>;
+
+export interface AphAlert {
+  id: string;
+  title: string;
+  description: string;
+  metric?: string;
+  action?: string;
+  severity: AphSeverity;
+}
+
+export interface AphCatalogEntry {
+  name: string;
+  description: string;
+  sla: string;
+  kpis: string[];
+}
+
+export interface AphCatalogSection {
+  title: string;
+  description?: string;
+  entries: AphCatalogEntry[];
+}
+
+export interface AphCityCoverage {
+  name: string;
+  population: string;
+  demandProfile: string;
+  contractedServices: string[];
+  slaFocus: string;
+}
+
+export interface AphCatalog {
+  sections: AphCatalogSection[];
+  cities: AphCityCoverage[];
+}
+
+export interface AphOraculoPlan {
+  objective: string;
+  deliverables: string[];
+  responsible: string;
+  deadline: string;
+  successMetric: string;
+  residualRisk: string;
+}
+
+export interface AphOraculoScenario {
+  id: string;
+  title: string;
+  question: string;
+  diagnosis: string;
+  impact: string;
+  evidences: string[];
+  risk: string;
+  recommendations: string[];
+  plan: AphOraculoPlan;
+  nextSteps: string[];
+  severity: AphSeverity;
+}
+
+export interface AphCameraFeed {
+  id: string;
+  title: string;
+  unit: string;
+  thumbnail: string;
+  status: 'ok' | 'alerta' | 'offline';
+  latency: string;
+  updatedAt: string;
+  description?: string;
+}
+
+export interface AphAmbulanceTelemetry {
+  speed: number;
+  rpm: number;
+  fuel: number;
+  temperature: number;
+  odometer: number;
+  lastMaintenanceKm: number;
+  crew: string[];
+  incidentCount: number;
+}
+
+export interface AphAmbulance {
+  id: string;
+  name: string;
+  type: 'UTI' | 'USB' | 'Resgate' | 'Suporte';
+  status: 'livre' | 'deslocamento' | 'em_atendimento' | 'indisponivel';
+  coordinates: [number, number];
+  address: string;
+  destination?: string;
+  eta?: string;
+  lastUpdate: string;
+  telemetry: AphAmbulanceTelemetry;
+}
+
+export interface AphMapLayer {
+  id: string;
+  type: 'heatmap' | 'geofence' | 'event';
+  color: string;
+  description: string;
+}
+
+export interface AphMapConfig {
+  accessToken?: string;
+  center: [number, number];
+  zoom: number;
+  layers: AphMapLayer[];
+}

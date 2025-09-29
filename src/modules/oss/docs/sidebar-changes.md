@@ -115,7 +115,7 @@ Adicionar APÓS:
 - Inserir no `AccessDropdown` com ícone `Ambulance`, descrição e redirecionamento para `/aph-dashboard`
 - Adicionar `aph` ao `roleLabelMap` e às traduções (`navbar.roles.aph`, `accessDropdown.options.aph`, `sidebar.sections.aph`)
 - Estrutura do menu APH:
-  - `Dashboard Tempo Real`: `/aph-dashboard`, `/aph-insights-ia`, `/aph-oraculo`
+  - `Dashboard Tempo Real`: `/aph-dashboard`, `/aph-insights-ia`, `/aph-oraculo`, `/aph-catalogo`
   - `Despacho & Regulação`: `/aph-despacho-regulacao`, `/aph-heatmap-cobertura`, `/aph-playbooks-operacionais`
   - `Frota & Telemetria`: `/aph-frota-telemetria`, `/aph-manutencao-preditiva`, `/aph-monitoramento-cameras`
   - `Clínica & Qualidade`: `/aph-clinica-qualidade`, `/aph-protocolos`, `/aph-educacao-continuada`
