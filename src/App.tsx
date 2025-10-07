@@ -482,6 +482,9 @@ const App = () => (
                       />
                       <Route path="/ai-insights" element={<AIInsightsPage />} />
                       <Route path="/oraculo-ia" element={<AIOraclePage />} />
+                      <Route path="/oraculo-financeiro" element={<OraculoFinanceiroPage />} />
+                      <Route path="/rededordiretor-dashboard" element={<RedeDOrDiretorDashboard />} />
+                      <Route path="/rededorfinanceiro-dashboard" element={<RedeDOrFinanceiroDashboard />} />
                       <Route
                         path="/noticias-saude-piracicaba"
                         element={<PiracicabaHealthNews />}
