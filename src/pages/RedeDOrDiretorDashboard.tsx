@@ -253,18 +253,18 @@ const RedeDOrDiretorDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div className="p-4 bg-purple-50 dark:bg-purple-950 rounded-lg text-center">
               <Award className="h-8 w-8 mx-auto mb-2 text-purple-600" />
-              <div className="font-semibold">{qualidade.acreditacaoONA}</div>
-              <div className="text-sm text-muted-foreground">Acreditação ONA</div>
+              <div className="font-semibold text-purple-900 dark:text-purple-100">{qualidade.acreditacaoONA}</div>
+              <div className="text-sm text-purple-700 dark:text-purple-300">Acreditação ONA</div>
             </div>
             <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg text-center">
               <CheckCircle className="h-8 w-8 mx-auto mb-2 text-blue-600" />
-              <div className="font-semibold">{qualidade.certificacaoJCI}</div>
-              <div className="text-sm text-muted-foreground">Certificação JCI</div>
+              <div className="font-semibold text-blue-900 dark:text-blue-100">{qualidade.certificacaoJCI}</div>
+              <div className="text-sm text-blue-700 dark:text-blue-300">Certificação JCI</div>
             </div>
             <div className="p-4 bg-green-50 dark:bg-green-950 rounded-lg text-center">
               <Target className="h-8 w-8 mx-auto mb-2 text-green-600" />
-              <div className="text-2xl font-bold">{qualidade.conformidadeProtocolos}%</div>
-              <div className="text-sm text-muted-foreground">Conformidade Protocolos</div>
+              <div className="text-2xl font-bold text-green-900 dark:text-green-100">{qualidade.conformidadeProtocolos}%</div>
+              <div className="text-sm text-green-700 dark:text-green-300">Conformidade Protocolos</div>
             </div>
           </div>
 
@@ -296,36 +296,36 @@ const RedeDOrDiretorDashboard = () => {
       {/* Indicadores OPME */}
       <Card className="border-orange-600">
         <CardHeader className="bg-orange-50 dark:bg-orange-950">
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-orange-900 dark:text-orange-100">
             <AlertTriangle className="h-5 w-5 text-orange-600" />
             Indicadores OPME - Atenção Necessária
           </CardTitle>
-          <CardDescription>Gestão de Órteses, Próteses e Materiais Especiais</CardDescription>
+          <CardDescription className="text-orange-700 dark:text-orange-300">Gestão de Órteses, Próteses e Materiais Especiais</CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-4 bg-red-50 dark:bg-red-950 rounded-lg">
-              <div className="text-sm text-muted-foreground">Taxa Glosa OPME</div>
+              <div className="text-sm text-red-700 dark:text-red-300">Taxa Glosa OPME</div>
               <div className="text-2xl font-bold text-red-600">{opme.taxaGlosa}%</div>
-              <div className="text-xs mt-1">Meta: &lt;{metas.opme.taxaGlosa}%</div>
+              <div className="text-xs mt-1 text-red-700 dark:text-red-300">Meta: &lt;{metas.opme.taxaGlosa}%</div>
               <Badge className="mt-2 bg-red-600">🔴 Crítico</Badge>
             </div>
             <div className="p-4 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
-              <div className="text-sm text-muted-foreground">Compliance TISS</div>
-              <div className="text-2xl font-bold text-yellow-600">{opme.complianceTISS}%</div>
-              <div className="text-xs mt-1">Meta: {metas.opme.complianceTISS}%</div>
+              <div className="text-sm text-yellow-800 dark:text-yellow-200">Compliance TISS</div>
+              <div className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">{opme.complianceTISS}%</div>
+              <div className="text-xs mt-1 text-yellow-800 dark:text-yellow-200">Meta: {metas.opme.complianceTISS}%</div>
               <Badge className="mt-2 bg-yellow-600">⚠️ Atenção</Badge>
             </div>
             <div className="p-4 bg-orange-50 dark:bg-orange-950 rounded-lg">
-              <div className="text-sm text-muted-foreground">Rastreabilidade UDI</div>
-              <div className="text-2xl font-bold text-orange-600">{opme.rastreabilidadeUDI}%</div>
-              <div className="text-xs mt-1">Meta: {metas.opme.rastreabilidadeUDI}%</div>
+              <div className="text-sm text-orange-800 dark:text-orange-200">Rastreabilidade UDI</div>
+              <div className="text-2xl font-bold text-orange-700 dark:text-orange-300">{opme.rastreabilidadeUDI}%</div>
+              <div className="text-xs mt-1 text-orange-800 dark:text-orange-200">Meta: {metas.opme.rastreabilidadeUDI}%</div>
               <Badge className="mt-2 bg-orange-600">🔴 Crítico</Badge>
             </div>
             <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-              <div className="text-sm text-muted-foreground">Tempo Autorização</div>
-              <div className="text-2xl font-bold text-blue-600">{opme.tempoMedioAutorizacao}d</div>
-              <div className="text-xs mt-1">Meta: {metas.opme.tempoMedioAutorizacao}d</div>
+              <div className="text-sm text-blue-800 dark:text-blue-200">Tempo Autorização</div>
+              <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{opme.tempoMedioAutorizacao}d</div>
+              <div className="text-xs mt-1 text-blue-800 dark:text-blue-200">Meta: {metas.opme.tempoMedioAutorizacao}d</div>
               <Badge className="mt-2 bg-blue-600">⚠️ Atenção</Badge>
             </div>
           </div>
