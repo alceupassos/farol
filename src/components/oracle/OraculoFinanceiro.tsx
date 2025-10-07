@@ -237,7 +237,7 @@ Como posso ajudá-lo hoje?`,
             </div>
             <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
               <Sparkles className="h-3 w-3" />
-              Powered by OpenAI GPT-4
+              Powered by OpenAI GPT-5, CLAUDE 4.5 e GROK 5
             </div>
           </div>
         </CardContent>
