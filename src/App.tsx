@@ -127,6 +127,29 @@ import LaboratoriosAdministracaoPage from "./pages/LaboratoriosAdministracaoPage
 import LaboratoriosAnalyticsPage from "./pages/LaboratoriosAnalyticsPage";
 import LaboratorioIntegrationDetailPage from "./pages/LaboratorioIntegrationDetailPage";
 import TestPage from "./pages/TestPage";
+import RedeDOrDiretorDashboard from "./pages/RedeDOrDiretorDashboard";
+import RedeDOrFinanceiroDashboard from "./pages/RedeDOrFinanceiroDashboard";
+import OraculoFinanceiroPage from "./pages/OraculoFinanceiroPage";
+
+// Patient Wallet Pages - MedChain Integration
+import {
+  PatientDashboard,
+  PatientRecords,
+  PatientLabExams,
+  PatientMedications,
+  PatientAppointments,
+  PatientMetrics,
+  PatientAccess,
+  PatientEmergency,
+  PatientGeneticData,
+  PatientQualityOfLife,
+  PatientProfile,
+  PatientSettings,
+  PatientTechnicalDetails,
+  PatientManageAccess,
+  PatientQrAnaAtivo
+} from "./pages/patient-wallet";
+import { OPMEDashboard, OPMEOracleInsights, OPMEEvolucaoGlosas, OPMEPlanoReducaoPage, OPMEPlaceholder } from "./pages/OPME";
 import {
   AphAntiglosasPage,
   AphClinicaQualidadePage,
@@ -229,6 +252,14 @@ const App = () => (
                         element={<DashboardRedirect />}
                       />
                       <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/rededordiretor-dashboard" element={<RedeDOrDiretorDashboard />} />
+                      <Route path="/rededorfinanceiro-dashboard" element={<RedeDOrFinanceiroDashboard />} />
+                      <Route path="/oraculo-financeiro" element={<OraculoFinanceiroPage />} />
+                      <Route path="/opme-dashboard" element={<OPMEDashboard />} />
+                      <Route path="/opme-plano-reducao" element={<OPMEPlanoReducaoPage />} />
+                      <Route path="/opme-evolucao-glosas" element={<OPMEEvolucaoGlosas />} />
+                      <Route path="/opme-oracle" element={<OPMEOracleInsights />} />
+                      <Route path="/opme-convenios" element={<OPMEPlaceholder title="Procedimentos por Convênio" description="Análise detalhada de procedimentos OPME" />} />
                       <Route path="/aph-dashboard" element={<AphDashboardPage />} />
                       <Route path="/aph-mapa-ambulancias" element={<AphMapaAmbulanciasPage />} />
                       <Route path="/aph-insights-ia" element={<AphInsightsIAPage />} />
@@ -359,6 +390,24 @@ const App = () => (
                         path="/qr-ana-ativo"
                         element={<QrAnaAtivoPage />}
                       />
+
+                      {/* Patient Wallet Routes - MedChain Integration */}
+                      <Route path="/patient/dashboard" element={<PatientDashboard />} />
+                      <Route path="/patient/records" element={<PatientRecords />} />
+                      <Route path="/patient/lab-exams" element={<PatientLabExams />} />
+                      <Route path="/patient/medications" element={<PatientMedications />} />
+                      <Route path="/patient/appointments" element={<PatientAppointments />} />
+                      <Route path="/patient/metrics" element={<PatientMetrics />} />
+                      <Route path="/patient/access" element={<PatientAccess />} />
+                      <Route path="/patient/emergency" element={<PatientEmergency />} />
+                      <Route path="/patient/genetic-data" element={<PatientGeneticData />} />
+                      <Route path="/patient/quality-of-life" element={<PatientQualityOfLife />} />
+                      <Route path="/patient/profile" element={<PatientProfile />} />
+                      <Route path="/patient/settings" element={<PatientSettings />} />
+                      <Route path="/patient/technical-details" element={<PatientTechnicalDetails />} />
+                      <Route path="/patient/manage-access" element={<PatientManageAccess />} />
+                      <Route path="/patient/qr-ana-ativo" element={<PatientQrAnaAtivo />} />
+
                       <Route
                         path="/intelligent-reading"
                         element={<IntelligentReading />}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText, Ambulance } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { SimpleTOTP } from '@/utils/simpleTOTP';
+import { totpCookie } from '@/utils/totpCookie';
 import { useTranslation } from 'react-i18next';
 
 const AccessDropdown = () => {
@@ -30,6 +31,19 @@ const AccessDropdown = () => {
   const [totpCode, setTotpCode] = useState('');
   const [totpError, setTotpError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isTotpAuthenticated, setIsTotpAuthenticated] = useState(false);
+
+  // Verificar cookie TOTP ao montar componente
+  useEffect(() => {
+    const isValid = totpCookie.isValid();
+    setIsTotpAuthenticated(isValid);
+    
+    if (isValid) {
+      console.log('✅ TOTP Cookie válido encontrado - autenticação ativa');
+    } else {
+      console.log('❌ TOTP Cookie não encontrado ou expirado');
+    }
+  }, []);
 
   const accessOptions = useMemo(
     () => [
@@ -86,8 +100,23 @@ const AccessDropdown = () => {
     [t]
   );
 
-  const handleAccessSelect = (role: string) => {
+  const handleAccessSelect = async (role: string) => {
     console.log('AccessDropdown: Iniciando seleção de acesso para papel:', role);
+    
+    // Verificar se já tem cookie TOTP válido
+    if (isTotpAuthenticated && totpCookie.isValid()) {
+      console.log('✅ TOTP já autenticado via cookie - pulando verificação');
+      
+      // Atualizar papel e redirecionar diretamente
+      await switchGuestRole(role);
+      
+      setTimeout(() => {
+        redirectAfterRole(role);
+      }, 150);
+      
+      return;
+    }
+    
     console.log('AccessDropdown: iniciando verificação TOTP para papel:', role);
     
     // Forçar o fechamento do menu dropdown
@@ -147,8 +176,8 @@ const AccessDropdown = () => {
       console.log('AccessDropdown: Redirecting to medical profile');
       navigate('/profile');
     } else if (role === 'paciente') {
-      console.log('AccessDropdown: Redirecting to patient profile');
-      navigate('/profile');
+      console.log('AccessDropdown: Redirecting to patient wallet dashboard');
+      navigate('/patient/dashboard');
     } else {
       console.log('AccessDropdown: Redirecting to default dashboard');
       navigate('/dashboard');
@@ -181,6 +210,11 @@ const AccessDropdown = () => {
 
       if (isValid) {
         console.log('AccessDropdown: TOTP verification succeeded for role:', selectedRole);
+        
+        // Definir cookie TOTP válido por 24h
+        totpCookie.set();
+        setIsTotpAuthenticated(true);
+        console.log('🍪 Cookie TOTP definido - válido por 24 horas');
         
         // Atualizar o papel antes do redirecionamento
         await switchGuestRole(selectedRole);

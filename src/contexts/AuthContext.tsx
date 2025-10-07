@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { SimpleTOTP } from '@/utils/simpleTOTP';
+import { totpCookie } from '@/utils/totpCookie';
 
 interface AuthContextType {
   user: User | null;
@@ -252,6 +253,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem(TOTP_FLAG_KEY);
       localStorage.removeItem('demo_user_role');
       localStorage.removeItem('profileAccessEnabled');
+      
+      // Limpar cookie TOTP
+      totpCookie.clear();
+      console.log('🔓 Logout realizado - Cookie TOTP removido');
       
       // Force redirect to home page to trigger TOTP login
       window.location.href = '/';

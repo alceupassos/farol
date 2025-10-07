@@ -168,11 +168,24 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       ],
       hospital: [
         {
-          title: 'Dashboard',
+          title: 'Dashboard Rede D\'Or Barueri',
           items: [
+            { to: '/rededordiretor-dashboard', icon: <Building className="h-5 w-5 mr-3" />, label: 'Dashboard Diretor Geral' },
+            { to: '/rededorfinanceiro-dashboard', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Dashboard Financeiro Completo' },
+            { to: '/oraculo-financeiro', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Oráculo Financeiro IA' },
             { to: '/dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: 'Visão Geral Hospital' },
             { to: '/hospital-dashboard-detalhado', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Dashboard Hospitalar' },
             { to: '/sistema-his-hmis', icon: <Database className="h-5 w-5 mr-3" />, label: 'Sistema HIS/HMIS' },
+          ],
+        },
+        {
+          title: 'Gestão OPME',
+          items: [
+            { to: '/opme-dashboard', icon: <Target className="h-5 w-5 mr-3" />, label: 'Painel Geral OPME' },
+            { to: '/opme-plano-reducao', icon: <Zap className="h-5 w-5 mr-3" />, label: 'Plano Redução de Glosa' },
+            { to: '/opme-evolucao-glosas', icon: <TrendingUp className="h-5 w-5 mr-3" />, label: 'Evolução de Glosas' },
+            { to: '/opme-oracle', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Oráculo de Insights' },
+            { to: '/opme-convenios', icon: <Handshake className="h-5 w-5 mr-3" />, label: 'Procedimentos por Convênio' },
           ],
         },
         {
@@ -349,14 +362,48 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       ],
       paciente: [
         {
-          title: 'Minha Saúde',
+          title: 'Dashboard',
           items: [
-            { to: '/profile', icon: <User className="h-5 w-5 mr-3" />, label: 'Meu Perfil' },
-            { to: '/records', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Prontuários' },
-            { to: '/medications', icon: <Pill className="h-5 w-5 mr-3" />, label: 'Medicamentos' },
-            { to: '/appointments', icon: <Calendar className="h-5 w-5 mr-3" />, label: 'Minhas Consultas' },
-            { to: '/metrics', icon: <BarChart3 className="h-5 w-5 mr-3" />, label: 'Métricas de Saúde' },
-            { to: '/labexams', icon: <Microscope className="h-5 w-5 mr-3" />, label: 'Meus Exames' },
+            { to: '/patient/dashboard', icon: <LayoutDashboard className="h-5 w-5 mr-3" />, label: 'Visão Geral' },
+            { to: '/patient/profile', icon: <User className="h-5 w-5 mr-3" />, label: 'Meu Perfil' },
+          ],
+        },
+        {
+          title: 'Registros Médicos',
+          items: [
+            { to: '/patient/records', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Prontuários' },
+            { to: '/patient/lab-exams', icon: <Microscope className="h-5 w-5 mr-3" />, label: 'Exames Laboratoriais' },
+            { to: '/patient/genetic-data', icon: <Database className="h-5 w-5 mr-3" />, label: 'Dados Genéticos' },
+          ],
+        },
+        {
+          title: 'Tratamento',
+          items: [
+            { to: '/patient/medications', icon: <Pill className="h-5 w-5 mr-3" />, label: 'Medicamentos' },
+            { to: '/patient/appointments', icon: <Calendar className="h-5 w-5 mr-3" />, label: 'Consultas' },
+          ],
+        },
+        {
+          title: 'Monitoramento',
+          items: [
+            { to: '/patient/metrics', icon: <Activity className="h-5 w-5 mr-3" />, label: 'Métricas de Saúde' },
+            { to: '/patient/quality-of-life', icon: <Heart className="h-5 w-5 mr-3" />, label: 'Qualidade de Vida' },
+          ],
+        },
+        {
+          title: 'Segurança & Acesso',
+          items: [
+            { to: '/patient/access', icon: <ShieldCheck className="h-5 w-5 mr-3" />, label: 'Controle de Acesso' },
+            { to: '/patient/manage-access', icon: <KeyRound className="h-5 w-5 mr-3" />, label: 'Gerenciar Permissões' },
+            { to: '/patient/emergency', icon: <AlertTriangle className="h-5 w-5 mr-3" />, label: 'QR de Emergência' },
+            { to: '/patient/qr-ana-ativo', icon: <ShieldAlert className="h-5 w-5 mr-3" />, label: 'QR ANA Ativo' },
+          ],
+        },
+        {
+          title: 'Configurações',
+          items: [
+            { to: '/patient/settings', icon: <Settings className="h-5 w-5 mr-3" />, label: 'Configurações' },
+            { to: '/patient/technical-details', icon: <Info className="h-5 w-5 mr-3" />, label: 'Detalhes Blockchain' },
           ],
         },
       ],
