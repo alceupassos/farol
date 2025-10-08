@@ -130,6 +130,9 @@ import TestPage from "./pages/TestPage";
 import RedeDOrDiretorDashboard from "./pages/RedeDOrDiretorDashboard";
 import RedeDOrFinanceiroDashboard from "./pages/RedeDOrFinanceiroDashboard";
 import OraculoFinanceiroPage from "./pages/OraculoFinanceiroPage";
+import TranscricaoAtendimentoPage from "./pages/TranscricaoAtendimentoPage";
+import AuditoriaProntuarioPage from "./pages/AuditoriaProntuarioPage";
+import GlosasConformidadePage from "./pages/GlosasConformidadePage";
 
 // Patient Wallet Pages - MedChain Integration
 import {
@@ -485,6 +488,9 @@ const App = () => (
                       <Route path="/oraculo-financeiro" element={<OraculoFinanceiroPage />} />
                       <Route path="/rededordiretor-dashboard" element={<RedeDOrDiretorDashboard />} />
                       <Route path="/rededorfinanceiro-dashboard" element={<RedeDOrFinanceiroDashboard />} />
+                      <Route path="/transcricao-atendimento" element={<TranscricaoAtendimentoPage />} />
+                      <Route path="/auditoria-prontuario" element={<AuditoriaProntuarioPage />} />
+                      <Route path="/glosas-conformidade" element={<GlosasConformidadePage />} />
                       <Route
                         path="/noticias-saude-piracicaba"
                         element={<PiracicabaHealthNews />}

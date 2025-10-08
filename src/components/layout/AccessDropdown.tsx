@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText, Ambulance } from 'lucide-react';
+import { ChevronDown, User, UserCheck, Building2, Hospital, Loader2, TestTube, FileText, Ambulance, Stethoscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -60,6 +60,13 @@ const AccessDropdown = () => {
         icon: Hospital,
         description: t('accessDropdown.options.hospital.description'),
         color: 'text-blue-500'
+      },
+      {
+        id: 'profissionais',
+        label: 'Profissionais...',
+        icon: Stethoscope,
+        description: 'Médicos, Enfermeiros e Equipe Clínica',
+        color: 'text-teal-500'
       },
       {
         id: 'aph',
@@ -162,6 +169,9 @@ const AccessDropdown = () => {
     } else if (role === 'hospital') {
       console.log('AccessDropdown: Redirecting to hospital dashboard');
       navigate('/dashboard');
+    } else if (role === 'profissionais') {
+      console.log('AccessDropdown: Redirecting to transcricao atendimento');
+      navigate('/transcricao-atendimento');
     } else if (role === 'aph') {
       console.log('AccessDropdown: Redirecting to APH dashboard');
       navigate('/aph-dashboard');
