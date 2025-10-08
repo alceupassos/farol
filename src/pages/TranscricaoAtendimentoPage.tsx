@@ -3,7 +3,7 @@
  * GRAVAR & Transcrever - Auxílio ao Médico
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
 
 type TipoAtendimento = 
   | 'enfermaria' 
@@ -144,6 +145,9 @@ const TranscricaoAtendimentoPage = () => {
   const [transcrito, setTranscrito] = useState(false);
   const [checklist, setChecklist] = useState<ChecklistItem[]>(checklistsPorTipo['enfermaria']);
   const [tempoGravacao, setTempoGravacao] = useState(0);
+  const [textoAnamnese, setTextoAnamnese] = useState('');
+  const [transcricaoRealTime, setTranscricaoRealTime] = useState('');
+  const [tipoDetectadoAuto, setTipoDetectadoAuto] = useState(false);
 
   const handleTipoChange = (value: string) => {
     const tipo = value as TipoAtendimento;
@@ -167,6 +171,46 @@ const TranscricaoAtendimentoPage = () => {
     }
   };
 
+  // Detectar tipo de atendimento automaticamente baseado no texto
+  useEffect(() => {
+    if (textoAnamnese.length > 50 && !tipoDetectadoAuto) {
+      const texto = textoAnamnese.toLowerCase();
+      let tipoDetectado: TipoAtendimento | null = null;
+
+      if (texto.includes('cirurgia') || texto.includes('opme') || texto.includes('procedimento cirúrgico')) {
+        tipoDetectado = 'centro-cirurgico';
+      } else if (texto.includes('uti') || texto.includes('terapia intensiva') || texto.includes('ventilação')) {
+        tipoDetectado = 'uti';
+      } else if (texto.includes('exame') || texto.includes('raio-x') || texto.includes('tomografia') || texto.includes('ressonância')) {
+        tipoDetectado = 'exames';
+      } else if (texto.includes('emergência') || texto.includes('pronto socorro') || texto.includes('ps')) {
+        tipoDetectado = 'pronto-atendimento';
+      } else if (texto.includes('ambulatório') || texto.includes('consulta')) {
+        tipoDetectado = 'ambulatorio';
+      } else if (texto.includes('telemedicina') || texto.includes('teleconsulta')) {
+        tipoDetectado = 'telemedicina';
+      } else if (texto.includes('enfermaria') || texto.includes('internação')) {
+        tipoDetectado = 'enfermaria';
+      }
+
+      if (tipoDetectado && tipoDetectado !== tipoAtendimento) {
+        setTipoAtendimento(tipoDetectado);
+        setChecklist(checklistsPorTipo[tipoDetectado]);
+        setTipoDetectadoAuto(true);
+      }
+    }
+  }, [textoAnamnese, tipoDetectadoAuto, tipoAtendimento]);
+
+  // Simular transcrição em tempo real
+  useEffect(() => {
+    if (gravando && textoAnamnese) {
+      const timer = setTimeout(() => {
+        setTranscricaoRealTime(textoAnamnese);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [textoAnamnese, gravando]);
+
   const handleTranscrever = () => {
     // Simular transcrição e preenchimento automático
     const checklistAtualizado = checklist.map((item, index) => ({
@@ -175,6 +219,7 @@ const TranscricaoAtendimentoPage = () => {
       preenchidoPorIA: index < checklist.length * 0.8,
     }));
     setChecklist(checklistAtualizado);
+    setTranscricaoRealTime(textoAnamnese);
     setTranscrito(true);
   };
 
@@ -230,6 +275,95 @@ const TranscricaoAtendimentoPage = () => {
               })}
             </SelectContent>
           </Select>
+          {tipoDetectadoAuto && (
+            <Badge className="mt-3 bg-green-600">
+              <CheckCircle className="h-3 w-3 mr-1" />
+              Tipo detectado automaticamente pela anamnese
+            </Badge>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Área de Anamnese e Transcrição em Tempo Real */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Anamnese e Transcrição</CardTitle>
+          <CardDescription>
+            Escreva a anamnese à esquerda e veja a transcrição estruturada em tempo real à direita
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Área de Escrita */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Escrever Anamnese</label>
+              <Textarea
+                placeholder="Digite ou cole a anamnese do paciente aqui...\n\nExemplo:\nPaciente deu entrada no pronto socorro com dor torácica há 2 horas...\nHistória de hipertensão e diabetes...\nSinais vitais: PA 160/100, FC 95, Tax 36.8°C..."
+                value={textoAnamnese}
+                onChange={(e) => setTextoAnamnese(e.target.value)}
+                className="min-h-[400px] font-mono text-sm"
+              />
+              <div className="text-xs text-muted-foreground">
+                {textoAnamnese.length} caracteres
+              </div>
+            </div>
+
+            {/* Transcrição em Tempo Real */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium flex items-center gap-2">
+                Transcrição Estruturada (Tempo Real)
+                {transcricaoRealTime && (
+                  <Badge className="bg-blue-600">
+                    <Activity className="h-3 w-3 mr-1 animate-pulse" />
+                    Processando IA
+                  </Badge>
+                )}
+              </label>
+              <div className="min-h-[400px] p-4 border rounded-md bg-muted/30 font-mono text-sm overflow-y-auto">
+                {transcricaoRealTime ? (
+                  <div className="space-y-3">
+                    <div>
+                      <div className="font-semibold text-blue-600">📋 SOAP Estruturado:</div>
+                      <div className="mt-2 space-y-2">
+                        <div>
+                          <span className="font-semibold">S (Subjetivo):</span>
+                          <p className="text-muted-foreground ml-4">{transcricaoRealTime.substring(0, 100)}...</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold">O (Objetivo):</span>
+                          <p className="text-muted-foreground ml-4">Sinais vitais extraídos automaticamente...</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold">A (Avaliação):</span>
+                          <p className="text-muted-foreground ml-4">Hipóteses diagnósticas sendo processadas...</p>
+                        </div>
+                        <div>
+                          <span className="font-semibold">P (Plano):</span>
+                          <p className="text-muted-foreground ml-4">Conduta terapêutica em análise...</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-3 border-t">
+                      <div className="font-semibold text-green-600">✅ Campos Preenchidos Automaticamente:</div>
+                      <ul className="mt-2 space-y-1 text-xs">
+                        <li>• Identificação do Paciente</li>
+                        <li>• Motivo da Consulta</li>
+                        <li>• História Pregressa</li>
+                        <li>• Sinais Vitais</li>
+                        <li>• Hipóteses Diagnósticas (CID-10)</li>
+                      </ul>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center text-muted-foreground py-20">
+                    <FileText className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p>A transcrição estruturada aparecerá aqui em tempo real</p>
+                    <p className="text-xs mt-2">Comece a escrever na área à esquerda</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
