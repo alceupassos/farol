@@ -62,13 +62,6 @@ const AccessDropdown = () => {
         color: 'text-blue-500'
       },
       {
-        id: 'profissionais',
-        label: 'Profissionais de Saúde',
-        icon: Stethoscope,
-        description: '72% IA-preenchido | -36% glosas | 85% D-0',
-        color: 'text-teal-500'
-      },
-      {
         id: 'aph',
         label: t('accessDropdown.options.aph.label'),
         icon: Ambulance,
@@ -91,10 +84,10 @@ const AccessDropdown = () => {
       },
       {
         id: 'medico',
-        label: t('accessDropdown.options.doctor.label'),
-        icon: UserCheck,
-        description: t('accessDropdown.options.doctor.description'),
-        color: 'text-secondary'
+        label: 'Profissional de Saúde',
+        icon: Stethoscope,
+        description: '72% IA-preenchido | -36% glosas | 85% D-0',
+        color: 'text-teal-500'
       },
       {
         id: 'paciente',
@@ -169,9 +162,6 @@ const AccessDropdown = () => {
     } else if (role === 'hospital') {
       console.log('AccessDropdown: Redirecting to hospital dashboard');
       navigate('/dashboard');
-    } else if (role === 'profissionais') {
-      console.log('AccessDropdown: Redirecting to transcricao atendimento');
-      navigate('/transcricao-atendimento');
     } else if (role === 'aph') {
       console.log('AccessDropdown: Redirecting to APH dashboard');
       navigate('/aph-dashboard');
@@ -183,8 +173,8 @@ const AccessDropdown = () => {
       console.log('AccessDropdown: Redirecting to laboratory hub');
       navigate('/laboratorios/visao-geral');
     } else if (role === 'medico') {
-      console.log('AccessDropdown: Redirecting to medical profile');
-      navigate('/profile');
+      console.log('AccessDropdown: Redirecting to transcricao atendimento');
+      navigate('/transcricao-atendimento');
     } else if (role === 'paciente') {
       console.log('AccessDropdown: Redirecting to patient wallet dashboard');
       navigate('/patient/dashboard');
