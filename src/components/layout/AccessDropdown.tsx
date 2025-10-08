@@ -58,14 +58,14 @@ const AccessDropdown = () => {
         id: 'hospital',
         label: t('accessDropdown.options.hospital.label'),
         icon: Hospital,
-        description: t('accessDropdown.options.hospital.description'),
+        description: 'Transcrição IA: -35% glosas | +R$ 1,2M/mês | +14,9M/ano',
         color: 'text-blue-500'
       },
       {
         id: 'profissionais',
-        label: 'Profissionais...',
+        label: 'Profissionais de Saúde',
         icon: Stethoscope,
-        description: 'Médicos, Enfermeiros e Equipe Clínica',
+        description: '72% IA-preenchido | -36% glosas | 85% D-0',
         color: 'text-teal-500'
       },
       {
@@ -277,8 +277,8 @@ const AccessDropdown = () => {
                     <IconComponent className="h-5 w-5" />
                   </div>
                   <div className="flex-1">
-                    <div className="font-medium text-sm">{option.label}</div>
-                    <div className="text-xs text-muted-foreground">{option.description}</div>
+                    <div className="font-medium text-sm text-foreground">{option.label}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">{option.description}</div>
                   </div>
                 </div>
               </DropdownMenuItem>
