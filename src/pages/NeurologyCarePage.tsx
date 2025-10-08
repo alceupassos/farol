@@ -23,7 +23,7 @@ const NeurologyCarePage = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-900 dark:from-indigo-950 dark:to-purple-950 p-6">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-indigo-800 dark:text-indigo-200 mb-2 flex items-center">
             <Brain className="h-10 w-10 mr-4 text-indigo-600" />
@@ -98,7 +98,7 @@ const NeurologyCarePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-indigo-800 dark:text-indigo-200">Evolução Cognitiva</CardTitle>
+              <CardTitle className="text-white text-indigo-800 dark:text-indigo-200">Evolução Cognitiva</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -118,7 +118,7 @@ const NeurologyCarePage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-indigo-800 dark:text-indigo-200">Perfil Neurológico</CardTitle>
+              <CardTitle className="text-white text-indigo-800 dark:text-indigo-200">Perfil Neurológico</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -136,7 +136,7 @@ const NeurologyCarePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-indigo-800">Avaliações Realizadas</CardTitle>
+              <CardTitle className="text-white text-indigo-800">Avaliações Realizadas</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -162,7 +162,7 @@ const NeurologyCarePage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-indigo-800">Fatores de Risco</CardTitle>
+              <CardTitle className="text-white text-indigo-800">Fatores de Risco</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -188,7 +188,7 @@ const NeurologyCarePage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-indigo-800">Recomendações</CardTitle>
+              <CardTitle className="text-white text-indigo-800">Recomendações</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">

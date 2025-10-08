@@ -133,11 +133,11 @@ export const PlanoReducaoGlosa = () => {
       {/* Header */}
       <Card className="border-orange-600">
         <CardHeader className="bg-gradient-to-r from-orange-900 to-red-900 dark:from-orange-950 dark:to-red-950">
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="text-white flex items-center gap-2 text-white">
             <Zap className="h-6 w-6 text-orange-200" />
             Plano de Redução de Glosa - Ação Rápida por Convênio
           </CardTitle>
-          <CardDescription className="text-orange-100">
+          <CardDescription className="text-gray-200 dark:text-gray-300 text-orange-100">
             Clique no convênio para ver o plano de ação detalhado e objetivo
           </CardDescription>
         </CardHeader>
@@ -213,7 +213,7 @@ export const PlanoReducaoGlosa = () => {
           <Card className="border-orange-600 shadow-xl">
             <CardHeader className="bg-gradient-to-r from-orange-900 to-red-900 dark:from-orange-950 dark:to-red-950">
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2 text-white">
+                <CardTitle className="text-white flex items-center gap-2 text-white">
                   <Target className="h-6 w-6 text-orange-200" />
                   {planosAcao[convenioSelecionado].titulo}
                 </CardTitle>
@@ -221,7 +221,7 @@ export const PlanoReducaoGlosa = () => {
                   {planosAcao[convenioSelecionado].prazo}
                 </Badge>
               </div>
-              <CardDescription className="text-orange-100 text-base mt-2">
+              <CardDescription className="text-gray-200 dark:text-gray-300 text-orange-100 text-base mt-2">
                 {planosAcao[convenioSelecionado].descricao}
               </CardDescription>
             </CardHeader>
@@ -301,7 +301,7 @@ export const PlanoReducaoGlosa = () => {
       {/* Resumo Total */}
       <Card className="border-green-600">
         <CardHeader className="bg-green-50 dark:bg-green-950">
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="text-white flex items-center gap-2">
             <Target className="h-5 w-5 text-green-600" />
             Potencial Total de Economia
           </CardTitle>

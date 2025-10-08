@@ -16,7 +16,7 @@ const GlucoseMonitoringPage = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950 dark:to-red-950 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-orange-900 to-red-900 dark:from-orange-950 dark:to-red-950 p-6">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-orange-800 dark:text-orange-200 mb-2 flex items-center">
             <Thermometer className="h-10 w-10 mr-4 text-orange-600" />
@@ -84,7 +84,7 @@ const GlucoseMonitoringPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-orange-800 dark:text-orange-200">Perfil Glicêmico Diário</CardTitle>
+              <CardTitle className="text-white text-orange-800 dark:text-orange-200">Perfil Glicêmico Diário</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -101,7 +101,7 @@ const GlucoseMonitoringPage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-orange-800 dark:text-orange-200">Orientações de Controle</CardTitle>
+              <CardTitle className="text-white text-orange-800 dark:text-orange-200">Orientações de Controle</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">

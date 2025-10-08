@@ -121,14 +121,14 @@ Como posso ajudá-lo hoje?`,
               <Brain className="h-6 w-6 text-white" />
             </div>
             <div>
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="text-white flex items-center gap-2 text-white">
                 Oráculo Financeiro
                 <Badge className="bg-purple-600">
                   <Sparkles className="h-3 w-3 mr-1" />
                   IA Powered
                 </Badge>
               </CardTitle>
-              <CardDescription className="text-purple-100">
+              <CardDescription className="text-gray-200 dark:text-gray-300 text-purple-100">
                 Assistente inteligente especializado em análise financeira hospitalar
               </CardDescription>
             </div>

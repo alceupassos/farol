@@ -23,7 +23,7 @@ const DiabetesCarePage = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-950 dark:to-orange-950 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-red-900 to-orange-900 dark:from-red-950 dark:to-orange-950 p-6">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-red-800 dark:text-red-200 mb-2 flex items-center">
             <Heart className="h-10 w-10 mr-4 text-red-600" />
@@ -100,7 +100,7 @@ const DiabetesCarePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-red-800 dark:text-red-200">Evolução da Glicemia</CardTitle>
+              <CardTitle className="text-white text-red-800 dark:text-red-200">Evolução da Glicemia</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -121,7 +121,7 @@ const DiabetesCarePage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-red-800 dark:text-red-200">Aderência aos Medicamentos</CardTitle>
+              <CardTitle className="text-white text-red-800 dark:text-red-200">Aderência aos Medicamentos</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -141,7 +141,7 @@ const DiabetesCarePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-red-800 dark:text-red-200">Medicamentos Atuais</CardTitle>
+              <CardTitle className="text-white text-red-800 dark:text-red-200">Medicamentos Atuais</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -166,7 +166,7 @@ const DiabetesCarePage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-red-800 dark:text-red-200">Orientações Nutricionais</CardTitle>
+              <CardTitle className="text-white text-red-800 dark:text-red-200">Orientações Nutricionais</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -191,7 +191,7 @@ const DiabetesCarePage = () => {
 
           <Card className="bg-white dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-red-800 dark:text-red-200">Alertas e Lembretes</CardTitle>
+              <CardTitle className="text-white text-red-800 dark:text-red-200">Alertas e Lembretes</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">

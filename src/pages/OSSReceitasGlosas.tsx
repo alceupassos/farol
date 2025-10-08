@@ -123,7 +123,7 @@ const OSSReceitasGlosas = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Faturamento Total</CardTitle>
+              <CardTitle className="text-white text-sm font-medium">Faturamento Total</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">R$ 2.28M</div>
@@ -136,7 +136,7 @@ const OSSReceitasGlosas = () => {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Taxa de Glosa</CardTitle>
+              <CardTitle className="text-white text-sm font-medium">Taxa de Glosa</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">3.2%</div>
@@ -149,7 +149,7 @@ const OSSReceitasGlosas = () => {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Recuperação</CardTitle>
+              <CardTitle className="text-white text-sm font-medium">Recuperação</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">72%</div>
@@ -161,7 +161,7 @@ const OSSReceitasGlosas = () => {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium">Em Recurso</CardTitle>
+              <CardTitle className="text-white text-sm font-medium">Em Recurso</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">R$ 34k</div>
@@ -306,7 +306,7 @@ const OSSReceitasGlosas = () => {
           <TabsContent value="simulador">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center">
+                <CardTitle className="text-white flex items-center">
                   <Calculator className="h-5 w-5 mr-2" />
                   Simulador de ROI - Recuperação de Glosas
                 </CardTitle>
@@ -353,7 +353,7 @@ const OSSReceitasGlosas = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+                    <div className="p-6 bg-gradient-to-r from-blue-900 to-purple-900 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
                       <h4 className="font-semibold mb-4">Resultado da Simulação</h4>
                       <div className="space-y-3">
                         <div className="flex justify-between">

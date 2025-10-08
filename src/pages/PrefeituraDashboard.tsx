@@ -276,7 +276,7 @@ const PrefeituraDashboard = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
           <Card className="bg-gray-900/80 backdrop-blur border-emerald-700/40 shadow-lg shadow-emerald-500/10">
             <CardHeader>
-              <CardTitle className="flex items-center justify-between text-white">
+              <CardTitle className="text-white flex items-center justify-between text-white">
                 <span>Visão integrada da rede</span>
                 <Badge variant="outline" className="border-emerald-500/40 text-emerald-200">APS + Hospital + Vigilância</Badge>
               </CardTitle>
@@ -300,7 +300,7 @@ const PrefeituraDashboard = () => {
 
           <Card className="bg-gray-900/75 backdrop-blur border-gray-700">
             <CardHeader>
-              <CardTitle className="text-white">Agenda de prioridades gestão à vista</CardTitle>
+              <CardTitle className="text-white text-white">Agenda de prioridades gestão à vista</CardTitle>
               <p className="text-sm text-gray-300">Metas pactuadas por eixo para produção assistencial, rede hospitalar e logística.</p>
             </CardHeader>
             <CardContent className="overflow-x-auto">
@@ -331,7 +331,7 @@ const PrefeituraDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="bg-gray-800/90 backdrop-blur border-gray-700">
             <CardHeader>
-              <CardTitle className="text-white">Indicadores Municipais</CardTitle>
+              <CardTitle className="text-white text-white">Indicadores Municipais</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -349,7 +349,7 @@ const PrefeituraDashboard = () => {
 
           <Card className="bg-gray-800/90 backdrop-blur border-gray-700">
             <CardHeader>
-              <CardTitle className="text-white">Orçamento por Área</CardTitle>
+              <CardTitle className="text-white text-white">Orçamento por Área</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -393,7 +393,7 @@ const PrefeituraDashboard = () => {
               return (
                 <Card key={item.id} className="border-border/50 bg-slate-900/80">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-base font-semibold text-white">
+                    <CardTitle className="text-white text-base font-semibold text-white">
                       {item.title}
                     </CardTitle>
                     <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
