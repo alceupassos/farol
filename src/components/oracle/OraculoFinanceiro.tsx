@@ -115,20 +115,20 @@ Como posso ajudá-lo hoje?`,
   return (
     <div className="h-full flex flex-col">
       <Card className="flex-1 flex flex-col border-purple-600">
-        <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950 dark:to-blue-950">
+        <CardHeader className="bg-gradient-to-r from-purple-900 to-blue-900 dark:from-purple-950 dark:to-blue-950">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-purple-600 rounded-full">
               <Brain className="h-6 w-6 text-white" />
             </div>
             <div>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 Oráculo Financeiro
                 <Badge className="bg-purple-600">
                   <Sparkles className="h-3 w-3 mr-1" />
                   IA Powered
                 </Badge>
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-purple-100">
                 Assistente inteligente especializado em análise financeira hospitalar
               </CardDescription>
             </div>
