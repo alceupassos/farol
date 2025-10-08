@@ -183,15 +183,15 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           items: [
             { to: '/transcricao-atendimento', icon: <Stethoscope className="h-5 w-5 mr-3" />, label: 'GRAVAR & Transcrever' },
             { to: '/auditoria-prontuario', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Auditoria de Prontuário' },
-            { to: '/glosas-conformidade', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Glosas & Conformidade' },
           ],
         },
         {
-          title: 'Gestão OPME',
+          title: 'Gestão de Glosas e OPME',
           items: [
-            { to: '/opme-dashboard', icon: <Target className="h-5 w-5 mr-3" />, label: 'Painel Geral OPME' },
+            { to: '/glosas-conformidade', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Glosas & Conformidade' },
             { to: '/opme-plano-reducao', icon: <Zap className="h-5 w-5 mr-3" />, label: 'Plano Redução de Glosa' },
             { to: '/opme-evolucao-glosas', icon: <TrendingUp className="h-5 w-5 mr-3" />, label: 'Evolução de Glosas' },
+            { to: '/opme-dashboard', icon: <Target className="h-5 w-5 mr-3" />, label: 'Painel Geral OPME' },
             { to: '/opme-oracle', icon: <Brain className="h-5 w-5 mr-3" />, label: 'Oráculo de Insights' },
             { to: '/opme-convenios', icon: <Handshake className="h-5 w-5 mr-3" />, label: 'Procedimentos por Convênio' },
           ],
