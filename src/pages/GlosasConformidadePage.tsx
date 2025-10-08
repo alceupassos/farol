@@ -13,13 +13,21 @@ import {
 } from 'lucide-react';
 
 const GlosasConformidadePage = () => {
-  // Dados simulados
+  // Dados simulados - Impacto da Transcrição IA
   const kpis = {
     taxaGlosaAtual: 8.3,
     taxaGlosaBaseline: 12.8,
     economiaMensal: 1245000,
     projecao12Meses: 14940000,
     reducaoPercentual: 35.2,
+    // Novos indicadores de transcrição
+    prontuariosTranscritos: 4850,
+    camposPreenchidosIA: 72.3,
+    tempoMedioPreenchimento: 3.5, // minutos
+    glosaEvitadaPorTranscricao: 892000, // R$ por mês
+    percentualGlosaEvitada: 71.6, // % das glosas evitadas pela IA
+    auditoriasComIA: 89.2, // % de auditorias com IA
+    conformidadeAumentada: 42.8, // % de aumento na conformidade
   };
 
   const porConvenio = [
@@ -96,60 +104,153 @@ const GlosasConformidadePage = () => {
         </p>
       </div>
 
-      {/* KPIs Principais */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-sm text-muted-foreground mb-2">Taxa de Glosa Atual</div>
-              <div className="text-4xl font-bold text-primary">{kpis.taxaGlosaAtual}%</div>
-              <div className="text-xs text-muted-foreground mt-2">
-                Baseline: {kpis.taxaGlosaBaseline}%
+      {/* Destaque: Impacto da Transcrição IA */}
+      <Card className="border-2 border-primary bg-gradient-to-r from-primary/5 to-blue-500/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-2xl">
+            <Brain className="h-7 w-7 text-primary" />
+            Impacto da Transcrição com IA na Redução de Glosas
+          </CardTitle>
+          <CardDescription className="text-base">
+            Eficácia comprovada do preenchimento automático de prontuários
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg border-2 border-green-500">
+              <div className="text-sm font-medium text-green-700 dark:text-green-400 mb-2">
+                Glosas Evitadas por Transcrição IA
               </div>
-              <Badge className="mt-2 bg-green-600">
-                <TrendingDown className="h-3 w-3 mr-1" />
-                -{kpis.reducaoPercentual}%
-              </Badge>
+              <div className="text-5xl font-bold text-green-600 mb-2">
+                {kpis.percentualGlosaEvitada}%
+              </div>
+              <div className="text-2xl font-semibold text-green-700 dark:text-green-400">
+                {formatCurrency(kpis.glosaEvitadaPorTranscricao)}/mês
+              </div>
+              <div className="text-xs text-muted-foreground mt-2">
+                De {formatCurrency(kpis.economiaMensal)} total economizado
+              </div>
+            </div>
+
+            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg border-2 border-blue-500">
+              <div className="text-sm font-medium text-blue-700 dark:text-blue-400 mb-2">
+                Campos Preenchidos Automaticamente
+              </div>
+              <div className="text-5xl font-bold text-blue-600 mb-2">
+                {kpis.camposPreenchidosIA}%
+              </div>
+              <div className="text-sm text-muted-foreground mt-2">
+                Em {kpis.prontuariosTranscritos.toLocaleString('pt-BR')} prontuários/mês
+              </div>
+              <Progress value={kpis.camposPreenchidosIA} className="mt-3 h-3" />
+            </div>
+
+            <div className="text-center p-4 bg-white dark:bg-gray-900 rounded-lg border-2 border-purple-500">
+              <div className="text-sm font-medium text-purple-700 dark:text-purple-400 mb-2">
+                Aumento na Conformidade
+              </div>
+              <div className="text-5xl font-bold text-purple-600 mb-2">
+                +{kpis.conformidadeAumentada}%
+              </div>
+              <div className="text-sm text-muted-foreground mt-2">
+                {kpis.auditoriasComIA}% das auditorias com IA
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Indicadores Financeiros - Um abaixo do outro */}
+      <div className="space-y-4">
+        <Card className="border-l-4 border-l-primary">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-primary/10 rounded-full">
+                  <DollarSign className="h-8 w-8 text-primary" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Taxa de Glosa Atual</div>
+                  <div className="text-4xl font-bold text-primary">{kpis.taxaGlosaAtual}%</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">Baseline: {kpis.taxaGlosaBaseline}%</div>
+                <Badge className="mt-2 bg-green-600 text-lg px-4 py-1">
+                  <TrendingDown className="h-4 w-4 mr-1" />
+                  -{kpis.reducaoPercentual}%
+                </Badge>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-l-4 border-l-green-600">
           <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-sm text-muted-foreground mb-2">Economia Mensal</div>
-              <div className="text-3xl font-bold text-green-600">
-                {formatCurrency(kpis.economiaMensal)}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-green-600/10 rounded-full">
+                  <TrendingUp className="h-8 w-8 text-green-600" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Economia Mensal</div>
+                  <div className="text-4xl font-bold text-green-600">
+                    {formatCurrency(kpis.economiaMensal)}
+                  </div>
+                </div>
               </div>
-              <div className="text-xs text-green-600 mt-2 flex items-center justify-center gap-1">
-                <TrendingUp className="h-3 w-3" />
-                vs Baseline
+              <div className="text-right">
+                <div className="text-sm text-green-600 font-medium">vs Baseline</div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  {kpis.percentualGlosaEvitada}% pela IA
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-l-4 border-l-blue-600">
           <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-sm text-muted-foreground mb-2">Projeção 12 Meses</div>
-              <div className="text-3xl font-bold text-blue-600">
-                {formatCurrency(kpis.projecao12Meses)}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-blue-600/10 rounded-full">
+                  <Calendar className="h-8 w-8 text-blue-600" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Projeção 12 Meses</div>
+                  <div className="text-4xl font-bold text-blue-600">
+                    {formatCurrency(kpis.projecao12Meses)}
+                  </div>
+                </div>
               </div>
-              <div className="text-xs text-muted-foreground mt-2">
-                Economia estimada
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">Economia estimada</div>
+                <div className="text-xs text-blue-600 font-medium mt-1">
+                  Com transcrição IA
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-l-4 border-l-orange-600">
           <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-sm text-muted-foreground mb-2">Redução vs Baseline</div>
-              <div className="text-4xl font-bold text-green-600">-{kpis.reducaoPercentual}%</div>
-              <div className="text-xs text-muted-foreground mt-2">
-                Glosas evitadas
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-orange-600/10 rounded-full">
+                  <Target className="h-8 w-8 text-orange-600" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Tempo Médio de Preenchimento</div>
+                  <div className="text-4xl font-bold text-orange-600">{kpis.tempoMedioPreenchimento} min</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">Por prontuário</div>
+                <Badge className="mt-2 bg-orange-600">
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  -78% vs manual
+                </Badge>
               </div>
             </div>
           </CardContent>
