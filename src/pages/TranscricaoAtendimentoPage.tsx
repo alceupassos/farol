@@ -11,7 +11,8 @@ import { Progress } from '@/components/ui/progress';
 import { 
   Mic, MicOff, Play, Pause, CheckCircle, AlertTriangle, 
   FileText, Clock, User, Activity, Stethoscope, Scissors,
-  TestTube, Ambulance, Heart, Video, Building2
+  TestTube, Ambulance, Heart, Video, Building2, Pill, 
+  UtensilsCrossed, Wind, UserCheck, LogOut, ArrowRightLeft
 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -20,11 +21,18 @@ import { Textarea } from '@/components/ui/textarea';
 type TipoAtendimento = 
   | 'enfermaria' 
   | 'quarto-a' 
+  | 'ajuste-quarto'
+  | 'ajuste-medicamentos'
+  | 'ajuste-dieta'
+  | 'ajuste-oxigenoterapia'
   | 'centro-cirurgico' 
   | 'exames' 
   | 'pronto-atendimento' 
   | 'uti' 
   | 'ambulatorio' 
+  | 'interconsulta'
+  | 'alta-hospitalar'
+  | 'transferencia-leito'
   | 'telemedicina' 
   | 'outros';
 
@@ -38,11 +46,18 @@ interface ChecklistItem {
 const tiposAtendimento = [
   { value: 'enfermaria', label: 'Enfermaria', icon: Activity },
   { value: 'quarto-a', label: 'Quarto Tipo A', icon: Building2 },
+  { value: 'ajuste-quarto', label: 'Ajuste de Quarto/Leito', icon: Building2 },
+  { value: 'ajuste-medicamentos', label: 'Ajuste de Medicamentos', icon: Pill },
+  { value: 'ajuste-dieta', label: 'Ajuste de Dieta', icon: UtensilsCrossed },
+  { value: 'ajuste-oxigenoterapia', label: 'Ajuste de Oxigenoterapia', icon: Wind },
   { value: 'centro-cirurgico', label: 'Centro Cirúrgico', icon: Scissors },
   { value: 'exames', label: 'Exames', icon: TestTube },
   { value: 'pronto-atendimento', label: 'Pronto Atendimento', icon: Ambulance },
   { value: 'uti', label: 'UTI', icon: Heart },
   { value: 'ambulatorio', label: 'Ambulatório', icon: Stethoscope },
+  { value: 'interconsulta', label: 'Interconsulta', icon: UserCheck },
+  { value: 'alta-hospitalar', label: 'Alta Hospitalar', icon: LogOut },
+  { value: 'transferencia-leito', label: 'Transferência de Leito', icon: ArrowRightLeft },
   { value: 'telemedicina', label: 'Telemedicina', icon: Video },
   { value: 'outros', label: 'Outros', icon: FileText },
 ];
@@ -130,6 +145,69 @@ const checklistsPorTipo: Record<TipoAtendimento, ChecklistItem[]> = {
     { campo: 'Hipóteses/Planos', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
     { campo: 'Orientações', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
     { campo: 'Retorno/Follow-up', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+  ],
+  'ajuste-quarto': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Motivo do Ajuste/Transferência', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Tipo de Quarto Atual', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Tipo de Quarto Solicitado', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Justificativa Clínica', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Condições Clínicas do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Autorização do Convênio', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+  ],
+  'ajuste-medicamentos': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Medicação Atual', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Medicação Nova/Ajustada', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Justificativa do Ajuste', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Posologia', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Alergias Checadas', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Interações Medicamentosas', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Sinais Vitais', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+  ],
+  'ajuste-dieta': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Dieta Atual', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Dieta Nova', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Justificativa Clínica', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Restrições Alimentares', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Via de Administração', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+  ],
+  'ajuste-oxigenoterapia': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Oxigenoterapia Atual', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Oxigenoterapia Nova', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Fluxo de O2 (L/min)', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Saturação de O2', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Justificativa do Ajuste', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Gasometria (se aplicável)', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+  ],
+  'interconsulta': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Especialidade Solicitada', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Motivo da Interconsulta', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Resumo Clínico', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Dúvida Específica', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Exames Relevantes', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+  ],
+  'alta-hospitalar': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Resumo da Internação', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Diagnóstico Principal (CID-10)', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Diagnósticos Secundários', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Procedimentos Realizados', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Medicações de Alta', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Orientações ao Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Retorno Ambulatorial', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+  ],
+  'transferencia-leito': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Leito Origem', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Leito Destino', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Motivo da Transferência', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Condições Clínicas', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Sinais Vitais', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Cuidados Especiais', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
   ],
   'outros': [
     { campo: 'Identificação', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
