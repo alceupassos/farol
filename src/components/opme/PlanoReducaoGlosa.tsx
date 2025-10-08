@@ -132,12 +132,12 @@ export const PlanoReducaoGlosa = () => {
     <div className="space-y-6">
       {/* Header */}
       <Card className="border-orange-600">
-        <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950 dark:to-red-950">
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-orange-600" />
+        <CardHeader className="bg-gradient-to-r from-orange-900 to-red-900 dark:from-orange-950 dark:to-red-950">
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Zap className="h-6 w-6 text-orange-200" />
             Plano de Redução de Glosa - Ação Rápida por Convênio
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-orange-100">
             Clique no convênio para ver o plano de ação detalhado e objetivo
           </CardDescription>
         </CardHeader>
@@ -167,12 +167,12 @@ export const PlanoReducaoGlosa = () => {
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Glosa Atual:</span>
+                  <span className="text-gray-700 dark:text-gray-300">Glosa Atual:</span>
                   <span className="text-2xl font-bold text-red-600">{convenio.taxaGlosa}%</span>
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Meta:</span>
+                  <span className="text-gray-700 dark:text-gray-300">Meta:</span>
                   <span className="text-xl font-bold text-green-600">
                     {(convenio.taxaGlosa - convenio.melhoriaEsperada).toFixed(1)}%
                   </span>
@@ -181,15 +181,15 @@ export const PlanoReducaoGlosa = () => {
                 <div className="pt-3 border-t">
                   <div className="flex items-center gap-2 text-sm mb-2">
                     <TrendingDown className="h-4 w-4 text-blue-600" />
-                    <span className="font-semibold">Redução: -{convenio.melhoriaEsperada}%</span>
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">Redução: -{convenio.melhoriaEsperada}%</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm mb-2">
                     <DollarSign className="h-4 w-4 text-green-600" />
-                    <span className="font-semibold">{formatCurrency(convenio.economiaProjetada)}/mês</span>
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(convenio.economiaProjetada)}/mês</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Clock className="h-4 w-4 text-purple-600" />
-                    <span className="text-muted-foreground">{convenio.prioridade}</span>
+                    <span className="text-gray-700 dark:text-gray-300">{convenio.prioridade}</span>
                   </div>
                 </div>
 
@@ -211,17 +211,17 @@ export const PlanoReducaoGlosa = () => {
       {convenioSelecionado && planosAcao[convenioSelecionado] && (
         <div id="plano-acao">
           <Card className="border-orange-600 shadow-xl">
-            <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950 dark:to-red-950">
+            <CardHeader className="bg-gradient-to-r from-orange-900 to-red-900 dark:from-orange-950 dark:to-red-950">
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-6 w-6 text-orange-600" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <Target className="h-6 w-6 text-orange-200" />
                   {planosAcao[convenioSelecionado].titulo}
                 </CardTitle>
                 <Badge className="bg-orange-600 text-lg px-4 py-2">
                   {planosAcao[convenioSelecionado].prazo}
                 </Badge>
               </div>
-              <CardDescription className="text-base mt-2">
+              <CardDescription className="text-orange-100 text-base mt-2">
                 {planosAcao[convenioSelecionado].descricao}
               </CardDescription>
             </CardHeader>
