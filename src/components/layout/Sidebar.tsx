@@ -179,6 +179,14 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           ],
         },
         {
+          title: 'Transcrição e Auditoria',
+          items: [
+            { to: '/transcricao-atendimento', icon: <Stethoscope className="h-5 w-5 mr-3" />, label: 'GRAVAR & Transcrever' },
+            { to: '/auditoria-prontuario', icon: <FileText className="h-5 w-5 mr-3" />, label: 'Auditoria de Prontuário' },
+            { to: '/glosas-conformidade', icon: <DollarSign className="h-5 w-5 mr-3" />, label: 'Glosas & Conformidade' },
+          ],
+        },
+        {
           title: 'Gestão OPME',
           items: [
             { to: '/opme-dashboard', icon: <Target className="h-5 w-5 mr-3" />, label: 'Painel Geral OPME' },
