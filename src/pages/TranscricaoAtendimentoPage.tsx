@@ -22,6 +22,7 @@ type TipoAtendimento =
   | 'enfermaria' 
   | 'quarto-a' 
   | 'ajuste-quarto'
+  | 'mudanca-tipo-leito'
   | 'ajuste-medicamentos'
   | 'ajuste-dieta'
   | 'ajuste-oxigenoterapia'
@@ -47,6 +48,7 @@ const tiposAtendimento = [
   { value: 'enfermaria', label: 'Enfermaria', icon: Activity },
   { value: 'quarto-a', label: 'Quarto Tipo A', icon: Building2 },
   { value: 'ajuste-quarto', label: 'Ajuste de Quarto/Leito', icon: Building2 },
+  { value: 'mudanca-tipo-leito', label: 'Mudança de Tipo de Leito', icon: ArrowRightLeft },
   { value: 'ajuste-medicamentos', label: 'Ajuste de Medicamentos', icon: Pill },
   { value: 'ajuste-dieta', label: 'Ajuste de Dieta', icon: UtensilsCrossed },
   { value: 'ajuste-oxigenoterapia', label: 'Ajuste de Oxigenoterapia', icon: Wind },
@@ -154,6 +156,20 @@ const checklistsPorTipo: Record<TipoAtendimento, ChecklistItem[]> = {
     { campo: 'Justificativa Clínica', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
     { campo: 'Condições Clínicas do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
     { campo: 'Autorização do Convênio', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+  ],
+  'mudanca-tipo-leito': [
+    { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Tipo de Leito Atual', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Tipo de Leito Solicitado', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Origem da Decisão', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Procedimento do Convênio', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Código TUSS (se aplicável)', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Justificativa Clínica', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Condições Clínicas Atuais', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Necessidade de Isolamento', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Equipamentos Especiais Necessários', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Autorização/Guia do Convênio', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
+    { campo: 'Previsão de Permanência', obrigatorio: false, preenchido: false, preenchidoPorIA: false },
   ],
   'ajuste-medicamentos': [
     { campo: 'Identificação do Paciente', obrigatorio: true, preenchido: false, preenchidoPorIA: false },
